@@ -1,0 +1,81 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+public class CoinManager : MonoBehaviour
+{
+    
+    public GameManager gm;
+    public TextMeshProUGUI hintText;
+    public TextMeshProUGUI coinCountText;
+    
+    public List<Color> colorData;
+    //public List<Color> colorsAdded;
+    void Start()
+    {
+        gm = GameManager.Instance;
+        if (gm.rowsInGrid != 0)
+        {
+            colorData.Sort((a, b) => 1 - 2 * Random.Range(0, colorData.Count));
+            for (int i = 0; i < gm.rowsInGrid; i++)
+            {
+                gm.rowColor.Add(colorData[i]);
+            }
+        }
+        coinCountText.text = GetCoinsCount().ToString();
+        if (GetCoinsCount() >= 20)
+        {
+            var countNum = (int)GetCoinsCount() / 20;
+            SetHintCount(countNum);
+            hintText.text = GetHintCount().ToString();
+        }
+        else
+        {
+            SetHintCount(0);
+            hintText.text = GetHintCount().ToString();
+        }
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            CoinsIncrease();
+        }
+
+        if (Input.GetKeyDown(KeyCode.A) && GetCoinsCount()>=20)
+        {
+            HintReduce();
+        }
+    }
+
+    public void HintReduce()
+    {
+        if (GetHintCount() > 0)
+        {
+            SetHintCount(GetHintCount()-1);
+            SetCoinCount(GetCoinsCount()-20);
+            coinCountText.text = GetCoinsCount().ToString();
+            hintText.text = GetHintCount().ToString();
+        }
+    }
+
+    public void CoinsIncrease(int x=50)
+    {
+        SetCoinCount(GetCoinsCount()+x);
+        SetHintCount((int)(GetCoinsCount()/20));
+        
+        coinCountText.text = GetCoinsCount().ToString();
+        hintText.text = GetHintCount().ToString();
+    }
+    
+    public static int GetHintCount() => PlayerPrefs.GetInt("Hint Count", 0);
+    public static void SetHintCount(int countHint) => PlayerPrefs.SetInt("Hint Count", countHint);
+    
+    public static int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 100);
+    public static void SetCoinCount(int countCoin) => PlayerPrefs.SetInt("Coins Count", countCoin);
+    
+}
