@@ -65,8 +65,7 @@ MonoBehaviour:
   materialHashCode: 296174242
   m_Version: 1.1.0
   m_SourceFontFileGUID: df4fb9c3ecf77f5498a4ee7dae22d680
-  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: df4fb9c3ecf77f5498a4ee7dae22d680,
-    type: 3}
+  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: df4fb9c3ecf77f5498a4ee7dae22d680, type: 3}
   m_SourceFontFile: {fileID: 0}
   m_AtlasPopulationMode: 0
   m_FaceInfo:
@@ -2486,7 +2485,8 @@ Material:
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - BEVEL_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -2520,7 +2520,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Ambient: 0.5
+    - _Ambient: 0.36
     - _Bevel: 0.5
     - _BevelClamp: 0
     - _BevelOffset: 0
@@ -2530,7 +2530,7 @@ Material:
     - _BumpOutline: 0
     - _ColorMask: 15
     - _CullMode: 0
-    - _Diffuse: 0.5
+    - _Diffuse: 0.63
     - _FaceDilate: 0
     - _FaceUVSpeedX: 0
     - _FaceUVSpeedY: 0
@@ -2539,7 +2539,7 @@ Material:
     - _GlowOuter: 0.05
     - _GlowPower: 0.75
     - _GradientScale: 6
-    - _LightAngle: 3.1416
+    - _LightAngle: 0.56
     - _MaskSoftnessX: 0
     - _MaskSoftnessY: 0
     - _OutlineSoftness: 0
@@ -2547,7 +2547,7 @@ Material:
     - _OutlineUVSpeedY: 0
     - _OutlineWidth: 0
     - _PerspectiveFilter: 0.875
-    - _Reflectivity: 10
+    - _Reflectivity: 8.1
     - _ScaleRatioA: 0.8333333
     - _ScaleRatioB: 0.6770833
     - _ScaleRatioC: 0.6770833
@@ -2555,7 +2555,7 @@ Material:
     - _ScaleY: 1
     - _ShaderFlags: 0
     - _Sharpness: 0
-    - _SpecularPower: 2
+    - _SpecularPower: 1.85
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0

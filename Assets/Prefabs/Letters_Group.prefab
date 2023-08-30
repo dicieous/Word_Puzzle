@@ -34,7 +34,7 @@ Transform:
   - {fileID: 5066871820357044684}
   - {fileID: 5169333075406456146}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4126890787108033142
 MonoBehaviour:
@@ -52,7 +52,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 64
-  _shakeStrength: {x: 0.2, y: 0.2, z: 0}
+  dustFX: {fileID: 3098921073377997907, guid: 6690041c92ae487419606881eae3ac2c, type: 3}
 --- !u!65 &3476716897945682098
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -224,6 +224,10 @@ PrefabInstance:
       propertyPath: cubePrefab
       value: 
       objectReference: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
+    - target: {fileID: 7048840437638379373, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb713b1f36ea0d143b17f1371bf5c934, type: 2}
     - target: {fileID: 7297580712202957475, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: m_IsKinematic
       value: 0

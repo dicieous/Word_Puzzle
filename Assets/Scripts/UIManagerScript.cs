@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Coffee.UIExtensions;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -9,8 +10,9 @@ public class UIManagerScript : MonoBehaviour
 {
 	public static UIManagerScript Instance;
 
-	public GameObject endScreen;
+	public GameObject endScreen,prefab;
 	public TextMeshProUGUI levelNo;
+	public Material newMat;
 
 	private void Awake()
 	{
@@ -20,6 +22,8 @@ public class UIManagerScript : MonoBehaviour
 	private void Start()
 	{
 		levelNo.text = "LEVEL " + PlayerPrefs.GetInt("Level", 1);
+		// GameObject plane = Instantiate(prefab);
+		// plane.GetComponent<MeshRenderer>().material = newMat;
 	}
 
 

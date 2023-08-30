@@ -13,10 +13,10 @@ public class HolderCubeScript : MonoBehaviour
 	public bool isFilled = false;
 
 
-	private void Update()
+	/*private void Update()
 	{
-		
-	}
+		Debug.Log("GrabWord value "+ GameManager.Instance.grabwords);
+	}*/
 
 	private void OnTriggerEnter(Collider other)
     {
@@ -25,9 +25,10 @@ public class HolderCubeScript : MonoBehaviour
 			isFilled = true;
 			//Debug.Log(rowNo + " is Row " + colNo + " is Column");
 			
-			var value = other.gameObject.GetComponentInChildren<TextMeshPro>().text;
+			var value = other.gameObject;
 			GameManager.Instance.AddWords(rowNo-1,colNo-1,value);
 			
+
 			//Debug.Log(other.gameObject.GetComponentInChildren<TextMeshPro>().text + " is Text");
 			//Debug.Log("FILLED");
 		}

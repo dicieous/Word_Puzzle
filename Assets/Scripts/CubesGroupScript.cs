@@ -12,6 +12,7 @@ public class CubesGroupScript : MonoBehaviour
 
 	[SerializeField] private List<GameObject> childObjects;
 	[SerializeField] private LayerMask mask;
+	[SerializeField] private ParticleSystem dustFX;
 
 	private Vector3[] initialPos;
 	private Vector3[] initialDir;
@@ -48,7 +49,7 @@ public class CubesGroupScript : MonoBehaviour
 		_offset = position - MouseWorldPosition();
 
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
-		Debug.Log("Vibrate on mouse Down");
+		//Debug.Log("Vibrate on mouse Down");
 
 
 		//_oldPos = position;
@@ -64,14 +65,14 @@ public class CubesGroupScript : MonoBehaviour
 		
 			var position1 = transform.position;
 			position1 = MouseWorldPosition() + _offset;
-			position1 = new Vector3(position1.x, position1.y, -2f);
+			position1 = new Vector3(position1.x, position1.y, -3.5f);
 			transform.position = position1;
 
 			if (!CheckIfHittingCubeGroup()) return;
 			foreach (var child in childObjects)
 			{
 				var position = child.transform.position;
-				position = new Vector3(position.x, position.y, -2f);
+				position = new Vector3(position.x, position.y, -3.5f);
 				child.GetComponent<PlayerCubeScript>().isPlaced = false;
 				child.transform.position = position;
 			}
@@ -132,7 +133,6 @@ public class CubesGroupScript : MonoBehaviour
 		{
 			ResetPosition();
 		}
-		
 		CondToAttachCubesInGrid();
 	}
 
@@ -233,25 +233,18 @@ public class CubesGroupScript : MonoBehaviour
 				child.transform.position = position;
 				var vector3 = transform.position;
 				vector3.z = position.z;
-
-
+				
+				Instantiate(dustFX, position, Quaternion.identity);
+				
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Pop");
 
-				canMove = false;
-				transform.DOShakeScale(.3f, new Vector3(0.05f, 0.05f, 0f), 4, 40, true).OnComplete((() =>
-				{
-					var originalScale = new Vector3(1f, 1f, 1f);
-					transform.localScale = originalScale;
-					canMove = true;
-				}));
-				
 				DOVirtual.DelayedCall(.05f, () =>
 				{
-					/*if (PlayerPrefs.GetInt("Level", 1) == 1)
-					{
-						GameManager.Instance.ShowTheText();
-					}*/
+					// if (PlayerPrefs.GetInt("Level", 1) == 1)
+					// {
+					// 	GameManager.Instance.ShowTheText();
+					// }
 				});
 			}
 		}

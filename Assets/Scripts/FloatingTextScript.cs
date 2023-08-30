@@ -26,7 +26,7 @@ public class FloatingTextScript : MonoBehaviour
 	private void Start()
 	{
 		transform.DOScale(scale, 1f).SetEase(_ease);
-		transform.DOMoveY(yMoveValue, 1f) ;	
+		//transform.DOMoveY(yMoveValue, 1f) ;	
 		
 
 		_text.DOFade(0, 2f).OnComplete((() =>
