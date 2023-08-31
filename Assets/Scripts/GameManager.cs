@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
+	
 	public static GameManager Instance;
-
+	
 	public List<string> answers;
+	public List<Color> rowColor;
 
+	public List<WordData> wordList;
+	
 	[Space(10)]
 	public int rowsInGrid;
 
@@ -18,7 +24,7 @@ public class GameManager : MonoBehaviour
 
 	[HideInInspector] public int rowfilled;
 	[HideInInspector] public List<GameObject> fXRowWords;
-
+	
 	[HideInInspector]
 	public bool grabwords = false;
 
@@ -73,6 +79,14 @@ public class GameManager : MonoBehaviour
 
 		wordCompleted = new bool[rowsInGrid];
 		InitializeWordComplete();
+		for (int i = 0; i < rowsInGrid; i++)
+		{
+			var wordData = new WordData
+			{
+				wordsDataLists = new List<GameObject>()
+			};
+			wordList.Add(wordData);
+		}
 	}
 
 #region Initialize Grid Words
@@ -154,18 +168,42 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
-
+		
 		return true;
 	}
 
 	//private int colnum = 0;
+	public void RearangeValues(int row)
+	{
+		for (int i = 0; i < colInGrid; i++)
+		{
+			//letterCubeWord[row][i].transform.GetChild(1).GetComponent<MeshRenderer>().material.color = Color.white;
+			wordList[row].wordsDataLists[i].transform.GetChild(1).GetComponent<MeshRenderer>().material.color = Color.white;
+		}
+
+		DOVirtual.DelayedCall(0.1f, () =>
+		{
+			for (int i = 0; i < colInGrid; i++)
+			{
+				wordList[row].wordsDataLists.RemoveAt(0);
+			}
+			
+		});
+	}
 	public void MovingSeq(int row, int columCount = 0)
 	{
 		var seq = DOTween.Sequence();
 		seq.AppendCallback(() =>
 		{
 			letterCubeWord[row][columCount].transform.GetChild(1).transform.DOScale(new Vector3(30f, 30f, 15f), 0.2f).SetEase(Ease.InOutBounce).SetLoops(2, LoopType.Yoyo);
+			letterCubeWord[row][columCount].transform.GetChild(1).GetComponent<MeshRenderer>().material.color = rowColor[row];
 			letterCubeWord[row][columCount].transform.GetChild(0).transform.DOScale(new Vector3(1.75f, 1.75f, 2f), 0.2f).SetEase(Ease.InOutBounce).SetLoops(2, LoopType.Yoyo);
+			if (wordList.Count != 0)
+			{
+				var gm = letterCubeWord[row][columCount].gameObject;
+				wordList[row].wordsDataLists.Add(gm);
+			}
+
 			columCount++;
 		});
 		seq.AppendInterval(0.1f);
@@ -213,12 +251,17 @@ public class GameManager : MonoBehaviour
 
 					
 					MovingSeq(row);
-					
 					print("row number" + row);
 					wordCompleted[row] = true;
 					wordsMade++;
 					Debug.Log("WordsMade " + wordsMade);
 				}
+			}
+			else if (!IsRowFull(row) && wordCompleted[row])
+			{
+				print("row number"+ row);
+				RearangeValues(row);
+				wordCompleted[row] = false;
 			}
 		}
 
@@ -291,4 +334,9 @@ public class GameManager : MonoBehaviour
 	}
 
 #endregion
+[System.Serializable]
+public class WordData
+{
+	public List<GameObject> wordsDataLists;
+}
 }
