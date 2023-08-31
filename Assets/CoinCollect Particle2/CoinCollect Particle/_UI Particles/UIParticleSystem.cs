@@ -54,16 +54,16 @@ public class UIParticleSystem : MaskableGraphic {
 			if (currentMaterial && currentMaterial.HasProperty("_MainTex")) {
 				particleTexture = currentMaterial.mainTexture;
 			}
-			Material material = new Material(Shader.Find("UI/Particles/Alpha Blended")); // TODO - You should create this discard shader
+			Material material = new Material(Shader.Find("UI/Particles/Additive")); // TODO - You should create this discard shader
 			if (Application.isPlaying) {
 				renderer.material = material;
 			}
-			//#if UNITY_EDITOR
+			#if UNITY_EDITOR
 			else {
 				material.hideFlags = HideFlags.DontSave;
 				renderer.sharedMaterial = material;
 			}
-			//#endif
+			#endif
 
 			// automatically set scaling
 			_particleSystem.scalingMode = ParticleSystemScalingMode.Hierarchy;

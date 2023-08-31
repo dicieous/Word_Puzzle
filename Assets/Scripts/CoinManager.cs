@@ -7,14 +7,20 @@ using Random = UnityEngine.Random;
 
 public class CoinManager : MonoBehaviour
 {
-    
+	public static CoinManager instance;
+	
     public GameManager gm;
     public TextMeshProUGUI hintText;
     public TextMeshProUGUI coinCountText;
     
     public List<Color> colorData;
     //public List<Color> colorsAdded;
-    void Start()
+	private void Awake()
+	{
+		instance = this;
+	}
+
+	void Start()
     {
         gm = GameManager.Instance;
         if (gm.rowsInGrid != 0)
@@ -38,19 +44,7 @@ public class CoinManager : MonoBehaviour
             hintText.text = GetHintCount().ToString();
         }
     }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            CoinsIncrease();
-        }
-
-        if (Input.GetKeyDown(KeyCode.A) && GetCoinsCount()>=20)
-        {
-            HintReduce();
-        }
-    }
+	
 
     public void HintReduce()
     {
@@ -63,7 +57,7 @@ public class CoinManager : MonoBehaviour
         }
     }
 
-    public void CoinsIncrease(int x=50)
+    public void CoinsIncrease(int x)
     {
         SetCoinCount(GetCoinsCount()+x);
         SetHintCount((int)(GetCoinsCount()/20));
@@ -72,10 +66,10 @@ public class CoinManager : MonoBehaviour
         hintText.text = GetHintCount().ToString();
     }
     
-    public static int GetHintCount() => PlayerPrefs.GetInt("Hint Count", 0);
-    public static void SetHintCount(int countHint) => PlayerPrefs.SetInt("Hint Count", countHint);
+    public  int GetHintCount() => PlayerPrefs.GetInt("Hint Count", 0);
+    public  void SetHintCount(int countHint) => PlayerPrefs.SetInt("Hint Count", countHint);
     
-    public static int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 100);
-    public static void SetCoinCount(int countCoin) => PlayerPrefs.SetInt("Coins Count", countCoin);
+    public  int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 1000);
+    public  void SetCoinCount(int countCoin) => PlayerPrefs.SetInt("Coins Count", countCoin);
     
 }

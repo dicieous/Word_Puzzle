@@ -22,6 +22,7 @@ public class CubesGroupScript : MonoBehaviour
 	private bool canMove = true;
 	private bool canReset = true;
 
+	public int number;
 	void Start()
 	{
 		_initPos = transform.position;
@@ -32,14 +33,11 @@ public class CubesGroupScript : MonoBehaviour
 			initialPos[i] = childObjects[i].transform.position;
 			//Debug.Log("Initial Position get " + initialPos[i]);
 		}
-
-		// if ((PlayerPrefs.GetInt("Level", 1) == 1))
-		// {
-		// 	GameManager.Instance.ShowTheText();
-		// }
+		
+		
 	}
 
-
+	private bool _once;
 	private void OnMouseDown()
 	{
 		if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
@@ -140,7 +138,8 @@ public class CubesGroupScript : MonoBehaviour
 	private void ResetPosition()
 	{
 		//transform.position = _initPos;
-		if (canReset)
+		if (canReset && !
+				GameManager.Instance.levelCompleted)
 		{
 			canReset = false;
 			transform.DOMove(_initPos, 0.2f).SetEase(Ease.Flash).OnComplete(() =>
@@ -239,17 +238,28 @@ public class CubesGroupScript : MonoBehaviour
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Pop");
 
-				DOVirtual.DelayedCall(.05f, () =>
+				if (PlayerPrefs.GetInt("Level", 1) == 1)
 				{
-					// if (PlayerPrefs.GetInt("Level", 1) == 1)
-					// {
-					// 	GameManager.Instance.ShowTheText();
-					// }
-				});
+					DOVirtual.DelayedCall(0.3f, () =>
+					{
+						if (!check2done)
+						{
+							print("checkingObj");
+							GameManager.Instance.ShowTheText();
+							UIManagerScript.Instance.HelpHand();
+							check2done = true;
+						}
+					});
+				}
+				
 			}
 		}
 	}
 
+	public bool check1done;
+	public bool check2done; 
+	public bool check3done;
+	
 	private void CondToAttachCubesInGrid()
 	{
 		for (int i = 0; i < childObjects.Count; i++)

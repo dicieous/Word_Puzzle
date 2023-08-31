@@ -8,24 +8,14 @@ public class TutorialImageScript : MonoBehaviour
 {
 	public Image tutHand;
 
-	private Tween _tween;
-	private bool imageDeleted = false;
-
 	[SerializeField] private Vector2 targetPos;
 	void Start()
 	{
-		_tween = tutHand.rectTransform.DOAnchorPos(targetPos, 2f).SetEase(Ease.InOutCirc).SetLoops(-1, LoopType.Restart);
+		tutHand.rectTransform.DOAnchorPos(targetPos, 2f).SetEase(Ease.InOutCirc).SetLoops(-1, LoopType.Restart);
 	}
 
-	private void Update()
+	public void HelpHand()
 	{
-		if (Input.GetMouseButtonDown(0)&&!imageDeleted)
-		{
-			imageDeleted = true;
-			Destroy(gameObject);
-			_tween.Kill();
-		}
-		
-
+		tutHand.enabled = false;
 	}
 }

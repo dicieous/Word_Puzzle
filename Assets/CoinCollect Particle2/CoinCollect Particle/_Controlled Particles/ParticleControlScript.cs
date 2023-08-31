@@ -46,8 +46,8 @@ public class ParticleControlScript : MonoBehaviour
         ParticleSystem ps = GetComponent<ParticleSystem>();
 
         transform.position = pos;
-        transform.GetComponent<RectTransform>().anchoredPosition=Vector2.zero;
-        //print("position"+transform.GetComponent<RectTransform>().anchoredPosition);
+		
+		transform.GetComponent<RectTransform>().anchoredPosition=Vector2.zero;
         StartCoroutine(PlayCoinParticlesCoroutine(ps, targetUI));
     }
 
