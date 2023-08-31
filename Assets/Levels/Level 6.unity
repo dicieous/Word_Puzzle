@@ -719,7 +719,7 @@ Transform:
   m_GameObject: {fileID: 386708119}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 1.17, y: -1.38, z: 0.79}
-  m_LocalScale: {x: 1.2, y: 1, z: 2}
+  m_LocalScale: {x: 1.3, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4167,11 +4167,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.43
+      value: 1.62
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.13
+      value: 3.85
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4435,6 +4435,9 @@ MonoBehaviour:
   - NEAR
   rowsInGrid: 4
   colInGrid: 4
+  rowfilled: 0
+  fXRowWords: []
+  grabwords: 0
   Cube_Groups:
   - {fileID: 2072267425}
   - {fileID: 1455858049}
@@ -4447,7 +4450,7 @@ MonoBehaviour:
   - {fileID: 1514004331}
   - {fileID: 761868247}
   - {fileID: 624527912}
-  starFX: {fileID: 100018, guid: a40b64bf23366dc42a892af2c6ff6140, type: 3}
+  starFX: {fileID: 4703598324225116034, guid: cf6696c35ed2218498ac4f5624ae2a23, type: 3}
   complementPrefab: {fileID: 7116642006971059512, guid: 1aae8e157f13b7347accb9d2c8564567, type: 3}
   instPos: {fileID: 1710234849}
   yMaxLimit: 3.2
