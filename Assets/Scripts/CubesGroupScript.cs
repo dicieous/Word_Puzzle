@@ -204,6 +204,20 @@ public class CubesGroupScript : MonoBehaviour
 
 		return false;
 	}
+	
+	private bool CheckIfAllHitting()
+	{
+		for (int i = 0; i < childObjects.Count; i++)
+		{
+			var child = childObjects[i].transform;
+			if(!CheckIfHitting(child)) return false;
+			var hitInfo = RayCastInfo(child);
+			if (hitInfo.collider.GetComponent<HolderCubeScript>().isFilled) return false;
+		}
+
+		print("all are hitting");
+		return true;
+	}
 
 	//To get position of the Cube Grid Cubes
 	private RaycastHit RayCastInfo(Transform child)
@@ -250,24 +264,80 @@ public class CubesGroupScript : MonoBehaviour
 		}
 	}
 
+	// ReSharper disable Unity.PerformanceAnalysis
 	private void CondToAttachCubesInGrid()
 	{
-		for (int i = 0; i < childObjects.Count; i++)
+		if (CheckIfAllHitting())
 		{
-			var child = childObjects[i].transform;
-			if (CheckIfHitting(child))
+			for (int i = 0; i < childObjects.Count; i++)
 			{
-				var hitInfo = RayCastInfo(child);
-				Debug.Log("Show");
-				AttachTheObj(hitInfo, child);
-			}
-			else if (!CheckIfHitting(child) && !child.GetComponent<PlayerCubeScript>().isPlaced)
-			{
-				
-				if (Input.GetMouseButtonUp(0))
+				var child = childObjects[i].transform;
+				if (CheckIfHitting(child))
 				{
-					ResetPosition();
+					var hitInfo = RayCastInfo(child);
+					if (Input.GetMouseButtonUp(0))
+					{
+						Debug.Log("Show");
+						AttachTheObj(hitInfo, child);
+					}
+
 				}
+			}
+			
+			/*// for (int i = 0; i < childObjects.Count; i++)
+			// {
+			// 	var child = childObjects[i].transform;
+			// 	if (CheckIfHitting(child))
+			// 	{
+			// 		var hitInfo = RayCastInfo(child);
+			// 		if (Input.GetMouseButtonUp(0))
+			// 		{
+			// 			Debug.Log("Show");
+			// 			AttachTheObj(hitInfo, child);
+			// 		}
+			// 	
+			// 	}
+			// 	else if (!CheckIfHitting(child) && !child.GetComponent<PlayerCubeScript>().isPlaced)
+			// 	{
+			// 		if (Input.GetMouseButtonUp(0))
+			// 		{
+			// 			ResetPosition();
+			// 		}
+			// 	}
+			// }
+
+			// for (int i = 0; i < childObjects.Count; i++)
+			// {
+			// 	var child = childObjects[i].transform;
+			// 	if (!CheckIfHitting(child) && !child.GetComponent<PlayerCubeScript>().isPlaced)
+			// 	{
+			//
+			// 		if (Input.GetMouseButtonUp(0))
+			// 		{
+			// 			ResetPosition();
+			// 		}
+			//
+			// 	}
+			//
+			// 	if (CheckIfHitting(child))
+			// 	{
+			// 		
+			// 		var hitInfo = RayCastInfo(child);
+			// 		Debug.Log("Show");
+			// 		AttachTheObj(hitInfo, child);
+			// 	}*/
+		}
+		else
+		{
+			for (int i = 0; i < childObjects.Count; i++)
+			{
+				var child = childObjects[i].transform;
+				if (!child.GetComponent<PlayerCubeScript>().isPlaced)
+				{
+					if (Input.GetMouseButtonUp(0))
+						ResetPosition();
+				}
+
 			}
 		}
 	}
