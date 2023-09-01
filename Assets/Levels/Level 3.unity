@@ -460,6 +460,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 152155450}
+  - component: {fileID: 152155451}
   m_Layer: 0
   m_Name: Hint_Cube_Holder_4
   m_TagString: Untagged
@@ -485,6 +486,21 @@ Transform:
   m_Father: {fileID: 1903516835}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &152155451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152155449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae417383e1a1714d95508c5dad02c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crctString: []
+  takenString: []
+  doneObject: 0
 --- !u!1 &173289814 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5931574303327248809, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
@@ -1336,6 +1352,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 633741415}
+  - component: {fileID: 633741416}
   m_Layer: 0
   m_Name: Hint_Cube_Holder_1
   m_TagString: Untagged
@@ -1362,6 +1379,21 @@ Transform:
   m_Father: {fileID: 1903516835}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &633741416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633741414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae417383e1a1714d95508c5dad02c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crctString: []
+  takenString: []
+  doneObject: 0
 --- !u!1 &644172422 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7617961761573801963, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
@@ -2298,6 +2330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1082491654}
+  - component: {fileID: 1082491655}
   m_Layer: 0
   m_Name: Hint_Cube_Holder_3
   m_TagString: Untagged
@@ -2323,6 +2356,21 @@ Transform:
   m_Father: {fileID: 1903516835}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1082491655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082491653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae417383e1a1714d95508c5dad02c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crctString: []
+  takenString: []
+  doneObject: 0
 --- !u!4 &1137846124 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3105032407085746626, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
@@ -2892,6 +2940,7 @@ MonoBehaviour:
   - BEAM
   rowColor: []
   wordList: []
+  ScriptOff: 0
   rowsInGrid: 3
   colInGrid: 4
   rowfilled: 0
@@ -3723,6 +3772,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2114843466}
+  - component: {fileID: 2114843467}
   m_Layer: 0
   m_Name: Hint_Cube_Holder_2
   m_TagString: Untagged
@@ -3747,6 +3797,21 @@ Transform:
   m_Father: {fileID: 1903516835}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2114843467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114843465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae417383e1a1714d95508c5dad02c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crctString: []
+  takenString: []
+  doneObject: 0
 --- !u!1001 &4442529472029118838
 PrefabInstance:
   m_ObjectHideFlags: 0

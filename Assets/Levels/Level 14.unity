@@ -294,6 +294,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 41737038}
+  - component: {fileID: 41737039}
   m_Layer: 0
   m_Name: Hint_Cube_Holder_8
   m_TagString: Untagged
@@ -318,6 +319,21 @@ Transform:
   m_Father: {fileID: 1838502778}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &41737039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41737037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae417383e1a1714d95508c5dad02c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crctString: []
+  takenString: []
+  doneObject: 0
 --- !u!1001 &61997670
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1368,6 +1384,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 507422568}
+  - component: {fileID: 507422569}
   m_Layer: 0
   m_Name: Hint_Cube_Holder_2
   m_TagString: Untagged
@@ -1392,6 +1409,21 @@ Transform:
   m_Father: {fileID: 1838502778}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &507422569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507422567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae417383e1a1714d95508c5dad02c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crctString: []
+  takenString: []
+  doneObject: 0
 --- !u!1001 &531997356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1871,6 +1903,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 766248762}
+  - component: {fileID: 766248763}
   m_Layer: 0
   m_Name: Hint_Cube_Holder_5
   m_TagString: Untagged
@@ -1895,6 +1928,21 @@ Transform:
   m_Father: {fileID: 1838502778}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &766248763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766248761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae417383e1a1714d95508c5dad02c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crctString: []
+  takenString: []
+  doneObject: 0
 --- !u!1001 &767558774
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3001,7 +3049,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10.3
+  orthographic size: 10.7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3664,6 +3712,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1074410135}
+  - component: {fileID: 1074410136}
   m_Layer: 0
   m_Name: Hint_Cube_Holder_7
   m_TagString: Untagged
@@ -3689,6 +3738,21 @@ Transform:
   m_Father: {fileID: 1838502778}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1074410136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074410134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae417383e1a1714d95508c5dad02c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crctString: []
+  takenString: []
+  doneObject: 0
 --- !u!1 &1077563589
 GameObject:
   m_ObjectHideFlags: 0
@@ -4212,6 +4276,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1231951731}
+  - component: {fileID: 1231951732}
   m_Layer: 0
   m_Name: Hint_Cube_Holder_4
   m_TagString: Untagged
@@ -4237,6 +4302,21 @@ Transform:
   m_Father: {fileID: 1838502778}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1231951732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231951730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae417383e1a1714d95508c5dad02c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crctString: []
+  takenString: []
+  doneObject: 0
 --- !u!1001 &1269135976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4504,6 +4584,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1407643223}
+  - component: {fileID: 1407643224}
   m_Layer: 0
   m_Name: Hint_Cube_Holder_1
   m_TagString: Untagged
@@ -4528,6 +4609,21 @@ Transform:
   m_Father: {fileID: 1838502778}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1407643224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407643222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae417383e1a1714d95508c5dad02c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crctString: []
+  takenString: []
+  doneObject: 0
 --- !u!1 &1439240282 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3692172608945480487, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
@@ -4793,6 +4889,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1482752588}
+  - component: {fileID: 1482752589}
   m_Layer: 0
   m_Name: Hint_Cube_Holder_3
   m_TagString: Untagged
@@ -4818,6 +4915,21 @@ Transform:
   m_Father: {fileID: 1838502778}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1482752589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482752587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae417383e1a1714d95508c5dad02c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crctString: []
+  takenString: []
+  doneObject: 0
 --- !u!1001 &1496156906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5715,6 +5827,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1793433480}
+  - component: {fileID: 1793433481}
   m_Layer: 0
   m_Name: Hint_Cube_Holder_6
   m_TagString: Untagged
@@ -5740,6 +5853,21 @@ Transform:
   m_Father: {fileID: 1838502778}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1793433481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793433479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae417383e1a1714d95508c5dad02c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crctString: []
+  takenString: []
+  doneObject: 0
 --- !u!1001 &1823542211
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6118,6 +6246,7 @@ MonoBehaviour:
   - MOVIE
   rowColor: []
   wordList: []
+  ScriptOff: 0
   rowsInGrid: 4
   colInGrid: 5
   rowfilled: 0

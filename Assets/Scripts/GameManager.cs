@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
 	public List<Color> rowColor;
 
 	public List<WordData> wordList;
-	
+	public bool ScriptOff;
 	[Space(10)]
 	public int rowsInGrid;
 
@@ -178,44 +178,74 @@ public class GameManager : MonoBehaviour
 	//private int colnum = 0;
 	public void RearangeValues(int row)
 	{
-		for (int i = 0; i < colInGrid; i++)
+		for (int i = 0; i < colInGrid+1; i++)
 		{
-			
-			wordList[row].wordsDataLists[i].transform.GetChild(1).GetComponent<MeshRenderer>().material.color = UI.originalColor.color;
-			wordList[row].wordsDataLists[i].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0].color =  UI.originalColor.color;
-			wordList[row].wordsDataLists[i].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1].color =  UI.originalColor.color;
+			if (i < colInGrid)
+			{
+				if (wordList[row].wordsDataLists[i] != null)
+				{
+					wordList[row].wordsDataLists[i].transform.GetChild(1).GetComponent<MeshRenderer>().material.color = UI.originalColor.color;
+					wordList[row].wordsDataLists[i].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0].color =  UI.originalColor.color;
+					wordList[row].wordsDataLists[i].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1].color =  UI.originalColor.color;
+					//wordList[row].wordsDataLists.RemoveAt(0);
+				}
+			}
+			else if (i >= colInGrid && removing)
+			{
+				removing = false;
+			}
 		}
-
-		DOVirtual.DelayedCall(0.1f, () =>
-		{
-			for (int i = 0; i < colInGrid; i++)
-			{
-				wordList[row].wordsDataLists.RemoveAt(0);
-			}
-			
-		});
 	}
-	public void MovingSeq(int row, int columCount = 0)
+
+	public bool removing;
+	public void MovingSeq(int row, int columCount=0)
 	{
-		var seq = DOTween.Sequence();
-		seq.AppendCallback(() =>
-		{
-			letterCubeWord[row][columCount].transform.GetChild(1).transform.DOScale(new Vector3(20f, 30f, 15f), 0.2f).SetEase(Ease.InOutBounce).SetLoops(2, LoopType.Yoyo);
-			letterCubeWord[row][columCount].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0].color = rowColor[row];
-			letterCubeWord[row][columCount].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1].color = rowColor[row];
-			letterCubeWord[row][columCount].transform.GetChild(0).transform.DOScale(new Vector3(1.75f, 1.75f, 2f), 0.2f).SetEase(Ease.InOutBounce).SetLoops(2, LoopType.Yoyo);
-			if (wordList.Count != 0)
+		    if (!removing)
 			{
-				var gm = letterCubeWord[row][columCount].gameObject;
-				wordList[row].wordsDataLists.Add(gm);
+				print("One");
+				var seq = DOTween.Sequence();
+				seq.AppendCallback(() =>
+				{
+					if (columCount < colInGrid)
+					{
+						//print(columCount);
+						letterCubeWord[row][columCount].transform.GetChild(0).transform
+							.DOScale(new Vector3(1.75f, 1.75f, 2f), 0.15f)
+							.SetEase(Ease.InOutBounce).SetLoops(2, LoopType.Yoyo);
+						letterCubeWord[row][columCount].transform.GetChild(1).transform
+							.DOScale(new Vector3(20f, 30f, 15f), 0.15f)
+							.SetEase(Ease.InOutBounce).SetLoops(2, LoopType.Yoyo);
+						letterCubeWord[row][columCount].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+							.color = rowColor[row];
+						letterCubeWord[row][columCount].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+							.color = rowColor[row];
+						if (!wordList[row].wordsDataLists.Contains(letterCubeWord[row][columCount].gameObject))
+						{
+							wordList[row].wordsDataLists.Add(letterCubeWord[row][columCount].gameObject);
+						}
+					}
+					if (columCount >= colInGrid)
+					{
+						scriptonfun();
+					}
+					columCount++;
+				});
+				seq.AppendInterval(0.1f);
+				seq.SetLoops(colInGrid + 1);
 			}
-
-			columCount++;
-		});
-		seq.AppendInterval(0.1f);
-		seq.SetLoops(colInGrid);
 	}
 
+	public void scriptonfun()
+	{
+		if (ScriptOff)
+		{
+			DOVirtual.DelayedCall(0.6f, () =>
+			{
+				print("FunctionCall");
+				ScriptOff = false;
+			});
+		}
+	}
 	/*public void collidercheck(int rownum)
 	{
 		for (int col = 0; col < colInGrid; col++)
@@ -247,7 +277,7 @@ public class GameManager : MonoBehaviour
 
 				if (answers.Contains(madeword) && row == answers.IndexOf(madeword))
 				{
-					Debug.Log(madeword + " The word you made");
+					//Debug.Log(madeword + " The word you made");
 					if (canInstantiate)
 					{
 						Instantiate(complementPrefab, instPos.position, Quaternion.identity);
@@ -255,34 +285,51 @@ public class GameManager : MonoBehaviour
 						canInstantiate = false;
 					}
 					
-					MovingSeq(row);
-					print("row number" + row);
+					if (!ScriptOff)
+					{
+						MovingSeq(row);
+						if (levelCompleted)
+						{
+							ScriptOff = true;
+						}
+					}
 					wordCompleted[row] = true;
 					wordsMade++;
-					Debug.Log("WordsMade " + wordsMade);
+					//print("row number" + row);
+					
+//					Debug.Log("WordsMade " + wordsMade);
 				}
 			}
 			else if (!IsRowFull(row) && wordCompleted[row] && !levelCompleted)
 			{
-				print("row number"+ row);
+				if (!removing)
+				{
+					removing = true;
+					//print("Removing one");
+				}
 				RearangeValues(row);
 				wordCompleted[row] = false;
+				wordsMade--;
+				//print("row number"+ row);
 			}
 		}
 
 		if (wordsMade >= answers.Count && IsGridFull() && !levelCompleted)
 		{
-			print("Win");
+//			print("Win");
 			levelCompleted = true;
+			UI.restartButton.interactable = false;
+			UI.hintButton.interactable = false;
 			//DestroyBlocks();
-			DOVirtual.DelayedCall(2f, () =>
+			DOVirtual.DelayedCall(.5f, () =>
 			{
 				UI.WinPanelActive();
-				Debug.Log("LevelComplete");
+				//Debug.Log("LevelComplete");
 			});
 		}
 	}
 
+	
 #endregion
 
 
@@ -309,8 +356,12 @@ public class GameManager : MonoBehaviour
 				if (!IsInstantiated(cube, count))
 				{
 					Instantiate(starFX, cube.transform.position, Quaternion.identity);
-					CoinManager.instance.HintReduce();
-					print("instantiated");
+					if (PlayerPrefs.GetInt("Level", 1) > 1)
+					{
+						CoinManager.instance.HintReduce();
+					}
+					if (PlayerPrefs.GetInt("Level", 1) == 1) UIManagerScript.Instance.HelpHand();
+//					print("instantiated");
 				}
 
 				for (int j = 0; j < count; j++)

@@ -69,7 +69,7 @@ public class CoinManager : MonoBehaviour
     public  int GetHintCount() => PlayerPrefs.GetInt("Hint Count", 0);
     public  void SetHintCount(int countHint) => PlayerPrefs.SetInt("Hint Count", countHint);
     
-    public  int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 1000);
+    public  int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 0);
     public  void SetCoinCount(int countCoin) => PlayerPrefs.SetInt("Coins Count", countCoin);
     
 }
