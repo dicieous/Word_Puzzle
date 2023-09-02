@@ -22,6 +22,7 @@ public class CubesGroupScript : MonoBehaviour
 	private bool canMove = true;
 	private bool canReset = true;
 
+	public int number;
 	void Start()
 	{
 		_initPos = transform.position;
@@ -32,14 +33,11 @@ public class CubesGroupScript : MonoBehaviour
 			initialPos[i] = childObjects[i].transform.position;
 			//Debug.Log("Initial Position get " + initialPos[i]);
 		}
-
-		// if ((PlayerPrefs.GetInt("Level", 1) == 1))
-		// {
-		// 	GameManager.Instance.ShowTheText();
-		// }
+		
+		
 	}
 
-
+	private bool _once;
 	private void OnMouseDown()
 	{
 		if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
@@ -59,8 +57,8 @@ public class CubesGroupScript : MonoBehaviour
 
 	private void OnMouseDrag()
 	{
-		if (canMove)
-		{
+		if (GameManager.Instance.levelCompleted || GameManager.Instance.ScriptOff) return;
+			
 			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
 		
 			var position1 = transform.position;
@@ -76,10 +74,8 @@ public class CubesGroupScript : MonoBehaviour
 				child.GetComponent<PlayerCubeScript>().isPlaced = false;
 				child.transform.position = position;
 			}
-		}
-		
-
-		//Raycast to check if you're hitting the CubeGroup Collider and take the childObjects back in the cubeGroup Collider
+			
+			//Raycast to check if you're hitting the CubeGroup Collider and take the childObjects back in the cubeGroup Collider
 
 		// RaycastHit hit;
 		// var ray = Camera.main!.ScreenPointToRay (Input.mousePosition);
@@ -97,8 +93,6 @@ public class CubesGroupScript : MonoBehaviour
 		// 		//Debug.Log("PushUp");
 		// 	}
 		// }
-
-
 		
 	}
 
@@ -140,7 +134,8 @@ public class CubesGroupScript : MonoBehaviour
 	private void ResetPosition()
 	{
 		//transform.position = _initPos;
-		if (canReset)
+		if (canReset && !
+				GameManager.Instance.levelCompleted)
 		{
 			canReset = false;
 			transform.DOMove(_initPos, 0.2f).SetEase(Ease.Flash).OnComplete(() =>
@@ -204,7 +199,6 @@ public class CubesGroupScript : MonoBehaviour
 
 		return false;
 	}
-	
 	private bool CheckIfAllHitting()
 	{
 		for (int i = 0; i < childObjects.Count; i++)
@@ -215,10 +209,9 @@ public class CubesGroupScript : MonoBehaviour
 			if (hitInfo.collider.GetComponent<HolderCubeScript>().isFilled) return false;
 		}
 
-		print("all are hitting");
+//		print("all are hitting");
 		return true;
 	}
-
 	//To get position of the Cube Grid Cubes
 	private RaycastHit RayCastInfo(Transform child)
 	{
@@ -234,12 +227,12 @@ public class CubesGroupScript : MonoBehaviour
 	{
 		isFilledC = hitInfo.collider.GetComponent<HolderCubeScript>().isFilled;
 
-		child.GetComponent<PlayerCubeScript>().isPlaced = true;
-		Debug.Log("isFilled Value " + isFilledC);
+	
+		//Debug.Log("isFilled Value " + isFilledC);
 
 		if (!isFilledC)
 		{
-			Debug.Log("Check if hitting");
+			//Debug.Log("Check if hitting");
 
 			if (Input.GetMouseButtonUp(0))
 			{
@@ -248,23 +241,34 @@ public class CubesGroupScript : MonoBehaviour
 				var vector3 = transform.position;
 				vector3.z = position.z;
 				
+				child.GetComponent<PlayerCubeScript>().isPlaced = true;
+				
 				Instantiate(dustFX, position, Quaternion.identity);
 				
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Pop");
 
-				DOVirtual.DelayedCall(.05f, () =>
+				if (PlayerPrefs.GetInt("Level", 1) == 1)
 				{
-					// if (PlayerPrefs.GetInt("Level", 1) == 1)
-					// {
-					// 	GameManager.Instance.ShowTheText();
-					// }
-				});
+					DOVirtual.DelayedCall(0.3f, () =>
+					{
+						if (!check2done)
+						{
+//							print("checkingObj");
+							GameManager.Instance.ShowTheText();
+							check2done = true;
+						}
+					});
+				}
+				
 			}
 		}
 	}
 
-	// ReSharper disable Unity.PerformanceAnalysis
+	public bool check1done;
+	public bool check2done; 
+	public bool check3done;
+	
 	private void CondToAttachCubesInGrid()
 	{
 		if (CheckIfAllHitting())
@@ -277,7 +281,7 @@ public class CubesGroupScript : MonoBehaviour
 					var hitInfo = RayCastInfo(child);
 					if (Input.GetMouseButtonUp(0))
 					{
-						Debug.Log("Show");
+						//Debug.Log("Show");
 						AttachTheObj(hitInfo, child);
 					}
 
