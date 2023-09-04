@@ -76,7 +76,8 @@ public class UIManagerScript : MonoBehaviour
 		{
 			if (countnumhelp == 0)
 			{
-				tutorialHand.gameObject.SetActive(true); 
+				tutorialHand.gameObject.SetActive(true);
+                //tutorialHand.enabled = true; 
 				tutorialHand.rectTransform.DOAnchorPos(targetPos[0], 2f).SetEase(Ease.InOutCirc).SetLoops(-1, LoopType.Restart);
 				countnumhelp = 1;
 			}
@@ -84,8 +85,8 @@ public class UIManagerScript : MonoBehaviour
 			else if (countnumhelp == 1)
 			{
 				//print("tutorial2");
-				tutorialHand2.gameObject.SetActive(true); 
-				tutorialHand.gameObject.SetActive(false);
+				tutorialHand2.gameObject.SetActive(true);
+                tutorialHand.enabled = false;
 				tutorialHand2.rectTransform.DOAnchorPos(targetPos[1], 2f).SetEase(Ease.InOutCirc).SetLoops(-1, LoopType.Restart);
 				countnumhelp = 2;
 				for (int i = 0; i < gameobject2.Count; i++)
@@ -101,8 +102,8 @@ public class UIManagerScript : MonoBehaviour
 			}
 			else if(countnumhelp ==2)
 			{
-				tutorialHand3.gameObject.SetActive(true); 
-				tutorialHand2.gameObject.SetActive(false);
+				tutorialHand3.gameObject.SetActive(true);
+                tutorialHand2.enabled = false;
 				tutorialHand3.rectTransform.DOAnchorPos(targetPos[2], 2f).SetEase(Ease.InOutCirc).SetLoops(-1, LoopType.Restart);
 				for (int i = 0; i < gameobject3.Count; i++)
 				{
@@ -151,10 +152,10 @@ public class UIManagerScript : MonoBehaviour
 	public void WinPanelActive()
 	{
 		if (tutorialHand3)
-		{
-			tutorialHand3.gameObject.SetActive(false);
-			tutorialtext.SetActive(false);
-		}
+        {
+            tutorialHand3.enabled = false;
+            tutorialtext.GetComponent<TextMeshPro>().enabled = false;
+        }
 		StartCoroutine(PlayCoinCollectionFx());
 		//if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
 		DOVirtual.DelayedCall(2f, () =>

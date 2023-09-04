@@ -181,12 +181,12 @@ public class GameManager : MonoBehaviour
 		{
 			if (i < colInGrid)
 			{
-				if (wordList[row].wordsDataLists[i] != null)
+				if (wordList[row].wordsDataLists[0] != null)
 				{
-					wordList[row].wordsDataLists[i].transform.GetChild(1).GetComponent<MeshRenderer>().material.color = UI.originalColor.color;
-					wordList[row].wordsDataLists[i].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0].color =  UI.originalColor.color;
-					wordList[row].wordsDataLists[i].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1].color =  UI.originalColor.color;
-					//wordList[row].wordsDataLists.RemoveAt(0);
+					wordList[row].wordsDataLists[0].transform.GetChild(1).GetComponent<MeshRenderer>().material.color = UI.originalColor.color;
+					wordList[row].wordsDataLists[0].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0].color =  UI.originalColor.color;
+					wordList[row].wordsDataLists[0].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1].color =  UI.originalColor.color;
+					wordList[row].wordsDataLists.RemoveAt(0);
 				}
 			}
 			else if (i >= colInGrid )
