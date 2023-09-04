@@ -55,7 +55,8 @@ public class UIManagerScript : MonoBehaviour
 		if ((PlayerPrefs.GetInt("Level", 1) == 1))
 		{
 			GameManager.Instance.ShowTheText();
-			tutorialtext.SetActive(true);
+            if(tutorialtext)
+                tutorialtext.SetActive(true);
 			//HelpHand();
 			for (int i = 0; i < gameobject2.Count; i++)
 			{
