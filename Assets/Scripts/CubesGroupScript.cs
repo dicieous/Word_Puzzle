@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -8,7 +9,6 @@ public class CubesGroupScript : MonoBehaviour
 {
 	private Vector3 _initPos;
 
-	//private PlayerCubeScript _playerCubeScript;
 
 	[SerializeField] private List<GameObject> childObjects;
 	[SerializeField] private LayerMask mask;
@@ -40,24 +40,23 @@ public class CubesGroupScript : MonoBehaviour
 	private bool _once;
 	private void OnMouseDown()
 	{
-		if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
+		if (!GameManager.Instance.downCheck)
+		{
+			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
 
-		var position1 = transform.position;
-		var position = new Vector3(position1.x, position1.y, position1.z);
-		_offset = position - MouseWorldPosition();
+			var position1 = transform.position;
+			var position = new Vector3(position1.x, position1.y + 1.5f, position1.z+0.5f);
+			_offset = position - MouseWorldPosition();
 
-		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
-		//Debug.Log("Vibrate on mouse Down");
-
-
-		//_oldPos = position;
-		/*var newScale = new Vector3(1f, 1f, 1f);
-		transform.DOScale(newScale, 0.05f).SetEase(Ease.OutBounce);*/
+			if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+		}
 	}
 
 	private void OnMouseDrag()
 	{
-		if (GameManager.Instance.levelCompleted || GameManager.Instance.ScriptOff) return;
+		if (!GameManager.Instance.downCheck)
+		{
+			if (GameManager.Instance.levelCompleted || GameManager.Instance.ScriptOff) return;
 			
 			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
 		
@@ -74,43 +73,20 @@ public class CubesGroupScript : MonoBehaviour
 				child.GetComponent<PlayerCubeScript>().isPlaced = false;
 				child.transform.position = position;
 			}
-			
-			//Raycast to check if you're hitting the CubeGroup Collider and take the childObjects back in the cubeGroup Collider
-
-		// RaycastHit hit;
-		// var ray = Camera.main!.ScreenPointToRay (Input.mousePosition);
-		// if (Physics.Raycast (ray, out hit)) {
-		// 	if (hit.transform.CompareTag("Cube_Group"))
-		// 	{
-		// 		foreach (var child in childObjects)
-		// 		{
-		// 			var position = child.transform.position;
-		// 			position = new Vector3(position.x, position.y, -2f);
-		// 			child.GetComponent<PlayerCubeScript>().isPlaced = false;
-		// 			child.transform.position = position;
-		// 		}
-		// 		
-		// 		//Debug.Log("PushUp");
-		// 	}
-		// }
-		
+		}
 	}
 
 	private void OnMouseUp()
 	{
-		/*if ((transform.position.y > GameManager.Instance.yMaxLimit ||
-			 transform.position.y < GameManager.Instance.yMinLimit) ||
-			(transform.position.x > GameManager.Instance.xMaxLimit ||
-			 transform.position.x < GameManager.Instance.xMinLimit))
+		if (!GameManager.Instance.downCheck)
 		{
-			ResetPosition();
-		}*/
-
-
-		/*var newScale = new Vector3(0.9f, .9f, 1f);
-		//transform.localScale = (newScale);
-		transform.DOScale(newScale, 0f);
-		*/
+			GameManager.Instance.downCheck = true;
+			DOVirtual.DelayedCall(0.5f, () =>
+			{
+				GameManager.Instance.downCheck = false;
+			});
+		}
+		
 	}
 
 	Vector3 MouseWorldPosition()
@@ -146,27 +122,11 @@ public class CubesGroupScript : MonoBehaviour
 			for (int i = 0; i < childObjects.Count; i++)
 			{
 				childObjects[i].transform.DOMove(initialPos[i], 0.2f).SetEase(Ease.Flash);
-				//childObjects[i].transform.position = initialPos[i];
-				//Debug.Log($"Initial Position set {initialPos[i]}");
+				
 			}
 		}
 		
 
-		/*var newScale = new Vector3(0.9f, .9f, .9f);
-		transform.DOScale(newScale, 0.2f);*/
-
-		//Debug.Log("ResetPos");
-		//Debug.Log("isFilled Value "+ PlayerCubeScript.instance.isFilled);
-		//if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ResetPositionMG");
-		//if(SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
-
-		
-		// for (int i = 0; i < childObjects.Count; i++)
-		// {
-		// 	//childObjects[i].transform.DOMove(initialPos[i], 0.2f);
-		// 	childObjects[i].transform.position = initialPos[i];
-		// 	//Debug.Log($"Initial Position set {initialPos[i]}");
-		// }
 	}
 
 	//To check if you are hitting letters Group Collider
@@ -269,6 +229,7 @@ public class CubesGroupScript : MonoBehaviour
 	public bool check2done; 
 	public bool check3done;
 	
+	// ReSharper disable Unity.PerformanceAnalysis
 	private void CondToAttachCubesInGrid()
 	{
 		if (CheckIfAllHitting())
@@ -287,49 +248,6 @@ public class CubesGroupScript : MonoBehaviour
 
 				}
 			}
-			
-			/*// for (int i = 0; i < childObjects.Count; i++)
-			// {
-			// 	var child = childObjects[i].transform;
-			// 	if (CheckIfHitting(child))
-			// 	{
-			// 		var hitInfo = RayCastInfo(child);
-			// 		if (Input.GetMouseButtonUp(0))
-			// 		{
-			// 			Debug.Log("Show");
-			// 			AttachTheObj(hitInfo, child);
-			// 		}
-			// 	
-			// 	}
-			// 	else if (!CheckIfHitting(child) && !child.GetComponent<PlayerCubeScript>().isPlaced)
-			// 	{
-			// 		if (Input.GetMouseButtonUp(0))
-			// 		{
-			// 			ResetPosition();
-			// 		}
-			// 	}
-			// }
-
-			// for (int i = 0; i < childObjects.Count; i++)
-			// {
-			// 	var child = childObjects[i].transform;
-			// 	if (!CheckIfHitting(child) && !child.GetComponent<PlayerCubeScript>().isPlaced)
-			// 	{
-			//
-			// 		if (Input.GetMouseButtonUp(0))
-			// 		{
-			// 			ResetPosition();
-			// 		}
-			//
-			// 	}
-			//
-			// 	if (CheckIfHitting(child))
-			// 	{
-			// 		
-			// 		var hitInfo = RayCastInfo(child);
-			// 		Debug.Log("Show");
-			// 		AttachTheObj(hitInfo, child);
-			// 	}*/
 		}
 		else
 		{

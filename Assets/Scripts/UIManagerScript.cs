@@ -5,6 +5,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class UIManagerScript : MonoBehaviour
@@ -20,14 +21,15 @@ public class UIManagerScript : MonoBehaviour
 	public Button nextButton;
 	public Button hintButton;
 	public Button restartButton;
-
+	
 	[Header("Levels changing")]
 	public GameObject starparticleEffect;
 
 	public Image tutorialHand, tutorialHand2, tutorialHand3;
 	public List<Collider> gameobject1, gameobject2, gameobject3;
 	public List<Vector2> targetPos;
-
+	public GameObject tutorialtext;
+	
 	[Space(10)]
 	public GameObject targetCongratulationImage;
 	public List<Sprite> congratulationsImages;
@@ -53,6 +55,7 @@ public class UIManagerScript : MonoBehaviour
 		if ((PlayerPrefs.GetInt("Level", 1) == 1))
 		{
 			GameManager.Instance.ShowTheText();
+			tutorialtext.SetActive(true);
 			//HelpHand();
 			for (int i = 0; i < gameobject2.Count; i++)
 			{
@@ -149,10 +152,7 @@ public class UIManagerScript : MonoBehaviour
 		if (tutorialHand3)
 		{
 			tutorialHand3.gameObject.SetActive(false);
-			if (transform.childCount >= 11)
-			{
-				transform.GetChild(10).gameObject.SetActive(false);
-			}
+			tutorialtext.SetActive(false);
 		}
 		StartCoroutine(PlayCoinCollectionFx());
 		//if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
@@ -220,6 +220,7 @@ public class UIManagerScript : MonoBehaviour
 	public void ResetScreenOnClick()
 	{
 		//GameManager.Instance.ResetScreen();
+		DOTween.KillAll();
 		var loadedScene = SceneManager.GetActiveScene().name;
 		SceneManager.LoadScene(loadedScene);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
