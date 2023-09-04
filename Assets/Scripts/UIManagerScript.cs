@@ -34,6 +34,9 @@ public class UIManagerScript : MonoBehaviour
 	public GameObject targetCongratulationImage;
 	public List<Sprite> congratulationsImages;
 	private int countnumhelp;
+    
+    // Lion Level Attempts Counter;
+    private static int levelAttempts;
 
 	private void Awake()
 	{
@@ -43,6 +46,8 @@ public class UIManagerScript : MonoBehaviour
 	private void Start()
 	{
 		levelNo.text = "LEVEL " + PlayerPrefs.GetInt("Level", 1);
+        
+        if(GAScript.instance) GAScript.instance.LevelStart(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
 		
 		cm = CoinManager.instance;
 		if (endScreen)
@@ -154,7 +159,7 @@ public class UIManagerScript : MonoBehaviour
 		if (tutorialHand3)
         {
             tutorialHand3.enabled = false;
-            tutorialtext.GetComponent<TextMeshPro>().enabled = false;
+            tutorialtext.GetComponent<TextMeshProUGUI>().enabled = false;
         }
 		StartCoroutine(PlayCoinCollectionFx());
 		//if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
@@ -205,6 +210,8 @@ public class UIManagerScript : MonoBehaviour
 	public void NextMoveFun()
 	{
 		//DOTween.KillAll();
+        if(GAScript.instance) GAScript.instance.LevelCompleted(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
+        levelAttempts = 0;
 		if (PlayerPrefs.GetInt("Level") >= (SceneManager.sceneCountInBuildSettings) - 1)
 		{
 			PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
@@ -222,6 +229,8 @@ public class UIManagerScript : MonoBehaviour
 	public void ResetScreenOnClick()
 	{
 		//GameManager.Instance.ResetScreen();
+        if(GAScript.instance) GAScript.instance.LevelRestart(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
+        levelAttempts++;
 		DOTween.KillAll();
 		var loadedScene = SceneManager.GetActiveScene().name;
 		SceneManager.LoadScene(loadedScene);
