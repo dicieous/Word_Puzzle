@@ -209,7 +209,7 @@ public class UIManagerScript : MonoBehaviour
 
 	public void NextMoveFun()
 	{
-		//DOTween.KillAll();
+        
         if(GAScript.instance) GAScript.instance.LevelCompleted(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
         levelAttempts = 0;
 		if (PlayerPrefs.GetInt("Level") >= (SceneManager.sceneCountInBuildSettings) - 1)
