@@ -19,7 +19,7 @@ public class CubesGroupScript : MonoBehaviour
 	private Vector3 _offset;
 
 	private bool isFilledC;
-	private bool canMove = true;
+	//private bool canMove = true;
 	private bool canReset = true;
 
 	public int number;
@@ -77,7 +77,7 @@ public class CubesGroupScript : MonoBehaviour
 		}
 	}
 
-	private void OnMouseUp()
+	/*private void OnMouseUp()
 	{
 		if (!GameManager.Instance.downCheck)
 		{
@@ -88,7 +88,7 @@ public class CubesGroupScript : MonoBehaviour
 			});
 		}
 		
-	}
+	}*/
 
 	Vector3 MouseWorldPosition()
 	{

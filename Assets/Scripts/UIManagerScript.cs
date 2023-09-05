@@ -145,11 +145,11 @@ public class UIManagerScript : MonoBehaviour
 		for (int i = 0; i < diamondParticlesRect.Count; i++)
 		{
 			var i1 = i;
-			diamondParticlesRect[i].DOMove(diamondIcon.position, 0.5f).OnComplete(() =>
+			diamondParticlesRect[i].DOMove(diamondIcon.position, 0.8f).OnComplete(() =>
 			{
 				diamondParticlesRect[i1].gameObject.SetActive(false);
 			});
-			yield return new WaitForSeconds(0.03f);
+			yield return new WaitForSeconds(0.04f);
 		}
 
 		//diamondNumOnWinPanel.text = GameController.instance.GetTotalCoin().ToString();
@@ -165,10 +165,10 @@ public class UIManagerScript : MonoBehaviour
 		//if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
 		DOVirtual.DelayedCall(2f, () =>
 		{
-			CoinManager.instance.CoinsIncrease(40);
+			CoinManager.instance.CoinsIncrease(30);
 		});
 		
-		DOVirtual.DelayedCall(3,()=>
+		DOVirtual.DelayedCall(3.25f,()=>
 		{
 			targetCongratulationImage.GetComponent<Image>().sprite =
 				congratulationsImages[Random.Range(0, congratulationsImages.Count)];

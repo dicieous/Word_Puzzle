@@ -14,21 +14,17 @@ public class GameManager : MonoBehaviour
 	public List<Color> rowColor;
 
 	public List<WordData> wordList;
+    
+    [HideInInspector]
 	public bool ScriptOff;
 	[Space(10)]
 	public int rowsInGrid;
-
 	public int colInGrid;
 
 	[HideInInspector] public int rowfilled;
 	[HideInInspector] public List<GameObject> fXRowWords;
-	
-	[HideInInspector]
-	public bool grabwords = false;
-
-	public bool downCheck;
+    [HideInInspector] public bool downCheck;
 	[Space(10)]
-	//private List<List<string>> Word = new List<List<string>>();
 	private List<List<GameObject>> letterCubeWord = new List<List<GameObject>>();
 
 	public List<GameObject> Cube_Groups;
@@ -52,11 +48,11 @@ public class GameManager : MonoBehaviour
 	[Space(10)]
 
 	//The min and max value of the Grid where cube are Attached
-	public float yMaxLimit;
-
-	public float xMinLimit;
-	public float yMinLimit;
-	public float xMaxLimit;
+	// public float yMaxLimit;
+	//
+	// public float xMinLimit;
+	// public float yMinLimit;
+	// public float xMaxLimit;
 
 	private bool[] wordCompleted;
 	public bool levelCompleted = false;
@@ -177,19 +173,19 @@ public class GameManager : MonoBehaviour
 	//private int colnum = 0;
 	public void RearangeValues(int row)
 	{
-		for (int i = 0; i < colInGrid+1; i++)
+		for (int i = 0; i < colInGrid; i++)
 		{
 			if (i < colInGrid)
 			{
 				if (wordList[row].wordsDataLists[0] != null)
 				{
-					wordList[row].wordsDataLists[0].transform.GetChild(1).GetComponent<MeshRenderer>().material.color = UI.originalColor.color;
+					/*wordList[row].wordsDataLists[0].transform.GetChild(1).GetComponent<MeshRenderer>().material.color = UI.originalColor.color;
 					wordList[row].wordsDataLists[0].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0].color =  UI.originalColor.color;
-					wordList[row].wordsDataLists[0].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1].color =  UI.originalColor.color;
+					wordList[row].wordsDataLists[0].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1].color =  UI.originalColor.color;*/
 					wordList[row].wordsDataLists.RemoveAt(0);
 				}
 			}
-			else if (i >= colInGrid )
+			/*else if (i >= colInGrid )
 			{
 				if (removing)
 				{
@@ -199,56 +195,58 @@ public class GameManager : MonoBehaviour
 				{
 					print(i);
 				}
-			}
+			}*/
 		}
 	}
 
 	public bool removing;
 	public void MovingSeq(int row, int columCount=0)
 	{
-		DOVirtual.DelayedCall(0.05f, () =>
-		{
-			if (!removing)
-			{
-				var seq = DOTween.Sequence();
-				seq.AppendCallback(() =>
-				{
-					if (columCount < colInGrid)
-					{
-						if (!wordList[row].wordsDataLists.Contains(letterCubeWord[row][columCount].gameObject))
-						{
-							wordList[row].wordsDataLists.Add(letterCubeWord[row][columCount].gameObject);
-						}
-						//print(columCount);
-						/*letterCubeWord[row][columCount].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
-							.color = rowColor[row];
-						letterCubeWord[row][columCount].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
-							.color = rowColor[row];
-						letterCubeWord[row][columCount].transform.GetChild(0).transform
-							.DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
-							.SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
-						letterCubeWord[row][columCount].transform.GetChild(1).transform
-							.DOScale(new Vector3(20f, 30f, 15f), 0.1f)
-							.SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);*/
-						if (!ScriptOff)
-						{
-							ScriptOff = true;
-						}
-					}
+        if (!removing)
+        {
+            for (int i = 0; i < colInGrid; i++)
+            {
+                if (!wordList[row].wordsDataLists.Contains(letterCubeWord[row][i].gameObject) && wordList[row].wordsDataLists.Count != colInGrid+1)
+                {
+                    wordList[row].wordsDataLists.Add(letterCubeWord[row][i].gameObject);
+                }
+            }
+            /*var seq = DOTween.Sequence();
+            seq.AppendCallback(() =>
+            {
+                if (columCount < colInGrid)
+                {
+                    if (!wordList[row].wordsDataLists.Contains(letterCubeWord[row][columCount].gameObject))
+                    {
+                        wordList[row].wordsDataLists.Add(letterCubeWord[row][columCount].gameObject);
+                    }
 
-					if (columCount >= colInGrid)
-					{
-						scriptonfun();
-					}
-
-					columCount++;
-				});
-				seq.AppendInterval(0.09f);
-				seq.SetLoops(colInGrid + 1);
-			}
-		});
-
-	}
+                    //print(columCount);
+                    /*letterCubeWord[row][columCount].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+                        .color = rowColor[row];
+                    letterCubeWord[row][columCount].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+                        .color = rowColor[row];
+                    letterCubeWord[row][columCount].transform.GetChild(0).transform
+                        .DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
+                        .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+                    letterCubeWord[row][columCount].transform.GetChild(1).transform
+                        .DOScale(new Vector3(20f, 30f, 15f), 0.1f)
+                        .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);#1#
+                    /*if (!ScriptOff)
+                    {
+                        ScriptOff = true;
+                    }#1#
+                }
+                /*if (columCount >= colInGrid)
+                {
+                    scriptonfun();
+                }#1#
+                columCount++;
+            });
+            seq.AppendInterval(0.09f);
+            seq.SetLoops(colInGrid );*/
+        }
+   }
 	public void scriptonfun()
 	{
 		if (ScriptOff)
@@ -301,18 +299,18 @@ public class GameManager : MonoBehaviour
 					
 					if (!ScriptOff)
 					{
-						ScriptOff = true;
+						//ScriptOff = true;
 						MovingSeq(row);
-						rownumadded = row;
+						//rownumadded = row;
 						
 					}
-					else
+					/*else
 					{
 						if(rownumadded != row)
 						{
 							MovingSeq(row);
 						}
-					}
+					}*/
 					wordCompleted[row] = true;
 					wordsMade++;
 					//print("row number" + row);
@@ -324,7 +322,7 @@ public class GameManager : MonoBehaviour
 			{
 				if (!removing)
 				{
-					removing = true;
+					//removing = true;
 					RearangeValues(row);
 					print("Removing one");
 				}
@@ -342,15 +340,18 @@ public class GameManager : MonoBehaviour
 			UI.restartButton.interactable = false;
 			UI.hintButton.interactable = false;
 			//DestroyBlocks();
-			DOVirtual.DelayedCall(.5f, () =>
+			DOVirtual.DelayedCall(.75f, () =>
 			{
 				UI.WinPanelActive();
                 BlockSeqCall();
                 //Debug.Log("LevelComplete");
             });
 		}
-	}
+    }
 
+    public DOTween vardo;
+    private int rownumadded;
+    //private int rowNumberDeleted;
     public void BlockSeqCall()
     {
         ///// FOr All rows moving at a time
@@ -358,8 +359,7 @@ public class GameManager : MonoBehaviour
         {
             AllBlocksColoredAtaTimeFun(i);
         }
-		
-        ///for single row moving at a time
+        //for single row moving at a time
         //BlocksColorRowByRowFun();
     }
     public void AllBlocksColoredAtaTimeFun(int row,int columCount = 0)
@@ -383,10 +383,10 @@ public class GameManager : MonoBehaviour
             }
             columCount++;
         });
-        seq.AppendInterval(0.09f);
+        seq.AppendInterval(0.13f);
         seq.SetLoops(colInGrid);
     }
-	private int rownumadded;
+	
 
 	public void ResetScreen()
 	{
@@ -419,7 +419,7 @@ public class GameManager : MonoBehaviour
 				for (int j = 0; j < count; j++)
 				{
 					var obj = cube;
-					obj.GetComponentsInChildren<TextMeshPro>()[j].DOFade(217/255f, 2f);
+					obj.GetComponentsInChildren<TextMeshPro>()[j].DOFade(217f/255f, 2f);
 					
 					obj.GetComponentsInChildren<HighlightTextScript>()[j].isVisible = true;
 				}
