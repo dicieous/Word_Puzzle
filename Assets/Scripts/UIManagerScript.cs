@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using Coffee.UIExtensions;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
+
+
+
+// [System.Serializable]
+// public class HintWords { public List<int> wordNoToShow; }
+
 
 public class UIManagerScript : MonoBehaviour
 {
@@ -29,8 +33,12 @@ public class UIManagerScript : MonoBehaviour
 	public List<Collider> gameobject1, gameobject2, gameobject3;
 	public List<Vector2> targetPos;
 	public GameObject tutorialtext;
-	
-	[Space(10)]
+
+    // [Space(10)] [Header("Hint Stuff")]
+    // public List<GameObject> hintsWordList; 
+    // public List<HintWords> hintWordsToShow;
+    
+    [Space(10)]
 	public GameObject targetCongratulationImage;
 	public List<Sprite> congratulationsImages;
 	private int countnumhelp;
@@ -63,14 +71,14 @@ public class UIManagerScript : MonoBehaviour
             if(tutorialtext)
                 tutorialtext.SetActive(true);
 			//HelpHand();
-			for (int i = 0; i < gameobject2.Count; i++)
-			{
-				gameobject2[i].enabled = false;
-			}
-			for (int i = 0; i < gameobject3.Count; i++)
-			{
-				gameobject3[i].enabled = false;
-			}
+			foreach (var t in gameobject2)
+            {
+                t.enabled = false;
+            }
+			foreach (var t in gameobject3)
+            {
+                t.enabled = false;
+            }
 		}
 		
 	}
@@ -238,3 +246,4 @@ public class UIManagerScript : MonoBehaviour
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 	}
 }
+

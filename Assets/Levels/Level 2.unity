@@ -2531,11 +2531,12 @@ MonoBehaviour:
   - ROW
   rowColor: []
   wordList: []
+  ScriptOff: 0
   rowsInGrid: 3
   colInGrid: 3
   rowfilled: 0
   fXRowWords: []
-  grabwords: 0
+  downCheck: 0
   Cube_Groups:
   - {fileID: 2072267425}
   - {fileID: 749803677}
@@ -2548,11 +2549,8 @@ MonoBehaviour:
   starFX: {fileID: 4703598324225116034, guid: cf6696c35ed2218498ac4f5624ae2a23, type: 3}
   complementPrefab: {fileID: 7116642006971059512, guid: 1aae8e157f13b7347accb9d2c8564567, type: 3}
   instPos: {fileID: 2076477979}
-  yMaxLimit: 2.4
-  xMinLimit: -0.1
-  yMinLimit: -0.1
-  xMaxLimit: 2.4
   levelCompleted: 0
+  removing: 0
 --- !u!4 &1870371619
 Transform:
   m_ObjectHideFlags: 0

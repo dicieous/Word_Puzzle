@@ -60,7 +60,7 @@ public class CubesGroupScript : MonoBehaviour
 			if (GameManager.Instance.levelCompleted || GameManager.Instance.ScriptOff) return;
 			
 			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
-		
+
 			var position1 = transform.position;
 			position1 = MouseWorldPosition() + _offset;
 			position1 = new Vector3(position1.x, position1.y, -3.5f);

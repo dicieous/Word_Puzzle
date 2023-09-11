@@ -2903,8 +2903,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9182287840638076848, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -282
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9912,7 +9912,6 @@ MonoBehaviour:
   colInGrid: 6
   rowfilled: 0
   fXRowWords: []
-  grabwords: 0
   downCheck: 0
   Cube_Groups:
   - {fileID: 173289814}
@@ -9932,10 +9931,6 @@ MonoBehaviour:
   starFX: {fileID: 100018, guid: a40b64bf23366dc42a892af2c6ff6140, type: 3}
   complementPrefab: {fileID: 7116642006971059512, guid: 1aae8e157f13b7347accb9d2c8564567, type: 3}
   instPos: {fileID: 262508563}
-  yMaxLimit: 6.2
-  xMinLimit: -2.6
-  yMinLimit: -1.2
-  xMaxLimit: 4.5
   levelCompleted: 0
   removing: 0
 --- !u!4 &1870371619
