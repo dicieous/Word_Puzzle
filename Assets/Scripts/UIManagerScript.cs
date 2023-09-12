@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using Coffee.UIExtensions;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
+
+
+
+// [System.Serializable]
+// public class HintWords { public List<int> wordNoToShow; }
+
 
 public class UIManagerScript : MonoBehaviour
 {
@@ -29,8 +33,12 @@ public class UIManagerScript : MonoBehaviour
 	public List<Collider> gameobject1, gameobject2, gameobject3;
 	public List<Vector2> targetPos;
 	public GameObject tutorialtext;
-	
-	[Space(10)]
+
+    // [Space(10)] [Header("Hint Stuff")]
+    // public List<GameObject> hintsWordList; 
+    // public List<HintWords> hintWordsToShow;
+    
+    [Space(10)]
 	public GameObject targetCongratulationImage;
 	public List<Sprite> congratulationsImages;
 	private int countnumhelp;
@@ -63,14 +71,14 @@ public class UIManagerScript : MonoBehaviour
             if(tutorialtext)
                 tutorialtext.SetActive(true);
 			//HelpHand();
-			for (int i = 0; i < gameobject2.Count; i++)
-			{
-				gameobject2[i].enabled = false;
-			}
-			for (int i = 0; i < gameobject3.Count; i++)
-			{
-				gameobject3[i].enabled = false;
-			}
+			foreach (var t in gameobject2)
+            {
+                t.enabled = false;
+            }
+			foreach (var t in gameobject3)
+            {
+                t.enabled = false;
+            }
 		}
 		
 	}
@@ -145,11 +153,11 @@ public class UIManagerScript : MonoBehaviour
 		for (int i = 0; i < diamondParticlesRect.Count; i++)
 		{
 			var i1 = i;
-			diamondParticlesRect[i].DOMove(diamondIcon.position, 0.5f).OnComplete(() =>
+			diamondParticlesRect[i].DOMove(diamondIcon.position, 0.8f).OnComplete(() =>
 			{
 				diamondParticlesRect[i1].gameObject.SetActive(false);
 			});
-			yield return new WaitForSeconds(0.03f);
+			yield return new WaitForSeconds(0.04f);
 		}
 
 		//diamondNumOnWinPanel.text = GameController.instance.GetTotalCoin().ToString();
@@ -165,10 +173,10 @@ public class UIManagerScript : MonoBehaviour
 		//if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
 		DOVirtual.DelayedCall(2f, () =>
 		{
-			CoinManager.instance.CoinsIncrease(40);
+			CoinManager.instance.CoinsIncrease(30);
 		});
 		
-		DOVirtual.DelayedCall(3,()=>
+		DOVirtual.DelayedCall(3.25f,()=>
 		{
 			targetCongratulationImage.GetComponent<Image>().sprite =
 				congratulationsImages[Random.Range(0, congratulationsImages.Count)];
@@ -209,7 +217,7 @@ public class UIManagerScript : MonoBehaviour
 
 	public void NextMoveFun()
 	{
-		//DOTween.KillAll();
+        
         if(GAScript.instance) GAScript.instance.LevelCompleted(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
         levelAttempts = 0;
 		if (PlayerPrefs.GetInt("Level") >= (SceneManager.sceneCountInBuildSettings) - 1)
@@ -238,3 +246,4 @@ public class UIManagerScript : MonoBehaviour
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 	}
 }
+

@@ -9,6 +9,8 @@ public class HolderCubeScript : MonoBehaviour
 	public int rowNo;
 	public int colNo;
 
+    [HideInInspector] public string inputext  = "*";
+ 
 	[Space(10)]
 
 	public bool isFilled = false;
@@ -46,6 +48,7 @@ public class HolderCubeScript : MonoBehaviour
 				{
 					//print("One DomeBAhv");
 					var value = other.gameObject;
+                    inputext = other.gameObject.GetComponentInChildren<TextMeshPro>().text;
 					GameManager.Instance.AddWords(rowNo - 1, colNo - 1, value);
 					isFilled = true;
 					staying = false;
@@ -63,6 +66,7 @@ public class HolderCubeScript : MonoBehaviour
         if (other.gameObject.CompareTag("Player_Cube") && once)
 		{
 			isFilled = false;
+            inputext = "*";
 			once = false;
 			if (staying) staying = false;
 			GameManager.Instance.RemoveWords(rowNo-1,colNo-1);

@@ -12,7 +12,7 @@ public class FloatingTextScript : MonoBehaviour
 	[SerializeField]
 	private Vector3 scale;
 	
-	private float yMoveValue = 2.3f;
+	//private float yMoveValue = 2.3f;
 	
 	[SerializeField]
 	private List<string> complementWords;

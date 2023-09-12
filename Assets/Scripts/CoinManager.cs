@@ -14,6 +14,8 @@ public class CoinManager : MonoBehaviour
     public TextMeshProUGUI coinCountText;
     
     public List<Color> colorData;
+    
+    public Color singleColor;
     //public List<Color> colorsAdded;
 	private void Awake()
 	{
@@ -30,6 +32,11 @@ public class CoinManager : MonoBehaviour
             {
                 gm.rowColor.Add(colorData[i]);
             }
+        }
+
+        if (GameManager.Instance.levelTypeChanged)
+        {
+            singleColor = colorData[Random.Range(0, colorData.Count)];
         }
         coinCountText.text = GetCoinsCount().ToString();
         if (GetCoinsCount() >= 20)
