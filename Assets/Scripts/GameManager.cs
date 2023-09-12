@@ -220,7 +220,7 @@ public class GameManager : MonoBehaviour
 							wordList[row].wordsDataLists.Add(letterCubeWord[row][columCount].gameObject);
 						}
 						//print(columCount);
-						letterCubeWord[row][columCount].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+						/*letterCubeWord[row][columCount].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
 							.color = rowColor[row];
 						letterCubeWord[row][columCount].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
 							.color = rowColor[row];
@@ -229,7 +229,7 @@ public class GameManager : MonoBehaviour
 							.SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
 						letterCubeWord[row][columCount].transform.GetChild(1).transform
 							.DOScale(new Vector3(20f, 30f, 15f), 0.1f)
-							.SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+							.SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);*/
 						if (!ScriptOff)
 						{
 							ScriptOff = true;
@@ -243,7 +243,7 @@ public class GameManager : MonoBehaviour
 
 					columCount++;
 				});
-				seq.AppendInterval(0.09f);
+				seq.AppendInterval(0.05f);
 				seq.SetLoops(colInGrid + 1);
 			}
 		});
@@ -344,12 +344,106 @@ public class GameManager : MonoBehaviour
 			//DestroyBlocks();
 			DOVirtual.DelayedCall(.5f, () =>
 			{
-				UI.WinPanelActive();
+				BlockSeqCall();
+				//UI.WinPanelActive();
 				//Debug.Log("LevelComplete");
 			});
 		}
 	}
 
+	public void BlockSeqCall()
+	{
+		///// FOr All rows moving at a time
+		/*for (int i = 0; i < rowsInGrid; i++)
+		{
+			AllBlocksColoredAtaTimeFun(i);
+		}*/
+		
+		///for single row moving at a time
+		BlocksColorRowByRowFun();
+	}
+	public void AllBlocksColoredAtaTimeFun(int row,int columCount = 0)
+	{
+		var seq = DOTween.Sequence();
+		seq.AppendCallback(() =>
+		{
+			if (columCount < colInGrid)
+			{
+				//print(columCount);
+				letterCubeWord[row][columCount].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+					.color = rowColor[row];
+				letterCubeWord[row][columCount].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+					.color = rowColor[row];
+				letterCubeWord[row][columCount].transform.GetChild(0).transform
+					.DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
+					.SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+				letterCubeWord[row][columCount].transform.GetChild(1).transform
+					.DOScale(new Vector3(20f, 30f, 15f), 0.1f)
+					.SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+			}
+
+			if (columCount >= colInGrid)
+			{
+				//scriptonfun();
+				UI.WinPanelActive();
+			}
+
+			columCount++;
+		});
+		seq.AppendInterval(0.09f);
+		seq.SetLoops(colInGrid + 1);
+	}
+
+	public void BlocksColorRowByRowFun()
+	{
+		for (int row = 0; row < rowsInGrid; row++)
+		{
+			for (int col = 0; col < colInGrid; col++)
+			{
+				mergeColorCubes.Add(letterCubeWord[row][col]);
+			}
+		}
+		DOVirtual.DelayedCall(0.5f, () =>
+		{
+			Time.timeScale = 2f;
+			BlocksColorRowByRowSeq();
+		});
+	}
+
+	public List<GameObject> mergeColorCubes;
+	private int mergeColorNumber;
+	public void BlocksColorRowByRowSeq()
+	{
+		var seq = DOTween.Sequence();
+		seq.AppendCallback(() =>
+		{
+			if (mergeColorNumber < mergeColorCubes.Count)
+			{
+				//mergeColorCubes[mergeColorNumber].AddComponent<Rigidbody>();
+				mergeColorCubes[mergeColorNumber].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+					.color = rowColor[mergeColorNumber];
+				mergeColorCubes[mergeColorNumber].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+					.color = rowColor[mergeColorNumber];
+				mergeColorCubes[mergeColorNumber].transform.GetChild(0).transform
+					.DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
+					.SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+				mergeColorCubes[mergeColorNumber].transform.GetChild(1).transform
+					.DOScale(new Vector3(20f, 30f, 15f), 0.1f)
+					.SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+				mergeColorNumber++;
+			}
+			else
+			{
+				DOVirtual.DelayedCall(1.25f, () =>
+				{
+					UI.WinPanelActive();
+				});
+
+			}
+		});
+		seq.AppendInterval(0.1f);
+		seq.SetLoops(mergeColorCubes.Count+1);
+	}
 	private int rownumadded;
 
 	public void ResetScreen()
