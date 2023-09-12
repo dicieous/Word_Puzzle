@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -209,7 +210,10 @@ public class UIManagerScript : MonoBehaviour
 
 	public void NextSceneLoader()
 	{
-		GameManager.Instance.DestroyBlocks();
+        if (!GameManager.Instance.levelTypeChanged)
+        {
+            GameManager.Instance.DestroyBlocks();
+        }
 		nextButton.interactable = false;
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");

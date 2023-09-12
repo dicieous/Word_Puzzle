@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -34,9 +35,115 @@ public class CubesGroupScript : MonoBehaviour
 			//Debug.Log("Initial Position get " + initialPos[i]);
 		}
 		
-		
+		if(GameManager.Instance.levelTypeChanged)
+        {
+            transform.GetChild(0).GetComponent<PlayerCubeScript>().anim = true;
+        }
 	}
 
+    public void AnimSeq()
+    {
+        var num = transform.GetComponents<Collider>().Length;
+        for (int i = 0; i < num; i++)
+        {
+            transform.GetComponents<Collider>()[i].enabled = false;
+        }
+        CrctAnimSeqCall();
+    }
+
+    private int countnum;
+    private void CrctAnimSeqCall()
+    {
+        countnum = 0;
+        var seq = DOTween.Sequence();
+        seq.AppendCallback(() =>
+        {
+            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+                .color = CoinManager.instance.singleColor; 
+            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+                .color = CoinManager.instance.singleColor;
+            childObjects[countnum].transform.GetChild(0).transform
+                .DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
+                .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+            childObjects[countnum].transform.GetChild(1).transform
+                .DOScale(new Vector3(20f, 30f, 15f), 0.1f)
+                .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+            countnum++;
+        });
+        seq.AppendInterval(0.15f);
+        seq.SetLoops(childObjects.Count);
+    }
+    
+    public void WrongAnimSeq()
+    {
+        countnum = 0;
+        var num = transform.GetComponents<Collider>().Length;
+        for (int i = 0; i < num; i++)
+        {
+            transform.GetComponents<Collider>()[i].enabled = false;
+        }
+        DOVirtual.DelayedCall(0.15f, () =>
+        {
+            WrongBackAnimSeq();
+        });
+        var seq = DOTween.Sequence();
+        seq.AppendCallback(() =>
+        {
+            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+                .color = CoinManager.instance.redColor; 
+            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+                .color = CoinManager.instance.redColor;
+            childObjects[countnum].transform.GetChild(0).transform
+                .DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
+                .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+            childObjects[countnum].transform.GetChild(1).transform
+                .DOScale(new Vector3(20f, 30f, 15f), 0.1f)
+                .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+            countnum++;
+        });
+        seq.AppendInterval(0.05f);
+        seq.SetLoops(childObjects.Count);
+        /*for (int i = 0; i < childObjects.Count; i++)
+        {
+            childObjects[i].transform.GetChild(1).GetComponent<MeshRenderer>().material.color = Color.red;
+        }
+        DOVirtual.DelayedCall(0.15f, () =>
+        {
+            for (int i = 0; i < childObjects.Count; i++)
+            {
+                childObjects[i].transform.GetChild(1).GetComponent<MeshRenderer>().material.color = Color.white;
+                //childObjects[i].GetComponent<MeshRenderer>().material.
+            }
+        });*/
+    }
+
+    private int countBackNum;
+    public void WrongBackAnimSeq()
+    {
+        countBackNum = 0;
+        var seq = DOTween.Sequence();
+        seq.AppendCallback(() =>
+        {
+            if (countBackNum == childObjects.Count)
+            {
+                var num = transform.GetComponents<Collider>().Length;
+                for (int i = 0; i < num; i++)
+                {
+                    transform.GetComponents<Collider>()[i].enabled = true;
+                }
+            }
+            else
+            {
+                childObjects[countBackNum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+                    .color = Color.white; 
+                childObjects[countBackNum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+                    .color = Color.white;
+            }
+            countBackNum++;
+        });
+        seq.AppendInterval(0.075f);
+        seq.SetLoops(childObjects.Count + 1);
+    }
 	private bool _once;
 	private void OnMouseDown()
 	{

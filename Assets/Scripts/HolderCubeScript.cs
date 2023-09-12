@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -9,14 +10,20 @@ public class HolderCubeScript : MonoBehaviour
 	public int rowNo;
 	public int colNo;
 
+    public int checkNumberRef;
+    
     [HideInInspector] public string inputext  = "*";
  
 	[Space(10)]
 
 	public bool isFilled = false;
 
+    private void Start()
+    {
+        checkNumberRef = int.Parse(transform.GetChild(1).GetComponent<TextMeshPro>().text) ;
+    }
 
-	/*private void Update()
+    /*private void Update()
 	{
 		Debug.Log("GrabWord value "+ GameManager.Instance.grabwords);
 	}*/
@@ -41,19 +48,50 @@ public class HolderCubeScript : MonoBehaviour
 		if (other.gameObject.CompareTag("Player_Cube") && !once)
 		{
 			staying = true;
+            if (other.gameObject.CompareTag("Player_Cube") && staying)
+            {
+                //print("One DomeBAhv");
+                if (other.gameObject.GetComponent<PlayerCubeScript>() && checkNumberRef != 0 && GameManager.Instance.levelTypeChanged)
+                {
+                    var playerscript = other.gameObject.GetComponent<PlayerCubeScript>();
+                    if (playerscript.checknumber == checkNumberRef)
+                    {
+                        if (playerscript.anim && playerscript.transform.parent.GetComponent<CubesGroupScript>())
+                        {
+                            playerscript.transform.parent.GetComponent<CubesGroupScript>().AnimSeq();
+                        }
+                        var value = other.gameObject;
+                        inputext = value.GetComponentInChildren<TextMeshPro>().text;
+                        //GameManager.Instance.AddWords(rowNo - 1, colNo - 1, value);
+                        isFilled = true;
+                        staying = false;
+                    }
+                    else
+                    {
+                        print("One");
+                        if (playerscript.anim && playerscript.transform.parent.GetComponent<CubesGroupScript>())
+                        {
+                            playerscript.transform.parent.GetComponent<CubesGroupScript>().WrongAnimSeq();
+                        }
+                        isFilled = true;
+                        staying = false;
+                    }
+                }
+                else
+                {
+                    var value = other.gameObject;
+                    inputext = value.GetComponentInChildren<TextMeshPro>().text;
+                    GameManager.Instance.AddWords(rowNo - 1, colNo - 1, value);
+                    isFilled = true;
+                    staying = false;
+                }
+
 			//print("OnceCheck ::::::::::::::::");
-			DOVirtual.DelayedCall(0.25f, () =>
+			/*DOVirtual.DelayedCall(0.25f, () =>
 			{
-				if (other.gameObject.CompareTag("Player_Cube") && staying)
-				{
-					//print("One DomeBAhv");
-					var value = other.gameObject;
-                    inputext = other.gameObject.GetComponentInChildren<TextMeshPro>().text;
-					GameManager.Instance.AddWords(rowNo - 1, colNo - 1, value);
-					isFilled = true;
-					staying = false;
-				}
-			});
+				
+				}*/
+			}
 			once = true;
 			//print("OnceCheck");
 		}

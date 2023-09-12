@@ -5,6 +5,9 @@ public class PlayerCubeScript : MonoBehaviour
 {
 	public bool isPlaced;
 
+    public int checknumber;
+    public bool anim;
+    
 	private void Start()
 	{
 		
@@ -12,7 +15,7 @@ public class PlayerCubeScript : MonoBehaviour
 			transform.GetChild(0).GetComponent<TextMeshPro>().text;
 		
 	}
-
+    
 	private void Update()
 	{
 		// var rayOrigin = transform.position;
