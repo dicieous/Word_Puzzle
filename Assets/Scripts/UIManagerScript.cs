@@ -214,6 +214,10 @@ public class UIManagerScript : MonoBehaviour
         {
             GameManager.Instance.DestroyBlocks();
         }
+        else
+        {
+            NextMoveFun();
+        }
 		nextButton.interactable = false;
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
