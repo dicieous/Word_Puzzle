@@ -86,11 +86,11 @@ public class HolderCubeScript : MonoBehaviour
                     staying = false;
                 }
 
-			//print("OnceCheck ::::::::::::::::");
-			/*DOVirtual.DelayedCall(0.25f, () =>
-			{
-				
-				}*/
+                //print("OnceCheck ::::::::::::::::");
+                /*DOVirtual.DelayedCall(0.25f, () =>
+                {
+
+                    }*/
 			}
 			once = true;
 			//print("OnceCheck");

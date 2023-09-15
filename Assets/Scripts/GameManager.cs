@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,6 +38,9 @@ public class GameManager : MonoBehaviour
 
 	public List<GameObject> Cube_Groups;
 
+    public event EventHandler OnPartComplete;
+    
+    
 	[SerializeField]
 	private List<GameObject> _allCubeObjects;
 	[Space(10)]
@@ -50,6 +55,8 @@ public class GameManager : MonoBehaviour
 
 	private bool canInstantiate = true;
 
+    [SerializeField] private List<int> wordsAfterWhichToMoveCam;
+    
 	private float instTime = 1f;
 
 	[Space(10)]
@@ -402,6 +409,13 @@ public class GameManager : MonoBehaviour
                 s.correctWordMade = true;
                 Debug.Log("Correct Word");
                 Debug.Log("Words Made "+wordsMade);
+                foreach (var wordNo in wordsAfterWhichToMoveCam)
+                {
+                    if (wordNo == wordsMade)
+                    {
+                        OnPartComplete?.Invoke(this,EventArgs.Empty);
+                    }
+                }
                 //Do anything after making the word
             }
             else if(s.correctWordMade && !stickingCubes[i].IsAllPlacesFullCheck())
@@ -482,31 +496,31 @@ public class GameManager : MonoBehaviour
         foreach (var cube in hintCubesHolder)
         {
             int count = cube.GetComponentsInChildren<TextMeshPro>().Length;
-            if (count != 0)
+            if (count == 0) continue;
+            if (!IsInstantiated(cube, count))
             {
-                if (!IsInstantiated(cube, count))
+                Instantiate(starFX, cube.transform.position, Quaternion.identity);
+                if (PlayerPrefs.GetInt("Level", 1) > 1)
                 {
-                    Instantiate(starFX, cube.transform.position, Quaternion.identity);
-                    if (PlayerPrefs.GetInt("Level", 1) > 1)
-                    {
-                        CoinManager.instance.HintReduce();
-                    }
-                    if (PlayerPrefs.GetInt("Level", 1) == 1) UIManagerScript.Instance.HelpHand();
-//					print("instantiated");
+                    CoinManager.instance.HintReduce();
                 }
-
-                for (int j = 0; j < count; j++)
-                {
-                    var obj = cube;
-                    obj.GetComponentsInChildren<TextMeshPro>()[j].DOFade(217f/255f, 2f);
-					
-                    obj.GetComponentsInChildren<HighlightTextScript>()[j].isVisible = true;
-                }
-
-                break;
+                if (PlayerPrefs.GetInt("Level", 1) == 1) UIManagerScript.Instance.HelpHand();
+                //print("instantiated");
             }
+
+            for (int j = 0; j < count; j++)
+            {
+                var obj = cube;
+                obj.GetComponentsInChildren<TextMeshPro>()[j].DOFade(217f/255f, 2f);
+					
+                obj.GetComponentsInChildren<HighlightTextScript>()[j].isVisible = true;
+            }
+
+            break;
         }
     }
+
+  
     
 //     public void ShowTheText()
 //     {
@@ -576,7 +590,7 @@ public class GameManager : MonoBehaviour
     }
 
     private int blocknum;
-    public void BlockSeq()
+    private void BlockSeq()
     {
         var seq = DOTween.Sequence();
         seq.AppendCallback(() =>
