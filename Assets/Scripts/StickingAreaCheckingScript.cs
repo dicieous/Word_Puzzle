@@ -7,13 +7,7 @@ public class StickingAreaCheckingScript : MonoBehaviour
     
     public string answerString;
     
-    
-    
     private HolderCubeScript[] holderCubeScripts;
-    
-    
-    
-    
 
     private void Start()
     {
@@ -36,6 +30,7 @@ public class StickingAreaCheckingScript : MonoBehaviour
         {
             var madeWord = holderCubeScripts.Aggregate("", (current, hScript) => current + hScript.inputext);
 
+            Debug.Log(madeWord);
             if (madeWord == answerString)
             {
                 correctWordMade = true;
