@@ -16,11 +16,14 @@ public class CameraMotionScript : MonoBehaviour
     [SerializeField] private List<float> orthoSize;
 
     [SerializeField] private float moveDuration;
+    
     [SerializeField] private List<StickingAreaToShow> stickingAreaCubes;
 
     [SerializeField] private List<GameObject> letterGroups;
 
     private int cameraMoved;
+    
+    private bool levelCompleted = true;
 
     public Color deactivatedColor;
     public Color activatedColor;
@@ -69,26 +72,36 @@ public class CameraMotionScript : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.levelCompleted)
+        if (GameManager.Instance.levelCompleted && levelCompleted)
         {
             GameManager.Instance.OnPartComplete -= InstanceOnOnPartComplete;
+            levelCompleted = false;
+            MoveCamera(null);
         }
     }
 
 
-    void MoveCamera(Action callAction)
+    private void MoveCamera(Action callAction)
     {
-        Debug.Log($"CameraMoved {cameraMoved} times");
+        //Debug.Log($"CameraMoved {cameraMoved} times");
         mainCamera.transform.DOMove(camPos[cameraMoved], moveDuration).SetEase(Ease.Linear);
-        mainCamera.DOOrthoSize(orthoSize[cameraMoved], moveDuration).SetEase(Ease.Linear).OnComplete(callAction.Invoke);
-        Debug.Log("Camera Moved");
+        if (!levelCompleted)
+        {
+            mainCamera.DOOrthoSize(orthoSize[cameraMoved], moveDuration).SetEase(Ease.Linear);
+        }
+        else
+        {
+            mainCamera.DOOrthoSize(orthoSize[cameraMoved], moveDuration).SetEase(Ease.Linear).OnComplete(callAction.Invoke);
+        }
+        
+        //Debug.Log("Camera Moved");
        
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
     IEnumerator ActivateStickingCubes(Action callBack)
     {
-        Debug.Log("Sticking Cubes Activated");
+        //Debug.Log("Sticking Cubes Activated");
         var stickingCubeGroup = stickingAreaCubes[cameraMoved].stickingAreaCubesGroup;
         for (var index = 0; index < stickingCubeGroup.Count; index++)
         {
@@ -97,7 +110,7 @@ public class CameraMotionScript : MonoBehaviour
             for (int j = 0; j < t.transform.childCount; j++)
             {
                 var j1 = j;
-                    print("Color Changed");
+                    //print("Color Changed");
                     t.GetComponentInChildren<Collider>().enabled = true;
                     t.transform.GetChild(j1).transform.GetChild(0).GetComponent<MeshRenderer>().materials[0].color =
                         activatedColor;
@@ -111,7 +124,7 @@ public class CameraMotionScript : MonoBehaviour
 
     void ActivateLetterCubes()
     {
-        Debug.Log("Letter Cubes Activated");
+        //Debug.Log("Letter Cubes Activated");
         var t = letterGroups[cameraMoved];
         t.SetActive(true);
         var cubes = t.transform;

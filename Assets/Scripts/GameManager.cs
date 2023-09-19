@@ -399,7 +399,7 @@ public class GameManager : MonoBehaviour
             if (!s.correctWordMade && s.IsAllPlacesFullCheck() && s.CheckForAnswer())
             {
                 wordsMade++;
-                if (canInstantiate)
+                if (canInstantiate && wordsAfterWhichToMoveCam.Count <= 0)
                 {
                     Instantiate(complementPrefab, instPos.position, Quaternion.identity);
                     instTime = 1f;
