@@ -31,7 +31,7 @@ public class HintParent : MonoBehaviour
 //			print("Once");
 		}
 
-		if (count == crctString.Count-1 && !doneObject)
+		if (count == crctString.Count && !doneObject)
 		{
 			for (int i = 0; i < crctString.Count; i++)
 			{
@@ -49,7 +49,7 @@ public class HintParent : MonoBehaviour
 		{
 			if (crctString.Contains(takenString[i]))
 			{
-				count = i;
+				count = i+1;
 				//print(count);
 			}
 			else
