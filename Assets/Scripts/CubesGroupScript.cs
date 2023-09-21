@@ -164,7 +164,7 @@ public class CubesGroupScript : MonoBehaviour
 	{
 		if (!GameManager.Instance.downCheck)
 		{
-			if (GameManager.Instance.levelCompleted || GameManager.Instance.ScriptOff) return;
+			if (GameManager.Instance.levelCompleted || GameManager.Instance.scriptOff) return;
 			
 			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
 

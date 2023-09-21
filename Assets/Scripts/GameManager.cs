@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public List<StickingAreaCheckingScript> stickingCubes;
     
     [HideInInspector]
-	public bool ScriptOff;
+	public bool scriptOff;
 	[Space(10)]
 	public int rowsInGrid;
 	public int colInGrid;
@@ -271,9 +271,9 @@ public class GameManager : MonoBehaviour
                     letterCubeWord[row][columCount].transform.GetChild(1).transform
                         .DOScale(new Vector3(20f, 30f, 15f), 0.1f)
                         .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);#1#
-                    /*if (!ScriptOff)
+                    /*if (!scriptOff)
                     {
-                        ScriptOff = true;
+                        scriptOff = true;
                     }#1#
                 }
                 /*if (columCount >= colInGrid)
@@ -289,12 +289,12 @@ public class GameManager : MonoBehaviour
     
     public void scriptonfun()
     {
-        if (ScriptOff)
+        if (scriptOff)
         {
             DOVirtual.DelayedCall(.7f, () =>
             {
                 //print("FunctionCall");
-                ScriptOff = false;
+                scriptOff = false;
             });
         }
     }
@@ -338,9 +338,9 @@ public class GameManager : MonoBehaviour
                         canInstantiate = false;
                     }
 					
-                    if (!ScriptOff)
+                    if (!scriptOff)
                     {
-                        //ScriptOff = true;
+                        //scriptOff = true;
                         MovingSeq(row);
                         //rownumadded = row;
 						
