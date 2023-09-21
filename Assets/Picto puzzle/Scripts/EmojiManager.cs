@@ -225,7 +225,7 @@ public class EmojiManager : MonoBehaviour
 
     public void NextButton()
     {
-        
+        UIManagerScript.Instance.NextMoveFun();
     }
 
     public void RetryButton()
@@ -267,4 +267,5 @@ public class EmojiManager : MonoBehaviour
     
     public  int GetListNumbers() => PlayerPrefs.GetInt("Lists Number", 0);
     public  void SetListNumber(int val) => PlayerPrefs.SetInt("Lists Number", val);
+    
 }

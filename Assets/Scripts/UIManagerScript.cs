@@ -54,8 +54,16 @@ public class UIManagerScript : MonoBehaviour
 
 	private void Start()
 	{
-		levelNo.text = "LEVEL " + PlayerPrefs.GetInt("Level", 1);
-        
+		
+		var s = GetSpecialLevelNumber().ToString()[^1];
+		if (s == '0')
+		{
+			levelNo.text = "LEVEL " + GetSpecialLevelNumber()+"(Boss Level)";
+		}
+		else
+		{
+			levelNo.text = "LEVEL " + GetSpecialLevelNumber();
+		}
         if(GAScript.instance) GAScript.instance.LevelStart(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
 		
 		cm = CoinManager.instance;
@@ -187,15 +195,18 @@ public class UIManagerScript : MonoBehaviour
 	
 	private void Update()
 	{
-		if (cm.GetHintCount() == 0 && hintButton.interactable)
+		var s = GetSpecialLevelNumber().ToString()[^1];
+		if (s != '0')
 		{
-			hintButton.interactable = false;
+			if (cm.GetHintCount() == 0 && hintButton.interactable)
+			{
+				hintButton.interactable = false;
+			}
+			else if (cm.GetHintCount() != 0 && !hintButton.interactable)
+			{
+				hintButton.interactable = true;
+			}
 		}
-		else if (cm.GetHintCount() != 0 && !hintButton.interactable)
-		{
-			hintButton.interactable = true;
-		}
-		
 	}
 
 	public void OnHintButtonClick()
@@ -222,25 +233,42 @@ public class UIManagerScript : MonoBehaviour
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 	}
-
+	
 	public void NextMoveFun()
 	{
-        
-        if(GAScript.instance) GAScript.instance.LevelCompleted(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
-        levelAttempts = 0;
-		if (PlayerPrefs.GetInt("Level") >= (SceneManager.sceneCountInBuildSettings) - 1)
+		SetSpecialLevelNumber(GetSpecialLevelNumber() + 1);
+		
+		var s = GetSpecialLevelNumber().ToString()[^1];
+		if (s == '0')
 		{
-			PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
-			var i = Random.Range(2, SceneManager.sceneCountInBuildSettings);
-			PlayerPrefs.SetInt("ThisLevel", i);
-			SceneManager.LoadScene(i);
+			SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
+			
+			PlayerPrefs.SetInt("Special",1);
+			
+			//PlayerPrefs.SetInt("ThisLevel", SceneManager.sceneCountInBuildSettings - 1);
 		}
 		else
 		{
-			PlayerPrefs.SetInt("Level", SceneManager.GetActiveScene().buildIndex + 1);
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+			levelAttempts = 0;
+			PlayerPrefs.SetInt("Special",0);
+			if (PlayerPrefs.GetInt("Level") >= (SceneManager.sceneCountInBuildSettings) - 2)
+			{
+				PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
+				var i = Random.Range(2, SceneManager.sceneCountInBuildSettings-2);
+				PlayerPrefs.SetInt("ThisLevel", i);
+				SceneManager.LoadScene(i);
+			}
+			else
+			{
+				/*PlayerPrefs.SetInt("Level", SceneManager.GetActiveScene().buildIndex + 1);
+				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);*/
+				PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
+				SceneManager.LoadScene(PlayerPrefs.GetInt("Level", 1));
+				print("one"+PlayerPrefs.GetInt("Level", 1));
+			}
 		}
-		
+        //if(GAScript.instance) GAScript.instance.LevelCompleted(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
+
 	}
 	public void ResetScreenOnClick()
 	{
@@ -253,5 +281,8 @@ public class UIManagerScript : MonoBehaviour
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 	}
+	
+	public int GetSpecialLevelNumber() => PlayerPrefs.GetInt("SpecialLevelNumber", 1);
+	public void SetSpecialLevelNumber(int levelNum) => PlayerPrefs.SetInt("SpecialLevelNumber", levelNum);
 }
 

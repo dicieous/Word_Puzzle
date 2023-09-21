@@ -172,6 +172,12 @@ public class GameManager : MonoBehaviour
 		{
 			canInstantiate = true;
 		}
+
+		if (Input.GetKeyDown(KeyCode.A))
+		{
+			print("Nextfuncall");
+			UI.NextMoveFun();
+		}
 	}
 
 

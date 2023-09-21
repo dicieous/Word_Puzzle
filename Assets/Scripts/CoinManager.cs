@@ -26,33 +26,38 @@ public class CoinManager : MonoBehaviour
 
 	void Start()
     {
-        gm = GameManager.Instance;
-        if (gm.rowsInGrid != 0)
+        var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
+        if (s != '0')
         {
-            colorData.Sort((a, b) => 1 - 2 * Random.Range(0, colorData.Count));
-            for (int i = 0; i < gm.rowsInGrid; i++)
+            gm = GameManager.Instance;
+            if (gm.rowsInGrid != 0)
             {
-                gm.rowColor.Add(colorData[i]);
+                colorData.Sort((a, b) => 1 - 2 * Random.Range(0, colorData.Count));
+                for (int i = 0; i < gm.rowsInGrid; i++)
+                {
+                    gm.rowColor.Add(colorData[i]);
+                }
+            }
+
+            if (GameManager.Instance.levelTypeChanged)
+            {
+                //singleColor = colorData[Random.Range(0, colorData.Count)];
+                singleColor = greenColor;
+            }
+            coinCountText.text = GetCoinsCount().ToString();
+            if (GetCoinsCount() >= 20)
+            {
+                var countNum = (int)GetCoinsCount() / 20;
+                SetHintCount(countNum);
+                hintText.text = GetHintCount().ToString();
+            }
+            else
+            {
+                SetHintCount(0);
+                hintText.text = GetHintCount().ToString();
             }
         }
-
-        if (GameManager.Instance.levelTypeChanged)
-        {
-            //singleColor = colorData[Random.Range(0, colorData.Count)];
-            singleColor = greenColor;
-        }
-        coinCountText.text = GetCoinsCount().ToString();
-        if (GetCoinsCount() >= 20)
-        {
-            var countNum = (int)GetCoinsCount() / 20;
-            SetHintCount(countNum);
-            hintText.text = GetHintCount().ToString();
-        }
-        else
-        {
-            SetHintCount(0);
-            hintText.text = GetHintCount().ToString();
-        }
+        
     }
 	
 
