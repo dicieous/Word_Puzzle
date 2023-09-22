@@ -30,8 +30,8 @@ public class UIManagerScript : MonoBehaviour
 	[Header("Levels changing")]
 	public GameObject starparticleEffect;
 
-	public Image tutorialHand, tutorialHand2, tutorialHand3;
-	public List<Collider> gameobject1, gameobject2, gameobject3;
+	public Image tutorialHand, tutorialHand2;
+    public List<Collider> gameobject1, gameobject2;
 	public List<Vector2> targetPos;
 	public GameObject tutorialtext;
 
@@ -77,14 +77,12 @@ public class UIManagerScript : MonoBehaviour
 		if ((PlayerPrefs.GetInt("Level", 1) == 1))
 		{
 			GameManager.Instance.ShowTheText();
+            hintButton.GetComponent<Image>().enabled = false;
+            hintButton.interactable = false;
             if(tutorialtext)
                 tutorialtext.SetActive(true);
 			//HelpHand();
 			foreach (var t in gameobject2)
-            {
-                t.enabled = false;
-            }
-			foreach (var t in gameobject3)
             {
                 t.enabled = false;
             }
@@ -94,16 +92,16 @@ public class UIManagerScript : MonoBehaviour
 
 	public void HelpHand()
 	{
-		if (tutorialHand || tutorialHand2 || tutorialHand3)
+		if (tutorialHand || tutorialHand2)
 		{
 			if (countnumhelp == 0)
 			{
 				tutorialHand.gameObject.SetActive(true);
-                //tutorialHand.enabled = true; 
+                tutorialHand.enabled = true; 
 				tutorialHand.rectTransform.DOAnchorPos(targetPos[0], 2f).SetEase(Ease.InOutCirc).SetLoops(-1, LoopType.Restart);
 				countnumhelp = 1;
 			}
-		
+            
 			else if (countnumhelp == 1)
 			{
 				//print("tutorial2");
@@ -111,30 +109,20 @@ public class UIManagerScript : MonoBehaviour
                 tutorialHand.enabled = false;
 				tutorialHand2.rectTransform.DOAnchorPos(targetPos[1], 2f).SetEase(Ease.InOutCirc).SetLoops(-1, LoopType.Restart);
 				countnumhelp = 2;
-				for (int i = 0; i < gameobject2.Count; i++)
+                foreach (var t in gameobject2)
+                {
+                    t.enabled = true;
+                }
+				/*for (int i = 0; i < gameobject2.Count; i++)
 				{
 					gameobject2[i].enabled = true;
 				}
 				for (int i = 0; i < gameobject1.Count; i++)
 				{
 					gameobject1[i].enabled = false;
-				}
+				}*/
 //				print(countnumhelp);
 			
-			}
-			else if(countnumhelp ==2)
-			{
-				tutorialHand3.gameObject.SetActive(true);
-                tutorialHand2.enabled = false;
-				tutorialHand3.rectTransform.DOAnchorPos(targetPos[2], 2f).SetEase(Ease.InOutCirc).SetLoops(-1, LoopType.Restart);
-				for (int i = 0; i < gameobject3.Count; i++)
-				{
-					gameobject3[i].enabled = true;
-				}
-				for (int i = 0; i < gameobject2.Count; i++)
-				{
-					gameobject2[i].enabled = false;
-				}
 			}
 		}
 		
@@ -173,9 +161,9 @@ public class UIManagerScript : MonoBehaviour
 	}
 	public void WinPanelActive()
 	{
-		if (tutorialHand3)
+		if (tutorialHand2)
         {
-            tutorialHand3.enabled = false;
+            tutorialHand2.enabled = false;
             tutorialtext.GetComponent<TextMeshProUGUI>().enabled = false;
         }
 		StartCoroutine(PlayCoinCollectionFx());

@@ -68,6 +68,10 @@ public class EmojiClick : MonoBehaviour
                 DOVirtual.DelayedCall(0.5f, () =>
                 {
                     EmojiManager.Instance.PanelAndListUpdate();
+                    if (EmojiManager.Instance.GetPanelsDone() == 3)
+                    {
+                        EmojiManager.Instance.popperBlast.Play();
+                    }
                 });
                 ///FindObjectOfType<Button>().enabled = false;
                 //UIManager.instance.WinPanel();
@@ -138,6 +142,7 @@ public class EmojiClick : MonoBehaviour
     public void SelectEmoji()
     {
         //AudioManager.instance.Play("Tap");
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         var temp = EventSystem.current.currentSelectedGameObject.GetComponent<Image>();
         temp.GetComponent<Button>().enabled = false;
         // UIManager.instance.SmokeOn();
@@ -153,6 +158,8 @@ public class EmojiClick : MonoBehaviour
             wrongImage[index].rectTransform.DOScale(Vector3.one * 1.3f, .25f).SetLoops(2, LoopType.Yoyo)
                 .SetEase(Ease.Flash);
             index++;
+            if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+            if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ResetPositionMG");
             //Vibration.Vibrate(20);
         }
 
@@ -171,6 +178,7 @@ public class EmojiClick : MonoBehaviour
                         var colorTemp = correctPos[0].GetComponent<Image>();
                         colorTemp.color = new Color(colorTemp.color.r, colorTemp.color.g, colorTemp.color.b, 1f);
                     });
+               
             }
 
             else if (temp.GetComponent<Image>().sprite == correctList[1])
@@ -186,6 +194,7 @@ public class EmojiClick : MonoBehaviour
                         var colorTemp = correctPos[1].GetComponent<Image>();
                         colorTemp.color = new Color(colorTemp.color.r, colorTemp.color.g, colorTemp.color.b, 1f);
                     });
+               
             }
             else if (temp.GetComponent<Image>().sprite == correctList[2])
             {
@@ -203,6 +212,8 @@ public class EmojiClick : MonoBehaviour
             }
 
             correctCheckList.Add(temp.gameObject);
+            if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Pop");
+            if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
             //Vibration.Vibrate(20);
         }
     }

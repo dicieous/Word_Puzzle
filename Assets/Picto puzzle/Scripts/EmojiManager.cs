@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Coffee.UIExtensions;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -43,8 +45,11 @@ public class EmojiManager : MonoBehaviour
     [Header("Win And Lose Panels")]
     public GameObject winPanel;
     public GameObject losePanel;
-    
 
+    public UIParticle popperBlast;
+
+    public TextMeshProUGUI tutorialText;
+    
     // public Button
     private void Awake()
     {
@@ -54,6 +59,7 @@ public class EmojiManager : MonoBehaviour
     private void Start()
     {
         //PanelInstanceFun(GetListNumbers());
+       
         
         if (GetListNumbers() > emojiDataScript.detailsLists.Count-1)
         {
@@ -98,7 +104,11 @@ public class EmojiManager : MonoBehaviour
         else
         {
             BarFilling();
-            winPanel.SetActive(true);
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                winPanel.SetActive(true);
+            });
+
         }
         
         ButtonsDisable();
@@ -110,6 +120,7 @@ public class EmojiManager : MonoBehaviour
         {
             panelObj = null;
         }*/
+        
         if (previousPanelObj != null)
         {
             previousPanelObj = panelObj;
@@ -126,7 +137,7 @@ public class EmojiManager : MonoBehaviour
                 StartCoroutine(previousPanelObj.GetComponent<EmojiClick>().ParentAnimDecrese());
             }
         }
-            
+        
         panelObj = Instantiate(emojiDataScript.detailsLists[panelCount].panel, emojiDataScript.detailsLists[panelCount].panel.GetComponent<RectTransform>().position, 
             emojiDataScript.detailsLists[panelCount].panel.GetComponent<RectTransform>().rotation);
         
@@ -135,7 +146,11 @@ public class EmojiManager : MonoBehaviour
         if(panelObj.GetComponent<EmojiClick>().correctList.Count > 0)
             panelObj.GetComponent<EmojiClick>().correctList.Clear();
         panelObj.transform.parent = parentObj.transform;
-        
+        if (panelObj.GetComponent<EmojiClick>().options.Count <= 2)
+        {
+            button5050.interactable = false;
+            button5050.GetComponent<Image>().enabled = false;
+        }
         
         panelObj.GetComponent<RectTransform>().SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left,0,0);
         panelObj.GetComponent<RectTransform>().SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom,0,0);
@@ -144,6 +159,15 @@ public class EmojiManager : MonoBehaviour
         panelObj.GetComponent<RectTransform>().anchorMax = new Vector2(1f, 1f);
         panelObj.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
         StartCoroutine(StartFunCall());
+        if (GetListNumbers() == 0)
+        {
+            tutorialText.gameObject.SetActive(true);
+            DOVirtual.DelayedCall(2f, () =>
+            {
+                print("Hint call");
+                FunHint();
+            });
+        }
     }
     // ReSharper disable Unity.PerformanceAnalysis
     public IEnumerator StartFunCall()
@@ -197,10 +221,13 @@ public class EmojiManager : MonoBehaviour
     public void FunShuffle()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
     }
 
     public void FunHint()
     {
+        print("Hint create");
         hintButton.interactable = false;
         for (int i = 0; i < panelObj.GetComponent<EmojiClick>().hintPos.Count; i++)
         {
@@ -211,6 +238,10 @@ public class EmojiManager : MonoBehaviour
             temp.rectTransform.DOScale(1.3f, 0.25f).SetEase(Ease.Linear)
                 .SetLoops(2, LoopType.Yoyo);
         }
+        print("Function decall");
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+        
     }
 
     public void Fun5050()
@@ -224,42 +255,50 @@ public class EmojiManager : MonoBehaviour
             panelObj.GetComponent<EmojiClick>().optionBtn.RemoveAt(i);
             panelObj.GetComponent<EmojiClick>().optionBtn[i].gameObject.SetActive(false);
         }
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
     }
 
     public void NextButton()
     {
         UIManagerScript.Instance.NextMoveFun();
-        
         SetListNumber(GetListNumbers() + 1);
         SetPanelsDone(GetPanelsDone() + 1);
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
     }
 
     public void RetryButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
     }
     public void BarFilling()
     {
         if (GetPanelsDone() == 1 && GetPanelsDone() != _previousValue)
         {
+            if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
+            //if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
             circle1.DOFillAmount(1, 0.015f);
         }
         else if (GetPanelsDone() == 2 && GetPanelsDone() != _previousValue)
         {
+            if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
             circle1.fillAmount = 1;
             bar.DOFillAmount(0.5f, 0.05f).OnComplete(() =>
             {
                 circle2.DOFillAmount(1, 0.015f);
             });
         }
-        else /*if(GetPanelsDone() == 0)*/
+        else if(GetPanelsDone() == 0)
         {
             bar.DOFillAmount(0, 0.005f);
             circle1.DOFillAmount(0, 0.005f);
             circle2.DOFillAmount(0, 0.005f);
             circle3.DOFillAmount(0, 0.005f);
         }
-        /*else
+        else
         {
             circle1.fillAmount = 1;
             circle2.fillAmount = 1;
@@ -267,7 +306,7 @@ public class EmojiManager : MonoBehaviour
             {
                 circle3.DOFillAmount(1, 0.015f);
             });
-        }*/
+        }
         _previousValue = GetPanelsDone();
     }
 
