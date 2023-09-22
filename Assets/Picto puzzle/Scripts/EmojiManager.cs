@@ -44,6 +44,7 @@ public class EmojiManager : MonoBehaviour
     public GameObject winPanel;
     public GameObject losePanel;
     
+
     // public Button
     private void Awake()
     {
@@ -77,12 +78,12 @@ public class EmojiManager : MonoBehaviour
     ///////----- panels and list updates-----------
     public void PanelAndListUpdate()
     {
-        SetListNumber(GetListNumbers() + 1);
-        SetPanelsDone(GetPanelsDone() + 1);
-        BarFilling();
-        if (GetPanelsDone() != 3)
+        if (GetPanelsDone() != 2)
         {
-            if (GetListNumbers() > emojiDataScript.detailsLists.Count-1)
+            SetListNumber(GetListNumbers() + 1);
+            SetPanelsDone(GetPanelsDone() + 1);
+            BarFilling();
+            if (GetListNumbers() > emojiDataScript.detailsLists.Count-2)
             {
                 listNumber = UnityEngine.Random.Range(0, emojiDataScript.detailsLists.Count - 1);
                 PanelInstanceFun(listNumber);
@@ -92,9 +93,11 @@ public class EmojiManager : MonoBehaviour
                 listNumber = GetListNumbers();
                 PanelInstanceFun(GetListNumbers());
             }
+            
         }
         else
         {
+            BarFilling();
             winPanel.SetActive(true);
         }
         
@@ -226,6 +229,9 @@ public class EmojiManager : MonoBehaviour
     public void NextButton()
     {
         UIManagerScript.Instance.NextMoveFun();
+        
+        SetListNumber(GetListNumbers() + 1);
+        SetPanelsDone(GetPanelsDone() + 1);
     }
 
     public void RetryButton()
@@ -234,33 +240,38 @@ public class EmojiManager : MonoBehaviour
     }
     public void BarFilling()
     {
-        if (GetPanelsDone() == 1)
+        if (GetPanelsDone() == 1 && GetPanelsDone() != _previousValue)
         {
             circle1.DOFillAmount(1, 0.015f);
         }
-        else if (GetPanelsDone() == 2)
+        else if (GetPanelsDone() == 2 && GetPanelsDone() != _previousValue)
         {
+            circle1.fillAmount = 1;
             bar.DOFillAmount(0.5f, 0.05f).OnComplete(() =>
             {
                 circle2.DOFillAmount(1, 0.015f);
             });
         }
-        else if (GetPanelsDone() == 3)
-        {
-            bar.DOFillAmount(1f, 0.05f).OnComplete(() =>
-            {
-                circle3.DOFillAmount(1, 0.015f);
-            });
-        }
-        else
+        else /*if(GetPanelsDone() == 0)*/
         {
             bar.DOFillAmount(0, 0.005f);
             circle1.DOFillAmount(0, 0.005f);
             circle2.DOFillAmount(0, 0.005f);
             circle3.DOFillAmount(0, 0.005f);
         }
+        /*else
+        {
+            circle1.fillAmount = 1;
+            circle2.fillAmount = 1;
+            bar.DOFillAmount(1f, 0.05f).OnComplete(() =>
+            {
+                circle3.DOFillAmount(1, 0.015f);
+            });
+        }*/
+        _previousValue = GetPanelsDone();
     }
 
+    private int _previousValue;
     
     public  int GetPanelsDone() => PlayerPrefs.GetInt("Panels Done", 0);
     public  void SetPanelsDone(int num) => PlayerPrefs.SetInt("Panels Done", num);
