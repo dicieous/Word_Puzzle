@@ -58,7 +58,7 @@ public class UIManagerScript : MonoBehaviour
 		var s = GetSpecialLevelNumber().ToString()[^1];
 		if (s == '0')
 		{
-			levelNo.text = "LEVEL " + GetSpecialLevelNumber()+"(Boss Level)";
+			levelNo.text = "LEVEL " + GetSpecialLevelNumber() +"\n(Boss Level)";
 		}
 		else
 		{
