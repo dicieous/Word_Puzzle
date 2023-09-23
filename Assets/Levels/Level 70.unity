@@ -7681,6 +7681,14 @@ PrefabInstance:
       propertyPath: childObjects.Array.data[10]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4259553686183862240, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb713b1f36ea0d143b17f1371bf5c934, type: 2}
+    - target: {fileID: 4259553686183862240, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9ef2e5e97fd334f428a5652d5e86b248, type: 2}
     - target: {fileID: 5066871820357044684, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -9325,7 +9333,7 @@ MonoBehaviour:
   - {fileID: 441681240}
   - {fileID: 1937466259}
   - {fileID: 371193975}
-  ScriptOff: 0
+  scriptOff: 0
   rowsInGrid: 7
   colInGrid: 7
   rowfilled: 0
@@ -9354,6 +9362,7 @@ MonoBehaviour:
   starFX: {fileID: 4703598324225116034, guid: cf6696c35ed2218498ac4f5624ae2a23, type: 3}
   complementPrefab: {fileID: 7116642006971059512, guid: 1aae8e157f13b7347accb9d2c8564567, type: 3}
   instPos: {fileID: 262508563}
+  wordsAfterWhichToMoveCam: 
   levelCompleted: 0
   removing: 0
 --- !u!4 &1870371619

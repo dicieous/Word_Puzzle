@@ -77,8 +77,9 @@ public class UIManagerScript : MonoBehaviour
 		if ((PlayerPrefs.GetInt("Level", 1) == 1))
 		{
 			GameManager.Instance.ShowTheText();
-            hintButton.GetComponent<Image>().enabled = false;
-            hintButton.interactable = false;
+            /*hintButton.GetComponent<Image>().enabled = false;
+            hintButton.interactable = false;*/
+            hintButton.gameObject.SetActive(false);
             if(tutorialtext)
                 tutorialtext.SetActive(true);
 			//HelpHand();

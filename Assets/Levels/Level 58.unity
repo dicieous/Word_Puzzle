@@ -977,7 +977,6 @@ Transform:
   m_Children:
   - {fileID: 368483163}
   - {fileID: 141758341}
-  - {fileID: 2022009588}
   - {fileID: 1771533703}
   m_Father: {fileID: 1077563590}
   m_RootOrder: -1
@@ -1644,7 +1643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_Name
-      value: Sticking_Cube_2
+      value: Sticking_Cube_1
       objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_TagString
@@ -1856,7 +1855,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1142444499}
   - {fileID: 1055123422}
   - {fileID: 1768723164}
   - {fileID: 122130337}
@@ -3119,7 +3117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_Name
-      value: Sticking_Cube_3
+      value: Sticking_Cube_2
       objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_TagString
@@ -3224,7 +3222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_Name
-      value: Sticking_Cube_4
+      value: Sticking_Cube_3
       objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_TagString
@@ -3330,7 +3328,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_Name
-      value: Sticking_Cube_3
+      value: Sticking_Cube_2
       objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_TagString
@@ -3640,16 +3638,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   answers:
-  - BOOK
-  - U
-  - FISH
+  - OOK
+  - BUS
+  - FIH
   rowColor: []
   wordList: []
   stickingCubes:
   - {fileID: 982728114}
   - {fileID: 1946002750}
   - {fileID: 441681240}
-  ScriptOff: 0
+  scriptOff: 0
   rowsInGrid: 7
   colInGrid: 7
   rowfilled: 0
@@ -3670,6 +3668,7 @@ MonoBehaviour:
   starFX: {fileID: 4703598324225116034, guid: cf6696c35ed2218498ac4f5624ae2a23, type: 3}
   complementPrefab: {fileID: 7116642006971059512, guid: 1aae8e157f13b7347accb9d2c8564567, type: 3}
   instPos: {fileID: 262508563}
+  wordsAfterWhichToMoveCam: 
   levelCompleted: 0
   removing: 0
 --- !u!4 &1870371619
@@ -3793,7 +3792,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1142444499}
   - {fileID: 1859244947}
+  - {fileID: 2022009588}
   m_Father: {fileID: 1077563590}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3817,7 +3818,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 441681239}
+    m_TransformParent: {fileID: 1946002749}
     m_Modifications:
     - target: {fileID: 1970286650030674297, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_Size.x
@@ -3918,7 +3919,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 982728113}
+    m_TransformParent: {fileID: 1946002749}
     m_Modifications:
     - target: {fileID: 1970286650030674297, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_Size.x
@@ -4180,11 +4181,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.78
+      value: 1.48
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.31
+      value: 4.36
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.z

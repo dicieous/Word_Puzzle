@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
 		InitializeGrid();
 
 		UI = UIManagerScript.Instance;
-		Debug.Log($"Words Made {wordsMade}");
+		//Debug.Log($"Words Made {wordsMade}");
 		wordCompleted = new bool[rowsInGrid];
 		InitializeWordComplete();
 		for (int i = 0; i < rowsInGrid; i++)
