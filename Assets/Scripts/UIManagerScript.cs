@@ -167,6 +167,7 @@ public class UIManagerScript : MonoBehaviour
             tutorialHand2.enabled = false;
             tutorialtext.GetComponent<TextMeshProUGUI>().enabled = false;
         }
+        
 		StartCoroutine(PlayCoinCollectionFx());
 		//if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
 		DOVirtual.DelayedCall(2f, () =>

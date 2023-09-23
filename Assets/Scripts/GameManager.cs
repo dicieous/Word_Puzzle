@@ -413,8 +413,8 @@ public class GameManager : MonoBehaviour
                 }
 
                 s.correctWordMade = true;
-                Debug.Log("Correct Word");
-                Debug.Log("Words Made "+wordsMade);
+                //Debug.Log("Correct Word");
+                //Debug.Log("Words Made "+wordsMade);
                 foreach (var wordNo in wordsAfterWhichToMoveCam)
                 {
                     if (wordNo == wordsMade)

@@ -64,7 +64,7 @@ public class EmojiManager : MonoBehaviour
     {
         //PanelInstanceFun(GetListNumbers());
        
-        if (GetListNumbers() == 0 || GetListNumbers() == 1)
+        if (GetListNumbers() == 0)
         {
             tutorialText.gameObject.SetActive(true);
         }

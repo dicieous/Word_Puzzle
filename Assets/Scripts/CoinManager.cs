@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class CoinManager : MonoBehaviour
 {
 	public static CoinManager instance;
-	
+    public GameObject confettiFx;
     public GameManager gm;
     public TextMeshProUGUI hintText;
     public TextMeshProUGUI coinCountText;
