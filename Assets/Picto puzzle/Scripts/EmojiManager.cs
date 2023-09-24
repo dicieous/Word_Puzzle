@@ -146,11 +146,11 @@ public class EmojiManager : MonoBehaviour
         if(panelObj.GetComponent<EmojiClick>().correctList.Count > 0)
             panelObj.GetComponent<EmojiClick>().correctList.Clear();
         panelObj.transform.parent = parentObj.transform;
-        if (panelObj.GetComponent<EmojiClick>().options.Count <= 2)
+        /*if (panelObj.GetComponent<EmojiClick>().options.Count <= 2)
         {
             button5050.interactable = false;
             button5050.GetComponent<Image>().enabled = false;
-        }
+        }*/
         
         panelObj.GetComponent<RectTransform>().SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left,0,0);
         panelObj.GetComponent<RectTransform>().SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom,0,0);
@@ -164,7 +164,7 @@ public class EmojiManager : MonoBehaviour
             tutorialText.gameObject.SetActive(true);
             DOVirtual.DelayedCall(2f, () =>
             {
-                print("Hint call");
+                //print("Hint call");
                 FunHint();
             });
         }
@@ -227,18 +227,18 @@ public class EmojiManager : MonoBehaviour
 
     public void FunHint()
     {
-        print("Hint create");
-        hintButton.interactable = false;
+        //print("Hint create");
         for (int i = 0; i < panelObj.GetComponent<EmojiClick>().hintPos.Count; i++)
         {
             var temp = panelObj.GetComponent<EmojiClick>().hintPos[i].GetComponent<Image>();
-            temp.color = new Color(temp.color.r, temp.color.g, temp.color.b, .5f);
+            temp.color = new Color(temp.color.r, temp.color.g, temp.color.b, .75f);
             temp.enabled = true;
             temp.sprite = panelObj.GetComponent<EmojiClick>().correctList[i];
             temp.rectTransform.DOScale(1.3f, 0.25f).SetEase(Ease.Linear)
                 .SetLoops(2, LoopType.Yoyo);
         }
-        print("Function decall");
+        hintButton.interactable = false;
+        //print("Function decall");
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
         
@@ -249,14 +249,18 @@ public class EmojiManager : MonoBehaviour
         /*var j = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         j.interactable = false;*/
         button5050.interactable = false;
-        int num = (panelObj.GetComponent<EmojiClick>().optionBtn.Count / 2);
-        for (int i = 0; i < num; i++)
+        if (panelObj.GetComponent<EmojiClick>().options.Count > 2)
         {
-            panelObj.GetComponent<EmojiClick>().optionBtn.RemoveAt(i);
-            panelObj.GetComponent<EmojiClick>().optionBtn[i].gameObject.SetActive(false);
+            int num = (panelObj.GetComponent<EmojiClick>().optionBtn.Count / 2);
+            for (int i = 0; i < num; i++)
+            {
+                panelObj.GetComponent<EmojiClick>().optionBtn.RemoveAt(i);
+                panelObj.GetComponent<EmojiClick>().optionBtn[i].gameObject.SetActive(false);
+            }
+            if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+            if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
         }
-        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
-        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+       
     }
 
     public void NextButton()
