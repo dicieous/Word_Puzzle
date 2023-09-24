@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -111,7 +112,7 @@ public class CameraMotionScript : MonoBehaviour
             {
                 var j1 = j;
                     //print("Color Changed");
-                    t.GetComponentInChildren<Collider>().enabled = true;
+                    t.transform.GetChild(j1).GetComponent<Collider>().enabled = true;
                     t.transform.GetChild(j1).transform.GetChild(0).GetComponent<MeshRenderer>().materials[0].color =
                         activatedColor;
                     yield return new WaitForSeconds(0.1f);
@@ -154,7 +155,12 @@ public class CameraMotionScript : MonoBehaviour
             var stickingCubeGroup = stickingAreaCubes[i].stickingAreaCubesGroup;
             foreach (var t in stickingCubeGroup)
             {
-                t.GetComponentInChildren<Collider>().enabled = false;
+                var childCount = t.transform.childCount;
+                for (int j = 0; j < childCount; j++)
+                {
+                    t.transform.GetChild(j).GetComponent<Collider>().enabled = false;
+                }
+                
                 
                 
                 for (int j = 0; j < t.transform.childCount; j++)

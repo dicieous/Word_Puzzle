@@ -65,6 +65,10 @@ public class EmojiClick : MonoBehaviour
                 //AudioManager.instance.Play("Won");
                 //Debug.Log("Win");
                 _levelComplete = true;
+                for (int i = 0; i < optionBtn.Count; i++)
+                {
+                    optionBtn[i].gameObject.GetComponent<Button>().interactable = false;
+                }
                 DOVirtual.DelayedCall(0.5f, () =>
                 {
                     EmojiManager.Instance.PanelAndListUpdate();

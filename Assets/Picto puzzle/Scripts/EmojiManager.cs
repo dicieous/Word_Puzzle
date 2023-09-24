@@ -42,10 +42,14 @@ public class EmojiManager : MonoBehaviour
     public Image circle2;
     public Image circle3;
 
+    [Header("next and retry")] 
+    public Button nextButton;
+    public Button retryButton;
+    
     [Header("Win And Lose Panels")]
     public GameObject winPanel;
     public GameObject losePanel;
-
+    
     public UIParticle popperBlast;
 
     public TextMeshProUGUI tutorialText;
@@ -60,7 +64,10 @@ public class EmojiManager : MonoBehaviour
     {
         //PanelInstanceFun(GetListNumbers());
        
-        
+        if (GetListNumbers() == 0)
+        {
+            tutorialText.gameObject.SetActive(true);
+        }
         if (GetListNumbers() > emojiDataScript.detailsLists.Count-1)
         {
             listNumber = UnityEngine.Random.Range(0, emojiDataScript.detailsLists.Count - 1);
@@ -146,11 +153,6 @@ public class EmojiManager : MonoBehaviour
         if(panelObj.GetComponent<EmojiClick>().correctList.Count > 0)
             panelObj.GetComponent<EmojiClick>().correctList.Clear();
         panelObj.transform.parent = parentObj.transform;
-        /*if (panelObj.GetComponent<EmojiClick>().options.Count <= 2)
-        {
-            button5050.interactable = false;
-            button5050.GetComponent<Image>().enabled = false;
-        }*/
         
         panelObj.GetComponent<RectTransform>().SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left,0,0);
         panelObj.GetComponent<RectTransform>().SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom,0,0);
@@ -159,15 +161,6 @@ public class EmojiManager : MonoBehaviour
         panelObj.GetComponent<RectTransform>().anchorMax = new Vector2(1f, 1f);
         panelObj.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
         StartCoroutine(StartFunCall());
-        if (GetListNumbers() == 0)
-        {
-            tutorialText.gameObject.SetActive(true);
-            DOVirtual.DelayedCall(2f, () =>
-            {
-                //print("Hint call");
-                FunHint();
-            });
-        }
     }
     // ReSharper disable Unity.PerformanceAnalysis
     public IEnumerator StartFunCall()
@@ -216,7 +209,25 @@ public class EmojiManager : MonoBehaviour
         panelObject.emojiName.text = emojiDataScript.detailsLists[listNumber].emojiName;
         panelObject.winCount = emojiDataScript.detailsLists[listNumber].correctList.ToList().Count;
         panelObject.StartFun();
-        
+        if (panelObj.GetComponent<EmojiClick>().options.Count <= 2)
+        {
+            button5050.interactable = false;
+            button5050.GetComponent<Image>().enabled = false;
+        }
+        else
+        {
+            button5050.interactable = true;
+            button5050.gameObject.GetComponent<Image>().enabled = true;
+        }
+        if (GetListNumbers() == 0 || GetListNumbers() == 1)
+        {
+            tutorialText.gameObject.SetActive(true);
+            FunHint();
+            /*DOVirtual.DelayedCall(2f, () =>
+            {
+                print("Hint call");
+            });*/
+        }
     }
     public void FunShuffle()
     {
@@ -231,14 +242,14 @@ public class EmojiManager : MonoBehaviour
         for (int i = 0; i < panelObj.GetComponent<EmojiClick>().hintPos.Count; i++)
         {
             var temp = panelObj.GetComponent<EmojiClick>().hintPos[i].GetComponent<Image>();
-            temp.color = new Color(temp.color.r, temp.color.g, temp.color.b, .75f);
+            temp.color = new Color(temp.color.r, temp.color.g, temp.color.b, .65f);
             temp.enabled = true;
             temp.sprite = panelObj.GetComponent<EmojiClick>().correctList[i];
             temp.rectTransform.DOScale(1.3f, 0.25f).SetEase(Ease.Linear)
                 .SetLoops(2, LoopType.Yoyo);
         }
-        hintButton.interactable = false;
         //print("Function decall");
+        hintButton.interactable = false;
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
         
@@ -249,18 +260,14 @@ public class EmojiManager : MonoBehaviour
         /*var j = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         j.interactable = false;*/
         button5050.interactable = false;
-        if (panelObj.GetComponent<EmojiClick>().options.Count > 2)
+        int num = (panelObj.GetComponent<EmojiClick>().optionBtn.Count / 2);
+        for (int i = 0; i < num; i++)
         {
-            int num = (panelObj.GetComponent<EmojiClick>().optionBtn.Count / 2);
-            for (int i = 0; i < num; i++)
-            {
-                panelObj.GetComponent<EmojiClick>().optionBtn.RemoveAt(i);
-                panelObj.GetComponent<EmojiClick>().optionBtn[i].gameObject.SetActive(false);
-            }
-            if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
-            if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+            panelObj.GetComponent<EmojiClick>().optionBtn.RemoveAt(i);
+            panelObj.GetComponent<EmojiClick>().optionBtn[i].gameObject.SetActive(false);
         }
-       
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
     }
 
     public void NextButton()
@@ -268,6 +275,7 @@ public class EmojiManager : MonoBehaviour
         UIManagerScript.Instance.NextMoveFun();
         SetListNumber(GetListNumbers() + 1);
         SetPanelsDone(GetPanelsDone() + 1);
+        nextButton.interactable = false;
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
     }
@@ -275,6 +283,7 @@ public class EmojiManager : MonoBehaviour
     public void RetryButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        retryButton.interactable = false;
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
     }
@@ -284,31 +293,46 @@ public class EmojiManager : MonoBehaviour
         {
             if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
             //if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
-            circle1.DOFillAmount(1, 0.015f);
+            circle1.DOFillAmount(1, 0.015f).OnComplete(() =>
+            {
+                circle1.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            });
         }
         else if (GetPanelsDone() == 2 && GetPanelsDone() != _previousValue)
         {
             if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
             circle1.fillAmount = 1;
+            circle1.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             bar.DOFillAmount(0.5f, 0.05f).OnComplete(() =>
             {
-                circle2.DOFillAmount(1, 0.015f);
+                circle2.DOFillAmount(1, 0.015f).OnComplete(() =>
+                {
+                    circle2.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                });
             });
         }
         else if(GetPanelsDone() == 0)
         {
             bar.DOFillAmount(0, 0.005f);
             circle1.DOFillAmount(0, 0.005f);
+            circle1.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             circle2.DOFillAmount(0, 0.005f);
+            circle2.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             circle3.DOFillAmount(0, 0.005f);
+            circle3.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         }
         else
         {
             circle1.fillAmount = 1;
+            circle1.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             circle2.fillAmount = 1;
+            circle2.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             bar.DOFillAmount(1f, 0.05f).OnComplete(() =>
             {
-                circle3.DOFillAmount(1, 0.015f);
+                circle3.DOFillAmount(1, 0.015f).OnComplete(() =>
+                {
+                    circle3.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                });
             });
         }
         _previousValue = GetPanelsDone();

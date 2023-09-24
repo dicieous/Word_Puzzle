@@ -77,8 +77,9 @@ public class UIManagerScript : MonoBehaviour
 		if ((PlayerPrefs.GetInt("Level", 1) == 1))
 		{
 			GameManager.Instance.ShowTheText();
-            hintButton.transform.gameObject.SetActive(false);
-            
+            /*hintButton.GetComponent<Image>().enabled = false;
+            hintButton.interactable = false;*/
+            hintButton.gameObject.SetActive(false);
             if(tutorialtext)
                 tutorialtext.SetActive(true);
 			//HelpHand();
@@ -166,6 +167,7 @@ public class UIManagerScript : MonoBehaviour
             tutorialHand2.enabled = false;
             tutorialtext.GetComponent<TextMeshProUGUI>().enabled = false;
         }
+        
 		StartCoroutine(PlayCoinCollectionFx());
 		//if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
 		DOVirtual.DelayedCall(2f, () =>

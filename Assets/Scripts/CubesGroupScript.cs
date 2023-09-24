@@ -59,9 +59,9 @@ public class CubesGroupScript : MonoBehaviour
         seq.AppendCallback(() =>
         {
             childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
-                .color = CoinManager.instance.singleColor; 
+                .color = CoinManager.instance.greenColor; 
             childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
-                .color = CoinManager.instance.singleColor;
+                .color = CoinManager.instance.greenColor;
             childObjects[countnum].transform.GetChild(0).transform
                 .DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
                 .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
