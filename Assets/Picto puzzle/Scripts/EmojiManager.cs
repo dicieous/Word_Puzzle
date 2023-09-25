@@ -89,22 +89,28 @@ public class EmojiManager : MonoBehaviour
             SetPanelsDone(0);
         }
         
+        CoinManager.instance.coinCountText.text = CoinManager.instance.GetCoinsCount().ToString();
+        CoinManager.instance.hintText.text = CoinManager.instance.GetHintCount().ToString();
+        if (CoinManager.instance.GetHintCount() > 0)
+        {
+            hintButton.interactable = false;
+        }
         BarFilling();
         //SetPanelsDone(GetPanelsDone() + 1);
     }
 
     private void Update()
     {
-        if (CoinManager.instance.GetHintCount() == 0 && hintButton.interactable)
+        /*if (CoinManager.instance.GetHintCount() == 0 && hintButton.interactable)
         {
             hintButton.interactable = false;
-            hintNumberText.text = CoinManager.instance.GetHintCount().ToString();
+            //hintNumberText.text = CoinManager.instance.GetHintCount().ToString();
         }
         else if (CoinManager.instance.GetHintCount() > 0 && !hintButton.interactable)
         {
             hintButton.interactable = true;
-            hintNumberText.text = CoinManager.instance.GetHintCount().ToString();
-        }
+            //hintNumberText.text = CoinManager.instance.GetHintCount().ToString();
+        }*/
     }
 
     ///////----- panels and list updates-----------
@@ -239,6 +245,15 @@ public class EmojiManager : MonoBehaviour
             button5050.interactable = true;
             button5050.gameObject.GetComponent<Image>().enabled = true;
         }
+
+        if (GetListNumbers() > 2)
+        {
+            tutorialText.enabled = false;
+        }
+        else
+        {
+            tutorialText.enabled = true;
+        }
         /*if (GetListNumbers() == 0 || GetListNumbers() == 1)
         {
             tutorialText.gameObject.SetActive(true);
@@ -278,8 +293,14 @@ public class EmojiManager : MonoBehaviour
             //print("Function decall");
             hintButton.interactable = false;
             CoinManager.instance.SetHintCount(CoinManager.instance.GetHintCount()-1);
-            CoinManager.instance.SetCoinCount(CoinManager.instance.GetCoinsCount()-20);
-            hintNumberText.text = CoinManager.instance.GetHintCount().ToString();
+            CoinManager.instance.SetCoinCount(CoinManager.instance.GetCoinsCount() - 20);
+            //CoinManager.instance.SetHintCount((int)( CoinManager.instance.GetCoinsCount()/20));
+            CoinManager.instance.coinCountText.text = CoinManager.instance.GetCoinsCount().ToString();
+            CoinManager.instance.hintText.text = CoinManager.instance.GetHintCount().ToString();
+            /*if (CoinManager.instance.GetHintCount() == 0)
+            {
+                hintButton.interactable = false;
+            }*/
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
         }
