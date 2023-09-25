@@ -391,6 +391,7 @@ public class GameManager : MonoBehaviour
             DOVirtual.DelayedCall(.75f, () =>
             {
 	            CoinManager.instance.confettiFx.Play();
+                if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper"); 
 	            CoinManager.instance.confettiFx1.Play();
                 UI.WinPanelActive();
                 BlockSeqCall();
@@ -446,6 +447,7 @@ public class GameManager : MonoBehaviour
             {
 	            CoinManager.instance.confettiFx.Play();
 	            CoinManager.instance.confettiFx1.Play();
+                if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper"); 
                 UI.WinPanelActive();
                 // BlockSeqCall();
                 //Debug.Log("LevelComplete");

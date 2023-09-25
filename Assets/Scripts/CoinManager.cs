@@ -4,30 +4,43 @@ using System.Collections.Generic;
 using Coffee.UIExtensions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class CoinManager : MonoBehaviour
 {
-	public static CoinManager instance;
+    public static CoinManager instance;
     public UIParticle confettiFx;
     public UIParticle confettiFx1;
     public GameManager gm;
     public TextMeshProUGUI hintText;
     public TextMeshProUGUI coinCountText;
-    
+
     public List<Color> colorData;
-    [HideInInspector]
-    public Color singleColor;
+    [HideInInspector] public Color singleColor;
     public Color redColor;
+
     public Color greenColor;
     //public List<Color> colorsAdded;
-	private void Awake()
-	{
-		instance = this;
-	}
+    public int hintCounter;
 
-	void Start()
+    [Header("Progression bar")] 
+    public Image progressionBarImage;
+    public TextMeshProUGUI progressionBarText;
+    public Image progressionImage;
+    public List<Sprite> progressionImageList;
+
+    public RectTransform winEmoji;
+    public List<Sprite> winEmojiSprites;
+    
+    private void Awake()
     {
+        instance = this;
+    }
+
+    void Start()
+    {
+        
         var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
         if (s != '0')
         {
@@ -46,6 +59,7 @@ public class CoinManager : MonoBehaviour
                 //singleColor = colorData[Random.Range(0, colorData.Count)];
                 singleColor = greenColor;
             }
+
             coinCountText.text = GetCoinsCount().ToString();
             if (GetCoinsCount() >= 20)
             {
@@ -58,17 +72,37 @@ public class CoinManager : MonoBehaviour
                 SetHintCount(0);
                 hintText.text = GetHintCount().ToString();
             }
+            
+            progressionBarImage.fillAmount = GetLoaderPercent();
+            //print(GetLoaderPercent());
+            progressionBarText.text = (int)(GetLoaderPercent() * 100) + "%";
+            
+            if (s == '1')
+            {
+                print(s);
+                SetLoaderPercentage(0f);
+                if (GetLoaderImageCount() >= progressionImageList.Count)
+                {
+                    SetLoaderImageCount(0);
+                }
+                SetLoaderImageCount(GetLoaderImageCount() + 1);
+            }
+            progressionImage.sprite = progressionImageList[GetLoaderImageCount()];
+            winEmoji.GetComponent<Image>().sprite = winEmojiSprites[Random.Range(0, winEmojiSprites.Count - 1)];
         }
-        
     }
-	
 
+    private int GetLoaderImageCount() => PlayerPrefs.GetInt("LoaderImageNumber", 0);
+    private void SetLoaderImageCount(int num) => PlayerPrefs.SetInt("LoaderImageNumber", num);
     public void HintReduce()
     {
         if (GetHintCount() > 0)
         {
-            SetHintCount(GetHintCount()-1);
-            SetCoinCount(GetCoinsCount()-20);
+            hintCounter++;
+            ByteBrewManager.instance.ProgressEvent(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),
+                hintCounter.ToString(), "NormalMode", "Hints");
+            SetHintCount(GetHintCount() - 1);
+            SetCoinCount(GetCoinsCount() - 20);
             coinCountText.text = GetCoinsCount().ToString();
             hintText.text = GetHintCount().ToString();
         }
@@ -76,17 +110,18 @@ public class CoinManager : MonoBehaviour
 
     public void CoinsIncrease(int x)
     {
-        SetCoinCount(GetCoinsCount()+x);
-        SetHintCount((int)(GetCoinsCount()/20));
-        
+        SetCoinCount(GetCoinsCount() + x);
+        SetHintCount((int)(GetCoinsCount() / 20));
         coinCountText.text = GetCoinsCount().ToString();
         hintText.text = GetHintCount().ToString();
     }
     
-    public  int GetHintCount() => PlayerPrefs.GetInt("Hint Count", 0);
-    public  void SetHintCount(int countHint) => PlayerPrefs.SetInt("Hint Count", countHint);
+    public float GetLoaderPercent() => PlayerPrefs.GetFloat("LoaderPercentage", 0);
+    public void SetLoaderPercentage(float percent) => PlayerPrefs.SetFloat("LoaderPercentage", percent);
     
-    public  int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 0);
-    public  void SetCoinCount(int countCoin) => PlayerPrefs.SetInt("Coins Count", countCoin);
-    
+    public int GetHintCount() => PlayerPrefs.GetInt("Hint Count", 0);
+    public void SetHintCount(int countHint) => PlayerPrefs.SetInt("Hint Count", countHint);
+
+    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 0);
+    public void SetCoinCount(int countCoin) => PlayerPrefs.SetInt("Coins Count", countCoin);
 }

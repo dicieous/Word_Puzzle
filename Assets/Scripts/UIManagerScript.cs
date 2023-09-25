@@ -177,9 +177,31 @@ public class UIManagerScript : MonoBehaviour
 		
 		DOVirtual.DelayedCall(3.25f,()=>
 		{
-			targetCongratulationImage.GetComponent<Image>().sprite =
-				congratulationsImages[Random.Range(0, congratulationsImages.Count)];
-			endScreen.SetActive(true);
+            var s = GetSpecialLevelNumber().ToString()[^1];
+            if (s != '0')
+            {
+                targetCongratulationImage.GetComponent<Image>().sprite = 
+                    congratulationsImages[Random.Range(0, congratulationsImages.Count)];
+                DOVirtual.DelayedCall(0.05f, () =>
+                {
+                    print((1f / 9f));
+                    var num = CoinManager.instance.GetLoaderPercent() + ((1f / 9f));
+                    //CoinManager.instance.SetLoaderPercentage(CoinManager.instance.GetLoaderPercent() + ((1f / 9f)));
+                    CoinManager.instance.progressionBarImage.DOFillAmount(num, 1f)
+                        .OnComplete(
+                            () =>
+                            {
+                                nextButton.interactable = true;
+                            });
+                    CoinManager.instance.progressionBarText.text = ((int)(num * 100) + "%");
+                });
+                endScreen.SetActive(true);
+
+            }
+            else
+            {
+                EmojiManager.Instance.winPanel.SetActive(true);
+            }
 		});
 	}
 	
@@ -204,21 +226,22 @@ public class UIManagerScript : MonoBehaviour
 		
 		//Debug.Log("Hint Button");
 		GameManager.Instance.ShowTheText();
-		
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 	}
 
 	public void NextSceneLoader()
 	{
-        if (!GameManager.Instance.levelTypeChanged)
+        ////////////////------------------------Block falling down here------------------------------
+        /*if (!GameManager.Instance.levelTypeChanged)
         {
             GameManager.Instance.DestroyBlocks();
         }
         else
         {
             NextMoveFun();
-        }
+        }*/
+        NextMoveFun();
 		nextButton.interactable = false;
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
@@ -234,7 +257,7 @@ public class UIManagerScript : MonoBehaviour
 			SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
 			
 			PlayerPrefs.SetInt("Special",1);
-			
+            CoinManager.instance.SetLoaderPercentage(0f);
 			//PlayerPrefs.SetInt("ThisLevel", SceneManager.sceneCountInBuildSettings - 1);
 		}
 		else
@@ -256,8 +279,9 @@ public class UIManagerScript : MonoBehaviour
 				SceneManager.LoadScene(PlayerPrefs.GetInt("Level", 1));
 				print("one"+PlayerPrefs.GetInt("Level", 1));
 			}
+            CoinManager.instance.SetLoaderPercentage(CoinManager.instance.GetLoaderPercent() + ((1f / 9f)));
 		}
-        //if(GAScript.instance) GAScript.instance.LevelCompleted(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
+        if(GAScript.instance) GAScript.instance.LevelCompleted(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
 
 	}
 	public void ResetScreenOnClick()
