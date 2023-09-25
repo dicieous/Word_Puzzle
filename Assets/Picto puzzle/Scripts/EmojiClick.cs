@@ -72,10 +72,7 @@ public class EmojiClick : MonoBehaviour
                 DOVirtual.DelayedCall(0.5f, () =>
                 {
                     EmojiManager.Instance.PanelAndListUpdate();
-                    if (EmojiManager.Instance.GetPanelsDone() == 3)
-                    {
-                        EmojiManager.Instance.popperBlast.Play();
-                    }
+                    
                 });
                 ///FindObjectOfType<Button>().enabled = false;
                 //UIManager.instance.WinPanel();

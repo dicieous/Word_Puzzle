@@ -387,8 +387,11 @@ public class GameManager : MonoBehaviour
             UI.restartButton.interactable = false;
             UI.hintButton.interactable = false;
             //DestroyBlocks();
+            
             DOVirtual.DelayedCall(.75f, () =>
             {
+	            CoinManager.instance.confettiFx.Play();
+	            CoinManager.instance.confettiFx1.Play();
                 UI.WinPanelActive();
                 BlockSeqCall();
                 //Debug.Log("LevelComplete");
@@ -438,8 +441,11 @@ public class GameManager : MonoBehaviour
             Debug.Log("LevelComplete");
             UI.restartButton.interactable = false;
             UI.hintButton.interactable = false;
+           
             DOVirtual.DelayedCall(.75f, () =>
             {
+	            CoinManager.instance.confettiFx.Play();
+	            CoinManager.instance.confettiFx1.Play();
                 UI.WinPanelActive();
                 // BlockSeqCall();
                 //Debug.Log("LevelComplete");

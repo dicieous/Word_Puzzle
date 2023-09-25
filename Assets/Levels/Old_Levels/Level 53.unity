@@ -769,6 +769,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5742540649647649439, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5925643920732930686, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -9932,7 +9936,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1446594911
 Transform:
   m_ObjectHideFlags: 0
@@ -13454,7 +13458,7 @@ MonoBehaviour:
   rowColor: []
   wordList: []
   stickingCubes: []
-  ScriptOff: 0
+  scriptOff: 0
   rowsInGrid: 7
   colInGrid: 7
   rowfilled: 0

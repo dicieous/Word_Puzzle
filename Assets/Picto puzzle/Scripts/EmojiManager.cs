@@ -5,6 +5,7 @@ using System.Linq;
 using Coffee.UIExtensions;
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -30,6 +31,8 @@ public class EmojiManager : MonoBehaviour
     [Header("Hint Details")]
     public Button hintButton;
     public GameObject hintButtonDummy;
+    public TextMeshProUGUI hintNumberText;
+    
     [Header("50/50 Details")]
     public Button button5050;
     public GameObject button5050Dummy;
@@ -41,7 +44,9 @@ public class EmojiManager : MonoBehaviour
     public Image circle1;
     public Image circle2;
     public Image circle3;
-
+    public Image circle4;
+    public Image circle5;
+    
     [Header("next and retry")] 
     public Button nextButton;
     public Button retryButton;
@@ -79,7 +84,7 @@ public class EmojiManager : MonoBehaviour
             listNumber = GetListNumbers();
             PanelInstanceFun(listNumber);
         }
-        if (GetPanelsDone() == 3)
+        if (GetPanelsDone() == 5)
         {
             SetPanelsDone(0);
         }
@@ -88,10 +93,24 @@ public class EmojiManager : MonoBehaviour
         //SetPanelsDone(GetPanelsDone() + 1);
     }
 
+    private void Update()
+    {
+        if (CoinManager.instance.GetHintCount() == 0 && hintButton.interactable)
+        {
+            hintButton.interactable = false;
+            hintNumberText.text = CoinManager.instance.GetHintCount().ToString();
+        }
+        else if (CoinManager.instance.GetHintCount() > 0 && !hintButton.interactable)
+        {
+            hintButton.interactable = true;
+            hintNumberText.text = CoinManager.instance.GetHintCount().ToString();
+        }
+    }
+
     ///////----- panels and list updates-----------
     public void PanelAndListUpdate()
     {
-        if (GetPanelsDone() != 2)
+        if (GetPanelsDone() != 4)
         {
             SetListNumber(GetListNumbers() + 1);
             SetPanelsDone(GetPanelsDone() + 1);
@@ -111,6 +130,7 @@ public class EmojiManager : MonoBehaviour
         else
         {
             BarFilling();
+            popperBlast.Play();
             DOVirtual.DelayedCall(1f, () =>
             {
                 winPanel.SetActive(true);
@@ -209,7 +229,7 @@ public class EmojiManager : MonoBehaviour
         panelObject.emojiName.text = emojiDataScript.detailsLists[listNumber].emojiName;
         panelObject.winCount = emojiDataScript.detailsLists[listNumber].correctList.ToList().Count;
         panelObject.StartFun();
-        if (panelObj.GetComponent<EmojiClick>().options.Count <= 2)
+        if (panelObj.GetComponent<EmojiClick>().options.Count <= 5)
         {
             button5050.interactable = false;
             button5050.GetComponent<Image>().enabled = false;
@@ -219,15 +239,15 @@ public class EmojiManager : MonoBehaviour
             button5050.interactable = true;
             button5050.gameObject.GetComponent<Image>().enabled = true;
         }
-        if (GetListNumbers() == 0 || GetListNumbers() == 1)
+        /*if (GetListNumbers() == 0 || GetListNumbers() == 1)
         {
             tutorialText.gameObject.SetActive(true);
             FunHint();
             /*DOVirtual.DelayedCall(2f, () =>
             {
                 print("Hint call");
-            });*/
-        }
+            });#1#
+        }*/
     }
     public void FunShuffle()
     {
@@ -239,19 +259,30 @@ public class EmojiManager : MonoBehaviour
     public void FunHint()
     {
         //print("Hint create");
-        for (int i = 0; i < panelObj.GetComponent<EmojiClick>().hintPos.Count; i++)
+        if (CoinManager.instance.GetHintCount() > 0)
         {
-            var temp = panelObj.GetComponent<EmojiClick>().hintPos[i].GetComponent<Image>();
-            temp.color = new Color(temp.color.r, temp.color.g, temp.color.b, .65f);
-            temp.enabled = true;
-            temp.sprite = panelObj.GetComponent<EmojiClick>().correctList[i];
-            temp.rectTransform.DOScale(1.3f, 0.25f).SetEase(Ease.Linear)
-                .SetLoops(2, LoopType.Yoyo);
+            
+            /*SetHintCount(GetHintCount()-1);
+            SetCoinCount(GetCoinsCount()-20);
+            coinCountText.text = GetCoinsCount().ToString();
+            hintText.text = GetHintCount().ToString();*/
+            for (int i = 0; i < panelObj.GetComponent<EmojiClick>().hintPos.Count; i++)
+            {
+                var temp = panelObj.GetComponent<EmojiClick>().hintPos[i].GetComponent<Image>();
+                temp.color = new Color(temp.color.r, temp.color.g, temp.color.b, .65f);
+                temp.enabled = true;
+                temp.sprite = panelObj.GetComponent<EmojiClick>().correctList[i];
+                temp.rectTransform.DOScale(1.3f, 0.25f).SetEase(Ease.Linear)
+                    .SetLoops(2, LoopType.Yoyo);
+            }
+            //print("Function decall");
+            hintButton.interactable = false;
+            CoinManager.instance.SetHintCount(CoinManager.instance.GetHintCount()-1);
+            CoinManager.instance.SetCoinCount(CoinManager.instance.GetCoinsCount()-20);
+            hintNumberText.text = CoinManager.instance.GetHintCount().ToString();
+            if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+            if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
         }
-        //print("Function decall");
-        hintButton.interactable = false;
-        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
-        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
         
     }
 
@@ -297,17 +328,50 @@ public class EmojiManager : MonoBehaviour
             {
                 circle1.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             });
+            
         }
         else if (GetPanelsDone() == 2 && GetPanelsDone() != _previousValue)
         {
             if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
             circle1.fillAmount = 1;
             circle1.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-            bar.DOFillAmount(0.5f, 0.05f).OnComplete(() =>
+            bar.DOFillAmount(0.25f, 0.05f).OnComplete(() =>
             {
                 circle2.DOFillAmount(1, 0.015f).OnComplete(() =>
                 {
                     circle2.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                });
+            });
+        } 
+        else if (GetPanelsDone() == 3 && GetPanelsDone() != _previousValue)
+        {
+            if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
+            circle1.fillAmount = 1;
+            circle2.fillAmount = 1;
+            circle1.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            circle2.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            bar.DOFillAmount(0.5f, 0.05f).OnComplete(() =>
+            {
+                circle3.DOFillAmount(1, 0.015f).OnComplete(() =>
+                {
+                    circle3.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                });
+            });
+        } 
+        else if (GetPanelsDone() == 4 && GetPanelsDone() != _previousValue)
+        {
+            if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
+            circle1.fillAmount = 1;
+            circle2.fillAmount = 1;
+            circle3.fillAmount = 1;
+            circle1.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            circle2.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            circle3.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            bar.DOFillAmount(0.75f, 0.05f).OnComplete(() =>
+            {
+                circle4.DOFillAmount(1, 0.015f).OnComplete(() =>
+                {
+                    circle4.gameObject.transform.GetChild(0).gameObject.SetActive(true);
                 });
             });
         }
@@ -319,19 +383,28 @@ public class EmojiManager : MonoBehaviour
             circle2.DOFillAmount(0, 0.005f);
             circle2.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             circle3.DOFillAmount(0, 0.005f);
-            circle3.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+            circle3.gameObject.transform.GetChild(0).gameObject.SetActive(false); 
+            circle4.DOFillAmount(0, 0.005f);
+            circle4.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+            circle5.DOFillAmount(0, 0.005f);
+            circle5.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         }
         else
         {
+            if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
             circle1.fillAmount = 1;
-            circle1.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             circle2.fillAmount = 1;
+            circle3.fillAmount = 1;
+            circle4.fillAmount = 1;
+            circle1.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             circle2.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            circle3.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            circle4.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             bar.DOFillAmount(1f, 0.05f).OnComplete(() =>
             {
-                circle3.DOFillAmount(1, 0.015f).OnComplete(() =>
+                circle5.DOFillAmount(1, 0.015f).OnComplete(() =>
                 {
-                    circle3.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                    circle5.gameObject.transform.GetChild(0).gameObject.SetActive(true);
                 });
             });
         }

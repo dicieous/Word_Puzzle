@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Coffee.UIExtensions;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -8,7 +9,8 @@ using Random = UnityEngine.Random;
 public class CoinManager : MonoBehaviour
 {
 	public static CoinManager instance;
-    public GameObject confettiFx;
+    public UIParticle confettiFx;
+    public UIParticle confettiFx1;
     public GameManager gm;
     public TextMeshProUGUI hintText;
     public TextMeshProUGUI coinCountText;
