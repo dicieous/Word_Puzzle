@@ -432,6 +432,6 @@ public class EmojiManager : MonoBehaviour
     public int GetPanelsDone() => PlayerPrefs.GetInt("Panels Done", 0);
     public void SetPanelsDone(int num) => PlayerPrefs.SetInt("Panels Done", num);
 
-    public int GetListNumbers() => PlayerPrefs.GetInt("Lists Number", 0);
+    public int GetListNumbers() => PlayerPrefs.GetInt("Lists Number", 7);
     public void SetListNumber(int val) => PlayerPrefs.SetInt("Lists Number", val);
 }
