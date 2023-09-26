@@ -266,7 +266,7 @@ public class EmojiManager : MonoBehaviour
         //print("Hint create");
         hintCounter++;
         ByteBrewManager.instance.EmojiEvent(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),
-            hintCounter.ToString(), "EmojiMode", GetPanelsDone().ToString(), "Hints");
+            hintCounter.ToString(), "EmojiMode", GetListNumbers().ToString(), "Hints");
         if (CoinManager.instance.GetHintCount() > 0)
         {
             /*SetHintCount(GetHintCount()-1);

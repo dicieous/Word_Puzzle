@@ -469,7 +469,7 @@ public class GameManager : MonoBehaviour
         //for single row moving at a time
         //BlocksColorRowByRowFun();
     }
-    public void AllBlocksColoredAtaTimeFun(int row,int columCount = 0)
+    private void AllBlocksColoredAtaTimeFun(int row,int columCount = 0)
     {
         var seq = DOTween.Sequence();
         seq.AppendCallback(() =>
