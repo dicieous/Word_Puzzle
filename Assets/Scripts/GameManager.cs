@@ -23,10 +23,15 @@ public class GameManager : MonoBehaviour
     
     [HideInInspector]
 	public bool scriptOff;
+    
 	[Space(10)]
 	public int rowsInGrid;
 	public int colInGrid;
-
+    
+    [Header("Opposite Words Level Columns")]
+    public List<int> numberOfColumns;
+    [Space(10)] 
+    
 	[HideInInspector] public int rowfilled;
 	[HideInInspector] public List<GameObject> fXRowWords;
     [HideInInspector] public bool downCheck;
@@ -130,10 +135,23 @@ public class GameManager : MonoBehaviour
 		for (int row = 0; row < rowsInGrid; row++)
 		{
 			List<GameObject> newRow = new List<GameObject>();
-			for (int col = 0; col < colInGrid; col++)
-			{
-				newRow.Add(null);
-			}
+            if (numberOfColumns.Count == 0)
+            {
+                for (int col = 0;col < colInGrid; col++)
+                {
+                    newRow.Add(null);
+                }
+            }
+            else
+            {
+                
+                for (int col = 0;col < numberOfColumns[row]; col++)
+                {
+                    newRow.Add(null);
+                }
+            }
+			
+            
 
 			letterCubeWord.Add(newRow);
 		}
@@ -581,6 +599,7 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
+  
     private bool CheckIfAllBlocksFullNew()
     {
         return stickingCubes.All(hScript => hScript.IsAllPlacesFullCheck());
