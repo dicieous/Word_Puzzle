@@ -103,29 +103,33 @@ public class CameraMotionScript : MonoBehaviour
     IEnumerator ActivateStickingCubes(Action callBack)
     {
         //Debug.Log("Sticking Cubes Activated");
-        var stickingCubeGroup = stickingAreaCubes[cameraMoved].stickingAreaCubesGroup;
-        for (var index = 0; index < stickingCubeGroup.Count; index++)
+        if (stickingAreaCubes.Count >= cameraMoved)
         {
-            var t = stickingCubeGroup[index];
-            var index1 = index;
-            for (int j = 0; j < t.transform.childCount; j++)
+            var stickingCubeGroup = stickingAreaCubes[cameraMoved].stickingAreaCubesGroup;
+            for (var index = 0; index < stickingCubeGroup.Count; index++)
             {
-                var j1 = j;
+                var t = stickingCubeGroup[index];
+                var index1 = index;
+                for (int j = 0; j < t.transform.childCount; j++)
+                {
+                    var j1 = j;
                     //print("Color Changed");
                     t.transform.GetChild(j1).GetComponent<Collider>().enabled = true;
                     t.transform.GetChild(j1).transform.GetChild(0).GetComponent<MeshRenderer>().materials[0].color =
                         activatedColor;
                     yield return new WaitForSeconds(0.1f);
-            }
+                }
            
-        }
+            }
 
-        callBack.Invoke();
+            callBack.Invoke();
+        }
     }
 
     void ActivateLetterCubes()
     {
         //Debug.Log("Letter Cubes Activated");
+        if(letterGroups.Count < cameraMoved)return;
         var t = letterGroups[cameraMoved];
         t.SetActive(true);
         var cubes = t.transform;
