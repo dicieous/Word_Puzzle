@@ -1,9 +1,21 @@
+using TMPro;
 using UnityEngine;
 
 public class PlayerCubeScript : MonoBehaviour
 {
 	public bool isPlaced;
-	
+
+    public int checknumber;
+    public bool anim;
+    
+	private void Start()
+	{
+		
+		transform.GetChild(2).GetComponent<TextMeshPro>().text =
+			transform.GetChild(0).GetComponent<TextMeshPro>().text;
+		
+	}
+    
 	private void Update()
 	{
 		// var rayOrigin = transform.position;

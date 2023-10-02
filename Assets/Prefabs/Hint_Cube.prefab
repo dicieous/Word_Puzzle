@@ -109,8 +109,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 2382364671
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.5529412}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -184,8 +184,8 @@ GameObject:
   - component: {fileID: 2102599373834701041}
   - component: {fileID: 2425014579304215170}
   - component: {fileID: 8885561426018819308}
-  - component: {fileID: 4148490482053643137}
-  - component: {fileID: 8456619578862258929}
+  - component: {fileID: 8844416982950678376}
+  - component: {fileID: 7310920681460288177}
   m_Layer: 0
   m_Name: Hint_Cube
   m_TagString: Hint_Cube
@@ -272,7 +272,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isVisible: 0
---- !u!65 &4148490482053643137
+  done: 0
+--- !u!65 &8844416982950678376
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -291,9 +292,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9310658, y: 0.9582224, z: 0.7431345}
-  m_Center: {x: -0.0029867887, y: 0.001355648, z: 0.0029868484}
---- !u!54 &8456619578862258929
+  m_Size: {x: 0.9, y: 0.9, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &7310920681460288177
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

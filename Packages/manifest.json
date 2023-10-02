@@ -2,8 +2,12 @@
   "dependencies": {
     "com.benoitfreslon.vibration": "https://github.com/BenoitFreslon/Vibration.git",
     "com.coffee.ui-particle": "https://github.com/mob-sakai/ParticleEffectForUGUI.git",
+    "com.lionstudios.release.lionanalytics": "2.6.1",
+    "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "2.0.4",
+    "com.unity.device-simulator.devices": "1.0.0",
     "com.unity.feature.development": "1.0.1",
+    "com.unity.recorder": "4.0.1",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.7.4",
     "com.unity.ugui": "1.0.0",
@@ -39,5 +43,15 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "Lion Studios",
+      "url": "http://packages.lionstudios.cc:4873",
+      "scopes": [
+        "com.lionstudios.release",
+        "com.lionstudios.templates"
+      ]
+    }
+  ]
 }

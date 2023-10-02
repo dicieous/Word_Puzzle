@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +10,6 @@ public class CubesGroupScript : MonoBehaviour
 {
 	private Vector3 _initPos;
 
-	//private PlayerCubeScript _playerCubeScript;
 
 	[SerializeField] private List<GameObject> childObjects;
 	[SerializeField] private LayerMask mask;
@@ -19,9 +20,10 @@ public class CubesGroupScript : MonoBehaviour
 	private Vector3 _offset;
 
 	private bool isFilledC;
-	private bool canMove = true;
+	//private bool canMove = true;
 	private bool canReset = true;
 
+	public int number;
 	void Start()
 	{
 		_initPos = transform.position;
@@ -32,37 +34,140 @@ public class CubesGroupScript : MonoBehaviour
 			initialPos[i] = childObjects[i].transform.position;
 			//Debug.Log("Initial Position get " + initialPos[i]);
 		}
-
-		// if ((PlayerPrefs.GetInt("Level", 1) == 1))
-		// {
-		// 	GameManager.Instance.ShowTheText();
-		// }
+		
+		if(GameManager.Instance.levelTypeChanged)
+        {
+            transform.GetChild(0).GetComponent<PlayerCubeScript>().anim = true;
+        }
 	}
 
+    public void AnimSeq()
+    {
+        var num = transform.GetComponents<Collider>().Length;
+        for (int i = 0; i < num; i++)
+        {
+            transform.GetComponents<Collider>()[i].enabled = false;
+        }
+        CrctAnimSeqCall();
+    }
 
+    private int countnum;
+    private void CrctAnimSeqCall()
+    {
+        countnum = 0;
+        var seq = DOTween.Sequence();
+        seq.AppendCallback(() =>
+        {
+            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+                .color = CoinManager.instance.greenColor; 
+            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+                .color = CoinManager.instance.greenColor;
+            childObjects[countnum].transform.GetChild(0).transform
+                .DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
+                .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+            childObjects[countnum].transform.GetChild(1).transform
+                .DOScale(new Vector3(20f, 30f, 15f), 0.1f)
+                .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+            countnum++;
+        });
+        seq.AppendInterval(0.15f);
+        seq.SetLoops(childObjects.Count);
+    }
+    
+    public void WrongAnimSeq()
+    {
+        countnum = 0;
+        var num = transform.GetComponents<Collider>().Length;
+        for (int i = 0; i < num; i++)
+        {
+            transform.GetComponents<Collider>()[i].enabled = false;
+        }
+        DOVirtual.DelayedCall(0.15f, () =>
+        {
+            WrongBackAnimSeq();
+        });
+        var seq = DOTween.Sequence();
+        seq.AppendCallback(() =>
+        {
+            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+                .color = CoinManager.instance.redColor; 
+            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+                .color = CoinManager.instance.redColor;
+            childObjects[countnum].transform.GetChild(0).transform
+                .DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
+                .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+            childObjects[countnum].transform.GetChild(1).transform
+                .DOScale(new Vector3(20f, 30f, 15f), 0.1f)
+                .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+            countnum++;
+        });
+        seq.AppendInterval(0.05f);
+        seq.SetLoops(childObjects.Count);
+        /*for (int i = 0; i < childObjects.Count; i++)
+        {
+            childObjects[i].transform.GetChild(1).GetComponent<MeshRenderer>().material.color = Color.red;
+        }
+        DOVirtual.DelayedCall(0.15f, () =>
+        {
+            for (int i = 0; i < childObjects.Count; i++)
+            {
+                childObjects[i].transform.GetChild(1).GetComponent<MeshRenderer>().material.color = Color.white;
+                //childObjects[i].GetComponent<MeshRenderer>().material.
+            }
+        });*/
+    }
+
+    private int countBackNum;
+    public void WrongBackAnimSeq()
+    {
+        countBackNum = 0;
+        var seq = DOTween.Sequence();
+        seq.AppendCallback(() =>
+        {
+            if (countBackNum == childObjects.Count)
+            {
+                var num = transform.GetComponents<Collider>().Length;
+                for (int i = 0; i < num; i++)
+                {
+                    transform.GetComponents<Collider>()[i].enabled = true;
+                }
+            }
+            else
+            {
+                childObjects[countBackNum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+                    .color = Color.white; 
+                childObjects[countBackNum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+                    .color = Color.white;
+            }
+            countBackNum++;
+        });
+        seq.AppendInterval(0.075f);
+        seq.SetLoops(childObjects.Count + 1);
+    }
+	private bool _once;
 	private void OnMouseDown()
 	{
-		if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
+		if (!GameManager.Instance.downCheck)
+		{
+			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
 
-		var position1 = transform.position;
-		var position = new Vector3(position1.x, position1.y, position1.z);
-		_offset = position - MouseWorldPosition();
-
-		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
-		//Debug.Log("Vibrate on mouse Down");
-
-
-		//_oldPos = position;
-		/*var newScale = new Vector3(1f, 1f, 1f);
-		transform.DOScale(newScale, 0.05f).SetEase(Ease.OutBounce);*/
+			var position1 = transform.position;
+			var position = new Vector3(position1.x, position1.y /*+ 1.5f*/, position1.z /*+ 2.5f*/);
+			_offset = position - MouseWorldPosition();
+            
+            if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+			if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+		}
 	}
 
 	private void OnMouseDrag()
 	{
-		if (canMove)
+		if (!GameManager.Instance.downCheck)
 		{
+			if (GameManager.Instance.levelCompleted || GameManager.Instance.scriptOff) return;
+			
 			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
-		
+
 			var position1 = transform.position;
 			position1 = MouseWorldPosition() + _offset;
 			position1 = new Vector3(position1.x, position1.y, -3.5f);
@@ -77,47 +182,20 @@ public class CubesGroupScript : MonoBehaviour
 				child.transform.position = position;
 			}
 		}
-		
-
-		//Raycast to check if you're hitting the CubeGroup Collider and take the childObjects back in the cubeGroup Collider
-
-		// RaycastHit hit;
-		// var ray = Camera.main!.ScreenPointToRay (Input.mousePosition);
-		// if (Physics.Raycast (ray, out hit)) {
-		// 	if (hit.transform.CompareTag("Cube_Group"))
-		// 	{
-		// 		foreach (var child in childObjects)
-		// 		{
-		// 			var position = child.transform.position;
-		// 			position = new Vector3(position.x, position.y, -2f);
-		// 			child.GetComponent<PlayerCubeScript>().isPlaced = false;
-		// 			child.transform.position = position;
-		// 		}
-		// 		
-		// 		//Debug.Log("PushUp");
-		// 	}
-		// }
-
-
-		
 	}
 
-	private void OnMouseUp()
+	/*private void OnMouseUp()
 	{
-		/*if ((transform.position.y > GameManager.Instance.yMaxLimit ||
-			 transform.position.y < GameManager.Instance.yMinLimit) ||
-			(transform.position.x > GameManager.Instance.xMaxLimit ||
-			 transform.position.x < GameManager.Instance.xMinLimit))
+		if (!GameManager.Instance.downCheck)
 		{
-			ResetPosition();
-		}*/
-
-
-		/*var newScale = new Vector3(0.9f, .9f, 1f);
-		//transform.localScale = (newScale);
-		transform.DOScale(newScale, 0f);
-		*/
-	}
+			GameManager.Instance.downCheck = true;
+			DOVirtual.DelayedCall(0.5f, () =>
+			{
+				GameManager.Instance.downCheck = false;
+			});
+		}
+		
+	}*/
 
 	Vector3 MouseWorldPosition()
 	{
@@ -140,7 +218,8 @@ public class CubesGroupScript : MonoBehaviour
 	private void ResetPosition()
 	{
 		//transform.position = _initPos;
-		if (canReset)
+		if (canReset && !
+				GameManager.Instance.levelCompleted)
 		{
 			canReset = false;
 			transform.DOMove(_initPos, 0.2f).SetEase(Ease.Flash).OnComplete(() =>
@@ -151,27 +230,11 @@ public class CubesGroupScript : MonoBehaviour
 			for (int i = 0; i < childObjects.Count; i++)
 			{
 				childObjects[i].transform.DOMove(initialPos[i], 0.2f).SetEase(Ease.Flash);
-				//childObjects[i].transform.position = initialPos[i];
-				//Debug.Log($"Initial Position set {initialPos[i]}");
+				
 			}
 		}
 		
 
-		/*var newScale = new Vector3(0.9f, .9f, .9f);
-		transform.DOScale(newScale, 0.2f);*/
-
-		//Debug.Log("ResetPos");
-		//Debug.Log("isFilled Value "+ PlayerCubeScript.instance.isFilled);
-		//if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ResetPositionMG");
-		//if(SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
-
-		
-		// for (int i = 0; i < childObjects.Count; i++)
-		// {
-		// 	//childObjects[i].transform.DOMove(initialPos[i], 0.2f);
-		// 	childObjects[i].transform.position = initialPos[i];
-		// 	//Debug.Log($"Initial Position set {initialPos[i]}");
-		// }
 	}
 
 	//To check if you are hitting letters Group Collider
@@ -204,7 +267,19 @@ public class CubesGroupScript : MonoBehaviour
 
 		return false;
 	}
+	private bool CheckIfAllHitting()
+	{
+		for (int i = 0; i < childObjects.Count; i++)
+		{
+			var child = childObjects[i].transform;
+			if(!CheckIfHitting(child)) return false;
+			var hitInfo = RayCastInfo(child);
+			if (hitInfo.collider.GetComponent<HolderCubeScript>().isFilled) return false;
+		}
 
+//		print("all are hitting");
+		return true;
+	}
 	//To get position of the Cube Grid Cubes
 	private RaycastHit RayCastInfo(Transform child)
 	{
@@ -220,12 +295,12 @@ public class CubesGroupScript : MonoBehaviour
 	{
 		isFilledC = hitInfo.collider.GetComponent<HolderCubeScript>().isFilled;
 
-		child.GetComponent<PlayerCubeScript>().isPlaced = true;
-		Debug.Log("isFilled Value " + isFilledC);
+	
+		//Debug.Log("isFilled Value " + isFilledC);
 
 		if (!isFilledC)
 		{
-			Debug.Log("Check if hitting");
+			//Debug.Log("Check if hitting");
 
 			if (Input.GetMouseButtonUp(0))
 			{
@@ -234,40 +309,65 @@ public class CubesGroupScript : MonoBehaviour
 				var vector3 = transform.position;
 				vector3.z = position.z;
 				
+				child.GetComponent<PlayerCubeScript>().isPlaced = true;
+				
 				Instantiate(dustFX, position, Quaternion.identity);
 				
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Pop");
 
-				DOVirtual.DelayedCall(.05f, () =>
+				if (PlayerPrefs.GetInt("Level", 1) == 1)
 				{
-					// if (PlayerPrefs.GetInt("Level", 1) == 1)
-					// {
-					// 	GameManager.Instance.ShowTheText();
-					// }
-				});
+					DOVirtual.DelayedCall(0.3f, () =>
+					{
+						if (!check2done)
+						{
+//							print("checkingObj");
+							GameManager.Instance.ShowTheText();
+							check2done = true;
+						}
+					});
+				}
+				
 			}
 		}
 	}
 
+	public bool check1done;
+	public bool check2done; 
+	public bool check3done;
+	
+	// ReSharper disable Unity.PerformanceAnalysis
 	private void CondToAttachCubesInGrid()
 	{
-		for (int i = 0; i < childObjects.Count; i++)
+		if (CheckIfAllHitting())
 		{
-			var child = childObjects[i].transform;
-			if (CheckIfHitting(child))
+			for (int i = 0; i < childObjects.Count; i++)
 			{
-				var hitInfo = RayCastInfo(child);
-				Debug.Log("Show");
-				AttachTheObj(hitInfo, child);
-			}
-			else if (!CheckIfHitting(child) && !child.GetComponent<PlayerCubeScript>().isPlaced)
-			{
-				
-				if (Input.GetMouseButtonUp(0))
+				var child = childObjects[i].transform;
+				if (CheckIfHitting(child))
 				{
-					ResetPosition();
+					var hitInfo = RayCastInfo(child);
+					if (Input.GetMouseButtonUp(0))
+					{
+						//Debug.Log("Show");
+						AttachTheObj(hitInfo, child);
+					}
+
 				}
+			}
+		}
+		else
+		{
+			for (int i = 0; i < childObjects.Count; i++)
+			{
+				var child = childObjects[i].transform;
+				if (!child.GetComponent<PlayerCubeScript>().isPlaced)
+				{
+					if (Input.GetMouseButtonUp(0))
+						ResetPosition();
+				}
+
 			}
 		}
 	}

@@ -14,8 +14,47 @@
       "dependencies": {},
       "hash": "3c11209f17d38f154e020cee8b0518be9ee0fb86"
     },
+    "com.lionstudios.release.lionanalytics": {
+      "version": "2.6.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.lionstudios.release.lionkitcore": "2.6.5",
+        "com.lionstudios.release.lionsdkservice": "2.4.10"
+      },
+      "url": "http://packages.lionstudios.cc:4873"
+    },
+    "com.lionstudios.release.lionkitcore": {
+      "version": "2.6.5",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
+      "url": "http://packages.lionstudios.cc:4873"
+    },
+    "com.lionstudios.release.lionsdkservice": {
+      "version": "2.4.10",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "http://packages.lionstudios.cc:4873"
+    },
+    "com.unity.2d.sprite": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {}
+    },
     "com.unity.collab-proxy": {
       "version": "2.0.4",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.device-simulator.devices": {
+      "version": "1.0.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -74,11 +113,27 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.performance.profile-analyzer": {
       "version": "1.2.2",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.recorder": {
+      "version": "4.0.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.timeline": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.settings-manager": {
