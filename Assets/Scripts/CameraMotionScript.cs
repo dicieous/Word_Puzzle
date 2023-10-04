@@ -166,7 +166,8 @@ public class CameraMotionScript : MonoBehaviour
     }
 
     void ActivateEmojis()
-    {
+    { 
+        if(emojis.Count < cameraMoved) return;
         {
             var e = emojis[cameraMoved].emojisGroup;
             foreach (var t in e)
@@ -178,6 +179,7 @@ public class CameraMotionScript : MonoBehaviour
 
     void DeactivateEmojis()
     {
+        if(emojis.Count < cameraMoved) return;
         for (int i = 0; i < emojis.Count; i++)
         {
             var e = emojis[i].emojisGroup;

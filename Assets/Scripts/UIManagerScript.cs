@@ -184,7 +184,7 @@ public class UIManagerScript : MonoBehaviour
                     congratulationsImages[Random.Range(0, congratulationsImages.Count)];
                 DOVirtual.DelayedCall(0.05f, () =>
                 {
-                   // print((1f / 9f));
+                   //6 print((1f / 9f));
                     var num = CoinManager.instance.GetLoaderPercent() + ((1f / 9f));
                     //CoinManager.instance.SetLoaderPercentage(CoinManager.instance.GetLoaderPercent() + ((1f / 9f)));
                     CoinManager.instance.progressionBarImage.DOFillAmount(num, 1f)
