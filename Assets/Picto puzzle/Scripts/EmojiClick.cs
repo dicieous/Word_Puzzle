@@ -36,22 +36,42 @@ public class EmojiClick : MonoBehaviour
     public List<GameObject> parentGamePanel;
 
     public bool levelStarted;
-    
+
+    private List<Sprite> optionsDup;
     // Start is called before the first frame update
 
     public void StartFun()
     {
+        optionsDup = options;
+        for (int i = 0; i < hintPos.Count; i++)
+        {
+            hintPos[i].sprite = correctList[i];
+        }
         foreach (var t in gamePanel)
         {
             t.transform.localScale = Vector3.zero;
         }
-        options.Sort((a, b) => 1 - 2 * Random.Range(0, options.Count));
+        /*options.Sort((a, b) => 1 - 2 * Random.Range(0, options.Count));
+        for (int i = 0; i < options.Count; i++)
+        {
+            optionBtn[i].GetComponent<Image>().sprite = options[i];
+            optionBtn[i].gameObject.tag = "Wrong";
+        }*/
+        for (int i = 0; i < options.Count; i++)
+        {
+            var temp = options[i];
+            int randomTemp = Random.Range(0, options.Count);
+            options[i] = options[randomTemp];
+            options[randomTemp] = temp;
+            //optionBtn[i].rectTransform.DOScale(1.3f, 0.3f).SetEase(Ease.Flash).SetLoops(2, LoopType.Yoyo);
+            
+        }
+        //optionsDup.Sort((a, b) => 1 - 2 * Random.Range(0, optionsDup.Count));
         for (int i = 0; i < options.Count; i++)
         {
             optionBtn[i].GetComponent<Image>().sprite = options[i];
             optionBtn[i].gameObject.tag = "Wrong";
         }
-
         PickRandomCorrect();
         // Gamepanel Animations...
         StartCoroutine(ParentOneByOne());
@@ -178,6 +198,18 @@ public class EmojiClick : MonoBehaviour
                         temp.GetComponent<Image>().enabled = false;
                         var colorTemp = correctPos[0].GetComponent<Image>();
                         colorTemp.color = new Color(colorTemp.color.r, colorTemp.color.g, colorTemp.color.b, 1f);
+                        if (CoinManager.instance.GetHintCount() > 0)
+                        {
+                            EmojiManager.Instance.hintButton.interactable = true;
+                            for (int i = 0; i < hintPos.Count; i++)
+                            {
+                                if (hintPos[i].transform.parent == correctPos[0].transform.parent)
+                                {
+                                    hintPos.RemoveAt(i);
+                                }
+                            }
+                           
+                        }
                     });
                
             }
@@ -194,8 +226,19 @@ public class EmojiClick : MonoBehaviour
                         temp.GetComponent<Image>().enabled = false;
                         var colorTemp = correctPos[1].GetComponent<Image>();
                         colorTemp.color = new Color(colorTemp.color.r, colorTemp.color.g, colorTemp.color.b, 1f);
+                        
                     });
-               
+                if (CoinManager.instance.GetHintCount() > 0)
+                {
+                    EmojiManager.Instance.hintButton.interactable = true;
+                    for (int i = 0; i < hintPos.Count; i++)
+                    {
+                        if (hintPos[i].transform.parent == correctPos[1].transform.parent)
+                        {
+                            hintPos.RemoveAt(i);
+                        }
+                    }
+                }
             }
             else if (temp.GetComponent<Image>().sprite == correctList[2])
             {
@@ -209,9 +252,47 @@ public class EmojiClick : MonoBehaviour
                         temp.GetComponent<Image>().enabled = false;
                         var colorTemp = correctPos[2].GetComponent<Image>();
                         colorTemp.color = new Color(colorTemp.color.r, colorTemp.color.g, colorTemp.color.b, 1f);
+                        
                     });
+                if (CoinManager.instance.GetHintCount() > 0)
+                {
+                    EmojiManager.Instance.hintButton.interactable = true;
+                    for (int i = 0; i < hintPos.Count; i++)
+                    {
+                        if (hintPos[i].transform.parent == correctPos[2].transform.parent)
+                        {
+                            hintPos.RemoveAt(i);
+                        }
+                    }
+                           
+                }
             }
-
+            else if (temp.GetComponent<Image>().sprite == correctList[3])
+            {
+                temp.GetComponent<Image>().rectTransform.DOMove(correctPos[3].rectTransform.position, .25f)
+                    .OnComplete(() =>
+                    {
+                        correctPos[3].GetComponent<Image>().enabled = true;
+                        correctPos[3].GetComponent<Image>().sprite = temp.GetComponent<Image>().sprite;
+                        // correctPos[1].GetComponent<Image>().rectTransform.DOScale(1.3f, 0.25f).SetEase(Ease.Linear)
+                        //     .SetLoops(2, LoopType.Yoyo);
+                        temp.GetComponent<Image>().enabled = false;
+                        var colorTemp = correctPos[3].GetComponent<Image>();
+                        colorTemp.color = new Color(colorTemp.color.r, colorTemp.color.g, colorTemp.color.b, 1f);
+                    });
+                if (CoinManager.instance.GetHintCount() > 0)
+                {
+                    EmojiManager.Instance.hintButton.interactable = true;
+                    for (int i = 0; i < hintPos.Count; i++)
+                    {
+                        if (hintPos[i].transform.parent == correctPos[3].transform.parent)
+                        {
+                            hintPos.RemoveAt(i);
+                        }
+                    }
+                           
+                }
+            }
             correctCheckList.Add(temp.gameObject);
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Pop");
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);

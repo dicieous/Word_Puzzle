@@ -119,9 +119,17 @@ public class CoinManager : MonoBehaviour
     public float GetLoaderPercent() => PlayerPrefs.GetFloat("LoaderPercentage", 0);
     public void SetLoaderPercentage(float percent) => PlayerPrefs.SetFloat("LoaderPercentage", percent);
     
+    
     public int GetHintCount() => PlayerPrefs.GetInt("Hint Count", 0);
     public void SetHintCount(int countHint) => PlayerPrefs.SetInt("Hint Count", countHint);
 
-    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 0);
+    public int GetShuffleCount() => PlayerPrefs.GetInt("ShuffleCount", 0);
+    public void SetShuffleCount(int countShuffle) => PlayerPrefs.SetInt("ShuffleCount", countShuffle);
+    
+
+    public int Get5050Count() => PlayerPrefs.GetInt("Count5050", 0);
+    public void Set5050Count(int count5050) => PlayerPrefs.SetInt("Count5050", count5050);
+    
+    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 1000000);
     public void SetCoinCount(int countCoin) => PlayerPrefs.SetInt("Coins Count", countCoin);
 }
