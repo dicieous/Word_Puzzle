@@ -256,6 +256,12 @@ public class EmojiManager : MonoBehaviour
 
     public void FunShuffle()
     {
+        CoinManager.instance.SetCoinCount(CoinManager.instance.GetCoinsCount()-10);
+        CoinManager.instance.coinCountText.text = CoinManager.instance.GetCoinsCount().ToString();
+        
+        // CoinManager.instance.SetShuffleCount(CoinManager.instance.GetShuffleCount()-1);
+        // CoinManager.instance.Set5050Count(CoinManager.instance.Get5050Count()-1);
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
@@ -269,11 +275,7 @@ public class EmojiManager : MonoBehaviour
             hintCounter.ToString(), "EmojiMode", GetListNumbers().ToString(), "Hints");
         if (CoinManager.instance.GetHintCount() > 0)
         {
-            /*SetHintCount(GetHintCount()-1);
-            SetCoinCount(GetCoinsCount()-20);
-            coinCountText.text = GetCoinsCount().ToString();
-            hintText.text = GetHintCount().ToString();*/
-            for (int i = 0; i < panelObj.GetComponent<EmojiClick>().hintPos.Count; i++)
+            /*for (int i = 0; i < panelObj.GetComponent<EmojiClick>().hintPos.Count; i++)
             {
                 var temp = panelObj.GetComponent<EmojiClick>().hintPos[i].GetComponent<Image>();
                 temp.color = new Color(temp.color.r, temp.color.g, temp.color.b, .65f);
@@ -281,8 +283,19 @@ public class EmojiManager : MonoBehaviour
                 temp.sprite = panelObj.GetComponent<EmojiClick>().correctList[i];
                 temp.rectTransform.DOScale(1.3f, 0.25f).SetEase(Ease.Linear)
                     .SetLoops(2, LoopType.Yoyo);
-            }
+            }*/
 
+            if (panelObj.GetComponent<EmojiClick>().hintPos.Count > 0)
+            {
+                var num = UnityEngine.Random.Range(0, panelObj.GetComponent<EmojiClick>().hintPos.Count);
+                
+                var temp = panelObj.GetComponent<EmojiClick>().hintPos[num].GetComponent<Image>();
+                temp.color = new Color(temp.color.r, temp.color.g, temp.color.b, .65f);
+                temp.enabled = true;
+                //temp.sprite = panelObj.GetComponent<EmojiClick>().correctList[num];
+                temp.rectTransform.DOScale(1.3f, 0.25f).SetEase(Ease.Linear)
+                    .SetLoops(2, LoopType.Yoyo);
+            }
             //print("Function decall");
             hintButton.interactable = false;
             CoinManager.instance.SetHintCount(CoinManager.instance.GetHintCount() - 1);
@@ -303,6 +316,12 @@ public class EmojiManager : MonoBehaviour
     {
         /*var j = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         j.interactable = false;*/
+        
+        CoinManager.instance.SetCoinCount(CoinManager.instance.GetCoinsCount()-10);
+        CoinManager.instance.coinCountText.text = CoinManager.instance.GetCoinsCount().ToString();
+        
+        // CoinManager.instance.SetShuffleCount(CoinManager.instance.GetShuffleCount()-1);
+        // CoinManager.instance.Set5050Count(CoinManager.instance.Get5050Count()-1);
         button5050.interactable = false;
         int num = (panelObj.GetComponent<EmojiClick>().optionBtn.Count / 2);
         for (int i = 0; i < num; i++)
@@ -432,6 +451,6 @@ public class EmojiManager : MonoBehaviour
     public int GetPanelsDone() => PlayerPrefs.GetInt("Panels Done", 0);
     public void SetPanelsDone(int num) => PlayerPrefs.SetInt("Panels Done", num);
 
-    public int GetListNumbers() => PlayerPrefs.GetInt("Lists Number", 7);
+    public int GetListNumbers() => PlayerPrefs.GetInt("Lists Number", 0);
     public void SetListNumber(int val) => PlayerPrefs.SetInt("Lists Number", val);
 }
