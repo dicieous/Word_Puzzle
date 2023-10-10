@@ -4173,6 +4173,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.4171584, y: 1.402606, z: 1}
   m_Center: {x: 0.58814275, y: 0.009232998, z: 0}
+--- !u!1 &604219460 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1378215702334318862, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+  m_PrefabInstance: {fileID: 1618739070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &620040679
 GameObject:
   m_ObjectHideFlags: 0
@@ -5255,6 +5260,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3105032407085746626, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
   m_PrefabInstance: {fileID: 790001387}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &807753551 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 729967882238156734, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+  m_PrefabInstance: {fileID: 1618739070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &816380640
 GameObject:
   m_ObjectHideFlags: 0
@@ -5834,6 +5844,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &964695203 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5742540649647649439, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+  m_PrefabInstance: {fileID: 1618739070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &982728112
 GameObject:
   m_ObjectHideFlags: 0
@@ -6364,6 +6379,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: orthoSize.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -6435,6 +6454,46 @@ PrefabInstance:
       propertyPath: letterGroups.Array.data[2]
       value: 
       objectReference: {fileID: 661255378}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[0].emojisGroup.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[1].emojisGroup.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[2].emojisGroup.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[0].emojisGroup.Array.data[0]
+      value: 
+      objectReference: {fileID: 1794400917}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[0].emojisGroup.Array.data[1]
+      value: 
+      objectReference: {fileID: 807753551}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[1].emojisGroup.Array.data[0]
+      value: 
+      objectReference: {fileID: 964695203}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[1].emojisGroup.Array.data[1]
+      value: 
+      objectReference: {fileID: 544279944}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[1].emojisGroup.Array.data[2]
+      value: 
+      objectReference: {fileID: 945515539}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[2].emojisGroup.Array.data[0]
+      value: 
+      objectReference: {fileID: 2027051331}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[2].emojisGroup.Array.data[1]
+      value: 
+      objectReference: {fileID: 604219460}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: stickingAreaCubes.Array.data[0].stickingAreaCubesGroup.Array.size
       value: 3
@@ -11400,6 +11459,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5185339923748389139, guid: cbf506303f2a72544bca61b38ba3ccd4, type: 3}
   m_PrefabInstance: {fileID: 1794123793}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1794400917 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3149127827766546903, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+  m_PrefabInstance: {fileID: 1618739070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1801319487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12219,9 +12283,10 @@ MonoBehaviour:
   - {fileID: 1937466259}
   - {fileID: 371193975}
   - {fileID: 2014414733}
-  ScriptOff: 0
+  scriptOff: 0
   rowsInGrid: 7
   colInGrid: 7
+  numberOfColumns: 
   rowfilled: 0
   fXRowWords: []
   downCheck: 0
