@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.41133603, g: 0.43699887, b: 0.45013523, a: 1}
+  m_IndirectSpecularColor: {r: 0.41385436, g: 0.43987173, b: 0.45213437, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1064,7 +1064,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6783209919625516775, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: anim
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6783209919625516775, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: parentObj
@@ -4200,7 +4200,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1771533703}
   - {fileID: 1550793514}
   - {fileID: 150905007}
   - {fileID: 2031787718}
@@ -6923,7 +6922,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6783209919625516775, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: anim
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6783209919625516775, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: parentObj
@@ -7107,19 +7106,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: camPos.Array.data[0].x
-      value: -4.9
+      value: -4.65
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: camPos.Array.data[0].y
-      value: 7.45
+      value: 5.81
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: camPos.Array.data[1].x
-      value: 1.37
+      value: 1.62
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: camPos.Array.data[1].y
-      value: 6.86
+      value: 5.48
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: camPos.Array.data[2].x
@@ -7127,7 +7126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: camPos.Array.data[2].y
-      value: 4.81
+      value: 4.41
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: camPos.Array.data[3].x
@@ -7147,15 +7146,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: orthoSize.Array.data[0]
-      value: 12.3
+      value: 13.9
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: orthoSize.Array.data[1]
-      value: 11
+      value: 13.9
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: orthoSize.Array.data[2]
-      value: 11
+      value: 11.8
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: orthoSize.Array.data[3]
@@ -7219,7 +7218,7 @@ PrefabInstance:
       objectReference: {fileID: 121916577}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: stickingAreaCubes.Array.data[0].stickingAreaCubesGroup.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: stickingAreaCubes.Array.data[1].stickingAreaCubesGroup.Array.size
@@ -7227,7 +7226,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: stickingAreaCubes.Array.data[2].stickingAreaCubesGroup.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: stickingAreaCubes.Array.data[0].stickingAreaCubesGroup.Array.data[0]
@@ -7240,7 +7239,7 @@ PrefabInstance:
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: stickingAreaCubes.Array.data[0].stickingAreaCubesGroup.Array.data[2]
       value: 
-      objectReference: {fileID: 578415713}
+      objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: stickingAreaCubes.Array.data[0].stickingAreaCubesGroup.Array.data[3]
       value: 
@@ -7264,7 +7263,7 @@ PrefabInstance:
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: stickingAreaCubes.Array.data[1].stickingAreaCubesGroup.Array.data[3]
       value: 
-      objectReference: {fileID: 371193973}
+      objectReference: {fileID: 578415713}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: stickingAreaCubes.Array.data[2].stickingAreaCubesGroup.Array.data[0]
       value: 
@@ -7272,7 +7271,11 @@ PrefabInstance:
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: stickingAreaCubes.Array.data[2].stickingAreaCubesGroup.Array.data[1]
       value: 
-      objectReference: {fileID: 2014414731}
+      objectReference: {fileID: 371193973}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: stickingAreaCubes.Array.data[2].stickingAreaCubesGroup.Array.data[2]
+      value: 
+      objectReference: {fileID: 578415713}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9073,7 +9076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6783209919625516775, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: anim
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6783209919625516775, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: parentObj
@@ -10945,7 +10948,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6783209919625516775, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: anim
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6783209919625516775, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: parentObj
@@ -12316,7 +12319,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 578415714}
+    m_TransformParent: {fileID: 1946002749}
     m_Modifications:
     - target: {fileID: 1970286650030674297, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_Size.x
@@ -12340,7 +12343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3105032407085746626, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.15
+      value: -1.1499996
       objectReference: {fileID: 0}
     - target: {fileID: 3105032407085746626, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -13010,7 +13013,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 354860719948611178, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: anim
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 354860719948611178, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: parentObj
@@ -13206,7 +13209,7 @@ PrefabInstance:
       objectReference: {fileID: 1864664402}
     - target: {fileID: 6883170769364475448, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: anim
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6883170769364475448, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: parentObj
@@ -13310,8 +13313,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   answers:
   - COCONUT
-  - URTLE
-  - OMATO
+  - URTLEO
+  - MATO
   - PUPKIN
   - KIFE
   - ADDER
@@ -13817,6 +13820,7 @@ Transform:
   - {fileID: 1859244947}
   - {fileID: 236046066}
   - {fileID: 1496156907}
+  - {fileID: 1771533703}
   m_Father: {fileID: 1077563590}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
