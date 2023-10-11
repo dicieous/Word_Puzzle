@@ -99,8 +99,11 @@ public class CoinManager : MonoBehaviour
         if (GetHintCount() > 0)
         {
             hintCounter++;
-            ByteBrewManager.instance.ProgressEvent(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),
-                hintCounter.ToString(), "NormalMode", "Hints");
+            if (ByteBrewManager.instance)
+            {
+                ByteBrewManager.instance.ProgressEvent(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),
+                    hintCounter.ToString(), "NormalMode", "Hints");
+            }
             SetHintCount(GetHintCount() - 1);
             SetCoinCount(GetCoinsCount() - 20);
             coinCountText.text = GetCoinsCount().ToString();
@@ -130,7 +133,7 @@ public class CoinManager : MonoBehaviour
     public int Get5050Count() => PlayerPrefs.GetInt("Count5050", 0);
     public void Set5050Count(int count5050) => PlayerPrefs.SetInt("Count5050", count5050);
     
-    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 0);
+    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 10000000);
 
     public void SetCoinCount(int countCoin) => PlayerPrefs.SetInt("Coins Count", countCoin);
 }
