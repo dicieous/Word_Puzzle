@@ -355,6 +355,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
   m_PrefabInstance: {fileID: 2095162899}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &73432411 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1378215702334318862, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+  m_PrefabInstance: {fileID: 1618739070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &77162220
 GameObject:
   m_ObjectHideFlags: 0
@@ -3451,6 +3456,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5185339923748389139, guid: cbf506303f2a72544bca61b38ba3ccd4, type: 3}
   m_PrefabInstance: {fileID: 507483136}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &517970316 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3149127827766546903, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+  m_PrefabInstance: {fileID: 1618739070}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &522928294
 PrefabInstance:
@@ -7088,6 +7098,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: orthoSize.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -7109,7 +7123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: camPos.Array.data[2].x
-      value: 7.4
+      value: 7.23
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: camPos.Array.data[2].y
@@ -7141,7 +7155,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: orthoSize.Array.data[2]
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: orthoSize.Array.data[3]
@@ -7159,6 +7173,50 @@ PrefabInstance:
       propertyPath: letterGroups.Array.data[2]
       value: 
       objectReference: {fileID: 661255378}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[0].emojisGroup.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[1].emojisGroup.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[2].emojisGroup.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[0].emojisGroup.Array.data[0]
+      value: 
+      objectReference: {fileID: 1791645502}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[0].emojisGroup.Array.data[1]
+      value: 
+      objectReference: {fileID: 1848284082}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[1].emojisGroup.Array.data[0]
+      value: 
+      objectReference: {fileID: 73432411}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[1].emojisGroup.Array.data[1]
+      value: 
+      objectReference: {fileID: 517970316}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[1].emojisGroup.Array.data[2]
+      value: 
+      objectReference: {fileID: 544279944}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[1].emojisGroup.Array.data[3]
+      value: 
+      objectReference: {fileID: 945515539}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[2].emojisGroup.Array.data[0]
+      value: 
+      objectReference: {fileID: 2027051331}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: emojis.Array.data[2].emojisGroup.Array.data[1]
+      value: 
+      objectReference: {fileID: 121916577}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: stickingAreaCubes.Array.data[0].stickingAreaCubesGroup.Array.size
       value: 3
@@ -12366,6 +12424,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
   m_PrefabInstance: {fileID: 1864664401}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1791645502 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5742540649647649439, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+  m_PrefabInstance: {fileID: 1618739070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1794123793
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12823,6 +12886,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.2932162, y: 2.6126866, z: 1}
   m_Center: {x: 2.2968566, y: -0.56199694, z: 0}
+--- !u!1 &1848284082 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 729967882238156734, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+  m_PrefabInstance: {fileID: 1618739070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1859244946
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13263,6 +13331,7 @@ MonoBehaviour:
   scriptOff: 0
   rowsInGrid: 7
   colInGrid: 7
+  numberOfColumns: 
   rowfilled: 0
   fXRowWords: []
   downCheck: 0

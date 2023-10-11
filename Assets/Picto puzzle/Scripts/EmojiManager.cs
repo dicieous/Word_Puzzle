@@ -99,16 +99,18 @@ public class EmojiManager : MonoBehaviour
 
     private void Update()
     {
-        /*if (CoinManager.instance.GetHintCount() == 0 && hintButton.interactable)
+        if (CoinManager.instance.GetCoinsCount() >= 10 && !shuffle.interactable)
         {
-            hintButton.interactable = false;
+            shuffle.interactable = true;
+            button5050.interactable = true;
+            //hintNumberText.text = ((int) (CoinManager.instance.GetHintCount() / 10f)).ToString();
+        }
+        else if (CoinManager.instance.GetHintCount() < 10 && shuffle.interactable)
+        {
+            shuffle.interactable = false;
+            button5050.interactable = false;
             //hintNumberText.text = CoinManager.instance.GetHintCount().ToString();
         }
-        else if (CoinManager.instance.GetHintCount() > 0 && !hintButton.interactable)
-        {
-            hintButton.interactable = true;
-            //hintNumberText.text = CoinManager.instance.GetHintCount().ToString();
-        }*/
     }
 
     ///////----- panels and list updates-----------
@@ -258,6 +260,8 @@ public class EmojiManager : MonoBehaviour
     {
         CoinManager.instance.SetCoinCount(CoinManager.instance.GetCoinsCount()-10);
         CoinManager.instance.coinCountText.text = CoinManager.instance.GetCoinsCount().ToString();
+        CoinManager.instance.SetHintCount((int)(CoinManager.instance.GetCoinsCount() / 20));
+        CoinManager.instance.hintText.text = CoinManager.instance.GetHintCount().ToString();
         
         // CoinManager.instance.SetShuffleCount(CoinManager.instance.GetShuffleCount()-1);
         // CoinManager.instance.Set5050Count(CoinManager.instance.Get5050Count()-1);
@@ -319,6 +323,8 @@ public class EmojiManager : MonoBehaviour
         
         CoinManager.instance.SetCoinCount(CoinManager.instance.GetCoinsCount()-10);
         CoinManager.instance.coinCountText.text = CoinManager.instance.GetCoinsCount().ToString();
+        CoinManager.instance.SetHintCount((int)(CoinManager.instance.GetCoinsCount() / 20));
+        CoinManager.instance.hintText.text = CoinManager.instance.GetHintCount().ToString();
         
         // CoinManager.instance.SetShuffleCount(CoinManager.instance.GetShuffleCount()-1);
         // CoinManager.instance.Set5050Count(CoinManager.instance.Get5050Count()-1);
