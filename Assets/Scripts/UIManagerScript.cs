@@ -219,6 +219,11 @@ public class UIManagerScript : MonoBehaviour
 				hintButton.interactable = true;
 			}
 		}
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            NextSceneLoader();
+        }
 	}
 
 	public void OnHintButtonClick()

@@ -85,6 +85,12 @@ public class EmojiClick : MonoBehaviour
                 //AudioManager.instance.Play("Won");
                 //Debug.Log("Win");
                 _levelComplete = true;
+                if (!EmojiManager.Instance._levelCompletemain && EmojiManager.Instance.GetPanelsDone() == 4)
+                {
+                    EmojiManager.Instance.shuffle.interactable = false;
+                    EmojiManager.Instance.button5050.interactable = false;
+                    EmojiManager.Instance._levelCompletemain = true;
+                }
                 for (int i = 0; i < optionBtn.Count; i++)
                 {
                     optionBtn[i].gameObject.GetComponent<Button>().interactable = false;
@@ -211,6 +217,13 @@ public class EmojiClick : MonoBehaviour
                            
                         }
                     });
+                if (EmojiManager.Instance.GetListNumbers() == 0)
+                {
+                    if (EmojiManager.Instance.hand1.activeInHierarchy)
+                    {
+                        EmojiManager.Instance.hand1.SetActive(false);
+                    }
+                }
                
             }
 
@@ -237,6 +250,13 @@ public class EmojiClick : MonoBehaviour
                         {
                             hintPos.RemoveAt(i);
                         }
+                    }
+                }
+                if (EmojiManager.Instance.GetListNumbers() == 0)
+                {
+                    if (EmojiManager.Instance.hand1.activeInHierarchy)
+                    {
+                        EmojiManager.Instance.hand1.SetActive(false);
                     }
                 }
             }

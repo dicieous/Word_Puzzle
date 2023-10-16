@@ -50,9 +50,11 @@ public class EmojiManager : MonoBehaviour
     public GameObject losePanel;
 
     public UIParticle popperBlast;
-
+    
+    public GameObject hand1;
+    public GameObject hand2;
     public TextMeshProUGUI tutorialText;
-
+    public bool _levelCompletemain;
 
     // public Button
     private void Awake()
@@ -99,7 +101,7 @@ public class EmojiManager : MonoBehaviour
 
     private void Update()
     {
-        if (CoinManager.instance.GetCoinsCount() >= 10 && !shuffle.interactable)
+        if (CoinManager.instance.GetCoinsCount() >= 10 && !shuffle.interactable && !_levelCompletemain)
         {
             shuffle.interactable = true;
             button5050.interactable = true;
@@ -171,6 +173,13 @@ public class EmojiManager : MonoBehaviour
             emojiDataScript.detailsLists[panelCount].panel.GetComponent<RectTransform>().position,
             emojiDataScript.detailsLists[panelCount].panel.GetComponent<RectTransform>().rotation);
 
+        if (GetListNumbers() == 0)
+        {
+            if(hand1.activeInHierarchy)
+                hand1.SetActive(false);
+            if(!hand1.activeInHierarchy)
+                hand1.SetActive(true);
+        }
         if (panelObj.GetComponent<EmojiClick>().wrongList.Count > 0)
             panelObj.GetComponent<EmojiClick>().wrongList.Clear();
         if (panelObj.GetComponent<EmojiClick>().correctList.Count > 0)
