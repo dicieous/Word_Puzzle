@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Debug = UnityEngine.Debug;
 
 public class CubesGroupScript : MonoBehaviour
 {
@@ -22,6 +22,7 @@ public class CubesGroupScript : MonoBehaviour
 	private bool isFilledC;
 	//private bool canMove = true;
 	private bool canReset = true;
+    private bool canCheckForPlacement = true;
 
 	public int number;
 	void Start()
@@ -152,7 +153,7 @@ public class CubesGroupScript : MonoBehaviour
 			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
 
 			var position1 = transform.position;
-			var position = new Vector3(position1.x, position1.y + 1.5f, position1.z + 2.5f);
+			var position = new Vector3(position1.x, position1.y + 3f, position1.z + 2.5f);
 			_offset = position - MouseWorldPosition();
             
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
@@ -211,7 +212,7 @@ public class CubesGroupScript : MonoBehaviour
 		{
 			ResetPosition();
 		}
-		CondToAttachCubesInGrid();
+        if(canCheckForPlacement) CondToAttachCubesInGrid();
 	}
 
 	//To reset the Position of the Objects
@@ -222,16 +223,29 @@ public class CubesGroupScript : MonoBehaviour
 				GameManager.Instance.levelCompleted)
 		{
 			canReset = false;
-			transform.DOMove(_initPos, 0.2f).SetEase(Ease.Flash).OnComplete(() =>
-			{
+			transform.DOMove(_initPos, 0.2f).SetEase(Ease.Flash).OnStart(() =>
+            {
+                foreach (var childCol in childObjects.Select(t => t.transform.GetComponent<Collider>()))
+                {
+                    childCol.enabled = false;
+                }
+                canCheckForPlacement = false;
+                Debug.Log("Check Stop");
+            }).OnComplete(() =>
+            {
+                foreach (var childCol in childObjects.Select(t => t.transform.GetComponent<Collider>()))
+                {
+                    childCol.enabled = true;
+                }
+                canCheckForPlacement = true;
 				canReset = true;
+                Debug.Log("Check Start");
 			});
 			
 			for (int i = 0; i < childObjects.Count; i++)
-			{
-				childObjects[i].transform.DOMove(initialPos[i], 0.2f).SetEase(Ease.Flash);
-				
-			}
+            {
+                childObjects[i].transform.DOMove(initialPos[i], 0.2f).SetEase(Ease.Flash);
+            }
 		}
 		
 
@@ -312,7 +326,6 @@ public class CubesGroupScript : MonoBehaviour
 				child.GetComponent<PlayerCubeScript>().isPlaced = true;
 				
 				Instantiate(dustFX, position, Quaternion.identity);
-				
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Pop");
 
@@ -340,8 +353,13 @@ public class CubesGroupScript : MonoBehaviour
 	// ReSharper disable Unity.PerformanceAnalysis
 	private void CondToAttachCubesInGrid()
 	{
-		if (CheckIfAllHitting())
+		if (canCheckForPlacement && CheckIfAllHitting())
 		{
+            if (Input.GetMouseButtonUp(0))
+            {
+                GameManager.Instance.movesCount--;
+                UIManagerScript.Instance.movesText.text = "Moves: " + GameManager.Instance.movesCount;
+            }
 			for (int i = 0; i < childObjects.Count; i++)
 			{
 				var child = childObjects[i].transform;
@@ -371,4 +389,9 @@ public class CubesGroupScript : MonoBehaviour
 			}
 		}
 	}
+
+    private void CheckCount()
+    {
+        
+    }
 }

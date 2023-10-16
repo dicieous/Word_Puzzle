@@ -18,8 +18,8 @@ public class UIManagerScript : MonoBehaviour
 	public static UIManagerScript Instance;
 	public CoinManager cm;
 	
-	public GameObject endScreen,prefab;
-	public TextMeshProUGUI levelNo;
+	public GameObject endScreen,prefab,failPanel;
+	public TextMeshProUGUI levelNo,movesText;
 	public Material originalColor;
 	public RectTransform coinEndReference;
 	public RectTransform coinStartReference;
@@ -71,7 +71,9 @@ public class UIManagerScript : MonoBehaviour
 		{
 			endScreen.SetActive(false);
 		}
-
+        
+        failPanel?.SetActive(false);
+        
 		//StartCoroutine(PlayCoinCollectionFx());
 
 		if ((PlayerPrefs.GetInt("Level", 1) == 1))
@@ -88,8 +90,9 @@ public class UIManagerScript : MonoBehaviour
                 t.enabled = false;
             }
 		}
-		
-	}
+
+       
+    }
 
 	public void HelpHand()
 	{
@@ -170,9 +173,9 @@ public class UIManagerScript : MonoBehaviour
         
 		StartCoroutine(PlayCoinCollectionFx());
 		//if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
-		DOVirtual.DelayedCall(2f, () =>
+		DOVirtual.DelayedCall(3.2f, () =>
 		{
-			CoinManager.instance.CoinsIncrease(30);
+			CoinManager.instance.CoinsIncrease(20);
 		});
 		
 		DOVirtual.DelayedCall(3.25f,()=>
@@ -204,7 +207,12 @@ public class UIManagerScript : MonoBehaviour
             }
 		});
 	}
-	
+
+    private void FailPanelActive()
+    {
+        failPanel.SetActive(true);
+    }
+    
 	private void Update()
 	{
 		var s = GetSpecialLevelNumber().ToString()[^1];
@@ -220,10 +228,11 @@ public class UIManagerScript : MonoBehaviour
 			}
 		}
 
-        if (Input.GetKey(KeyCode.Space))
+        if (GameManager.Instance.movesCount == 0)
         {
-            NextSceneLoader();
+            FailPanelActive();
         }
+        
 	}
 
 	public void OnHintButtonClick()

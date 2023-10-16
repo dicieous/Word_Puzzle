@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     [Space(10)] 
     
 	[HideInInspector] public int rowfilled;
+    public int movesCount;
 	[HideInInspector] public List<GameObject> fXRowWords;
     [HideInInspector] public bool downCheck;
     [Space(10)]
@@ -118,7 +119,18 @@ public class GameManager : MonoBehaviour
         }*/
 
 		starFX = UI.starparticleEffect;
-	}
+        movesCount = hintCubesHolder.Count * 2;
+        var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
+        if (s == '0')
+        {
+            UIManagerScript.Instance.movesText.enabled = false;
+        }
+        else
+        {
+            UIManagerScript.Instance.movesText.text = "Moves: " + movesCount;
+        }
+       
+    }
 
 //#region Initialize Grid Words
 
