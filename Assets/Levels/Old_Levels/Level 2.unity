@@ -195,6 +195,10 @@ PrefabInstance:
       propertyPath: rowNo
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7651212965024853534, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
+      propertyPath: m_text
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_Name
       value: Sticking_Cube (4)
@@ -280,6 +284,10 @@ PrefabInstance:
       value: W
       objectReference: {fileID: 0}
     - target: {fileID: 6783209919625516775, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
+      propertyPath: isPlaced
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6783209919625516775, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: parentObj
       value: 
       objectReference: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
@@ -287,6 +295,10 @@ PrefabInstance:
       propertyPath: cubePrefab
       value: 
       objectReference: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
+    - target: {fileID: 6783209919625516775, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
+      propertyPath: checknumber
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7297580712202957475, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: m_IsKinematic
       value: 0
@@ -452,6 +464,10 @@ PrefabInstance:
       propertyPath: rowNo
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7651212965024853534, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
+      propertyPath: m_text
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_Name
       value: Sticking_Cube (8)
@@ -539,6 +555,10 @@ PrefabInstance:
     - target: {fileID: 4355730102995990804, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: rowNo
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7651212965024853534, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
+      propertyPath: m_text
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_Name
@@ -882,6 +902,10 @@ PrefabInstance:
       propertyPath: rowNo
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7651212965024853534, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
+      propertyPath: m_text
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_Name
       value: Sticking_Cube (3)
@@ -1213,6 +1237,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4355730102995990804, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: rowNo
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7651212965024853534, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
+      propertyPath: m_text
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
@@ -1563,6 +1591,10 @@ PrefabInstance:
       propertyPath: rowNo
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7651212965024853534, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
+      propertyPath: m_text
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_Name
       value: Sticking_Cube (7)
@@ -1680,9 +1712,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 1832498849}
     m_Modifications:
     - target: {fileID: 354860719948611178, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
+      propertyPath: anim
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 354860719948611178, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: parentObj
       value: 
       objectReference: {fileID: 173289814}
+    - target: {fileID: 354860719948611178, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
+      propertyPath: checknumber
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2105571065622522270, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.15
@@ -1839,6 +1879,10 @@ PrefabInstance:
       propertyPath: parentObj
       value: 
       objectReference: {fileID: 173289814}
+    - target: {fileID: 6883170769364475448, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
+      propertyPath: checknumber
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7159628943913161484, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -2243,9 +2287,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 1832498849}
     m_Modifications:
     - target: {fileID: 354860719948611178, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
+      propertyPath: anim
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 354860719948611178, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: parentObj
       value: 
       objectReference: {fileID: 749803677}
+    - target: {fileID: 354860719948611178, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
+      propertyPath: checknumber
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2105571065622522270, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.15
@@ -2370,6 +2422,10 @@ PrefabInstance:
       propertyPath: parentObj
       value: 
       objectReference: {fileID: 749803677}
+    - target: {fileID: 6883170769364475448, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
+      propertyPath: checknumber
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7159628943913161484, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -2560,6 +2616,10 @@ PrefabInstance:
     - target: {fileID: 4355730102995990804, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: rowNo
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7651212965024853534, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
+      propertyPath: m_text
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_Name
@@ -2757,6 +2817,10 @@ PrefabInstance:
       propertyPath: cubePrefab
       value: 
       objectReference: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
+    - target: {fileID: 6783209919625516775, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
+      propertyPath: checknumber
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7048840437638379373, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -2827,6 +2891,7 @@ MonoBehaviour:
   colInGrid: 3
   numberOfColumns: 
   rowfilled: 0
+  movesCount: 0
   fXRowWords: []
   downCheck: 0
   levelTypeChanged: 0
@@ -3133,6 +3198,10 @@ PrefabInstance:
       propertyPath: rowNo
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7651212965024853534, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
+      propertyPath: m_text
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
       propertyPath: m_Name
       value: Sticking_Cube (1)
@@ -3217,6 +3286,10 @@ PrefabInstance:
       propertyPath: cubePrefab
       value: 
       objectReference: {fileID: 7868056204885224546, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
+    - target: {fileID: 6783209919625516775, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
+      propertyPath: checknumber
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7048840437638379373, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -3403,9 +3476,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 1832498849}
     m_Modifications:
     - target: {fileID: 354860719948611178, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
+      propertyPath: anim
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 354860719948611178, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: parentObj
       value: 
       objectReference: {fileID: 2072267425}
+    - target: {fileID: 354860719948611178, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
+      propertyPath: checknumber
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2105571065622522270, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.15
@@ -3510,6 +3591,10 @@ PrefabInstance:
       propertyPath: parentObj
       value: 
       objectReference: {fileID: 2072267425}
+    - target: {fileID: 6883170769364475448, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
+      propertyPath: checknumber
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7159628943913161484, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_IsTrigger
       value: 0

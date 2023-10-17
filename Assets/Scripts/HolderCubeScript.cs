@@ -77,11 +77,24 @@ public class HolderCubeScript : MonoBehaviour
                 }
                 else
                 {
-                    var value = other.gameObject;
-                    inputext = value.GetComponentInChildren<TextMeshPro>().text;
-                    GameManager.Instance.AddWords(rowNo - 1, colNo - 1, value);
-                    isFilled = true;
-                    staying = false;
+                    var playerScript = other.gameObject.GetComponent<PlayerCubeScript>();
+                        if (playerScript.anim && playerScript.transform.parent.GetComponent<CubesGroupScript>())
+                        {
+                            if (playerScript.checknumber == checkNumberRef)
+                            {
+                                playerScript.transform.parent.GetComponent<CubesGroupScript>().AnimSeq();
+                            }
+                            else
+                            {
+                                playerScript.transform.parent.GetComponent<CubesGroupScript>().WrongAnimSeq();
+                            }
+                           
+                        }
+                        var value = other.gameObject;
+                        inputext = value.GetComponentInChildren<TextMeshPro>().text;
+                        GameManager.Instance.AddWords(rowNo - 1, colNo - 1, value);
+                        isFilled = true;
+                        staying = false;
                 }
 
                 //print("OnceCheck ::::::::::::::::");
