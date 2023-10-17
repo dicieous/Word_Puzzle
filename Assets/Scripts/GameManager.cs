@@ -419,7 +419,7 @@ public class GameManager : MonoBehaviour
             UI.hintButton.interactable = false;
             //DestroyBlocks();
             
-            DOVirtual.DelayedCall(.75f, () =>
+            DOVirtual.DelayedCall(1.25f, () =>
             {
 	            CoinManager.instance.confettiFx.Play();
                 if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper"); 
@@ -428,10 +428,21 @@ public class GameManager : MonoBehaviour
                 BlockSeqCall();
                 //Debug.Log("LevelComplete");
             });
-        }else if(movesCount == 0 && !levelCompleted)
+        }
+        else if(movesCount == 0 && !levelCompleted)
         {
-            UI.FailPanelActive();
-            Debug.Log("Failed");
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                if (!levelCompleted)
+                {
+                    UI.FailPanelActive();
+                    Debug.Log("Failed");
+                    if(!scriptOff)
+                        scriptOff = true;
+                }
+            });
+            if (!scriptOff)
+                scriptOff = true;
         }
     }
 
@@ -488,10 +499,21 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("LevelComplete");
             });
             
-        }else if(movesCount == 0 && !levelCompleted)
+        } 
+        else if(movesCount == 0 && !levelCompleted)
         {
-            UI.FailPanelActive();
-            Debug.Log("Failed");
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                if (!levelCompleted)
+                {
+                    UI.FailPanelActive();
+                    Debug.Log("Failed");
+                    if(!scriptOff)
+                        scriptOff = true;
+                }
+            });
+            if (!scriptOff)
+                scriptOff = true;
         }
             
     }
