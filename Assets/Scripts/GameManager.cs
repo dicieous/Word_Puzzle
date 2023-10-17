@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
     
     [HideInInspector]
 	public bool levelCompleted = false;
-
+    
 	private int wordsMade;
 
 	private UIManagerScript UI;
@@ -196,7 +196,7 @@ public class GameManager : MonoBehaviour
             MakeAndCheckWord();
         else
             MakeAndCheckWordNew();
-
+        
 		instTime -= Time.deltaTime;
 		if (instTime < 0)
 		{
@@ -208,6 +208,7 @@ public class GameManager : MonoBehaviour
 			print("Nextfuncall");
 			UI.NextMoveFun();
 		}
+        
 	}
 
 
@@ -412,7 +413,7 @@ public class GameManager : MonoBehaviour
 
         if (wordsMade >= answers.Count && IsGridFull() && !levelCompleted)
         {
-//			print("Win");
+			print("Win");
             levelCompleted = true;
             UI.restartButton.interactable = false;
             UI.hintButton.interactable = false;
@@ -427,6 +428,10 @@ public class GameManager : MonoBehaviour
                 BlockSeqCall();
                 //Debug.Log("LevelComplete");
             });
+        }else if(movesCount == 0 && !levelCompleted)
+        {
+            UI.FailPanelActive();
+            Debug.Log("Failed");
         }
     }
 
@@ -483,7 +488,12 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("LevelComplete");
             });
             
+        }else if(movesCount == 0 && !levelCompleted)
+        {
+            UI.FailPanelActive();
+            Debug.Log("Failed");
         }
+            
     }
     
     public DOTween vardo;
@@ -633,6 +643,15 @@ public class GameManager : MonoBehaviour
             BlockSeq();
         });
     }
+
+    // private void FailPanelActivateCond()
+    // {
+    //     if (movesCount == 0 && !levelCompleted)
+    //     {
+    //         UI.FailPanelActive();
+    //         Debug.Log("Failed");
+    //     }
+    // }
 
     private int blocknum;
     private void BlockSeq()

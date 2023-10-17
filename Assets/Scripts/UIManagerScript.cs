@@ -208,7 +208,7 @@ public class UIManagerScript : MonoBehaviour
 		});
 	}
 
-    private void FailPanelActive()
+    public void FailPanelActive()
     {
         failPanel.SetActive(true);
     }
@@ -227,12 +227,6 @@ public class UIManagerScript : MonoBehaviour
 				hintButton.interactable = true;
 			}
 		}
-
-        if (GameManager.Instance.movesCount == 0)
-        {
-            FailPanelActive();
-        }
-        
 	}
 
 	public void OnHintButtonClick()

@@ -230,7 +230,7 @@ public class CubesGroupScript : MonoBehaviour
                     childCol.enabled = false;
                 }
                 canCheckForPlacement = false;
-                Debug.Log("Check Stop");
+                //Debug.Log("Check Stop");
             }).OnComplete(() =>
             {
                 foreach (var childCol in childObjects.Select(t => t.transform.GetComponent<Collider>()))
@@ -239,7 +239,7 @@ public class CubesGroupScript : MonoBehaviour
                 }
                 canCheckForPlacement = true;
 				canReset = true;
-                Debug.Log("Check Start");
+                //Debug.Log("Check Start");
 			});
 			
 			for (int i = 0; i < childObjects.Count; i++)
