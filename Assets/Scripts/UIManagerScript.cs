@@ -24,6 +24,7 @@ public class UIManagerScript : MonoBehaviour
 	public RectTransform coinEndReference;
 	public RectTransform coinStartReference;
 	public Button nextButton;
+    public Button retryButton;
 	public Button hintButton;
 	public Button restartButton;
 	
@@ -71,7 +72,7 @@ public class UIManagerScript : MonoBehaviour
 		{
 			endScreen.SetActive(false);
 		}
-        
+
         failPanel?.SetActive(false);
         
 		//StartCoroutine(PlayCoinCollectionFx());
@@ -170,15 +171,8 @@ public class UIManagerScript : MonoBehaviour
             tutorialHand2.enabled = false;
             tutorialtext.GetComponent<TextMeshProUGUI>().enabled = false;
         }
-        
-		StartCoroutine(PlayCoinCollectionFx());
 		//if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
-		DOVirtual.DelayedCall(3.2f, () =>
-		{
-			CoinManager.instance.CoinsIncrease(20);
-		});
-		
-		DOVirtual.DelayedCall(3.25f,()=>
+		DOVirtual.DelayedCall(2.5f,()=>
 		{
             var s = GetSpecialLevelNumber().ToString()[^1];
             if (s != '0')
@@ -190,20 +184,41 @@ public class UIManagerScript : MonoBehaviour
                    //6 print((1f / 9f));
                     var num = CoinManager.instance.GetLoaderPercent() + ((1f / 9f));
                     //CoinManager.instance.SetLoaderPercentage(CoinManager.instance.GetLoaderPercent() + ((1f / 9f)));
-                    CoinManager.instance.progressionBarImage.DOFillAmount(num, 1f)
+                    CoinManager.instance.progressionBarImage.DOFillAmount(num, 1f);/*
                         .OnComplete(
                             () =>
                             {
                                 nextButton.interactable = true;
-                            });
+                            });*/
                     CoinManager.instance.progressionBarText.text = ((int)(num * 100) + "%");
                 });
                 endScreen.SetActive(true);
-
+                DOVirtual.DelayedCall(0.5f, () =>
+                {
+                    StartCoroutine(PlayCoinCollectionFx());
+                });
+                DOVirtual.DelayedCall(3.5f, () =>
+                {
+                    CoinManager.instance.CoinsIncrease(25);
+                    nextButton.interactable = true;
+                });
             }
             else
             {
                 EmojiManager.Instance.winPanel.SetActive(true);
+                DOVirtual.DelayedCall(0.5f, () =>
+                {
+                    StartCoroutine(PlayCoinCollectionFx());
+                });
+                DOVirtual.DelayedCall(3.5f, () =>
+                {
+                    CoinManager.instance.CoinsIncrease(25);
+                    EmojiManager.Instance.nextButton.interactable = true;
+                });
+                /*DOVirtual.DelayedCall(0.5f, () =>
+                {
+                    CoinManager.instance.CoinsIncrease(25);
+                });*/
             }
 		});
 	}
@@ -231,7 +246,6 @@ public class UIManagerScript : MonoBehaviour
 
 	public void OnHintButtonClick()
 	{
-		
 		//Debug.Log("Hint Button");
 		GameManager.Instance.ShowTheText();
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
@@ -303,7 +317,15 @@ public class UIManagerScript : MonoBehaviour
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 	}
-	
+
+    public void Retry()
+    {
+        retryButton.interactable = false;
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
+    }
 	public int GetSpecialLevelNumber() => PlayerPrefs.GetInt("SpecialLevelNumber", 1);
 	public void SetSpecialLevelNumber(int levelNum) => PlayerPrefs.SetInt("SpecialLevelNumber", levelNum);
 }

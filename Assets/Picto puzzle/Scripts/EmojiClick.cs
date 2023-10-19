@@ -84,17 +84,21 @@ public class EmojiClick : MonoBehaviour
             {
                 //AudioManager.instance.Play("Won");
                 //Debug.Log("Win");
-                _levelComplete = true;
-                if (!EmojiManager.Instance._levelCompletemain && EmojiManager.Instance.GetPanelsDone() == 4)
+                
+                /*if (!EmojiManager.Instance._levelCompletemain && EmojiManager.Instance.GetPanelsDone() == 4)
                 {
                     EmojiManager.Instance.shuffle.interactable = false;
                     EmojiManager.Instance.button5050.interactable = false;
                     EmojiManager.Instance._levelCompletemain = true;
-                }
+                }*/
+                EmojiManager.Instance.shuffle.interactable = false;
+                EmojiManager.Instance.button5050.interactable = false;
+                EmojiManager.Instance._levelCompletemain = true;
                 for (int i = 0; i < optionBtn.Count; i++)
                 {
                     optionBtn[i].gameObject.GetComponent<Button>().interactable = false;
                 }
+                _levelComplete = true;
                 DOVirtual.DelayedCall(0.5f, () =>
                 {
                     EmojiManager.Instance.PanelAndListUpdate();

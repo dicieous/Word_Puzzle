@@ -669,7 +669,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870288274646724166, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2268805544716723623, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: tutorialHand
@@ -838,6 +838,10 @@ PrefabInstance:
     - target: {fileID: 2424670809646481562, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2579449119852269431, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4123314229245458399, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_Enabled
@@ -2754,7 +2758,9 @@ MonoBehaviour:
   scriptOff: 0
   rowsInGrid: 7
   colInGrid: 7
+  numberOfColumns: 
   rowfilled: 0
+  movesCount: 0
   fXRowWords: []
   downCheck: 0
   levelTypeChanged: 1
@@ -2770,6 +2776,7 @@ MonoBehaviour:
   instPos: {fileID: 262508563}
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
+  levelFail: 0
   removing: 0
 --- !u!4 &1870371619
 Transform:

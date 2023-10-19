@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
     
     [HideInInspector]
 	public bool levelCompleted = false;
-    
+    public bool levelFail;
 	private int wordsMade;
 
 	private UIManagerScript UI;
@@ -429,20 +429,23 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("LevelComplete");
             });
         }
-        else if(movesCount == 0 && !levelCompleted)
+        else if(movesCount == 0 && !levelCompleted && !levelFail)
         {
             DOVirtual.DelayedCall(1f, () =>
             {
                 if (!levelCompleted)
                 {
+                    //if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
+                    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Fail"); 
                     UI.FailPanelActive();
-                    Debug.Log("Failed");
+                    //Debug.Log("Failed");
                     if(!scriptOff)
                         scriptOff = true;
                 }
             });
             if (!scriptOff)
                 scriptOff = true;
+            levelFail = true;
         }
     }
 
@@ -500,20 +503,23 @@ public class GameManager : MonoBehaviour
             });
             
         } 
-        else if(movesCount == 0 && !levelCompleted)
+        else if(movesCount == 0 && !levelCompleted && !levelFail)
         {
             DOVirtual.DelayedCall(1f, () =>
             {
                 if (!levelCompleted)
                 {
+                    //if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
+                    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Fail"); 
                     UI.FailPanelActive();
-                    Debug.Log("Failed");
+                    //Debug.Log("Failed");
                     if(!scriptOff)
                         scriptOff = true;
                 }
             });
             if (!scriptOff)
                 scriptOff = true;
+            levelFail = true;
         }
             
     }
