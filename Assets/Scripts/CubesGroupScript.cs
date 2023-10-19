@@ -355,11 +355,7 @@ public class CubesGroupScript : MonoBehaviour
 	{
 		if (canCheckForPlacement && CheckIfAllHitting())
 		{
-            if (Input.GetMouseButtonUp(0))
-            {
-                GameManager.Instance.movesCount--;
-                UIManagerScript.Instance.movesText.text = "Moves: " + GameManager.Instance.movesCount;
-            }
+            
 			for (int i = 0; i < childObjects.Count; i++)
 			{
 				var child = childObjects[i].transform;
@@ -374,6 +370,11 @@ public class CubesGroupScript : MonoBehaviour
 
 				}
 			}
+            if (Input.GetMouseButtonUp(0))
+            {
+                GameManager.Instance.movesCount--;
+                UIManagerScript.Instance.movesText.text = "Moves: " + GameManager.Instance.movesCount;
+            }
 		}
 		else
 		{

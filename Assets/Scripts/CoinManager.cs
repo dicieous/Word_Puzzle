@@ -61,9 +61,9 @@ public class CoinManager : MonoBehaviour
             }
 
             coinCountText.text = GetCoinsCount().ToString();
-            if (GetCoinsCount() >= 20)
+            if (GetCoinsCount() >= 50)
             {
-                var countNum = (int)GetCoinsCount() / 20;
+                var countNum = (int)GetCoinsCount() / 50;
                 SetHintCount(countNum);
                 hintText.text = GetHintCount().ToString();
             }
@@ -104,8 +104,9 @@ public class CoinManager : MonoBehaviour
                 ByteBrewManager.instance.ProgressEvent(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),
                     hintCounter.ToString(), "NormalMode", "Hints");
             }
-            SetHintCount(GetHintCount() - 1);
-            SetCoinCount(GetCoinsCount() - 20);
+            //SetHintCount(GetHintCount() - 1);
+            SetCoinCount(GetCoinsCount() - 50);
+            SetHintCount((int)GetCoinsCount() / 50);
             coinCountText.text = GetCoinsCount().ToString();
             hintText.text = GetHintCount().ToString();
         }
@@ -114,7 +115,10 @@ public class CoinManager : MonoBehaviour
     public void CoinsIncrease(int x)
     {
         SetCoinCount(GetCoinsCount() + x);
-        SetHintCount((int)(GetCoinsCount() / 20));
+        if (GetCoinsCount() >= 50)
+        {
+            SetHintCount((int)(GetCoinsCount() / 50));
+        }
         coinCountText.text = GetCoinsCount().ToString();
         hintText.text = GetHintCount().ToString();
     }
