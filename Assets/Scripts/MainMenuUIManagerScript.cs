@@ -21,13 +21,13 @@ public class MainMenuUIManagerScript : MonoBehaviour
     public void MoveToActivePlayableLevel()
     {
         Debug.Log("3");
-        var levelImageIndex = PlayerPrefs.GetInt("Level");
+        var levelImageIndex = PlayerPrefs.GetInt("Level")+1;
 
         VerticalLayoutGroup vert = levelsScrollRect.content.GetComponent<VerticalLayoutGroup>();
         levelImageIndex = Mathf.Clamp(levelImageIndex, 0, levelsScrollRect.content.transform.childCount-1);
 
         float scrollHeight = 0f; 
-        for (int i = 0; i < levelImageIndex - 2; i++)
+        for (int i = 0; i < levelImageIndex - 1; i++)
         {
             var childTransform = vert.transform.GetChild(i) as RectTransform;
             if (childTransform != null) scrollHeight += childTransform.rect.height + vert.spacing;
@@ -39,9 +39,9 @@ public class MainMenuUIManagerScript : MonoBehaviour
         normalizedPosition = Mathf.Clamp01(normalizedPosition);
         levelsScrollRect.verticalNormalizedPosition = normalizedPosition;
         
-        Debug.Log("scrollHeight: " + scrollHeight);
-        Debug.Log("viewportHeight: " + viewportHeight);
-        Debug.Log("normalizedPosition: " + normalizedPosition);
+        // Debug.Log("scrollHeight: " + scrollHeight);
+        // Debug.Log("viewportHeight: " + viewportHeight);
+        // Debug.Log("normalizedPosition: " + normalizedPosition);
 
     }
 }

@@ -9,106 +9,117 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
+using Sequence = DG.Tweening.Sequence;
 
 public class GameManager : MonoBehaviour
 {
-	
-	public static GameManager Instance;
-	
-	public List<string> answers;
-	public List<Color> rowColor;
-    
-	public List<WordData> wordList;
+    public static GameManager Instance;
+
+    public List<string> answers;
+    public List<Color> rowColor;
+
+    public List<WordData> wordList;
     public List<StickingAreaCheckingScript> stickingCubes;
-    
-    [HideInInspector]
-	public bool scriptOff;
-    
-	[Space(10)]
-	public int rowsInGrid;
-	public int colInGrid;
-    
+
+    [HideInInspector] public bool scriptOff;
+
+    [Space(10)] public int rowsInGrid;
+    public int colInGrid;
+
     [Header("Opposite Words Level Columns")]
     public List<int> numberOfColumns;
-    [Space(10)] 
-    
-	[HideInInspector] public int rowfilled;
-    public int movesCount;
-	[HideInInspector] public List<GameObject> fXRowWords;
-    [HideInInspector] public bool downCheck;
-    [Space(10)]
-    [Header("Change Level Style")]
-    public bool levelTypeChanged = false;
-	[Space(10)]
-	private List<List<GameObject>> letterCubeWord = new List<List<GameObject>>();
 
-	public List<GameObject> Cube_Groups;
+    [Space(10)] [Header("AutoComplete Section")] [SerializeField]
+    private List<CompleteWordCubes> completeWordCubesList;
+
+    [SerializeField] private List<CompleteWordPosition> completeWordPositionsList;
+
+    private int wordNoToComplete = 0;
+
+    public bool canClickNow = true;
+    public bool canPlaceNow = true;
+    
+    [HideInInspector] public int rowfilled;
+    
+    [Space(20)]
+    public int movesCount;
+    [HideInInspector] public List<GameObject> fXRowWords;
+    [HideInInspector] public bool downCheck;
+
+    [Space(10)] [Header("Change Level Style")]
+    public bool levelTypeChanged = false;
+
+    [Space(10)] private List<List<GameObject>> letterCubeWord = new List<List<GameObject>>();
+
+    public List<GameObject> Cube_Groups;
 
     public event EventHandler OnPartComplete;
-    
-    
-	[SerializeField]
-	private List<GameObject> _allCubeObjects;
-	[Space(10)]
-	[SerializeField] private List<GameObject> hintCubesHolder;
 
-	[Space(10)]
-	[SerializeField] private GameObject starFX;
 
-	[SerializeField] private GameObject complementPrefab;
+    [SerializeField] private List<GameObject> _allCubeObjects;
+    [Space(10)] [SerializeField] private List<GameObject> hintCubesHolder;
 
-	[SerializeField] private Transform instPos;
+    [Space(10)] [SerializeField] private GameObject starFX;
 
-	private bool canInstantiate = true;
+    [SerializeField] private GameObject complementPrefab;
+
+    [SerializeField] private Transform instPos;
+
+    private bool canInstantiate = true;
 
     [SerializeField] private List<int> wordsAfterWhichToMoveCam;
-    
-	private float instTime = 1f;
 
-	[Space(10)]
+    private float instTime = 1f;
 
-	//The min and max value of the Grid where cube are Attached
-	// public float yMaxLimit;
-	//
-	// public float xMinLimit;
-	// public float yMinLimit;
-	// public float xMaxLimit;
+    [Space(10)] private bool[] wordCompleted;
 
-	private bool[] wordCompleted;
-    
-    [HideInInspector]
-	public bool levelCompleted = false;
+    [HideInInspector] public bool levelCompleted = false;
     public bool levelFail;
-	private int wordsMade;
+    private int wordsMade;
 
-	private UIManagerScript UI;
+    [Serializable]
+    private struct CompleteWordCubes
+    {
+        public List<GameObject> completeWordCubeGroup;
+    }
 
-	private void Awake()
-	{
-		if (!Instance) Instance = this;
-	}
+    [Serializable]
+    private struct CompleteWordPosition
+    {
+        public List<Vector3> completeWordCubePositionGroup;
+    }
 
-	private void Start()
-	{
-		Application.targetFrameRate = 120;
-		InitializeGrid();
+    private UIManagerScript UI;
 
-		UI = UIManagerScript.Instance;
-		//Debug.Log($"Words Made {wordsMade}");
-		wordCompleted = new bool[rowsInGrid];
-		InitializeWordComplete();
-		for (int i = 0; i < rowsInGrid; i++)
-		{
-			var wordData = new WordData
-			{
-				wordsDataLists = new List<GameObject>()
-			};
-			wordList.Add(wordData);
-		}
-        
-        if(levelTypeChanged) AssignAnswersToStickingCubes();
+
+    private void Awake()
+    {
+        if (!Instance) Instance = this;
+    }
+
+    private void Start()
+    {
+        canClickNow = true;
+        canPlaceNow = true;
+        Application.targetFrameRate = 120;
+        InitializeGrid();
+
+        UI = UIManagerScript.Instance;
+        //Debug.Log($"Words Made {wordsMade}");
+        wordCompleted = new bool[rowsInGrid];
+        InitializeWordComplete();
+        for (int i = 0; i < rowsInGrid; i++)
+        {
+            var wordData = new WordData
+            {
+                wordsDataLists = new List<GameObject>()
+            };
+            wordList.Add(wordData);
+        }
+
+        if (levelTypeChanged) AssignAnswersToStickingCubes();
         /*for (int var = 0, i = 0; i < rowsInGrid; i++)
-        { 
+        {
             var s = answers[i];
             for (int j = 0; j < s.Length; j++)
             {
@@ -118,7 +129,7 @@ public class GameManager : MonoBehaviour
             }
         }*/
 
-		starFX = UI.starparticleEffect;
+        starFX = UI.starparticleEffect;
         movesCount = hintCubesHolder.Count * 2;
         var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
         if (s == '0')
@@ -129,55 +140,52 @@ public class GameManager : MonoBehaviour
         {
             UIManagerScript.Instance.movesText.text = "Moves: " + movesCount;
         }
-       
     }
 
 //#region Initialize Grid Words
 
-	void InitializeWordComplete()
-	{
-		for (int i = 0; i < rowsInGrid; i++)
-		{
-			wordCompleted[i] = false;
-		}
-	}
+    void InitializeWordComplete()
+    {
+        for (int i = 0; i < rowsInGrid; i++)
+        {
+            wordCompleted[i] = false;
+        }
+    }
 
-	void InitializeGrid()
-	{
-		for (int row = 0; row < rowsInGrid; row++)
-		{
-			List<GameObject> newRow = new List<GameObject>();
+    void InitializeGrid()
+    {
+        for (int row = 0; row < rowsInGrid; row++)
+        {
+            List<GameObject> newRow = new List<GameObject>();
             if (numberOfColumns.Count == 0)
             {
-                for (int col = 0;col < colInGrid; col++)
+                for (int col = 0; col < colInGrid; col++)
                 {
                     newRow.Add(null);
                 }
             }
             else
             {
-                
-                for (int col = 0;col < numberOfColumns[row]; col++)
+                for (int col = 0; col < numberOfColumns[row]; col++)
                 {
                     newRow.Add(null);
                 }
             }
-			
-            
 
-			letterCubeWord.Add(newRow);
-		}
-	}
 
-	public void AddWords(int row, int col, GameObject value)
-	{
-		letterCubeWord[row][col] = value;
-	}
+            letterCubeWord.Add(newRow);
+        }
+    }
 
-	public void RemoveWords(int row, int col)
-	{
-		letterCubeWord[row][col] = null;
-	}
+    public void AddWords(int row, int col, GameObject value)
+    {
+        letterCubeWord[row][col] = value;
+    }
+
+    public void RemoveWords(int row, int col)
+    {
+        letterCubeWord[row][col] = null;
+    }
 
     private void AssignAnswersToStickingCubes()
     {
@@ -186,103 +194,104 @@ public class GameManager : MonoBehaviour
             stickingCubes[i].answerString = answers[i];
         }
     }
-    
+
 //#endregion
 
 // ReSharper disable Unity.PerformanceAnalysis
-	void Update()
-	{
-        if(!levelTypeChanged) 
+    void Update()
+    {
+        if (!levelTypeChanged)
             MakeAndCheckWord();
         else
             MakeAndCheckWordNew();
-        
-		instTime -= Time.deltaTime;
-		if (instTime < 0)
-		{
-			canInstantiate = true;
-		}
 
-		if (Input.GetKeyDown(KeyCode.A))
-		{
-			print("Nextfuncall");
-			UI.NextMoveFun();
-		}
-        
-	}
+        instTime -= Time.deltaTime;
+        if (instTime < 0)
+        {
+            canInstantiate = true;
+        }
 
-
-	//#region Make And Check Words
-
-	bool IsRowFull(int rowIndex)
-	{
-		for (int col = 0; col < colInGrid; col++)
-		{
-			if (letterCubeWord[rowIndex][col] == null)
-			{
-				//Debug.Log($"Row {rowIndex+1} is not full");
-				return false;
-			}
-		}
-
-		//Debug.Log($"Row {rowIndex+1} is full");
-		return true;
-	}
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            print("Nextfuncall");
+            UI.NextMoveFun();
+        }
+    }
 
 
-	bool IsGridFull()
-	{
-		for (int row = 0; row < rowsInGrid; row++)
-		{
-			for (int col = 0; col < colInGrid; col++)
-			{
-				if (letterCubeWord[row][col] == null)
-				{
-					return false;
-				}
-			}
-		}
-		
-		return true;
-	}
+    //#region Make And Check Words
 
-	//private int colnum = 0;
-	public void RearangeValues(int row)
-	{
-		for (int i = 0; i < colInGrid; i++)
-		{
-			if (i < colInGrid)
-			{
-				if (wordList[row].wordsDataLists[0] != null)
-				{
-					/*wordList[row].wordsDataLists[0].transform.GetChild(1).GetComponent<MeshRenderer>().material.color = UI.originalColor.color;
-					wordList[row].wordsDataLists[0].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0].color =  UI.originalColor.color;
-					wordList[row].wordsDataLists[0].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1].color =  UI.originalColor.color;*/
-					wordList[row].wordsDataLists.RemoveAt(0);
-				}
-			}
-			/*else if (i >= colInGrid )
-			{
-				if (removing)
-				{
-					removing = false;
-				}
-				else
-				{
-					print(i);
-				}
-			}*/
-		}
-	}
+    bool IsRowFull(int rowIndex)
+    {
+        for (int col = 0; col < colInGrid; col++)
+        {
+            if (letterCubeWord[rowIndex][col] == null)
+            {
+                //Debug.Log($"Row {rowIndex+1} is not full");
+                return false;
+            }
+        }
 
-	public bool removing;
-	public void MovingSeq(int row, int columCount=0)
-	{
+        //Debug.Log($"Row {rowIndex+1} is full");
+        return true;
+    }
+
+
+    bool IsGridFull()
+    {
+        for (int row = 0; row < rowsInGrid; row++)
+        {
+            for (int col = 0; col < colInGrid; col++)
+            {
+                if (letterCubeWord[row][col] == null)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    //private int colnum = 0;
+    public void RearangeValues(int row)
+    {
+        for (int i = 0; i < colInGrid; i++)
+        {
+            if (i < colInGrid)
+            {
+                if (wordList[row].wordsDataLists[0] != null)
+                {
+                    /*wordList[row].wordsDataLists[0].transform.GetChild(1).GetComponent<MeshRenderer>().material.color = UI.originalColor.color;
+                    wordList[row].wordsDataLists[0].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0].color =  UI.originalColor.color;
+                    wordList[row].wordsDataLists[0].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1].color =  UI.originalColor.color;*/
+                    wordList[row].wordsDataLists.RemoveAt(0);
+                }
+            }
+            /*else if (i >= colInGrid )
+            {
+                if (removing)
+                {
+                    removing = false;
+                }
+                else
+                {
+                    print(i);
+                }
+            }*/
+        }
+    }
+
+    public bool removing;
+
+    public void MovingSeq(int row, int columCount = 0)
+    {
         if (!removing)
         {
             for (int i = 0; i < colInGrid; i++)
             {
-                if (!wordList[row].wordsDataLists.Contains(letterCubeWord[row][i].gameObject) && wordList[row].wordsDataLists.Count != colInGrid+1)
+                if (!wordList[row].wordsDataLists.Contains(letterCubeWord[row][i].gameObject) &&
+                    wordList[row].wordsDataLists.Count != colInGrid + 1)
                 {
                     wordList[row].wordsDataLists.Add(letterCubeWord[row][i].gameObject);
                 }
@@ -323,7 +332,7 @@ public class GameManager : MonoBehaviour
             seq.SetLoops(colInGrid );*/
         }
     }
-    
+
     public void scriptonfun()
     {
         if (scriptOff)
@@ -353,7 +362,7 @@ public class GameManager : MonoBehaviour
 
     private void MakeAndCheckWord()
     {
-        if(levelCompleted) return;
+        if (levelCompleted) return;
         for (int row = 0; row < rowsInGrid; row++)
         {
             if (IsRowFull(row) && !wordCompleted[row])
@@ -374,14 +383,14 @@ public class GameManager : MonoBehaviour
                         instTime = 1f;
                         canInstantiate = false;
                     }
-					
+
                     if (!scriptOff)
                     {
                         //scriptOff = true;
                         MovingSeq(row);
                         //rownumadded = row;
-						
                     }
+
                     /*else
                     {
                         if(rownumadded != row)
@@ -392,8 +401,8 @@ public class GameManager : MonoBehaviour
                     wordCompleted[row] = true;
                     wordsMade++;
                     //print("row number" + row);
-					
-//					Debug.Log("WordsMade " + wordsMade);
+
+                    //Debug.Log("WordsMade " + wordsMade);
                 }
             }
             else if (!IsRowFull(row) && wordCompleted[row] && !levelCompleted)
@@ -404,7 +413,7 @@ public class GameManager : MonoBehaviour
                     RearangeValues(row);
                     print("Removing one");
                 }
-				
+
                 wordCompleted[row] = false;
                 wordsMade--;
                 //print("row number"+ row);
@@ -413,33 +422,33 @@ public class GameManager : MonoBehaviour
 
         if (wordsMade >= answers.Count && IsGridFull() && !levelCompleted)
         {
-			print("Win");
+            print("Win");
             levelCompleted = true;
             UI.restartButton.interactable = false;
             UI.hintButton.interactable = false;
             //DestroyBlocks();
-            
+
             DOVirtual.DelayedCall(1.25f, () =>
             {
-	            CoinManager.instance.confettiFx.Play();
-                if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper"); 
-	            CoinManager.instance.confettiFx1.Play();
+                CoinManager.instance.confettiFx.Play();
+                if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
+                CoinManager.instance.confettiFx1.Play();
                 UI.WinPanelActive();
                 BlockSeqCall();
                 //Debug.Log("LevelComplete");
             });
         }
-        else if(movesCount == 0 && !levelCompleted && !levelFail)
+        else if (movesCount == 0 && !levelCompleted && !levelFail)
         {
             DOVirtual.DelayedCall(1f, () =>
             {
                 if (!levelCompleted)
                 {
                     //if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
-                    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Fail"); 
+                    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Fail");
                     UI.FailPanelActive();
                     //Debug.Log("Failed");
-                    if(!scriptOff)
+                    if (!scriptOff)
                         scriptOff = true;
                 }
             });
@@ -451,8 +460,8 @@ public class GameManager : MonoBehaviour
 
     private void MakeAndCheckWordNew()
     {
-        if(levelCompleted) return;
-        for (int i = 0;i<stickingCubes.Count;i++)
+        if (levelCompleted) return;
+        for (int i = 0; i < stickingCubes.Count; i++)
         {
             var s = stickingCubes[i];
             if (!s.correctWordMade && s.IsAllPlacesFullCheck() && s.CheckForAnswer())
@@ -467,23 +476,23 @@ public class GameManager : MonoBehaviour
 
                 s.correctWordMade = true;
                 //Debug.Log("Correct Word");
-                Debug.Log("Words Made "+wordsMade);
+                Debug.Log("Words Made " + wordsMade);
                 foreach (var wordNo in wordsAfterWhichToMoveCam)
                 {
                     if (wordNo == wordsMade)
                     {
-                        OnPartComplete?.Invoke(this,EventArgs.Empty);
+                        OnPartComplete?.Invoke(this, EventArgs.Empty);
                     }
                 }
                 //Do anything after making the word
             }
-            else if(s.correctWordMade && !stickingCubes[i].IsAllPlacesFullCheck())
+            else if (s.correctWordMade && !stickingCubes[i].IsAllPlacesFullCheck())
             {
                 s.correctWordMade = false;
                 wordsMade--;
             }
         }
-        
+
         if (wordsMade == stickingCubes.Count && CheckIfAllBlocksFullNew())
         {
             //do anything after all words are made
@@ -491,29 +500,28 @@ public class GameManager : MonoBehaviour
             Debug.Log("LevelComplete");
             UI.restartButton.interactable = false;
             UI.hintButton.interactable = false;
-           
+
             DOVirtual.DelayedCall(.75f, () =>
             {
-	            CoinManager.instance.confettiFx.Play();
-	            CoinManager.instance.confettiFx1.Play();
-                if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper"); 
+                CoinManager.instance.confettiFx.Play();
+                CoinManager.instance.confettiFx1.Play();
+                if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
                 UI.WinPanelActive();
                 // BlockSeqCall();
                 //Debug.Log("LevelComplete");
             });
-            
-        } 
-        else if(movesCount == 0 && !levelCompleted && !levelFail)
+        }
+        else if (movesCount == 0 && !levelCompleted && !levelFail)
         {
             DOVirtual.DelayedCall(1f, () =>
             {
                 if (!levelCompleted)
                 {
                     //if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
-                    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Fail"); 
+                    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Fail");
                     UI.FailPanelActive();
                     //Debug.Log("Failed");
-                    if(!scriptOff)
+                    if (!scriptOff)
                         scriptOff = true;
                 }
             });
@@ -521,11 +529,12 @@ public class GameManager : MonoBehaviour
                 scriptOff = true;
             levelFail = true;
         }
-            
     }
-    
+
     public DOTween vardo;
+
     private int rownumadded;
+
     //private int rowNumberDeleted;
     public void BlockSeqCall()
     {
@@ -537,7 +546,8 @@ public class GameManager : MonoBehaviour
         //for single row moving at a time
         //BlocksColorRowByRowFun();
     }
-    private void AllBlocksColoredAtaTimeFun(int row,int columCount = 0)
+
+    private void AllBlocksColoredAtaTimeFun(int row, int columCount = 0)
     {
         var seq = DOTween.Sequence();
         seq.AppendCallback(() =>
@@ -556,12 +566,13 @@ public class GameManager : MonoBehaviour
                     .DOScale(new Vector3(20f, 30f, 15f), 0.1f)
                     .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
             }
+
             columCount++;
         });
         seq.AppendInterval(0.13f);
         seq.SetLoops(colInGrid);
     }
-	
+
 
     public void ResetScreen()
     {
@@ -573,6 +584,7 @@ public class GameManager : MonoBehaviour
         var loadedScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(loadedScene);
     }
+
     public void ShowTheText()
     {
         foreach (var cube in hintCubesHolder)
@@ -586,6 +598,7 @@ public class GameManager : MonoBehaviour
                 {
                     CoinManager.instance.HintReduce();
                 }
+
                 if (PlayerPrefs.GetInt("Level", 1) == 1) UIManagerScript.Instance.HelpHand();
                 //print("instantiated");
             }
@@ -593,8 +606,8 @@ public class GameManager : MonoBehaviour
             for (int j = 0; j < count; j++)
             {
                 var obj = cube;
-                obj.GetComponentsInChildren<TextMeshPro>()[j].DOFade(217f/255f, 2f);
-					
+                obj.GetComponentsInChildren<TextMeshPro>()[j].DOFade(217f / 255f, 2f);
+
                 obj.GetComponentsInChildren<HighlightTextScript>()[j].isVisible = true;
             }
 
@@ -602,8 +615,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-  
-    
+
 //     public void ShowTheText()
 //     {
 //         foreach (var words in  UI.hintWordsToShow)
@@ -649,13 +661,13 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-  
+
     private bool CheckIfAllBlocksFullNew()
     {
         return stickingCubes.All(hScript => hScript.IsAllPlacesFullCheck());
     }
-    
-    
+
+
     public void DestroyBlocks()
     {
         for (int row = 0; row < rowsInGrid; row++)
@@ -665,6 +677,7 @@ public class GameManager : MonoBehaviour
                 _allCubeObjects.Add(letterCubeWord[row][col]);
             }
         }
+
         DOVirtual.DelayedCall(0.5f, () =>
         {
             Time.timeScale = 2f;
@@ -672,16 +685,66 @@ public class GameManager : MonoBehaviour
         });
     }
 
-    // private void FailPanelActivateCond()
-    // {
-    //     if (movesCount == 0 && !levelCompleted)
-    //     {
-    //         UI.FailPanelActive();
-    //         Debug.Log("Failed");
-    //     }
-    // }
+    public void AutoCompleteFunc()
+    {
+        if(wordNoToComplete >= completeWordCubesList.Count) return;
+        
+        var cubesGroups = completeWordCubesList[wordNoToComplete].completeWordCubeGroup;
+        //var cubesGroupCount = cubesGroups.Count - 1;
+        Debug.Log("Called ");
+
+        var compSequence = DOTween.Sequence();
+        
+        for (int i = 0; i < cubesGroups.Count + 1; i++)
+        {
+            if (i < cubesGroups.Count)
+            {
+                print(" totAL KNJBJ"+cubesGroups.Count);
+                print(i);
+                var cube = cubesGroups[i];
+            
+                if (cube == null) continue;
+            
+                Debug.Log("FuncCalled ");
+            
+                var cubePos = cube.transform.position;
+                cubePos = new Vector3(cubePos.x, cubePos.y, -3.5f);
+            
+                compSequence?.Append(cube.transform
+                    .DOMove(completeWordPositionsList[wordNoToComplete].completeWordCubePositionGroup[i], .5f).SetEase(Ease.Linear)
+                    .OnStart(() =>
+                    {
+                        scriptOff = true;
+                        canPlaceNow = false;
+                        canClickNow = false;
+                    }).OnComplete(() =>
+                    {
+                        UIManagerScript.Instance.autoWordButton.interactable = true;
+                        canPlaceNow = true;
+                    }));
+                canPlaceNow = false;
+            }
+            else
+            {
+                /*scriptOff = false;
+                //canPlaceNow = true;
+                canClickNow = true;*/
+                DOVirtual.DelayedCall(2f, () =>
+                {
+                    UIManagerScript.Instance.autoWordButton.interactable = true;
+                    print("Donecgafdwy8i");
+                });
+                print("intractable value     "+i);
+            }
+        }
+
+       
+        wordNoToComplete++;
+        Debug.Log("Hey");
+    }
 
     private int blocknum;
+
     private void BlockSeq()
     {
         var seq = DOTween.Sequence();
@@ -698,26 +761,27 @@ public class GameManager : MonoBehaviour
                             _allCubeObjects[blocknum].transform.localScale.z + 0.7f), 1f);
                 _allCubeObjects[blocknum].transform.GetChild(0).GetComponent<TextMeshPro>().enabled = false;
                 _allCubeObjects[blocknum].transform.GetChild(2).GetComponent<TextMeshPro>().enabled = true;
-                _allCubeObjects[blocknum].transform.GetComponent<Rigidbody>().AddForce(new Vector3(0, Random.Range(350, 400), -150));
-                _allCubeObjects[blocknum].transform.DORotate(new Vector3(Random.Range(-180, 180), Random.Range(-180, 180), Random.Range(-180, 180)), 0.05f)
+                _allCubeObjects[blocknum].transform.GetComponent<Rigidbody>()
+                    .AddForce(new Vector3(0, Random.Range(350, 400), -150));
+                _allCubeObjects[blocknum].transform
+                    .DORotate(new Vector3(Random.Range(-180, 180), Random.Range(-180, 180), Random.Range(-180, 180)),
+                        0.05f)
                     .SetEase(Ease.InFlash);
-                _allCubeObjects[blocknum].transform.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(-50, 50), Random.Range(-50, 50), Random.Range(-50, 50)));
+                _allCubeObjects[blocknum].transform.GetComponent<Rigidbody>()
+                    .AddTorque(new Vector3(Random.Range(-50, 50), Random.Range(-50, 50), Random.Range(-50, 50)));
                 if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("CubesBlast");
-				
+
                 blocknum++;
             }
             else
             {
-                DOVirtual.DelayedCall(1.25f, () =>
-                {
-                    UI.NextMoveFun();
-                });
-
+                DOVirtual.DelayedCall(1.25f, () => { UI.NextMoveFun(); });
             }
         });
         seq.AppendInterval(0.1f);
-        seq.SetLoops(_allCubeObjects.Count+1);
+        seq.SetLoops(_allCubeObjects.Count + 1);
     }
+
 //#endregion
     [System.Serializable]
     public class WordData

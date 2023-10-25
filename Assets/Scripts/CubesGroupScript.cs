@@ -316,7 +316,7 @@ public class CubesGroupScript : MonoBehaviour
 		{
 			//Debug.Log("Check if hitting");
 
-			if (Input.GetMouseButtonUp(0))
+			//if (Input.GetMouseButtonUp(0))
 			{
 				var position = hitInfo.transform.position;
 				child.transform.position = position;
@@ -324,8 +324,9 @@ public class CubesGroupScript : MonoBehaviour
 				vector3.z = position.z;
 				
 				child.GetComponent<PlayerCubeScript>().isPlaced = true;
-				
+				//Debug.Log("Placed");
 				Instantiate(dustFX, position, Quaternion.identity);
+                //GameManager.Instance.canPlaceNow = false;
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Pop");
 
@@ -362,7 +363,7 @@ public class CubesGroupScript : MonoBehaviour
 				if (CheckIfHitting(child))
 				{
 					var hitInfo = RayCastInfo(child);
-					if (Input.GetMouseButtonUp(0))
+					if (Input.GetMouseButtonUp(0) || GameManager.Instance.canPlaceNow)
 					{
 						//Debug.Log("Show");
 						AttachTheObj(hitInfo, child);
@@ -370,6 +371,9 @@ public class CubesGroupScript : MonoBehaviour
 
 				}
 			}
+
+            //GameManager.Instance.canPlaceNow = false;
+            
             if (Input.GetMouseButtonUp(0))
             {
                 GameManager.Instance.movesCount--;
@@ -390,9 +394,4 @@ public class CubesGroupScript : MonoBehaviour
 			}
 		}
 	}
-
-    private void CheckCount()
-    {
-        
-    }
 }

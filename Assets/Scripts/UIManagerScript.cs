@@ -27,7 +27,8 @@ public class UIManagerScript : MonoBehaviour
     public Button retryButton;
 	public Button hintButton;
 	public Button restartButton;
-	
+    public Button autoWordButton;
+    
 	[Header("Levels changing")]
 	public GameObject starparticleEffect;
 
@@ -140,7 +141,7 @@ public class UIManagerScript : MonoBehaviour
 	public List<RectTransform> diamondParticlesRect;
 	public IEnumerator PlayCoinCollectionFx()
 	{
-		yield return new WaitForSeconds(1.5f);
+		//yield return new WaitForSeconds(1.5f);
 		diamondFxParent.SetActive(true);
 		for (int i = 0; i < diamondParticlesRect.Count; i++)
 		{
@@ -172,7 +173,7 @@ public class UIManagerScript : MonoBehaviour
             tutorialtext.GetComponent<TextMeshProUGUI>().enabled = false;
         }
 		//if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
-		DOVirtual.DelayedCall(2.5f,()=>
+		DOVirtual.DelayedCall(1.5f,()=>
 		{
             var s = GetSpecialLevelNumber().ToString()[^1];
             if (s != '0')
@@ -197,7 +198,7 @@ public class UIManagerScript : MonoBehaviour
                 {
                     StartCoroutine(PlayCoinCollectionFx());
                 });
-                DOVirtual.DelayedCall(3.5f, () =>
+                DOVirtual.DelayedCall(2f, () =>
                 {
                     CoinManager.instance.CoinsIncrease(25);
                     nextButton.interactable = true;
@@ -210,7 +211,7 @@ public class UIManagerScript : MonoBehaviour
                 {
                     StartCoroutine(PlayCoinCollectionFx());
                 });
-                DOVirtual.DelayedCall(3.5f, () =>
+                DOVirtual.DelayedCall(2f, () =>
                 {
                     CoinManager.instance.CoinsIncrease(25);
                     EmojiManager.Instance.nextButton.interactable = true;
@@ -226,6 +227,19 @@ public class UIManagerScript : MonoBehaviour
     public void FailPanelActive()
     {
         failPanel.SetActive(true);
+    }
+
+    public void AutoWordCompleteButton()
+    {
+        if (GameManager.Instance.canClickNow && autoWordButton.interactable)
+        {
+            autoWordButton.interactable = false;
+            GameManager.Instance.AutoCompleteFunc();
+            Debug.Log("AutoComplete");
+        }
+        Debug.Log("AutoCompleteOut");
+        Debug.Log("canClickNow " + GameManager.Instance.canClickNow);
+        
     }
     
 	private void Update()
@@ -311,7 +325,8 @@ public class UIManagerScript : MonoBehaviour
 		//GameManager.Instance.ResetScreen();
         if(GAScript.instance) GAScript.instance.LevelRestart(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
         levelAttempts++;
-		DOTween.KillAll();
+		//DOTween.KillAll();
+        //GameManager.Instance.compSequence.Kill();
 		var loadedScene = SceneManager.GetActiveScene().name;
 		SceneManager.LoadScene(loadedScene);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
