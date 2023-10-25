@@ -232,10 +232,9 @@ public class UIManagerScript : MonoBehaviour
 
     public void AutoWordCompleteButton()
     {
-        if (autoWordButton.interactable)
+        if (GameManager.Instance.canClickNow && autoWordButton.interactable)
         {
             autoWordButton.interactable = false;
-            autoWordBool = true;
             GameManager.Instance.AutoCompleteFunc();
             Debug.Log("AutoComplete");
         }

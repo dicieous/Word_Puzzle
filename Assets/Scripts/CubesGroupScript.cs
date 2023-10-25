@@ -153,6 +153,7 @@ public class CubesGroupScript : MonoBehaviour
 			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
 
 			var position1 = transform.position;
+            GameManager.Instance.canPlaceNow = false;
 			var position = new Vector3(position1.x, position1.y + 3f, position1.z + 2.5f);
 			_offset = position - MouseWorldPosition();
             
