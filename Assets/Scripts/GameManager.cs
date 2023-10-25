@@ -400,6 +400,7 @@ public class GameManager : MonoBehaviour
                     }*/
                     wordCompleted[row] = true;
                     wordsMade++;
+                    wordNoToComplete++;
                     //print("row number" + row);
 
                     //Debug.Log("WordsMade " + wordsMade);
@@ -485,6 +486,7 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 //Do anything after making the word
+                wordNoToComplete++;
             }
             else if (s.correctWordMade && !stickingCubes[i].IsAllPlacesFullCheck())
             {
@@ -685,11 +687,64 @@ public class GameManager : MonoBehaviour
         });
     }
 
+    private int _numberVal;
+    public void seqcall()
+    {
+        scriptOff = true;
+        var cubesGroups = completeWordCubesList[wordNoToComplete].completeWordCubeGroup;
+        var seq = DOTween.Sequence();
+        seq.AppendCallback(() =>
+        {
+            if (_numberVal < cubesGroups.Count)
+            {
+                var cube = cubesGroups[_numberVal];
+                /*cube.transform
+                    .DOMove(completeWordPositionsList[wordNoToComplete].completeWordCubePositionGroup[_numberVal], .5f)
+                    .SetEase(Ease.Linear);*/
+                ObjMoving(cube,completeWordPositionsList[wordNoToComplete].completeWordCubePositionGroup[_numberVal]);
+                /*.OnStart(() =>
+                {
+                    scriptOff = true;
+                    canPlaceNow = false;
+                    canClickNow = false;
+                }).OnComplete(() =>
+                {
+                    UIManagerScript.Instance.autoWordButton.interactable = true;
+                    canPlaceNow = true;
+                });*/
+                //canPlaceNow = false;
+                _numberVal++;
+            }
+            else
+            {
+                print("One");
+                scriptOff = false;
+                UIManagerScript.Instance.autoWordButton.interactable = true;
+                UIManagerScript.Instance.autoWordBool = false;
+            }
+        });
+        seq.AppendInterval(1f);
+        seq.SetLoops(cubesGroups.Count + 1);
+    }
+
+    public void ObjMoving(GameObject obj,Vector3 pos)
+    {
+        obj.transform.DOMove(pos, .5f).SetEase(Ease.Linear).OnStart(() =>
+        {
+            obj.GetComponent<CubesGroupScript>().canPlaceNow = false;
+        }).OnComplete(() =>
+        {
+            obj.GetComponent<CubesGroupScript>().canPlaceNow = true;
+        });
+        //var posi=pos.transform.position
+    }
     public void AutoCompleteFunc()
     {
         if(wordNoToComplete >= completeWordCubesList.Count) return;
-        
-        var cubesGroups = completeWordCubesList[wordNoToComplete].completeWordCubeGroup;
+        _numberVal = 0;
+        seqcall();
+        print("Word to complete " + wordNoToComplete);
+        /*var cubesGroups = completeWordCubesList[wordNoToComplete].completeWordCubeGroup;
         //var cubesGroupCount = cubesGroups.Count - 1;
         Debug.Log("Called ");
 
@@ -703,12 +758,12 @@ public class GameManager : MonoBehaviour
                 print(i);
                 var cube = cubesGroups[i];
             
-                if (cube == null) continue;
+                /*if (cube == null) continue;#1#
             
                 Debug.Log("FuncCalled ");
             
-                var cubePos = cube.transform.position;
-                cubePos = new Vector3(cubePos.x, cubePos.y, -3.5f);
+                /*var cubePos = cube.transform.position;
+                cubePos = new Vector3(cubePos.x, cubePos.y, -3.5f);#1#
             
                 compSequence?.Append(cube.transform
                     .DOMove(completeWordPositionsList[wordNoToComplete].completeWordCubePositionGroup[i], .5f).SetEase(Ease.Linear)
@@ -728,7 +783,7 @@ public class GameManager : MonoBehaviour
             {
                 /*scriptOff = false;
                 //canPlaceNow = true;
-                canClickNow = true;*/
+                canClickNow = true;#1#
                 DOVirtual.DelayedCall(2f, () =>
                 {
                     UIManagerScript.Instance.autoWordButton.interactable = true;
@@ -740,7 +795,7 @@ public class GameManager : MonoBehaviour
 
        
         wordNoToComplete++;
-        Debug.Log("Hey");
+        Debug.Log("Hey");*/
     }
 
     private int blocknum;
@@ -781,7 +836,7 @@ public class GameManager : MonoBehaviour
         seq.AppendInterval(0.1f);
         seq.SetLoops(_allCubeObjects.Count + 1);
     }
-
+    
 //#endregion
     [System.Serializable]
     public class WordData
