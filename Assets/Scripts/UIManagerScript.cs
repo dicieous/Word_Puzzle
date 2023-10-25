@@ -231,14 +231,15 @@ public class UIManagerScript : MonoBehaviour
 
     public void AutoWordCompleteButton()
     {
-        if (GameManager.Instance.canClickNow && autoWordButton.interactable)
-        {
-            autoWordButton.interactable = false;
-            GameManager.Instance.AutoCompleteFunc();
-            Debug.Log("AutoComplete");
-        }
-        Debug.Log("AutoCompleteOut");
-        Debug.Log("canClickNow " + GameManager.Instance.canClickNow);
+        autoWordButton.interactable = false;
+        GameManager.Instance.AutoCompleteFunc();
+        
+        // if (GameManager.Instance.canClickNow)
+        // {
+        //     Debug.Log("AutoComplete");
+        // }
+        // Debug.Log("AutoCompleteOut");
+        // Debug.Log("canClickNow " + GameManager.Instance.canClickNow);
         
     }
     

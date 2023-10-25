@@ -693,48 +693,52 @@ public class GameManager : MonoBehaviour
         //var cubesGroupCount = cubesGroups.Count - 1;
         Debug.Log("Called ");
 
+        ;
+        
         var compSequence = DOTween.Sequence();
         
-        for (int i = 0; i < cubesGroups.Count + 1; i++)
+        scriptOff = true;
+        
+        for (var i = 0; i <= cubesGroups.Count; i++)
         {
-            if (i < cubesGroups.Count)
+            
+            if (i == cubesGroups.Count)
             {
-                print(" totAL KNJBJ"+cubesGroups.Count);
-                print(i);
-                var cube = cubesGroups[i];
-            
-                if (cube == null) continue;
-            
-                Debug.Log("FuncCalled ");
-            
-                var cubePos = cube.transform.position;
-                cubePos = new Vector3(cubePos.x, cubePos.y, -3.5f);
-            
-                compSequence?.Append(cube.transform
-                    .DOMove(completeWordPositionsList[wordNoToComplete].completeWordCubePositionGroup[i], .5f).SetEase(Ease.Linear)
-                    .OnStart(() =>
-                    {
-                        scriptOff = true;
-                        canPlaceNow = false;
-                        canClickNow = false;
-                    }).OnComplete(() =>
-                    {
-                        UIManagerScript.Instance.autoWordButton.interactable = true;
-                        canPlaceNow = true;
-                    }));
-                canPlaceNow = false;
+                scriptOff = false;
+                Debug.Log(scriptOff + " ScriptOff");
+                //canPlaceNow = true;
+                //canClickNow = true;
+                UIManagerScript.Instance.autoWordButton.interactable = true;
+
             }
             else
             {
-                /*scriptOff = false;
-                //canPlaceNow = true;
-                canClickNow = true;*/
-                DOVirtual.DelayedCall(2f, () =>
-                {
-                    UIManagerScript.Instance.autoWordButton.interactable = true;
-                    print("Donecgafdwy8i");
-                });
-                print("intractable value     "+i);
+                var cube = cubesGroups[i];
+            
+                //if (cube == null) continue;
+            
+                Debug.Log("FuncCalled ");
+            
+                Vector3 cubePos = cube.transform.position;
+                cubePos = new Vector3(cubePos.x, cubePos.y, -3.5f);
+                cube.transform.position = cubePos;
+                
+                compSequence?.Append(cube.transform
+                    .DOMove(completeWordPositionsList[wordNoToComplete].completeWordCubePositionGroup[i], .5f)
+                    .SetEase(Ease.Linear)
+                    .OnStart(() =>
+                    {
+                        canPlaceNow = false;
+                        //canClickNow = false;
+                    }).OnComplete(() =>
+                    {
+                        //scriptOff = false;
+                        //canClickNow = true;
+                        canPlaceNow = true;
+                    }));
+                //canPlaceNow = false;
+                /*print(" totAL KNJBJ"+cubesGroups.Count);
+                print(i);*/
             }
         }
 
