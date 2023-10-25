@@ -28,6 +28,7 @@ public class UIManagerScript : MonoBehaviour
 	public Button hintButton;
 	public Button restartButton;
     public Button autoWordButton;
+    public bool autoWordBool;
     
 	[Header("Levels changing")]
 	public GameObject starparticleEffect;
@@ -229,15 +230,25 @@ public class UIManagerScript : MonoBehaviour
         failPanel.SetActive(true);
     }
 
+    public void AutoButtonActive()
+    {
+        autoWordBool = false;
+        autoWordButton.interactable = true;
+    }
+
+    public void AutoButtonInActive()
+    {
+        autoWordBool = true;
+        autoWordButton.interactable = false;
+    }
     public void AutoWordCompleteButton()
     {
-        autoWordButton.interactable = false;
-        GameManager.Instance.AutoCompleteFunc();
-        
-        // if (GameManager.Instance.canClickNow)
-        // {
-        //     Debug.Log("AutoComplete");
-        // }
+        if (autoWordButton.interactable && !autoWordBool)
+        {
+            AutoButtonInActive();
+            GameManager.Instance.AutoCompleteFunc();
+            Debug.Log("AutoComplete");
+        }
         // Debug.Log("AutoCompleteOut");
         // Debug.Log("canClickNow " + GameManager.Instance.canClickNow);
         

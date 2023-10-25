@@ -400,6 +400,7 @@ public class GameManager : MonoBehaviour
                     }*/
                     wordCompleted[row] = true;
                     wordsMade++;
+                    wordNoToComplete++;
                     //print("row number" + row);
 
                     //Debug.Log("WordsMade " + wordsMade);
@@ -484,6 +485,7 @@ public class GameManager : MonoBehaviour
                         OnPartComplete?.Invoke(this, EventArgs.Empty);
                     }
                 }
+                wordNoToComplete++;
                 //Do anything after making the word
             }
             else if (s.correctWordMade && !stickingCubes[i].IsAllPlacesFullCheck())
@@ -685,68 +687,62 @@ public class GameManager : MonoBehaviour
         });
     }
 
-    public void AutoCompleteFunc()
+   private int _numberVal;
+    public void seqcall()
     {
-        if(wordNoToComplete >= completeWordCubesList.Count) return;
-        
-        var cubesGroups = completeWordCubesList[wordNoToComplete].completeWordCubeGroup;
-        //var cubesGroupCount = cubesGroups.Count - 1;
-        Debug.Log("Called ");
-
-        ;
-        
-        var compSequence = DOTween.Sequence();
-        
         scriptOff = true;
-        
-        for (var i = 0; i <= cubesGroups.Count; i++)
+        print("Function calling here");
+        var cubesGroups = completeWordCubesList[wordNoToComplete].completeWordCubeGroup;
+        var seq = DOTween.Sequence();
+        seq.AppendCallback(() =>
         {
-            
-            if (i == cubesGroups.Count)
+            if (_numberVal < cubesGroups.Count)
             {
-                scriptOff = false;
-                Debug.Log(scriptOff + " ScriptOff");
-                //canPlaceNow = true;
-                //canClickNow = true;
-                UIManagerScript.Instance.autoWordButton.interactable = true;
-
+                var cube = cubesGroups[_numberVal];
+                ObjMoving(cube,completeWordPositionsList[wordNoToComplete].completeWordCubePositionGroup[_numberVal]);
+                _numberVal++;
             }
             else
             {
-                var cube = cubesGroups[i];
-            
-                //if (cube == null) continue;
-            
-                Debug.Log("FuncCalled ");
-            
-                Vector3 cubePos = cube.transform.position;
-                cubePos = new Vector3(cubePos.x, cubePos.y, -3.5f);
-                cube.transform.position = cubePos;
-                
-                compSequence?.Append(cube.transform
-                    .DOMove(completeWordPositionsList[wordNoToComplete].completeWordCubePositionGroup[i], .5f)
-                    .SetEase(Ease.Linear)
-                    .OnStart(() =>
-                    {
-                        canPlaceNow = false;
-                        //canClickNow = false;
-                    }).OnComplete(() =>
-                    {
-                        //scriptOff = false;
-                        //canClickNow = true;
-                        canPlaceNow = true;
-                    }));
-                //canPlaceNow = false;
-                /*print(" totAL KNJBJ"+cubesGroups.Count);
-                print(i);*/
-            }
-        }
+                print("call in sequence One");
+                DOVirtual.DelayedCall(0.6f, () =>
+                {
+                    scriptOff = false;
+                    UIManagerScript.Instance.AutoButtonActive(); 
+                    autoFunCall = false;
+                });
 
-       
-        wordNoToComplete++;
-        Debug.Log("Hey");
+            }
+        });
+        seq.AppendInterval(1f);
+        seq.SetLoops(cubesGroups.Count + 1);
     }
 
+    public void ObjMoving(GameObject obj,Vector3 pos)
+    {
+        obj.transform.DOMove(pos, .5f).SetEase(Ease.Linear).OnStart(() =>
+        {
+            obj.GetComponent<CubesGroupScript>().canPlaceNow = false;
+        }).OnComplete(() =>
+        {
+            obj.GetComponent<CubesGroupScript>().canPlaceNow = true;
+        });
+        //var posi=pos.transform.position
+    }
+    public void AutoCompleteFunc()
+    {
+        if (!autoFunCall)
+        {
+            _numberVal = 0;
+            autoFunCall = true;
+            if(wordNoToComplete >= completeWordCubesList.Count) return;
+            seqcall();
+        }
+       
+        //print("Word to complete " + wordNoToComplete);
+    }
+
+    private bool autoFunCall = false;
     private int blocknum;
 
     private void BlockSeq()
