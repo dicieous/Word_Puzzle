@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.41385436, g: 0.43987173, b: 0.45213437, a: 1}
+  m_IndirectSpecularColor: {r: 0.41133603, g: 0.43699887, b: 0.45013523, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7694,7 +7694,34 @@ MonoBehaviour:
   rowsInGrid: 7
   colInGrid: 7
   numberOfColumns: 
+  completeWordCubesList:
+  - completeWordCubeGroup:
+    - {fileID: 778288380}
+  - completeWordCubeGroup:
+    - {fileID: 1506765879}
+  - completeWordCubeGroup:
+    - {fileID: 522928298}
+  - completeWordCubeGroup:
+    - {fileID: 443556460}
+  - completeWordCubeGroup:
+    - {fileID: 173289814}
+    - {fileID: 1864664402}
+  completeWordPositionsList:
+  - completeWordCubePositionGroup:
+    - {x: 3.44, y: 5.31, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 1.18, y: 1.8800001, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: -1.15, y: 0.72999996, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: -2.37, y: -1.72, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: -1.22, y: -0.54, z: -3.5}
+    - {x: 3.4, y: -0.5, z: -3.5}
+  canClickNow: 1
+  canPlaceNow: 1
   rowfilled: 0
+  movesCount: 0
   fXRowWords: []
   downCheck: 0
   levelTypeChanged: 1
@@ -7718,6 +7745,7 @@ MonoBehaviour:
   instPos: {fileID: 262508563}
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
+  levelFail: 0
   removing: 0
 --- !u!4 &1870371619
 Transform:
