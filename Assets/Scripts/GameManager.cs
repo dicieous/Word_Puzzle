@@ -400,7 +400,7 @@ public class GameManager : MonoBehaviour
                     }*/
                     wordCompleted[row] = true;
                     wordsMade++;
-                    wordNoToComplete++;
+                    //wordNoToComplete++;
                     //print("row number" + row);
 
                     //Debug.Log("WordsMade " + wordsMade);
@@ -485,7 +485,7 @@ public class GameManager : MonoBehaviour
                         OnPartComplete?.Invoke(this, EventArgs.Empty);
                     }
                 }
-                wordNoToComplete++;
+                //wordNoToComplete++;
                 //Do anything after making the word
             }
             else if (s.correctWordMade && !stickingCubes[i].IsAllPlacesFullCheck())
@@ -687,18 +687,55 @@ public class GameManager : MonoBehaviour
         });
     }
 
+    //To Remove the word from the AutoWordCompleteLists list after it's placed
+    public void RemoveCompletedWord(Transform wordGroup)
+    {
+        for (var i = 0; i < completeWordCubesList.Count; i++)
+        {
+            var cubesGroups = completeWordCubesList[i].completeWordCubeGroup;
+            var cubesPositions = completeWordPositionsList[i].completeWordCubePositionGroup;
+            
+            //For deleting element from completeWordCubeGroup
+            for (var j = 0; j < cubesGroups.Count; j++)
+            {
+                if(cubesGroups[j] == null) continue;
+                if (cubesGroups[j].gameObject == wordGroup.gameObject)
+                {
+                    cubesGroups[j] = null;
+                }
+            }
+            //For Deleting the Element from completeWordCubesList & completeWordPositionsList
+            for (var j = 0; j < cubesGroups.Count; j++)
+            {
+                if(cubesGroups[j] != null) break;
+                if (j == cubesGroups.Count - 1)
+                {
+                    completeWordCubesList.Remove(completeWordCubesList[i]);
+                    completeWordPositionsList.Remove(completeWordPositionsList[i]);
+                }
+            }
+        }
+    }
+    
    private int _numberVal;
     public void seqcall()
     {
         scriptOff = true;
         print("Function calling here");
         var cubesGroups = completeWordCubesList[wordNoToComplete].completeWordCubeGroup;
+        var cubeGroupsCount = cubesGroups.Count;
+        Debug.Log("CubeGroups Count " + cubesGroups.Count);
         var seq = DOTween.Sequence();
         seq.AppendCallback(() =>
         {
-            if (_numberVal < cubesGroups.Count)
+            //Debug.Log("CubeGroups Count " + cubesGroups.Count);
+            if (_numberVal < cubeGroupsCount)
             {
                 var cube = cubesGroups[_numberVal];
+                var position = cube.transform.position;
+                var cubePos = new Vector3(position.x, position.y, -3.5f);
+                cube.transform.position = cubePos;
+                
                 ObjMoving(cube,completeWordPositionsList[wordNoToComplete].completeWordCubePositionGroup[_numberVal]);
                 _numberVal++;
             }
@@ -715,7 +752,7 @@ public class GameManager : MonoBehaviour
             }
         });
         seq.AppendInterval(1f);
-        seq.SetLoops(cubesGroups.Count + 1);
+        seq.SetLoops(cubeGroupsCount + 1);
     }
 
     public void ObjMoving(GameObject obj,Vector3 pos)
@@ -737,6 +774,7 @@ public class GameManager : MonoBehaviour
             autoFunCall = true;
             if(wordNoToComplete >= completeWordCubesList.Count) return;
             seqcall();
+            
         }
        
         //print("Word to complete " + wordNoToComplete);
