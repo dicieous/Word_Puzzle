@@ -213,49 +213,46 @@ public class CubesGroupScript : MonoBehaviour
 		{
 			ResetPosition();
 		}
-
-		if (canCheckForPlacement) CondToAttachCubesInGrid();
+        if(canCheckForPlacement)
+            CondToAttachCubesInGrid();
 	}
 
 	//To reset the Position of the Objects
-	private void ResetPosition()
-	{
-		if(!UIManagerScript.Instance.autoWordBool)
-		{
-			if (canReset && !
-				    GameManager.Instance.levelCompleted)
-			{
-				canReset = false;
-				transform.DOMove(_initPos, 0.2f).SetEase(Ease.Flash).OnStart(() =>
-				{
-					foreach (var childCol in childObjects.Select(t => t.transform.GetComponent<Collider>()))
-					{
-						childCol.enabled = false;
-					}
-					canCheckForPlacement = false;
-					//Debug.Log("Check Stop");
-				}).OnComplete(() =>
-				{
-					foreach (var childCol in childObjects.Select(t => t.transform.GetComponent<Collider>()))
-					{
-						childCol.enabled = true;
-					}
-					canCheckForPlacement = true;
-					canReset = true;
-					//Debug.Log("Check Start");
-				});
+    private void ResetPosition()
+    {
+        if(!UIManagerScript.Instance.autoWordBool)
+        {
+            if (canReset && !
+                    GameManager.Instance.levelCompleted)
+            {
+                canReset = false;
+                transform.DOMove(_initPos, 0.2f).SetEase(Ease.Flash).OnStart(() =>
+                {
+                    foreach (var childCol in childObjects.Select(t => t.transform.GetComponent<Collider>()))
+                    {
+                        childCol.enabled = false;
+                    }
+                    canCheckForPlacement = false;
+                    //Debug.Log("Check Stop");
+                }).OnComplete(() =>
+                {
+                    foreach (var childCol in childObjects.Select(t => t.transform.GetComponent<Collider>()))
+                    {
+                        childCol.enabled = true;
+                    }
+                    canCheckForPlacement = true;
+                    canReset = true;
+                    //Debug.Log("Check Start");
+                });
 			
-				for (int i = 0; i < childObjects.Count; i++)
-				{
-					childObjects[i].transform.DOMove(initialPos[i], 0.2f).SetEase(Ease.Flash);
-				}
-			}
-		}
-		//transform.position = _initPos;
-		
-		
-
-	}
+                for (int i = 0; i < childObjects.Count; i++)
+                {
+                    childObjects[i].transform.DOMove(initialPos[i], 0.2f).SetEase(Ease.Flash);
+                }
+            }
+        }
+        //transform.position = _initPos;
+    }
 
 	//To check if you are hitting letters Group Collider
 	private bool CheckIfHittingCubeGroup()
@@ -357,8 +354,8 @@ public class CubesGroupScript : MonoBehaviour
 	public bool check2done; 
 	public bool check3done;
 
-	public bool canPlaceNow;
-	private bool _doneWard;
+    public bool canPlaceNow = false;
+    private bool _doneWard = false;
 	// ReSharper disable Unity.PerformanceAnalysis
 	private void CondToAttachCubesInGrid()
 	{
@@ -371,12 +368,11 @@ public class CubesGroupScript : MonoBehaviour
 				if (CheckIfHitting(child))
 				{
 					var hitInfo = RayCastInfo(child);
-					if (Input.GetMouseButtonUp(0) || canPlaceNow && !_doneWard)
-					{
-						//Debug.Log("Show");
-						AttachTheObj(hitInfo, child);
-					}
-
+                    if (Input.GetMouseButtonUp(0) || canPlaceNow && !_doneWard)
+                    {
+                        //Debug.Log("Show");
+                        AttachTheObj(hitInfo, child);
+                    }
 				}
 			}
 
