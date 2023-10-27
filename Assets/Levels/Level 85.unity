@@ -2995,7 +2995,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2446023301524287216, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 100.4
+      value: 49
+      objectReference: {fileID: 0}
+    - target: {fileID: 3596776800983306466, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3596776800983306466, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3596776800983306466, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 144.17407
+      objectReference: {fileID: 0}
+    - target: {fileID: 3596776800983306466, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 72.087036
+      objectReference: {fileID: 0}
+    - target: {fileID: 3596776800983306466, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: 4862706779092243883, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -8433,7 +8453,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500105350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.06, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11587,6 +11607,44 @@ MonoBehaviour:
   rowsInGrid: 7
   colInGrid: 7
   numberOfColumns: 
+  completeWordCubesList:
+  - completeWordCubeGroup:
+    - {fileID: 1506765879}
+    - {fileID: 363163145}
+  - completeWordCubeGroup:
+    - {fileID: 173289814}
+    - {fileID: 1190326786}
+  - completeWordCubeGroup:
+    - {fileID: 1582667982}
+    - {fileID: 1864664402}
+  - completeWordCubeGroup:
+    - {fileID: 778288380}
+    - {fileID: 443556460}
+  - completeWordCubeGroup:
+    - {fileID: 1826517057}
+    - {fileID: 1082021489}
+  - completeWordCubeGroup:
+    - {fileID: 1263633895}
+  completeWordPositionsList:
+  - completeWordCubePositionGroup:
+    - {x: -3.21, y: 7.31, z: -3.5}
+    - {x: -0.89, y: 7.34, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: -3.23, y: 2.7, z: -3.5}
+    - {x: -2.07, y: 4.98, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 5.98, y: 0.46, z: -3.5}
+    - {x: 2.52, y: 0.49, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 1.36, y: 3.93, z: -3.5}
+    - {x: 2.5, y: 7.35, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 0.2, y: 3.95, z: -3.5}
+    - {x: 0.26, y: 1.73, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 3.76, y: 1.58, z: -3.5}
+  canClickNow: 1
+  canPlaceNow: 1
   rowfilled: 0
   movesCount: 0
   fXRowWords: []
@@ -11621,6 +11679,7 @@ MonoBehaviour:
   instPos: {fileID: 60355732}
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
+  levelFail: 0
   removing: 0
 --- !u!4 &1870371619
 Transform:

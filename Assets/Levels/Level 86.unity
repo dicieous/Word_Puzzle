@@ -10165,7 +10165,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500105350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.79, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12606,7 +12606,48 @@ MonoBehaviour:
   rowsInGrid: 7
   colInGrid: 7
   numberOfColumns: 
+  completeWordCubesList:
+  - completeWordCubeGroup:
+    - {fileID: 1582667982}
+    - {fileID: 1864664402}
+  - completeWordCubeGroup:
+    - {fileID: 1506765879}
+    - {fileID: 1263633895}
+    - {fileID: 2100487022}
+  - completeWordCubeGroup:
+    - {fileID: 1082021489}
+  - completeWordCubeGroup:
+    - {fileID: 363163145}
+  - completeWordCubeGroup:
+    - {fileID: 173289814}
+    - {fileID: 778288380}
+  - completeWordCubeGroup:
+    - {fileID: 1468335251}
+  - completeWordCubeGroup:
+    - {fileID: 1190326786}
+  completeWordPositionsList:
+  - completeWordCubePositionGroup:
+    - {x: -4.68, y: 1.5, z: -3.5}
+    - {x: -1.18, y: 1.47, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 1.06, y: 6.05, z: -3.5}
+    - {x: -3.49, y: 5.98, z: -3.5}
+    - {x: -2.34, y: 4.87, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: -2.37, y: 7.2, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: -1.22, y: 3.8, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 4.55, y: 0.38, z: -3.5}
+    - {x: 4.52, y: 3.78, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 2.24, y: 3.75, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 2.2, y: 8.41, z: -3.5}
+  canClickNow: 1
+  canPlaceNow: 1
   rowfilled: 0
+  movesCount: 0
   fXRowWords: []
   downCheck: 0
   levelTypeChanged: 1
@@ -12639,6 +12680,7 @@ MonoBehaviour:
   instPos: {fileID: 60355732}
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
+  levelFail: 0
   removing: 0
 --- !u!4 &1870371619
 Transform:
@@ -13771,11 +13813,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.81
+      value: 1.15
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.69
+      value: 11.63
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.z

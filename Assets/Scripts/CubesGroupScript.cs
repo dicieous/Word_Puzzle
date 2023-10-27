@@ -49,6 +49,7 @@ public class CubesGroupScript : MonoBehaviour
         {
             transform.GetComponents<Collider>()[i].enabled = false;
         }
+        GameManager.Instance.RemoveCompletedWord(transform);
         CrctAnimSeqCall();
     }
 
