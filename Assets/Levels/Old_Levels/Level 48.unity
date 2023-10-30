@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.41385436, g: 0.43987173, b: 0.45213437, a: 1}
+  m_IndirectSpecularColor: {r: 0.41133603, g: 0.43699887, b: 0.45013523, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11949,6 +11949,32 @@ MonoBehaviour:
   rowsInGrid: 6
   colInGrid: 7
   numberOfColumns: 
+  completeWordCubesList:
+  - completeWordCubeGroup:
+    - {fileID: 173289814}
+    - {fileID: 1864664402}
+  - completeWordCubeGroup:
+    - {fileID: 1506765879}
+  - completeWordCubeGroup:
+    - {fileID: 778288380}
+    - {fileID: 1124137802}
+  - completeWordCubeGroup:
+    - {fileID: 443556460}
+    - {fileID: 522928298}
+  completeWordPositionsList:
+  - completeWordCubePositionGroup:
+    - {x: 1.76, y: 2.37, z: -3.5}
+    - {x: -2.8, y: 0.05, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 2.96, y: 1.2, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: -0.56, y: 5.82, z: -3.5}
+    - {x: -2.81, y: 3.48, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 4.08, y: 5.74, z: -3.5}
+    - {x: 1.75, y: 4.64, z: -3.5}
+  canClickNow: 1
+  canPlaceNow: 1
   rowfilled: 0
   movesCount: 0
   fXRowWords: []
@@ -11976,6 +12002,7 @@ MonoBehaviour:
   instPos: {fileID: 262508563}
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
+  levelFail: 0
   removing: 0
 --- !u!4 &1870371619
 Transform:
@@ -14094,11 +14121,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.88
+      value: 1.32
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.56
+      value: 6.92
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.z

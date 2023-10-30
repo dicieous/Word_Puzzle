@@ -112,15 +112,41 @@ public class CoinManager : MonoBehaviour
             SetHintCount((int)GetCoinsCount() / 50);
             coinCountText.text = GetCoinsCount().ToString();
             hintText.text = GetHintCount().ToString();
+            if (GetCoinsCount() >= 100)
+            {
+                UIManagerScript.Instance.autoWordButton.interactable = false;
+            }
         }
     }
 
+    public void AutoWordReduce()
+    {
+        /*if (ByteBrewManager.instance)
+           {
+               ByteBrewManager.instance.ProgressEvent(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),
+                   hintCounter.ToString(), "NormalMode", "Hints");
+           }*/
+        //SetHintCount(GetHintCount() - 1);
+        SetCoinCount(GetCoinsCount() - 100);
+        SetHintCount((int)GetCoinsCount() / 50);
+        coinCountText.text = GetCoinsCount().ToString();
+        hintText.text = GetHintCount().ToString();
+        if (GetCoinsCount() >= 100)
+        {
+            UIManagerScript.Instance.autoWordButton.interactable = false;
+        }
+    }
     public void CoinsIncrease(int x)
     {
         SetCoinCount(GetCoinsCount() + x);
         if (GetCoinsCount() >= 50)
         {
             SetHintCount((int)(GetCoinsCount() / 50));
+        }
+
+        if (GetCoinsCount() >= 100)
+        {
+            UIManagerScript.Instance.autoWordButton.interactable = true;
         }
         coinCountText.text = GetCoinsCount().ToString();
         hintText.text = GetHintCount().ToString();
