@@ -34,7 +34,7 @@ public class UIManagerScript : MonoBehaviour
 	public Button restartButton;
 	[Header("AutoWord Details")]
     public Button autoWordButton;
-    public bool autoWordBool;
+    public bool autoWordDisableWordBool;
     
 	[Header("Levels changing")]
 	public GameObject starparticleEffect;
@@ -121,11 +121,11 @@ public class UIManagerScript : MonoBehaviour
         {
             if (CoinManager.instance.GetCoinsCount() >= 100)
             {
-                autoWordButton.gameObject.SetActive(true);
+	            autoWordButton.interactable = true;
             }
             else
             {
-                autoWordButton.gameObject.SetActive(false);
+	            autoWordButton.interactable = false;
             }
         }
        
@@ -279,31 +279,30 @@ public class UIManagerScript : MonoBehaviour
 
     public void AutoButtonActive()
     {
-        autoWordBool = false;
-        if (CoinManager.instance.GetCoinsCount() >= 100)
+        autoWordDisableWordBool = false;
+        if (CoinManager.instance.GetCoinsCount() >= 100 && !GameManager.Instance.levelCompleted)
         {
             autoWordButton.interactable = true;
         }
     }
 
-    public void AutoButtonInActive()
+    public void AutoButtonDisActive()
     {
-        autoWordBool = true;
+        autoWordDisableWordBool = true;
         autoWordButton.interactable = false;
     }
     public void AutoWordCompleteButton()
     {
-        if (autoWordButton.interactable && !autoWordBool && CoinManager.instance.GetCoinsCount() >= 100)
+        if (autoWordButton.interactable && !autoWordDisableWordBool)
         {
-            AutoButtonInActive();
-            CoinManager.instance.AutoWordReduce();
+            AutoButtonDisActive();
+            
             if(GameManager.Instance)
 				GameManager.Instance.AutoCompleteFunc();
             
+            CoinManager.instance.AutoWordReduce();
             Debug.Log("AutoComplete");
         }
-        // Debug.Log("AutoCompleteOut");
-        // Debug.Log("canClickNow " + GameManager.Instance.canClickNow);
         
     }
     

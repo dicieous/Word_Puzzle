@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using Coffee.UIExtensions;
 using TMPro;
 using UnityEngine;
@@ -95,8 +96,6 @@ public class CoinManager : MonoBehaviour
         }
     }
 
-    private int GetLoaderImageCount() => PlayerPrefs.GetInt("LoaderImageNumber", 0);
-    private void SetLoaderImageCount(int num) => PlayerPrefs.SetInt("LoaderImageNumber", num);
     public void HintReduce()
     {
         if (GetHintCount() > 0)
@@ -112,7 +111,7 @@ public class CoinManager : MonoBehaviour
             SetHintCount((int)GetCoinsCount() / 50);
             coinCountText.text = GetCoinsCount().ToString();
             hintText.text = GetHintCount().ToString();
-            if (GetCoinsCount() >= 100)
+            if (GetCoinsCount() < 100)
             {
                 UIManagerScript.Instance.autoWordButton.interactable = false;
             }
@@ -151,6 +150,9 @@ public class CoinManager : MonoBehaviour
         coinCountText.text = GetCoinsCount().ToString();
         hintText.text = GetHintCount().ToString();
     }
+    
+    private int GetLoaderImageCount() => PlayerPrefs.GetInt("LoaderImageNumber", 0);
+    private void SetLoaderImageCount(int num) => PlayerPrefs.SetInt("LoaderImageNumber", num);
     
     public float GetLoaderPercent() => PlayerPrefs.GetFloat("LoaderPercentage", 0);
     public void SetLoaderPercentage(float percent) => PlayerPrefs.SetFloat("LoaderPercentage", percent);

@@ -221,7 +221,7 @@ public class CubesGroupScript : MonoBehaviour
 	//To reset the Position of the Objects
     private void ResetPosition()
     {
-        if(!UIManagerScript.Instance.autoWordBool)
+        if(!UIManagerScript.Instance.autoWordDisableWordBool)
         {
             if (canReset && !
                     GameManager.Instance.levelCompleted)
