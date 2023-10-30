@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using DG.Tweening;
 using TMPro;
 using Unity.VisualScripting;
@@ -723,9 +724,17 @@ public class GameManager : MonoBehaviour
     }
     
    private int _numberVal;
+   public void AutoCompleteFunc()
+   {
+       _numberVal = 0;
+       //autoFunCall = true;
+       if(wordNoToComplete >= completeWordCubesList.Count) return;
+       seqcall();
+       print("Word to complete           " + wordNoToComplete);
+   }
     public void seqcall()
     {
-        scriptOff = true;
+        //scriptOff = true;
         print("Function calling here");
         var cubesGroups = completeWordCubesList[wordNoToComplete].completeWordCubeGroup;
         var cubeGroupsCount = cubesGroups.Count;
@@ -747,11 +756,13 @@ public class GameManager : MonoBehaviour
             else
             {
                 print("call in sequence One");
-                DOVirtual.DelayedCall(0.6f, () =>
+                DOVirtual.DelayedCall(0.5f, () =>
                 {
                     scriptOff = false;
-                    UIManagerScript.Instance.AutoButtonActive(); 
-                    autoFunCall = false;
+                });
+                DOVirtual.DelayedCall(0.7f, () =>
+                {
+                    UIManagerScript.Instance.AutoButtonActive();
                 });
 
             }
@@ -770,19 +781,6 @@ public class GameManager : MonoBehaviour
             obj.GetComponent<CubesGroupScript>().canPlaceNow = true;
         });
         //var posi=pos.transform.position
-    }
-    public void AutoCompleteFunc()
-    {
-        if (!autoFunCall)
-        {
-            _numberVal = 0;
-            autoFunCall = true;
-            if(wordNoToComplete >= completeWordCubesList.Count) return;
-            seqcall();
-            
-        }
-       
-        //print("Word to complete " + wordNoToComplete);
     }
 
     private bool autoFunCall = false;

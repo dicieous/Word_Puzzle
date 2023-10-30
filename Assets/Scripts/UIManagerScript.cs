@@ -27,10 +27,14 @@ public class UIManagerScript : MonoBehaviour
 	
 	public Button nextButton;
     public Button retryButton;
+    [Header("hint Button Details")] 
+    public GameObject hintObj;
 	public Button hintButton;
+	[Header("Restart Button Details")]
 	public Button restartButton;
+	[Header("AutoWord Details")]
     public Button autoWordButton;
-    public bool autoWordBool;
+    public bool autoWordDisableWordBool;
     
 	[Header("Levels changing")]
 	public GameObject starparticleEffect;
@@ -85,13 +89,15 @@ public class UIManagerScript : MonoBehaviour
         if(GAScript.instance) GAScript.instance.LevelStart(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
 		
 		cm = CoinManager.instance;
-		if (endScreen)
-		{
-			endScreen.SetActive(false);
-		}
 
-        failPanel?.SetActive(false);
-        
+		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
+		{
+			hintButton.enabled = false;
+			autoWordButton.gameObject.SetActive(false);
+			restartButton.image.enabled = false;
+			levelNo.gameObject.SetActive(false);
+			movesText.gameObject.SetActive(false);
+		}
 		//StartCoroutine(PlayCoinCollectionFx());
 
 		if ((PlayerPrefs.GetInt("Level", 1) == 1))
@@ -115,11 +121,11 @@ public class UIManagerScript : MonoBehaviour
         {
             if (CoinManager.instance.GetCoinsCount() >= 100)
             {
-                autoWordButton.gameObject.SetActive(true);
+	            autoWordButton.interactable = true;
             }
             else
             {
-                autoWordButton.gameObject.SetActive(false);
+	            autoWordButton.interactable = false;
             }
         }
        
@@ -273,31 +279,30 @@ public class UIManagerScript : MonoBehaviour
 
     public void AutoButtonActive()
     {
-        autoWordBool = false;
-        if (CoinManager.instance.GetCoinsCount() >= 100)
+        autoWordDisableWordBool = false;
+        if (CoinManager.instance.GetCoinsCount() >= 100 && !GameManager.Instance.levelCompleted)
         {
             autoWordButton.interactable = true;
         }
     }
 
-    public void AutoButtonInActive()
+    public void AutoButtonDisActive()
     {
-        autoWordBool = true;
+        autoWordDisableWordBool = true;
         autoWordButton.interactable = false;
     }
     public void AutoWordCompleteButton()
     {
-        if (autoWordButton.interactable && !autoWordBool && CoinManager.instance.GetCoinsCount() >= 100)
+        if (autoWordButton.interactable && !autoWordDisableWordBool)
         {
-            AutoButtonInActive();
-            CoinManager.instance.AutoWordReduce();
+            AutoButtonDisActive();
+            
             if(GameManager.Instance)
 				GameManager.Instance.AutoCompleteFunc();
             
+            CoinManager.instance.AutoWordReduce();
             Debug.Log("AutoComplete");
         }
-        // Debug.Log("AutoCompleteOut");
-        // Debug.Log("canClickNow " + GameManager.Instance.canClickNow);
         
     }
     
