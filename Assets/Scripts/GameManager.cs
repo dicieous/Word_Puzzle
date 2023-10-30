@@ -429,6 +429,7 @@ public class GameManager : MonoBehaviour
             levelCompleted = true;
             UI.restartButton.interactable = false;
             UI.hintButton.interactable = false;
+            UI.autoWordButton.interactable = false;
             MonitizationScript.instance.giftImage.GetComponent<Button>().interactable = false;
             //DestroyBlocks();
 
@@ -446,6 +447,7 @@ public class GameManager : MonoBehaviour
         {
             UI.restartButton.interactable = false;
             UI.hintButton.interactable = false;
+            UI.autoWordButton.interactable = false;
             MonitizationScript.instance.giftImage.GetComponent<Button>().interactable = false;
             DOVirtual.DelayedCall(1f, () =>
             {
