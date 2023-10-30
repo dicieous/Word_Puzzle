@@ -148,7 +148,7 @@ public class LevelMapInstantiator : MonoBehaviour
 
             if (this == null) continue;
             var image = Instantiate(levelImages, transform, true);
-            image.transform.localScale = Vector3.one * 3;
+            image.transform.localScale = Vector3.one * 2.5f;
             image.GetComponentInChildren<TextMeshProUGUI>().text = (i + startLevel).ToString();
 
             //image.transform.GetChild(1).GetComponent<Image>().color = Color.gray ;
