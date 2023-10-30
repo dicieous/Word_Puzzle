@@ -89,10 +89,11 @@ public class UIManagerScript : MonoBehaviour
         if(GAScript.instance) GAScript.instance.LevelStart(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
 		
 		cm = CoinManager.instance;
-
+        
 		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
 		{
-			hintButton.enabled = false;
+            //print("One");
+			hintButton.gameObject.SetActive(false);
 			autoWordButton.gameObject.SetActive(false);
 			restartButton.image.enabled = false;
 			levelNo.gameObject.SetActive(false);
@@ -309,7 +310,7 @@ public class UIManagerScript : MonoBehaviour
 	private void Update()
 	{
 		var s = GetSpecialLevelNumber().ToString()[^1];
-		if (s != '0')
+		if (s != '0' && (SceneManager.GetActiveScene().buildIndex != SceneManager.sceneCountInBuildSettings - 1))
 		{
 			if (cm.GetHintCount() == 0 && hintButton.interactable)
 			{
