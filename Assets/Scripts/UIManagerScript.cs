@@ -250,7 +250,10 @@ public class UIManagerScript : MonoBehaviour
                     }
                     else
                     {
-	                    DOVirtual.DelayedCall(1f, MapLevelCall);
+	                    DOVirtual.DelayedCall(1f, ()=>
+	                    {
+		                    MapLevelCall();
+	                    });
                     }
                 });
             }
@@ -265,7 +268,10 @@ public class UIManagerScript : MonoBehaviour
                 DOVirtual.DelayedCall(2f, () =>
                 {
                     CoinManager.instance.CoinsIncrease(25);
-                    DOVirtual.DelayedCall(1f, MapLevelCall);
+                    DOVirtual.DelayedCall(1f, ()=>
+                    {
+	                    MapLevelCall();
+                    });
                     //EmojiManager.Instance.nextButton.interactable = true;
                 });
                 /*DOVirtual.DelayedCall(0.5f, () =>
@@ -315,24 +321,25 @@ public class UIManagerScript : MonoBehaviour
 		var s = GetSpecialLevelNumber().ToString()[^1];
 		if (s != '0' && (SceneManager.GetActiveScene().buildIndex != SceneManager.sceneCountInBuildSettings - 1))
 		{
-			if (cm.GetHintCount() == 0 && hintButton.interactable)
-			{
-				hintButton.interactable = false;
-			}
-			else if (cm.GetHintCount() >= 50 && !hintButton.interactable)
+			if (cm.GetCoinsCount() >= 50 && !hintButton.interactable)
 			{
 				hintButton.interactable = true;
 			}
-
-			if (Input.GetMouseButtonUp(0))
+			else if(cm.GetCoinsCount() < 50 && hintButton.interactable)
 			{
-				AutoButtonDisActive();
+				hintButton.interactable = false;
+			}
+			/*if (Input.GetMouseButtonUp(0))
+			{
+				//AutoButtonDisActive();
+				AutoButtonActive();
 			}
 
 			if (Input.GetMouseButtonDown(0))
 			{
-				AutoButtonActive();
-			}
+				// AutoButtonActive();
+				AutoButtonDisActive();
+			}*/
 		}
 	}
 

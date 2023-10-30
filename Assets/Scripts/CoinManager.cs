@@ -120,10 +120,10 @@ public class CoinManager : MonoBehaviour
             SetHintCount((int)GetCoinsCount() / 50);
             coinCountText.text = GetCoinsCount().ToString();
             hintText.text = GetHintCount().ToString();
-            autoWordCountText.text = ((int)(GetCoinsCount() / 100)).ToString();
             if (GetCoinsCount() < 100)
             {
                 UIManagerScript.Instance.autoWordButton.interactable = false;
+                autoWordCountText.text = ((int)0).ToString();
             }
         }
     }
@@ -140,28 +140,43 @@ public class CoinManager : MonoBehaviour
         SetHintCount((int)GetCoinsCount() / 50);
         coinCountText.text = GetCoinsCount().ToString();
         hintText.text = GetHintCount().ToString();
-        autoWordCountText.text = ((int)(GetCoinsCount() / 100)).ToString();
         if (GetCoinsCount() >= 100)
         {
             UIManagerScript.Instance.autoWordButton.interactable = false;
         }
+        autoWordCountText.text = ((int)(GetCoinsCount() / 100)).ToString();
     }
     public void CoinsIncrease(int x)
     {
+        //var s1 = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
         SetCoinCount(GetCoinsCount() + x);
         if (GetCoinsCount() >= 50)
         {
             SetHintCount((int)(GetCoinsCount() / 50));
+            /*if (s1 != '0')
+            {
+                UIManagerScript.Instance.hintButton.interactable = true;
+            }*/
+            
         }
 
         var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
-        if (GetCoinsCount() >= 100 && s != '0')
+        if (s != '0')
         {
-            UIManagerScript.Instance.autoWordButton.interactable = true;
+            if (GetCoinsCount() >= 100)
+            {
+                UIManagerScript.Instance.autoWordButton.interactable = true;
+                autoWordCountText.text = ((int)(GetCoinsCount() / 100)).ToString();
+            }
+            else
+            {
+                autoWordCountText.text = ((int)0).ToString();
+            }
         }
+        
         coinCountText.text = GetCoinsCount().ToString();
         hintText.text = GetHintCount().ToString();
-        autoWordCountText.text = ((int)(GetCoinsCount() / 100)).ToString();
+
     }
     
     private int GetLoaderImageCount() => PlayerPrefs.GetInt("LoaderImageNumber", 0);
