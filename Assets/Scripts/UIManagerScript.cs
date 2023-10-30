@@ -27,8 +27,12 @@ public class UIManagerScript : MonoBehaviour
 	
 	public Button nextButton;
     public Button retryButton;
+    [Header("hint Button Details")] 
+    public GameObject hintObj;
 	public Button hintButton;
+	[Header("Restart Button Details")]
 	public Button restartButton;
+	[Header("AutoWord Details")]
     public Button autoWordButton;
     public bool autoWordBool;
     
@@ -85,13 +89,15 @@ public class UIManagerScript : MonoBehaviour
         if(GAScript.instance) GAScript.instance.LevelStart(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
 		
 		cm = CoinManager.instance;
-		if (endScreen)
-		{
-			endScreen.SetActive(false);
-		}
 
-        failPanel?.SetActive(false);
-        
+		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
+		{
+			hintButton.enabled = false;
+			autoWordButton.gameObject.SetActive(false);
+			restartButton.image.enabled = false;
+			levelNo.gameObject.SetActive(false);
+			movesText.gameObject.SetActive(false);
+		}
 		//StartCoroutine(PlayCoinCollectionFx());
 
 		if ((PlayerPrefs.GetInt("Level", 1) == 1))
