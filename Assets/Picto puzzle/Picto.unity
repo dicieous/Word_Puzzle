@@ -2910,7 +2910,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &800891074
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3946,8 +3946,11 @@ MonoBehaviour:
   coinStartReference: {fileID: 0}
   nextButton: {fileID: 0}
   retryButton: {fileID: 0}
+  hintObj: {fileID: 0}
   hintButton: {fileID: 0}
   restartButton: {fileID: 0}
+  autoWordButton: {fileID: 0}
+  autoWordDisableWordBool: 0
   starparticleEffect: {fileID: 4703598324225116034, guid: cf6696c35ed2218498ac4f5624ae2a23, type: 3}
   tutorialHand: {fileID: 0}
   tutorialHand2: {fileID: 0}
@@ -3957,6 +3960,11 @@ MonoBehaviour:
   tutorialtext: {fileID: 0}
   targetCongratulationImage: {fileID: 0}
   congratulationsImages: []
+  giftPanel: {fileID: 0}
+  claimButton: {fileID: 0}
+  coinsText: {fileID: 0}
+  gifAnimationObj: {fileID: 0}
+  giftLevel: 0
   diamondIcon: {fileID: 1905652867}
   diamondFxParent: {fileID: 220826510}
   centerParticleRect: {fileID: 188722828}

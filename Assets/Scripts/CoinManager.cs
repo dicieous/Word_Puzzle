@@ -41,7 +41,7 @@ public class CoinManager : MonoBehaviour
 
     void Start()
     {
-        
+        coinCountText.text = GetCoinsCount().ToString();
         var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
         if (s != '0')
         {
@@ -63,8 +63,6 @@ public class CoinManager : MonoBehaviour
                     singleColor = greenColor;
                 } 
             }
-            
-            coinCountText.text = GetCoinsCount().ToString();
             if (GetCoinsCount() >= 50)
             {
                 var countNum = (int)GetCoinsCount() / 50;
