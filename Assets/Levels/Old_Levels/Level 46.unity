@@ -12102,8 +12102,29 @@ MonoBehaviour:
   colInGrid: 7
   numberOfColumns: 
   completeWordCubesList:
-  - completeWordCubeGroup: []
-  completeWordPositionsList: []
+  - completeWordCubeGroup:
+    - {fileID: 1506765879}
+    - {fileID: 778288380}
+    - {fileID: 1215324759}
+  - completeWordCubeGroup:
+    - {fileID: 173289814}
+    - {fileID: 1124137802}
+  - completeWordCubeGroup:
+    - {fileID: 443556460}
+    - {fileID: 1864664402}
+    - {fileID: 522928298}
+  completeWordPositionsList:
+  - completeWordCubePositionGroup:
+    - {x: 0.55, y: 3.53, z: -3.5}
+    - {x: -0.58, y: 6.99, z: -3.5}
+    - {x: 4.01, y: 3.53, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 1.73, y: 4.64, z: -3.5}
+    - {x: -2.89, y: 3.52, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 1.72, y: 1.14, z: -3.5}
+    - {x: -2.9, y: 1.13, z: -3.5}
+    - {x: 2.83, y: 1.19, z: -3.5}
   canClickNow: 1
   canPlaceNow: 1
   rowfilled: 0
@@ -14248,12 +14269,24 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 7.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.88
+      value: 1.35
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.56
+      value: 7.25
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.z
