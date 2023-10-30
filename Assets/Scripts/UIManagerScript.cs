@@ -24,6 +24,7 @@ public class UIManagerScript : MonoBehaviour
 	public Material originalColor;
 	public RectTransform coinEndReference;
 	public RectTransform coinStartReference;
+	
 	public Button nextButton;
     public Button retryButton;
 	public Button hintButton;
@@ -52,8 +53,8 @@ public class UIManagerScript : MonoBehaviour
     private static int levelAttempts;
 
     [Header("Gift Details")] 
-    public GameObject giftPanel;
-    [FormerlySerializedAs("openButton")] public Button claimButton;
+    public GameObject giftPanel; 
+    public Button claimButton;
     public GameObject coinsText;
     //public Button looseButton;
     public GameObject gifAnimationObj;
@@ -100,6 +101,8 @@ public class UIManagerScript : MonoBehaviour
             /*hintButton.GetComponent<Image>().enabled = false;
             hintButton.interactable = false;*/
             hintButton.gameObject.SetActive(false);
+            autoWordButton.gameObject.SetActive(false);
+            MonitizationScript.instance.giftObject.SetActive(false);
             if(tutorialtext)
                 tutorialtext.SetActive(true);
 			//HelpHand();
@@ -194,6 +197,7 @@ public class UIManagerScript : MonoBehaviour
 		//if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
 		DOVirtual.DelayedCall(1.5f,()=>
 		{
+			MonitizationScript.instance.giftObject.SetActive(false);
             var s = GetSpecialLevelNumber().ToString()[^1];
             if (s != '0')
             {

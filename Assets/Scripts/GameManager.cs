@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 using Sequence = DG.Tweening.Sequence;
 
@@ -427,6 +428,7 @@ public class GameManager : MonoBehaviour
             levelCompleted = true;
             UI.restartButton.interactable = false;
             UI.hintButton.interactable = false;
+            MonitizationScript.instance.giftImage.GetComponent<Button>().interactable = false;
             //DestroyBlocks();
 
             DOVirtual.DelayedCall(1.25f, () =>
@@ -441,6 +443,9 @@ public class GameManager : MonoBehaviour
         }
         else if (movesCount == 0 && !levelCompleted && !levelFail)
         {
+            UI.restartButton.interactable = false;
+            UI.hintButton.interactable = false;
+            MonitizationScript.instance.giftImage.GetComponent<Button>().interactable = false;
             DOVirtual.DelayedCall(1f, () =>
             {
                 if (!levelCompleted)
