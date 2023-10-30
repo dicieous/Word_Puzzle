@@ -111,7 +111,17 @@ public class UIManagerScript : MonoBehaviour
                 t.enabled = false;
             }
 		}
-
+        else
+        {
+            if (CoinManager.instance.GetCoinsCount() >= 100)
+            {
+                autoWordButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                autoWordButton.gameObject.SetActive(false);
+            }
+        }
        
     }
 
@@ -264,7 +274,10 @@ public class UIManagerScript : MonoBehaviour
     public void AutoButtonActive()
     {
         autoWordBool = false;
-        autoWordButton.interactable = true;
+        if (CoinManager.instance.GetCoinsCount() >= 100)
+        {
+            autoWordButton.interactable = true;
+        }
     }
 
     public void AutoButtonInActive()
@@ -274,11 +287,13 @@ public class UIManagerScript : MonoBehaviour
     }
     public void AutoWordCompleteButton()
     {
-        if (autoWordButton.interactable && !autoWordBool)
+        if (autoWordButton.interactable && !autoWordBool && CoinManager.instance.GetCoinsCount() >= 100)
         {
             AutoButtonInActive();
+            CoinManager.instance.AutoWordReduce();
             if(GameManager.Instance)
 				GameManager.Instance.AutoCompleteFunc();
+            
             Debug.Log("AutoComplete");
         }
         // Debug.Log("AutoCompleteOut");
@@ -295,7 +310,7 @@ public class UIManagerScript : MonoBehaviour
 			{
 				hintButton.interactable = false;
 			}
-			else if (cm.GetHintCount() != 0 && !hintButton.interactable)
+			else if (cm.GetHintCount() >= 50 && !hintButton.interactable)
 			{
 				hintButton.interactable = true;
 			}
