@@ -306,7 +306,7 @@ public class UIManagerScript : MonoBehaviour
         if (autoWordButton.interactable && !autoWordDisableWordBool)
         {
             AutoButtonDisActive();
-            
+            GameManager.Instance.autoWordClick = true;
             if(GameManager.Instance)
 				GameManager.Instance.AutoCompleteFunc();
             
@@ -319,7 +319,7 @@ public class UIManagerScript : MonoBehaviour
 	private void Update()
 	{
 		var s = GetSpecialLevelNumber().ToString()[^1];
-		if (s != '0' && (SceneManager.GetActiveScene().buildIndex != SceneManager.sceneCountInBuildSettings - 1))
+		if (s != '0' && (SceneManager.GetActiveScene().buildIndex != SceneManager.sceneCountInBuildSettings - 1) && !GameManager.Instance.levelCompleted)
 		{
 			if (cm.GetCoinsCount() >= 50 && !hintButton.interactable)
 			{
@@ -340,7 +340,16 @@ public class UIManagerScript : MonoBehaviour
 				// AutoButtonActive();
 				AutoButtonDisActive();
 			}*/
+			if (!GameManager.Instance.autoWordClick)
+			{
+				if (GameManager.Instance.wordTouch && autoWordButton.interactable)
+					autoWordButton.interactable = false;
+				else if(!GameManager.Instance.wordTouch && !autoWordButton.interactable)
+					AutoButtonActive();
+			}
 		}
+
+		
 	}
 
 	public void OnHintButtonClick()
@@ -474,11 +483,6 @@ public class UIManagerScript : MonoBehaviour
 	    var s = GetSpecialLevelNumber().ToString()[^1];
 	    if (s == '0')
 	    {
-		    if (EmojiManager.Instance)
-		    {
-			    EmojiManager.Instance.SetListNumber(EmojiManager.Instance.GetListNumbers() + 1);
-			    EmojiManager.Instance.SetPanelsDone(EmojiManager.Instance.GetPanelsDone() + 1);
-		    }
 		    SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 2);
 		    PlayerPrefs.SetInt("Special",1);
 		    CoinManager.instance.SetLoaderPercentage(0f);
@@ -503,6 +507,12 @@ public class UIManagerScript : MonoBehaviour
     }
     public void MapLevelCall()
     {
+	    if (EmojiManager.Instance)
+	    {
+		    EmojiManager.Instance.SetListNumber(EmojiManager.Instance.GetListNumbers() + 1);
+		    EmojiManager.Instance.SetPanelsDone(EmojiManager.Instance.GetPanelsDone() + 1);
+	    }
+	    
 	    SetSpecialLevelNumber(GetSpecialLevelNumber() + 1);
 	    PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
 	    SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
