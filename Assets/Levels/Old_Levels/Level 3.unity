@@ -2319,7 +2319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.25
+      value: -6.17
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2513,11 +2513,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.33
+      value: 1.43
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.39
+      value: 2.88
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3045,7 +3045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.72
+      value: -5.64
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3445,6 +3445,22 @@ MonoBehaviour:
   rowsInGrid: 3
   colInGrid: 4
   numberOfColumns: 
+  completeWordCubesList:
+  - completeWordCubeGroup:
+    - {fileID: 749803677}
+    - {fileID: 173289814}
+  - completeWordCubeGroup:
+    - {fileID: 2072267425}
+    - {fileID: 2078122373}
+  completeWordPositionsList:
+  - completeWordCubePositionGroup:
+    - {x: -0.58, y: 0.04, z: -3.5}
+    - {x: 1.67, y: 0.09, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: -0.56, y: 1.27, z: -3.5}
+    - {x: 1.67, y: 1.32, z: -3.5}
+  canClickNow: 1
+  canPlaceNow: 1
   rowfilled: 0
   movesCount: 0
   fXRowWords: []
@@ -3466,6 +3482,7 @@ MonoBehaviour:
   instPos: {fileID: 1076512326}
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
+  levelFail: 0
   removing: 0
 --- !u!4 &1870371619
 Transform:
@@ -4181,7 +4198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.52
+      value: -3.44
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4535,7 +4552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.5
+      value: -3.42
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.z

@@ -2286,7 +2286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.6
+      value: -2.0400002
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2752,7 +2752,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10.179999
+      value: -8.62
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4225,7 +4225,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.89
+      value: -6.33
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5461,7 +5461,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: -0.5, z: -15}
+  m_LocalPosition: {x: 1, y: 0, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5845,7 +5845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.24
+      value: -3.68
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8085,7 +8085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.81
+      value: -3.2500002
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10221,7 +10221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.7599998
+      value: -3.2
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10373,6 +10373,28 @@ MonoBehaviour:
   rowsInGrid: 6
   colInGrid: 6
   numberOfColumns: 
+  completeWordCubesList:
+  - completeWordCubeGroup:
+    - {fileID: 443556460}
+    - {fileID: 778288380}
+  - completeWordCubeGroup:
+    - {fileID: 1506765879}
+    - {fileID: 522928298}
+  - completeWordCubeGroup:
+    - {fileID: 173289814}
+    - {fileID: 1864664402}
+  completeWordPositionsList:
+  - completeWordCubePositionGroup:
+    - {x: 2.79, y: 5.75, z: -3.5}
+    - {x: -1.82, y: 5.75, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: -1.8, y: 1.23, z: -3.5}
+    - {x: 1.65, y: 0.05, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 2.78, y: 4.6, z: -3.5}
+    - {x: 1.62, y: 3.52, z: -3.5}
+  canClickNow: 1
+  canPlaceNow: 1
   rowfilled: 0
   movesCount: 0
   fXRowWords: []
@@ -10398,6 +10420,7 @@ MonoBehaviour:
   instPos: {fileID: 262508563}
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
+  levelFail: 0
   removing: 0
 --- !u!4 &1870371619
 Transform:

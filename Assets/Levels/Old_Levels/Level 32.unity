@@ -10152,6 +10152,28 @@ MonoBehaviour:
   rowsInGrid: 6
   colInGrid: 6
   numberOfColumns: 
+  completeWordCubesList:
+  - completeWordCubeGroup:
+    - {fileID: 443556460}
+    - {fileID: 778288380}
+    - {fileID: 522928298}
+  - completeWordCubeGroup:
+    - {fileID: 1864664402}
+  - completeWordCubeGroup:
+    - {fileID: 173289814}
+    - {fileID: 1506765879}
+  completeWordPositionsList:
+  - completeWordCubePositionGroup:
+    - {x: 2.83, y: 3.41, z: -3.5}
+    - {x: 3.95, y: 2.25, z: -3.5}
+    - {x: -0.61, y: -0.01, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: -0.63, y: 4.53, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 0.49, y: 5.71, z: -3.5}
+    - {x: 2.76, y: 4.55, z: -3.5}
+  canClickNow: 1
+  canPlaceNow: 1
   rowfilled: 0
   movesCount: 0
   fXRowWords: []
@@ -10177,6 +10199,7 @@ MonoBehaviour:
   instPos: {fileID: 262508563}
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
+  levelFail: 0
   removing: 0
 --- !u!4 &1870371619
 Transform:

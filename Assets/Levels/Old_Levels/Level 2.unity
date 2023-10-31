@@ -1833,11 +1833,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.9
+      value: 2.76
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.966
+      value: -3.33
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2376,11 +2376,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.4099998
+      value: -1.5499998
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.966
+      value: -3.33
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2890,6 +2890,20 @@ MonoBehaviour:
   rowsInGrid: 3
   colInGrid: 3
   numberOfColumns: 
+  completeWordCubesList:
+  - completeWordCubeGroup:
+    - {fileID: 2072267425}
+    - {fileID: 749803677}
+  - completeWordCubeGroup:
+    - {fileID: 173289814}
+  completeWordPositionsList:
+  - completeWordCubePositionGroup:
+    - {x: 1.18, y: 1.19, z: -3.5}
+    - {x: 0, y: 1.17, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 1.14, y: 0.03, z: -3.5}
+  canClickNow: 1
+  canPlaceNow: 1
   rowfilled: 0
   movesCount: 0
   fXRowWords: []
@@ -2909,6 +2923,7 @@ MonoBehaviour:
   instPos: {fileID: 2076477979}
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
+  levelFail: 0
   removing: 0
 --- !u!4 &1870371619
 Transform:
@@ -3338,11 +3353,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.33
+      value: 1.39
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.39
+      value: 2.76
       objectReference: {fileID: 0}
     - target: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3545,11 +3560,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.24000001
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.966
+      value: -3.33
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalPosition.z
