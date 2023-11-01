@@ -8355,7 +8355,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.76, y: -6.06, z: -15}
+  m_LocalPosition: {x: 1.76, y: -2.98, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14539,7 +14539,12 @@ MonoBehaviour:
   rowsInGrid: 7
   colInGrid: 7
   numberOfColumns: 
+  completeWordCubesList: []
+  completeWordPositionsList: []
+  canClickNow: 1
+  canPlaceNow: 1
   rowfilled: 0
+  movesCount: 0
   fXRowWords: []
   downCheck: 0
   levelTypeChanged: 1
@@ -14575,6 +14580,7 @@ MonoBehaviour:
   instPos: {fileID: 262508563}
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
+  levelFail: 0
   removing: 0
 --- !u!4 &1870371619
 Transform:
