@@ -501,7 +501,7 @@ public class UIManagerScript : MonoBehaviour
 		    {
 			    SceneManager.LoadScene(PlayerPrefs.GetInt("Level", 1));
 		    }
-		    CoinManager.instance.SetLoaderPercentage(CoinManager.instance.GetLoaderPercent() + ((1f / 9f)));
+		    //CoinManager.instance.SetLoaderPercentage(CoinManager.instance.GetLoaderPercent() + ((1f / 9f)));
 	    }
 	    if(GAScript.instance) GAScript.instance.LevelCompleted(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
     }
@@ -515,6 +515,7 @@ public class UIManagerScript : MonoBehaviour
 	    
 	    SetSpecialLevelNumber(GetSpecialLevelNumber() + 1);
 	    PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
+	    CoinManager.instance.SetLoaderPercentage(CoinManager.instance.GetLoaderPercent() + ((1f / 9f)));
 	    SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
     }
 	public int GetSpecialLevelNumber() => PlayerPrefs.GetInt("SpecialLevelNumber", 1);
