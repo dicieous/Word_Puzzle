@@ -16,6 +16,8 @@ public class HolderCubeScript : MonoBehaviour
 
 	public bool isFilled = false;
 
+    [HideInInspector] public GameObject objRef;
+
     private void Start()
     {
         checkNumberRef = int.Parse(transform.GetChild(1).GetComponent<TextMeshPro>().text) ;
@@ -48,6 +50,7 @@ public class HolderCubeScript : MonoBehaviour
 			staying = true;
             if (other.gameObject.CompareTag("Player_Cube") && staying)
             {
+                objRef = other.gameObject;
                 //print("One DomeBAhv");
                 if (other.gameObject.GetComponent<PlayerCubeScript>() && checkNumberRef != 0 && GameManager.Instance.levelTypeChanged)
                 {
