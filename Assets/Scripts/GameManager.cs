@@ -426,10 +426,9 @@ public class GameManager : MonoBehaviour
         if (wordsMade >= answers.Count && IsGridFull() && !levelCompleted)
         {
             print("Win");
-            levelCompleted = true;
-            UI.restartButton.interactable = false;
-            UI.hintButton.interactable = false;
-            MonitizationScript.instance.giftImage.GetComponent<Button>().interactable = false;
+            
+            ButtonsTurnOffFun();
+            
             //DestroyBlocks();
 
             DOVirtual.DelayedCall(1.25f, () =>
@@ -444,9 +443,8 @@ public class GameManager : MonoBehaviour
         }
         else if (movesCount == 0 && !levelCompleted && !levelFail)
         {
-            UI.restartButton.interactable = false;
-            UI.hintButton.interactable = false;
-            MonitizationScript.instance.giftImage.GetComponent<Button>().interactable = false;
+            ButtonsTurnOffFun();
+            
             DOVirtual.DelayedCall(1f, () =>
             {
                 if (!levelCompleted)
@@ -506,9 +504,9 @@ public class GameManager : MonoBehaviour
             //do anything after all words are made
             levelCompleted = true;
             Debug.Log("LevelComplete");
-            UI.restartButton.interactable = false;
-            UI.hintButton.interactable = false;
-
+            
+            ButtonsTurnOffFun();
+            
             DOVirtual.DelayedCall(.75f, () =>
             {
                 CoinManager.instance.confettiFx.Play();
@@ -704,14 +702,23 @@ public class GameManager : MonoBehaviour
             //For deleting element from completeWordCubeGroup
             for (var j = 0; j < cubesGroups.Count; j++)
             {
-                if(cubesGroups[j] == null) continue;
                 if (cubesGroups[j].gameObject == wordGroup.gameObject)
                 {
-                    cubesGroups[j] = null;
+                    //cubesGroups[j] = null;
+                    if (cubesGroups.Count == 1)
+                    {
+                        completeWordCubesList.RemoveAt(i);
+                        completeWordPositionsList.RemoveAt(i);
+                    }
+                    else
+                    {
+                        cubesGroups.RemoveAt(j);
+                        cubesPositions.RemoveAt(j);
+                    }
                 }
             }
             //For Deleting the Element from completeWordCubesList & completeWordPositionsList
-            for (var j = 0; j < cubesGroups.Count; j++)
+            /*for (var j = 0; j < cubesGroups.Count; j++)
             {
                 if(cubesGroups[j] != null) break;
                 if (j == cubesGroups.Count - 1)
@@ -719,7 +726,7 @@ public class GameManager : MonoBehaviour
                     completeWordCubesList.Remove(completeWordCubesList[i]);
                     completeWordPositionsList.Remove(completeWordPositionsList[i]);
                 }
-            }
+            }*/
         }
     }
     
@@ -745,12 +752,13 @@ public class GameManager : MonoBehaviour
             //Debug.Log("CubeGroups Count " + cubesGroups.Count);
             if (_numberVal < cubeGroupsCount)
             {
-                var cube = cubesGroups[_numberVal];
+                //print(_numberVal);
+                var cube = cubesGroups[0];
                 var position = cube.transform.position;
                 var cubePos = new Vector3(position.x, position.y, -3.5f);
                 cube.transform.position = cubePos;
                 
-                ObjMoving(cube,completeWordPositionsList[wordNoToComplete].completeWordCubePositionGroup[_numberVal]);
+                ObjMoving(cube,completeWordPositionsList[wordNoToComplete].completeWordCubePositionGroup[0]);
                 _numberVal++;
             }
             else
@@ -762,6 +770,7 @@ public class GameManager : MonoBehaviour
                 });
                 DOVirtual.DelayedCall(0.7f, () =>
                 {
+                    autoWordClick = false;
                     UIManagerScript.Instance.AutoButtonActive();
                 });
 
@@ -823,6 +832,20 @@ public class GameManager : MonoBehaviour
         seq.SetLoops(_allCubeObjects.Count + 1);
     }
 
+    public void ButtonsTurnOffFun()
+    {
+        if (UI.restartButton.interactable)
+            UI.restartButton.interactable = false;
+        if(UI.hintButton.interactable)
+            UI.hintButton.interactable = false;
+        if(UI.autoWordButton.interactable)
+            UI.autoWordButton.interactable = false;
+        if (MonitizationScript.instance.giftImage.GetComponent<Button>().interactable)
+            MonitizationScript.instance.giftImage.GetComponent<Button>().interactable = false;
+    }
+
+    public bool wordTouch;
+    public bool autoWordClick;
 //#endregion
     [System.Serializable]
     public class WordData

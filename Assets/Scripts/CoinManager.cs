@@ -5,6 +5,7 @@ using System.Globalization;
 using Coffee.UIExtensions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -16,6 +17,7 @@ public class CoinManager : MonoBehaviour
     public GameManager gm;
     public TextMeshProUGUI hintText;
     public TextMeshProUGUI coinCountText;
+    public TextMeshProUGUI autoWordCountText;
 
     public List<Color> colorData;
     [HideInInspector] public Color singleColor;
@@ -42,6 +44,7 @@ public class CoinManager : MonoBehaviour
     void Start()
     {
         coinCountText.text = GetCoinsCount().ToString();
+        
         var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
         if (s != '0')
         {
@@ -68,6 +71,14 @@ public class CoinManager : MonoBehaviour
                 var countNum = (int)GetCoinsCount() / 50;
                 SetHintCount(countNum);
                 hintText.text = GetHintCount().ToString();
+                if (GetCoinsCount() >= 100)
+                {
+                    autoWordCountText.text = ((int)(GetCoinsCount() / 100f)).ToString();
+                }
+                else
+                {
+                    autoWordCountText.text = ((int)0).ToString();
+                }
             }
             else
             {
@@ -112,6 +123,7 @@ public class CoinManager : MonoBehaviour
             if (GetCoinsCount() < 100)
             {
                 UIManagerScript.Instance.autoWordButton.interactable = false;
+                autoWordCountText.text = ((int)0).ToString();
             }
         }
     }
@@ -132,21 +144,39 @@ public class CoinManager : MonoBehaviour
         {
             UIManagerScript.Instance.autoWordButton.interactable = false;
         }
+        autoWordCountText.text = ((int)(GetCoinsCount() / 100)).ToString();
     }
     public void CoinsIncrease(int x)
     {
+        //var s1 = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
         SetCoinCount(GetCoinsCount() + x);
         if (GetCoinsCount() >= 50)
         {
             SetHintCount((int)(GetCoinsCount() / 50));
+            /*if (s1 != '0')
+            {
+                UIManagerScript.Instance.hintButton.interactable = true;
+            }*/
+            
         }
 
-        if (GetCoinsCount() >= 100)
+        var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
+        if (s != '0')
         {
-            UIManagerScript.Instance.autoWordButton.interactable = true;
+            if (GetCoinsCount() >= 100)
+            {
+                UIManagerScript.Instance.autoWordButton.interactable = true;
+                autoWordCountText.text = ((int)(GetCoinsCount() / 100)).ToString();
+            }
+            else
+            {
+                autoWordCountText.text = ((int)0).ToString();
+            }
         }
+        
         coinCountText.text = GetCoinsCount().ToString();
         hintText.text = GetHintCount().ToString();
+
     }
     
     private int GetLoaderImageCount() => PlayerPrefs.GetInt("LoaderImageNumber", 0);

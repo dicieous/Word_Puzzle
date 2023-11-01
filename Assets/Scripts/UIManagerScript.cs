@@ -72,65 +72,66 @@ public class UIManagerScript : MonoBehaviour
 	private void Start()
 	{
 		
-		var s = GetSpecialLevelNumber().ToString()[^1];
-		if (s == '0')
-		{
-			levelNo.text = "LEVEL " + GetSpecialLevelNumber() +"\n(Boss Level)";
-		}
-		else
-		{
-			levelNo.text = "LEVEL " + GetSpecialLevelNumber();
-		}
-
-		if (s == '5')
-		{
-			giftLevel = true;
-		}
-        if(GAScript.instance) GAScript.instance.LevelStart(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
-		
-		cm = CoinManager.instance;
-        
 		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
 		{
-            //print("One");
+			//print("One");
 			hintButton.gameObject.SetActive(false);
 			autoWordButton.gameObject.SetActive(false);
 			restartButton.image.enabled = false;
 			levelNo.gameObject.SetActive(false);
 			movesText.gameObject.SetActive(false);
 		}
-		//StartCoroutine(PlayCoinCollectionFx());
-
-		if ((PlayerPrefs.GetInt("Level", 1) == 1))
+		else
 		{
-			if(GameManager.Instance)
-				GameManager.Instance.ShowTheText();
-            /*hintButton.GetComponent<Image>().enabled = false;
-            hintButton.interactable = false;*/
-            hintButton.gameObject.SetActive(false);
-            autoWordButton.gameObject.SetActive(false);
-            MonitizationScript.instance.giftObject.SetActive(false);
-            if(tutorialtext)
-                tutorialtext.SetActive(true);
-			//HelpHand();
-			foreach (var t in gameobject2)
-            {
-                t.enabled = false;
-            }
+			cm = CoinManager.instance;
+			var s = GetSpecialLevelNumber().ToString()[^1];
+			if (s == '0')
+			{
+				levelNo.text = "LEVEL " + GetSpecialLevelNumber() +"\n(Boss Level)";
+			}
+			else
+			{
+				levelNo.text = "LEVEL " + GetSpecialLevelNumber();
+				
+				if (CoinManager.instance.GetCoinsCount() >= 100)
+				{
+					autoWordButton.interactable = true;
+				}
+				else
+				{
+					autoWordButton.interactable = false;
+				}
+			}
+
+			if (s == '5')
+			{
+				giftLevel = true;
+			}
+			
+			//StartCoroutine(PlayCoinCollectionFx());
+
+			if ((PlayerPrefs.GetInt("Level", 1) == 1))
+			{
+				if(GameManager.Instance)
+					GameManager.Instance.ShowTheText();
+				/*hintButton.GetComponent<Image>().enabled = false;
+				hintButton.interactable = false;*/
+				hintButton.gameObject.SetActive(false);
+				autoWordButton.gameObject.SetActive(false);
+				MonitizationScript.instance.giftObject.SetActive(false);
+				if(tutorialtext)
+					tutorialtext.SetActive(true);
+				//HelpHand();
+				foreach (var t in gameobject2)
+				{
+					t.enabled = false;
+				}
+			}
+			
+			if(GAScript.instance) GAScript.instance.LevelStart(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
 		}
-        else
-        {
-            if (CoinManager.instance.GetCoinsCount() >= 100)
-            {
-	            autoWordButton.interactable = true;
-            }
-            else
-            {
-	            autoWordButton.interactable = false;
-            }
-        }
-       
-    }
+
+	}
 
 	public void HelpHand()
 	{
@@ -214,10 +215,11 @@ public class UIManagerScript : MonoBehaviour
 		//if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
 		DOVirtual.DelayedCall(1.5f,()=>
 		{
-			MonitizationScript.instance.giftObject.SetActive(false);
+			
             var s = GetSpecialLevelNumber().ToString()[^1];
             if (s != '0')
             {
+	            MonitizationScript.instance.giftObject.SetActive(false);
                 targetCongratulationImage.GetComponent<Image>().sprite = 
                     congratulationsImages[Random.Range(0, congratulationsImages.Count)];
                 DOVirtual.DelayedCall(0.05f, () =>
@@ -248,12 +250,16 @@ public class UIManagerScript : MonoBehaviour
                     }
                     else
                     {
-	                    MapLevelCall();
+	                    DOVirtual.DelayedCall(1f, ()=>
+	                    {
+		                    MapLevelCall();
+	                    });
                     }
                 });
             }
             else
             {
+	            print("Win Calling");
                 EmojiManager.Instance.winPanel.SetActive(true);
                 DOVirtual.DelayedCall(0.5f, () =>
                 {
@@ -262,8 +268,11 @@ public class UIManagerScript : MonoBehaviour
                 DOVirtual.DelayedCall(2f, () =>
                 {
                     CoinManager.instance.CoinsIncrease(25);
+                    DOVirtual.DelayedCall(1f, ()=>
+                    {
+	                    MapLevelCall();
+                    });
                     //EmojiManager.Instance.nextButton.interactable = true;
-                    MapLevelCall();
                 });
                 /*DOVirtual.DelayedCall(0.5f, () =>
                 {
@@ -297,7 +306,7 @@ public class UIManagerScript : MonoBehaviour
         if (autoWordButton.interactable && !autoWordDisableWordBool)
         {
             AutoButtonDisActive();
-            
+            GameManager.Instance.autoWordClick = true;
             if(GameManager.Instance)
 				GameManager.Instance.AutoCompleteFunc();
             
@@ -310,17 +319,37 @@ public class UIManagerScript : MonoBehaviour
 	private void Update()
 	{
 		var s = GetSpecialLevelNumber().ToString()[^1];
-		if (s != '0' && (SceneManager.GetActiveScene().buildIndex != SceneManager.sceneCountInBuildSettings - 1))
+		if (s != '0' && (SceneManager.GetActiveScene().buildIndex != SceneManager.sceneCountInBuildSettings - 1) && !GameManager.Instance.levelCompleted)
 		{
-			if (cm.GetHintCount() == 0 && hintButton.interactable)
-			{
-				hintButton.interactable = false;
-			}
-			else if (cm.GetHintCount() >= 50 && !hintButton.interactable)
+			if (cm.GetCoinsCount() >= 50 && !hintButton.interactable)
 			{
 				hintButton.interactable = true;
 			}
+			else if(cm.GetCoinsCount() < 50 && hintButton.interactable)
+			{
+				hintButton.interactable = false;
+			}
+			/*if (Input.GetMouseButtonUp(0))
+			{
+				//AutoButtonDisActive();
+				AutoButtonActive();
+			}
+
+			if (Input.GetMouseButtonDown(0))
+			{
+				// AutoButtonActive();
+				AutoButtonDisActive();
+			}*/
+			if (!GameManager.Instance.autoWordClick)
+			{
+				if (GameManager.Instance.wordTouch && autoWordButton.interactable)
+					autoWordButton.interactable = false;
+				else if(!GameManager.Instance.wordTouch && !autoWordButton.interactable)
+					AutoButtonActive();
+			}
 		}
+
+		
 	}
 
 	public void OnHintButtonClick()
@@ -443,8 +472,10 @@ public class UIManagerScript : MonoBehaviour
 	    DOVirtual.DelayedCall(2f, () =>
 	    {
 		    CoinManager.instance.CoinsIncrease(50);
-		    //nextButton.interactable = true;
-		    MapLevelCall();
+		    DOVirtual.DelayedCall(1f, () =>
+		    {
+			    MapLevelCall();
+		    });
 	    });
     }
     public void MapLevelNextButton()
@@ -470,18 +501,22 @@ public class UIManagerScript : MonoBehaviour
 		    {
 			    SceneManager.LoadScene(PlayerPrefs.GetInt("Level", 1));
 		    }
-		    CoinManager.instance.SetLoaderPercentage(CoinManager.instance.GetLoaderPercent() + ((1f / 9f)));
+		    //CoinManager.instance.SetLoaderPercentage(CoinManager.instance.GetLoaderPercent() + ((1f / 9f)));
 	    }
 	    if(GAScript.instance) GAScript.instance.LevelCompleted(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
     }
     public void MapLevelCall()
     {
-	    DOVirtual.DelayedCall(0.75f, () =>
+	    if (EmojiManager.Instance)
 	    {
-		    SetSpecialLevelNumber(GetSpecialLevelNumber() + 1);
-		    PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
-		    SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
-	    });
+		    EmojiManager.Instance.SetListNumber(EmojiManager.Instance.GetListNumbers() + 1);
+		    EmojiManager.Instance.SetPanelsDone(EmojiManager.Instance.GetPanelsDone() + 1);
+	    }
+	    
+	    SetSpecialLevelNumber(GetSpecialLevelNumber() + 1);
+	    PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
+	    CoinManager.instance.SetLoaderPercentage(CoinManager.instance.GetLoaderPercent() + ((1f / 9f)));
+	    SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
     }
 	public int GetSpecialLevelNumber() => PlayerPrefs.GetInt("SpecialLevelNumber", 1);
 	public void SetSpecialLevelNumber(int levelNum) => PlayerPrefs.SetInt("SpecialLevelNumber", levelNum);

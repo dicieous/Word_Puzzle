@@ -157,7 +157,8 @@ public class CubesGroupScript : MonoBehaviour
             GameManager.Instance.canPlaceNow = false;
 			var position = new Vector3(position1.x, position1.y + 3f, position1.z + 2.5f);
 			_offset = position - MouseWorldPosition();
-            
+			if (!GameManager.Instance.wordTouch)
+				GameManager.Instance.wordTouch = true;
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 			if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		}
@@ -216,6 +217,8 @@ public class CubesGroupScript : MonoBehaviour
 		}
         if(canCheckForPlacement)
             CondToAttachCubesInGrid();
+        if(Input.GetMouseButtonUp(0) && GameManager.Instance.wordTouch)
+	        GameManager.Instance.wordTouch = false;
 	}
 
 	//To reset the Position of the Objects
@@ -223,8 +226,7 @@ public class CubesGroupScript : MonoBehaviour
     {
         if(!UIManagerScript.Instance.autoWordDisableWordBool)
         {
-            if (canReset && !
-                    GameManager.Instance.levelCompleted)
+            if (canReset && !GameManager.Instance.levelCompleted)
             {
                 canReset = false;
                 transform.DOMove(_initPos, 0.2f).SetEase(Ease.Flash).OnStart(() =>
@@ -381,7 +383,7 @@ public class CubesGroupScript : MonoBehaviour
             
             if (Input.GetMouseButtonUp(0))
             {
-                GameManager.Instance.movesCount--;
+	            GameManager.Instance.movesCount--;
                 UIManagerScript.Instance.movesText.text = "Moves: " + GameManager.Instance.movesCount;
             }
 		}
