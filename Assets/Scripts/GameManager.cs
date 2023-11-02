@@ -737,13 +737,14 @@ public class GameManager : MonoBehaviour
        //autoFunCall = true;
        if(wordNoToComplete >= completeWordCubesList.Count) return;
        seqcall();
-       print("Word to complete           " + wordNoToComplete);
+       print("Word to complete" + wordNoToComplete);
    }
     public void seqcall()
     {
         //scriptOff = true;
         print("Function calling here");
         var cubesGroups = completeWordCubesList[wordNoToComplete].completeWordCubeGroup;
+        ClearAutoWordArea(cubesGroups);
         var cubeGroupsCount = cubesGroups.Count;
         Debug.Log("CubeGroups Count " + cubesGroups.Count);
         var seq = DOTween.Sequence();
@@ -846,6 +847,73 @@ public class GameManager : MonoBehaviour
 
     public bool wordTouch;
     public bool autoWordClick;
+    
+    public void ClearAutoWordArea(List<GameObject> cubeGroups)
+    {
+        List<int> refNumber = new List<int>();
+        for (int i = 0; i < cubeGroups.Count; i++)
+        {
+            var childCount = cubeGroups[i].transform.childCount;
+            for (int j = 0; j < childCount; j++)
+            {
+                var child = cubeGroups[i].transform.GetChild(j).GetComponent<PlayerCubeScript>();
+                //refNumber.Add(child.checknumber);
+                if(ClearWordResetSticking(child.checknumber)) break;
+                
+            }
+        }
+
+       
+    }
+
+    private bool ClearWordResetSticking(int refNumber)
+    {
+        for (int i = 0; i < stickingCubes.Count; i++)
+        {
+            var cubes = stickingCubes[i].transform;
+            for (int j = 0; j < cubes.childCount; j++)
+            {
+                var holdersCube = cubes.GetChild(j);
+                if(ResetCubeFunc(holdersCube,refNumber)) return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool ResetCubeFunc(Transform holdersCube, int refNumber)
+    {
+        var holderCube = holdersCube.GetComponent<HolderCubeScript>();
+        
+        if (!holderCube.isFilled) return false;
+        if (holderCube.checkNumberRef == refNumber)
+        {
+            var individualCube = holderCube.objRef.transform;
+            var cubeToReset = individualCube.parent;
+            if (individualCube.GetComponent<PlayerCubeScript>().checknumber != holderCube.checkNumberRef)
+            {
+                print("DOINGJHVAWIDFUAGD");
+                var cubeVec = cubeToReset.transform.position;
+                var cubePos = new Vector3(cubeVec.x, cubeVec.y, -5f);
+                cubeToReset.transform.position = cubePos;
+
+                if (holderCube.isFilled)
+                    holderCube.isFilled = false;
+
+                for (int i = 0; i < cubeToReset.childCount; i++)
+                {
+                    cubeToReset.transform.GetChild(i).GetComponent<PlayerCubeScript>().isPlaced = false;
+                    print("I am being Called");
+                }
+
+                cubeToReset.GetComponent<CubesGroupScript>().ResetPosition();
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
 //#endregion
     [System.Serializable]
     public class WordData
