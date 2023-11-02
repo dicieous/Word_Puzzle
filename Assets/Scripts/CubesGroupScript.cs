@@ -22,7 +22,7 @@ public class CubesGroupScript : MonoBehaviour
 	private bool isFilledC;
 	//private bool canMove = true;
 	private bool canReset = true;
-    private bool canCheckForPlacement = true;
+    [HideInInspector] public bool canCheckForPlacement = true;
 
 	public int number;
 	void Start()
@@ -176,6 +176,7 @@ public class CubesGroupScript : MonoBehaviour
 			position1 = MouseWorldPosition() + _offset;
 			position1 = new Vector3(position1.x, position1.y, -3.5f);
 			transform.position = position1;
+            canPlaceNow = false;
 
 			if (!CheckIfHittingCubeGroup()) return;
 			foreach (var child in childObjects)
@@ -224,7 +225,7 @@ public class CubesGroupScript : MonoBehaviour
 	//To reset the Position of the Objects
     public void ResetPosition()
     {
-        Debug.Log("Reset Called");
+        //Debug.Log("Reset Called");
         //if(!UIManagerScript.Instance.autoWordDisableWordBool)
         {
             if (canReset && !GameManager.Instance.levelCompleted)
@@ -232,11 +233,12 @@ public class CubesGroupScript : MonoBehaviour
                 canReset = false;
                 transform.DOMove(_initPos, 0.2f).SetEase(Ease.Flash).OnStart(() =>
                 {
+                    canCheckForPlacement = false;
                     foreach (var childCol in childObjects.Select(t => t.transform.GetComponent<Collider>()))
                     {
                         childCol.enabled = false;
                     }
-                    canCheckForPlacement = false;
+                   
                     //Debug.Log("Check Stop");
                 }).OnComplete(() =>
                 {
@@ -331,7 +333,7 @@ public class CubesGroupScript : MonoBehaviour
 				vector3.z = position.z;
 				
 				child.GetComponent<PlayerCubeScript>().isPlaced = true;
-				//Debug.Log("Placed");
+				Debug.Log("Placed");
 				Instantiate(dustFX, position, Quaternion.identity);
                 //GameManager.Instance.canPlaceNow = false;
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);

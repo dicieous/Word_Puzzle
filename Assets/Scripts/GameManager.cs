@@ -346,21 +346,6 @@ public class GameManager : MonoBehaviour
             });
         }
     }
-    /*public void collidercheck(int rownum)
-    {
-        for (int col = 0; col < colInGrid; col++)
-        {
-            letterCubeWord[rownum][col].GetComponent<Collider>().enabled = false;
-        }
-
-        DOVirtual.DelayedCall(0.5f, () =>
-        {
-            for (int col = 0; col < colInGrid; col++)
-            {
-                letterCubeWord[rownum][col].GetComponent<Collider>().enabled = true;
-            }
-        });
-    }*/
 
     private void MakeAndCheckWord()
     {
@@ -582,11 +567,6 @@ public class GameManager : MonoBehaviour
 
     public void ResetScreen()
     {
-        // foreach (var cube in Cube_Groups)
-        // {
-        // 	cube.GetComponent<CubesGroupScript>().ResetPosition();
-        // }
-
         var loadedScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(loadedScene);
     }
@@ -620,38 +600,6 @@ public class GameManager : MonoBehaviour
             break;
         }
     }
-
-
-//     public void ShowTheText()
-//     {
-//         foreach (var words in  UI.hintWordsToShow)
-//         {
-//             int count = words.wordNoToShow.Count;
-//             if (count != 0)
-//             {
-//                 if (!IsInstantiated(words, count))
-//                 {
-//                     Instantiate(starFX, cube.transform.position, Quaternion.identity);
-//                     if (PlayerPrefs.GetInt("Level", 1) > 1)
-//                     {
-//                         CoinManager.instance.HintReduce();
-//                     }
-//                     if (PlayerPrefs.GetInt("Level", 1) == 1) UIManagerScript.Instance.HelpHand();
-// //					print("instantiated");
-//                 }
-//
-//                 for (int j = 0; j < count; j++)
-//                 {
-//                     var obj = cube;
-//                     obj.GetComponentsInChildren<TextMeshPro>()[j].DOFade(217f/255f, 2f);
-// 					
-//                     obj.GetComponentsInChildren<HighlightTextScript>()[j].isVisible = true;
-//                 }
-//
-//                 break;
-//             }
-//         }
-//     }
 
     private bool IsInstantiated(GameObject obj, int count)
     {
@@ -717,16 +665,6 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
-            //For Deleting the Element from completeWordCubesList & completeWordPositionsList
-            /*for (var j = 0; j < cubesGroups.Count; j++)
-            {
-                if(cubesGroups[j] != null) break;
-                if (j == cubesGroups.Count - 1)
-                {
-                    completeWordCubesList.Remove(completeWordCubesList[i]);
-                    completeWordPositionsList.Remove(completeWordPositionsList[i]);
-                }
-            }*/
         }
     }
     
@@ -753,18 +691,26 @@ public class GameManager : MonoBehaviour
             //Debug.Log("CubeGroups Count " + cubesGroups.Count);
             if (_numberVal < cubeGroupsCount)
             {
-                //print(_numberVal);
+                print(_numberVal);
                 var cube = cubesGroups[0];
-                var position = cube.transform.position;
-                var cubePos = new Vector3(position.x, position.y, -3.5f);
-                cube.transform.position = cubePos;
+               
+                for (int k = 0; k < cube.transform.childCount; k++)
+                {
+                    var cubeChild = cube.transform.GetChild(k);
+                    var position = cubeChild.transform.position;
+                    position = new Vector3(position.x, position.y, -3.5f);
+                    cubeChild.GetComponent<PlayerCubeScript>().isPlaced = false;
+                    cubeChild.transform.position = position;
+                }
+                
+                //Debug.Log(cube.transform.position + "Position");
                 
                 ObjMoving(cube,completeWordPositionsList[wordNoToComplete].completeWordCubePositionGroup[0]);
                 _numberVal++;
             }
             else
             {
-                print("call in sequence One");
+                //print("call in sequence One");
                 DOVirtual.DelayedCall(0.5f, () =>
                 {
                     scriptOff = false;
@@ -850,7 +796,6 @@ public class GameManager : MonoBehaviour
     
     public void ClearAutoWordArea(List<GameObject> cubeGroups)
     {
-        List<int> refNumber = new List<int>();
         for (int i = 0; i < cubeGroups.Count; i++)
         {
             var childCount = cubeGroups[i].transform.childCount;
@@ -890,20 +835,30 @@ public class GameManager : MonoBehaviour
         {
             var individualCube = holderCube.objRef.transform;
             var cubeToReset = individualCube.parent;
+                cubeToReset.transform.GetComponent<CubesGroupScript>().canCheckForPlacement = false;
             if (individualCube.GetComponent<PlayerCubeScript>().checknumber != holderCube.checkNumberRef)
             {
-                print("DOINGJHVAWIDFUAGD");
+                //print("DOINGJHVAWIDFUAGD");
                 var cubeVec = cubeToReset.transform.position;
                 var cubePos = new Vector3(cubeVec.x, cubeVec.y, -5f);
                 cubeToReset.transform.position = cubePos;
 
-                if (holderCube.isFilled)
-                    holderCube.isFilled = false;
+                // if (holderCube.isFilled)
+                //     holderCube.isFilled = false;
 
                 for (int i = 0; i < cubeToReset.childCount; i++)
                 {
-                    cubeToReset.transform.GetChild(i).GetComponent<PlayerCubeScript>().isPlaced = false;
-                    print("I am being Called");
+                    var playerCubeScript =  cubeToReset.transform.GetChild(i).GetComponent<PlayerCubeScript>();
+                    
+                    if(playerCubeScript.isPlaced) playerCubeScript.isPlaced = false;
+
+                    var holderCubeScript = playerCubeScript.stickingCubeObjRef.GetComponent<HolderCubeScript>();
+                    
+                    if(holderCubeScript.isFilled) holderCubeScript.isFilled = false;
+                    if(holderCubeScript.staying) holderCubeScript.staying = false;
+                    if(holderCubeScript.once) holderCubeScript.once = false;
+                    
+                    //print("I am being Called");
                 }
 
                 cubeToReset.GetComponent<CubesGroupScript>().ResetPosition();
