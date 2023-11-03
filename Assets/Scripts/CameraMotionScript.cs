@@ -46,6 +46,10 @@ public class CameraMotionScript : MonoBehaviour
 
     private void Start()
     {
+        if(UIManagerScript.Instance.autoWordButton.interactable)
+            UIManagerScript.Instance.autoWordButton.interactable = false;
+        if(!GameManager.Instance.cameraMoving)
+            GameManager.Instance.cameraMoving = true;
         if (SceneManager.GetActiveScene().isLoaded)
         {
             DeactivateCubes();
@@ -69,6 +73,10 @@ public class CameraMotionScript : MonoBehaviour
 
     private void InstanceOnOnPartComplete(object sender, EventArgs e)
     {
+        if(UIManagerScript.Instance.autoWordButton.interactable)
+            UIManagerScript.Instance.autoWordButton.interactable = false;
+        if(!GameManager.Instance.cameraMoving)
+            GameManager.Instance.cameraMoving = true;
         DOVirtual.DelayedCall(.5f, () =>
         {
             MoveCamera(() =>
@@ -96,6 +104,7 @@ public class CameraMotionScript : MonoBehaviour
 
     private void MoveCamera(Action callAction)
     {
+        
         //Debug.Log($"CameraMoved {cameraMoved} times");
         mainCamera.transform.DOMove(camPos[cameraMoved], moveDuration).SetEase(Ease.Linear);
         if (!levelCompleted)
@@ -156,9 +165,17 @@ public class CameraMotionScript : MonoBehaviour
                     .OnComplete(() =>
                     {
                         var numColliders = cubes.GetChild(j1).transform.GetComponents<Collider>().Length;
-                        for (int i = 0; i < numColliders; i++)
+                        for (int i = 0; i <= numColliders; i++)
                         {
-                            cubes.GetChild(j1).transform.GetComponents<Collider>()[i].enabled = true;
+                            if (i < numColliders)
+                            {
+                                cubes.GetChild(j1).transform.GetComponents<Collider>()[i].enabled = true;
+                            }
+                            else if (i == numColliders)
+                            {
+                                UIManagerScript.Instance.AutoButtonActive();
+                                GameManager.Instance.cameraMoving = false;
+                            }
                         }
                     });
             }

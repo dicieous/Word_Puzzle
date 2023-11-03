@@ -165,7 +165,7 @@ public class CoinManager : MonoBehaviour
         {
             if (GetCoinsCount() >= 100)
             {
-                UIManagerScript.Instance.autoWordButton.interactable = true;
+                UIManagerScript.Instance.AutoButtonActive();
                 autoWordCountText.text = ((int)(GetCoinsCount() / 100)).ToString();
             }
             else

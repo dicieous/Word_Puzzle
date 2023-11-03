@@ -413,7 +413,7 @@ public class GameManager : MonoBehaviour
             print("Win");
             
             ButtonsTurnOffFun();
-            
+            levelCompleted = true;
             //DestroyBlocks();
 
             DOVirtual.DelayedCall(1.25f, () =>
@@ -861,14 +861,15 @@ public class GameManager : MonoBehaviour
                     //print("I am being Called");
                 }
 
-                cubeToReset.GetComponent<CubesGroupScript>().ResetPosition();
+                cubeToReset.GetComponent<CubesGroupScript>().AutoResetPositionFun();
                 return true;
             }
         }
 
         return false;
     }
-    
+
+    public bool cameraMoving;
 //#endregion
     [System.Serializable]
     public class WordData

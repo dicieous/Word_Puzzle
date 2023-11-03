@@ -222,11 +222,12 @@ public class CubesGroupScript : MonoBehaviour
 	        GameManager.Instance.wordTouch = false;
 	}
 
+	
 	//To reset the Position of the Objects
     public void ResetPosition()
     {
         //Debug.Log("Reset Called");
-        //if(!UIManagerScript.Instance.autoWordDisableWordBool)
+        if(!UIManagerScript.Instance.autoWordDisableWordBool)
         {
             if (canReset && !GameManager.Instance.levelCompleted)
             {
@@ -259,7 +260,42 @@ public class CubesGroupScript : MonoBehaviour
         }
         //transform.position = _initPos;
     }
-
+    public void AutoResetPositionFun()
+    {
+	    //Debug.Log("Reset Called");
+	    //if(!UIManagerScript.Instance.autoWordDisableWordBool)
+	    {
+		    if (canReset && !GameManager.Instance.levelCompleted)
+		    {
+			    canReset = false;
+			    transform.DOMove(_initPos, 0.2f).SetEase(Ease.Flash).OnStart(() =>
+			    {
+				    canCheckForPlacement = false;
+				    foreach (var childCol in childObjects.Select(t => t.transform.GetComponent<Collider>()))
+				    {
+					    childCol.enabled = false;
+				    }
+                   
+				    //Debug.Log("Check Stop");
+			    }).OnComplete(() =>
+			    {
+				    foreach (var childCol in childObjects.Select(t => t.transform.GetComponent<Collider>()))
+				    {
+					    childCol.enabled = true;
+				    }
+				    canCheckForPlacement = true;
+				    canReset = true;
+				    //Debug.Log("Check Start");
+			    });
+			
+			    for (int i = 0; i < childObjects.Count; i++)
+			    {
+				    childObjects[i].transform.DOMove(initialPos[i], 0.2f).SetEase(Ease.Flash);
+			    }
+		    }
+	    }
+	    //transform.position = _initPos;
+    }
 	//To check if you are hitting letters Group Collider
 	private bool CheckIfHittingCubeGroup()
 	{

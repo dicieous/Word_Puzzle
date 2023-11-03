@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.41133603, g: 0.43699887, b: 0.45013523, a: 1}
+  m_IndirectSpecularColor: {r: 0.41385436, g: 0.43987173, b: 0.45213437, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2877,14 +2877,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1085611884545982984, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1386715370896144066, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_text
-      value: Level 14
-      objectReference: {fileID: 0}
     - target: {fileID: 2371328186632468328, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2968,14 +2960,6 @@ PrefabInstance:
     - target: {fileID: 2371328186632468328, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3478097237658206337, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1870371618}
-    - target: {fileID: 3478097237658206337, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ResetScreen
       objectReference: {fileID: 0}
     - target: {fileID: 8290938290612111971, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_Name
@@ -6757,6 +6741,8 @@ MonoBehaviour:
   levelCompleted: 0
   levelFail: 0
   removing: 0
+  wordTouch: 0
+  autoWordClick: 0
 --- !u!4 &1870371619
 Transform:
   m_ObjectHideFlags: 0

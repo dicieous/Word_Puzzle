@@ -92,15 +92,18 @@ public class UIManagerScript : MonoBehaviour
 			else
 			{
 				levelNo.text = "LEVEL " + GetSpecialLevelNumber();
+				if (!GameManager.Instance.levelTypeChanged)
+				{
+					if (CoinManager.instance.GetCoinsCount() >= 100)
+					{
+						autoWordButton.interactable = true;
+					}
+					else
+					{
+						autoWordButton.interactable = false;
+					}
+				}
 				
-				if (CoinManager.instance.GetCoinsCount() >= 100)
-				{
-					autoWordButton.interactable = true;
-				}
-				else
-				{
-					autoWordButton.interactable = false;
-				}
 			}
 
 			if (s == '5')
@@ -290,7 +293,7 @@ public class UIManagerScript : MonoBehaviour
     public void AutoButtonActive()
     {
         autoWordDisableWordBool = false;
-        if (CoinManager.instance.GetCoinsCount() >= 100 && !GameManager.Instance.levelCompleted)
+        if (CoinManager.instance.GetCoinsCount() >= 100 && !GameManager.Instance.levelCompleted && !GameManager.Instance.cameraMoving)
         {
             autoWordButton.interactable = true;
         }
@@ -340,7 +343,7 @@ public class UIManagerScript : MonoBehaviour
 				// AutoButtonActive();
 				AutoButtonDisActive();
 			}*/
-			if (!GameManager.Instance.autoWordClick)
+			if (!GameManager.Instance.autoWordClick && !GameManager.Instance.cameraMoving)
 			{
 				if (GameManager.Instance.wordTouch && autoWordButton.interactable)
 					autoWordButton.interactable = false;

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.41133603, g: 0.43699887, b: 0.45013523, a: 1}
+  m_IndirectSpecularColor: {r: 0.41385436, g: 0.43987173, b: 0.45213437, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2256,38 +2256,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1085611884545982984, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1085611884545982984, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1386715370896144066, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_text
-      value: Level 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 1870288274646663542, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1870288274646663542, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_ApplyActiveColorSpace
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1870288274646724166, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1959314219608058062, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1959314219608058062, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_ApplyActiveColorSpace
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2371328186632468328, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2382,58 +2350,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3615625040245869263, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7652693414975030453, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8064494997897898900, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8064494997897898900, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_Maskable
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8064494997897898900, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_AutoScaling
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8064494997897898900, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_MeshSharing
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8064494997897898900, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_PositionMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8064494997897898900, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_Particles.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8064494997897898900, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_Particles.Array.data[0]
-      value: 
-      objectReference: {fileID: 2101535362}
-    - target: {fileID: 8064494997897898900, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_Particles.Array.data[1]
-      value: 
-      objectReference: {fileID: 1777083889}
-    - target: {fileID: 8064494997897898900, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_Particles.Array.data[2]
-      value: 
-      objectReference: {fileID: 1596114231}
-    - target: {fileID: 8064494997897898900, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_AnimatableProperties.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8064494997897898900, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_AnimatableProperties.Array.data[0].m_Name
-      value: _Color
-      objectReference: {fileID: 0}
-    - target: {fileID: 8064494997897898900, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_AnimatableProperties.Array.data[0].m_Type
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8290938290612111971, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
@@ -7180,11 +7096,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3105032407085746626, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
   m_PrefabInstance: {fileID: 232752938}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &1596114231 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1960502250963374002, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-  m_PrefabInstance: {fileID: 523625987}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1645482937 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3105032407085746626, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
@@ -8531,11 +8442,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3105032407085746626, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
   m_PrefabInstance: {fileID: 1771533702}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &1777083889 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1870288274648189064, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-  m_PrefabInstance: {fileID: 523625987}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1786252497 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
@@ -9179,6 +9085,8 @@ MonoBehaviour:
   levelCompleted: 0
   levelFail: 0
   removing: 0
+  wordTouch: 0
+  autoWordClick: 0
 --- !u!4 &1870371619
 Transform:
   m_ObjectHideFlags: 0
@@ -10055,11 +9963,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3105032407085746626, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
   m_PrefabInstance: {fileID: 2083312594}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &2101535362 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1870288274648152316, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-  m_PrefabInstance: {fileID: 523625987}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2113695190
 PrefabInstance:
