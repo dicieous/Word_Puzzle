@@ -7,6 +7,8 @@ public class PlayerCubeScript : MonoBehaviour
 
     public int checknumber;
     public bool anim;
+
+    [HideInInspector] public GameObject stickingCubeObjRef;
     
 	private void Start()
 	{

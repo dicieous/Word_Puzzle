@@ -42,16 +42,19 @@ public class HolderCubeScript : MonoBehaviour
 		}
     }*/
 
-	private bool once;
+    [HideInInspector]
+	public bool once;
 	private void OnTriggerStay(Collider other)
 	{
 		if (other.gameObject.CompareTag("Player_Cube") && !once)
 		{
 			staying = true;
+            print("One DomeBAhv sffsdf");
             if (other.gameObject.CompareTag("Player_Cube") && staying)
             {
                 objRef = other.gameObject;
-                //print("One DomeBAhv");
+                other.gameObject.GetComponent<PlayerCubeScript>().stickingCubeObjRef = this.gameObject;
+                print("One DomeBAhv");
                 if (other.gameObject.GetComponent<PlayerCubeScript>() && checkNumberRef != 0 && GameManager.Instance.levelTypeChanged)
                 {
                     var playerscript = other.gameObject.GetComponent<PlayerCubeScript>();
@@ -112,7 +115,8 @@ public class HolderCubeScript : MonoBehaviour
 		
 	}
 
-	private bool staying;
+    [HideInInspector]
+	public bool staying;
 	private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player_Cube") && once)
