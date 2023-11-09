@@ -14,7 +14,15 @@ public class LevelLoader : MonoBehaviour
         }
         else
         {
-            if (PlayerPrefs.GetInt("Special", 0) == 1)
+            /*if (PlayerPrefs.GetInt("Level", 1) >= 2)
+            {
+                SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
+            }*/
+            /*if (PlayerPrefs.GetInt("Special", 0) == 1)
+            {
+                SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 2);
+            }*/
+            if (PlayerPrefs.GetInt("Level", 1) >= 2)
             {
                 SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
             }

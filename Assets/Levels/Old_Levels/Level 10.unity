@@ -1415,7 +1415,7 @@ Transform:
   m_GameObject: {fileID: 386708119}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 1.17, y: -1.38, z: 0.79}
-  m_LocalScale: {x: 1.4, y: 1, z: 2.3}
+  m_LocalScale: {x: 5, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3077,7 +3077,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: -1.42, z: -15}
+  m_LocalPosition: {x: 1.23, y: -1.42, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6101,6 +6101,28 @@ MonoBehaviour:
   rowsInGrid: 4
   colInGrid: 5
   numberOfColumns: 
+  completeWordCubesList:
+  - completeWordCubeGroup:
+    - {fileID: 2072267425}
+    - {fileID: 173289814}
+  - completeWordCubeGroup:
+    - {fileID: 1462889364}
+    - {fileID: 1506765879}
+    - {fileID: 143941431}
+  - completeWordCubeGroup:
+    - {fileID: 1737361488}
+  completeWordPositionsList:
+  - completeWordCubePositionGroup:
+    - {x: 2.26, y: 2.96, z: -3.5}
+    - {x: -1.19, y: 2.99, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 3.38, y: 1.78, z: -3.5}
+    - {x: -1.2, y: 1.84, z: -3.5}
+    - {x: -0.06, y: -0.48, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: -0.02, y: 0.65, z: -3.5}
+  canClickNow: 1
+  canPlaceNow: 1
   rowfilled: 0
   movesCount: 0
   fXRowWords: []
@@ -6126,7 +6148,10 @@ MonoBehaviour:
   instPos: {fileID: 683308960}
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
+  levelFail: 0
   removing: 0
+  wordTouch: 0
+  autoWordClick: 0
 --- !u!4 &1870371619
 Transform:
   m_ObjectHideFlags: 0
