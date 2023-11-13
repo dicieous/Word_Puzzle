@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public List<WordData> wordList;
     public List<StickingAreaCheckingScript> stickingCubes;
 
-    [HideInInspector] public bool scriptOff;
+    public bool scriptOff;
 
     [Space(10)] public int rowsInGrid;
     public int colInGrid;
@@ -32,9 +32,9 @@ public class GameManager : MonoBehaviour
     public List<int> numberOfColumns;
 
     [Space(10)] [Header("AutoComplete Section")] [SerializeField]
-    private List<CompleteWordCubes> completeWordCubesList;
+    public List<CompleteWordCubes> completeWordCubesList;
 
-    [SerializeField] private List<CompleteWordPosition> completeWordPositionsList;
+    [SerializeField] public List<CompleteWordPosition> completeWordPositionsList;
 
     private int wordNoToComplete = 0;
 
@@ -80,13 +80,13 @@ public class GameManager : MonoBehaviour
     private int wordsMade;
 
     [Serializable]
-    private struct CompleteWordCubes
+    public struct CompleteWordCubes
     {
         public List<GameObject> completeWordCubeGroup;
     }
 
     [Serializable]
-    private struct CompleteWordPosition
+    public struct CompleteWordPosition
     {
         public List<Vector3> completeWordCubePositionGroup;
     }
@@ -197,6 +197,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private bool _checkAllWordsClear;
 //#endregion
 
 // ReSharper disable Unity.PerformanceAnalysis
@@ -212,7 +213,29 @@ public class GameManager : MonoBehaviour
         {
             canInstantiate = true;
         }
-
+        if (!levelCompleted && completeWordCubesList.Count == 0 && !_checkAllWordsClear)
+        {
+            ButtonsTurnOffFun();
+            _checkAllWordsClear = true;
+            DOVirtual.DelayedCall(3f, () =>
+            {
+                if (!levelCompleted)
+                {
+                    levelCompleted = true;
+                    ButtonsTurnOffFun();
+            
+                    DOVirtual.DelayedCall(.75f, () =>
+                    {
+                        CoinManager.instance.confettiFx.Play();
+                        CoinManager.instance.confettiFx1.Play();
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
+                        UI.WinPanelActive();
+                        // BlockSeqCall();
+                        //Debug.Log("LevelComplete");
+                    });
+                }
+            });
+        }
         if (Input.GetKeyDown(KeyCode.A))
         {
             print("Nextfuncall");
@@ -669,15 +692,246 @@ public class GameManager : MonoBehaviour
     }
     
    private int _numberVal;
+   public List<GameObject> numberCubeHolders;
+   [SerializeField]
+   private List<int> objNumbers;
+   public void LetterObjectsCheck()
+   {
+       if (numberCubeHolders.Count > 0)
+       {
+           numberCubeHolders.Clear();
+       }
+       if(objNumbers.Count > 0)
+       {
+           objNumbers.Clear();
+       }
+       var firstAutoWordData = completeWordCubesList[0].completeWordCubeGroup;
+       var firstAutoWordDataCount = completeWordCubesList[0].completeWordCubeGroup.Count;
+       for (int i = 0; i < firstAutoWordDataCount; i++)
+       {
+           var childcountdetails=completeWordCubesList[0].completeWordCubeGroup[i].transform.childCount;
+           for (int j = 0; j < childcountdetails; j++)
+           {
+               objNumbers.Add(completeWordCubesList[0].completeWordCubeGroup[i].transform.GetChild(j).GetComponent<PlayerCubeScript>().checknumber);
+           }
+           
+       }
+
+       if (levelTypeChanged)
+       {
+           var stickingCount = stickingCubes.Count;
+           for (int i = 0; i < stickingCount; i++)
+           {
+               var stickingChildCount = stickingCubes[i].transform.childCount;
+               for (int j = 0; j < stickingChildCount; j++)
+               {
+                   var holderCubeData = stickingCubes[i].transform.GetChild(j).GetComponent<HolderCubeScript>();
+                   if (objNumbers.Contains(holderCubeData.checkNumberRef))
+                   {
+                       //var cubeobj = holderCubeData;
+                       if (holderCubeData.isFilled)
+                       {
+                           if (!numberCubeHolders.Contains(holderCubeData.objRef.transform.parent.gameObject))
+                           {
+                               // numberCubeHolders.Add(objRef);
+                               numberCubeHolders.Add(holderCubeData.objRef.transform.parent.gameObject);
+                           }
+                       }
+                   }
+               }
+           }
+       }
+       else
+       {
+           var stickingCubesObjs = FindObjectsOfType<HolderCubeScript>().ToList();
+           var stickingCount = stickingCubesObjs.Count;
+           for (int i = 0; i < stickingCount; i++)
+           {
+               var stickingChildCount = stickingCubesObjs[i].transform.childCount;
+               for (int j = 0; j < stickingChildCount; j++)
+               {
+                   var holderCubeData = stickingCubesObjs[i];
+                   if (objNumbers.Contains(holderCubeData.checkNumberRef))
+                   {
+                       //var cubeobj = holderCubeData;
+                       if (holderCubeData.isFilled)
+                       {
+                           if (!numberCubeHolders.Contains(holderCubeData.objRef.transform.parent.gameObject))
+                           {
+                               // numberCubeHolders.Add(objRef);
+                               numberCubeHolders.Add(holderCubeData.objRef.transform.parent.gameObject);
+                           }
+                       }
+                   }
+               }
+           }
+       }
+
+       DOVirtual.DelayedCall(0.1f, () =>
+       {
+           print("oneObj");
+           for (int i = 0; i < numberCubeHolders.Count; i++)
+           {
+               var holderCube = numberCubeHolders[i];
+               for (int j = 0; j < firstAutoWordDataCount; j++)
+               {
+                   if (holderCube != completeWordCubesList[0].completeWordCubeGroup[j] && !holderCube.GetComponent<CubesGroupScript>().doneWithWord)
+                   {
+                       //FunWaitCall(holderCube,completeWordPositionsList[0].completeWordCubePositionGroup[j]);
+                       ResetObjects(holderCube);
+                   }
+               }
+           }
+       });
+
+       DOVirtual.DelayedCall(0.5f, () =>
+       {
+           for (int i = 0; i < firstAutoWordDataCount; i++)
+           {
+               FunWaitCall(completeWordCubesList[0].completeWordCubeGroup[i],
+                   completeWordPositionsList[0].completeWordCubePositionGroup[i]);
+           }
+       });
+   }
+
+   public void ResetObjects(GameObject resetObj)
+   {
+       var cubeVec = resetObj.transform.position;
+       var cubePos = new Vector3(cubeVec.x, cubeVec.y, -5f);
+       resetObj.transform.position = cubePos;
+       
+       for (int i = 0; i < resetObj.transform.childCount; i++)
+       {
+           if (resetObj.transform.GetChild(i).GetComponent<PlayerCubeScript>())
+           {
+               if (resetObj.transform.GetChild(i).transform.localPosition !=
+                   resetObj.transform.GetChild(i).GetComponent<PlayerCubeScript>().startPos)
+               {
+                   resetObj.transform.GetChild(i).transform.localPosition =
+                       resetObj.transform.GetChild(i).GetComponent<PlayerCubeScript>().startPos;
+               }
+           }
+       }
+       // if (holderCube.isFilled)
+       //     holderCube.isFilled = false;
+
+       for (int i = 0; i < resetObj.transform.childCount; i++)
+       {
+           var playerCubeScript =  resetObj.transform.GetChild(i).GetComponent<PlayerCubeScript>();
+                    
+           if(playerCubeScript.isPlaced) playerCubeScript.isPlaced = false;
+
+           var holderCubeScript = playerCubeScript.stickingCubeObjRef.GetComponent<HolderCubeScript>();
+                    
+           if(holderCubeScript.isFilled) holderCubeScript.isFilled = false;
+           if(holderCubeScript.staying) holderCubeScript.staying = false;
+           if(holderCubeScript.once) holderCubeScript.once = false;
+                    
+           //print("I am being Called");
+       }
+       print("resetcalling");
+       resetObj.GetComponent<CubesGroupScript>().AutoResetPositionFun();
+   }
+   public void FunWaitCall(GameObject obj,Vector3 posi)
+   {
+       ObjMoving(obj,posi);
+       //ObjMovingFunCall(obj,posi);
+       DOVirtual.DelayedCall(0.25f, () =>
+       {
+           if (scriptOff) scriptOff = false;
+           
+       });
+   }
    public void AutoCompleteFunc()
    {
        _numberVal = 0;
        //autoFunCall = true;
-       if(wordNoToComplete >= completeWordCubesList.Count) return;
-       seqcall();
-       print("Word to complete" + wordNoToComplete);
+       //if(wordNoToComplete >= completeWordCubesList.Count) return;
+       // seqcall();
+       //AutoFunCall();
+       LetterObjectsCheck();
    }
-    public void seqcall()
+
+   
+   /*public void AutoFunCall()
+   {
+       //print("Function calling here");
+       var cubesGroups = completeWordCubesList[wordNoToComplete].completeWordCubeGroup;
+       ClearAutoWordArea(cubesGroups);
+       DOVirtual.DelayedCall(0.25f, () =>
+       {
+           AutoFunCallMoving();
+       });
+       /*var cubeGroupsCount = cubesGroups.Count;
+       //Debug.Log("CubeGroups Count " + cubesGroups.Count);
+       //var seq = DOTween.Sequence();
+       for (int i = 0; i < cubeGroupsCount; i++)
+       {
+           if (i < cubeGroupsCount)
+           {
+               print(_numberVal);
+               var cube = cubesGroups[i];
+               
+               for (int k = 0; k < cube.transform.childCount; k++)
+               {
+                   var cubeChild = cube.transform.GetChild(k);
+                   var position = cubeChild.transform.position;
+                   position = new Vector3(position.x, position.y, -3.5f);
+                   cubeChild.GetComponent<PlayerCubeScript>().isPlaced = false;
+                   cubeChild.transform.position = position;
+               }
+                
+               //Debug.Log(cube.transform.position + "Position");
+                
+               ObjMoving(cube,completeWordPositionsList[wordNoToComplete].completeWordCubePositionGroup[i]);
+               //_numberVal++;
+           }
+           else
+           {
+               DOVirtual.DelayedCall(0.25f, () =>
+               {
+                   scriptOff = false;
+                   /*autoWordClick = false;
+                   UIManagerScript.Instance.AutoButtonActive();#2#
+               });
+
+           }
+       }#1#
+   }*/
+   /*public void AutoFunCallMoving()
+   {
+       var cubesGroups = completeWordCubesList[wordNoToComplete].completeWordCubeGroup;
+       var cubeGroupsCount = cubesGroups.Count;
+       for (int i = 0; i <= cubeGroupsCount; i++)
+       {
+           if (i < cubeGroupsCount)
+           {
+//               print(_numberVal);
+               var cube = cubesGroups[i];
+               
+               for (int k = 0; k < cube.transform.childCount; k++)
+               {
+                   var cubeChild = cube.transform.GetChild(k);
+                   var position = cubeChild.transform.position;
+                   position = new Vector3(position.x, position.y, -3.5f);
+                   cubeChild.GetComponent<PlayerCubeScript>().isPlaced = false;
+                   cubeChild.transform.position = position;
+               }
+               ObjMoving(cube,completeWordPositionsList[wordNoToComplete].completeWordCubePositionGroup[i]);
+           }
+           else
+           {
+               DOVirtual.DelayedCall(0.25f, () =>
+               {
+                   scriptOff = false;
+                   /*autoWordClick = false;
+                   UIManagerScript.Instance.AutoButtonActive();#1#
+               });
+
+           }
+       }
+   }*/
+    /*public void seqcall()
     {
         //scriptOff = true;
         print("Function calling here");
@@ -725,20 +979,148 @@ public class GameManager : MonoBehaviour
         });
         seq.AppendInterval(1f);
         seq.SetLoops(cubeGroupsCount + 1);
-    }
+    }*/
 
-    public void ObjMoving(GameObject obj,Vector3 pos)
+    /*public void ObjMoving(GameObject obj,Vector3 pos)
     {
         obj.transform.DOMove(pos, .5f).SetEase(Ease.Linear).OnStart(() =>
         {
             obj.GetComponent<CubesGroupScript>().canPlaceNow = false;
+            for (int i = 0; i < obj.transform.childCount; i++)
+            {
+                obj.transform.GetChild(i).GetComponent<Collider>().enabled = false;
+                if (obj.transform.GetChild(i).GetComponent<PlayerCubeScript>())
+                {
+                    if (obj.transform.GetChild(i).GetComponent<PlayerCubeScript>().stickingCubeObjRef)
+                    {
+                        var holdercubeObj = obj.transform.GetChild(i).GetComponent<PlayerCubeScript>()
+                            .stickingCubeObjRef
+                            .GetComponent<HolderCubeScript>();
+                        holdercubeObj.FunCallingObj();
+                    }
+                    
+                }
+            }
+            var coll=obj.GetComponents<Collider>().ToList();
+            if (coll.Count > 1)
+            {
+                for (int i = 0; i < coll.Count; i++)
+                {
+                    coll[i].enabled = false;
+                    //coll[i].GetComponent<PlayerCubeScript>().letterDone = true;
+                }
+            }
+            else
+            {
+                coll[0].enabled = false;
+                //coll[0].GetComponent<PlayerCubeScript>().letterDone = true;
+            }
         }).OnComplete(() =>
         {
             obj.GetComponent<CubesGroupScript>().canPlaceNow = true;
+            for (int i = 0; i < obj.transform.childCount; i++)
+            {
+                obj.transform.GetChild(i).GetComponent<Collider>().enabled = true;
+            }
+            var coll=obj.GetComponents<Collider>().ToList();
+            if (coll.Count > 1)
+            {
+                for (int i = 0; i < coll.Count; i++)
+                {
+                    coll[i].enabled = true;
+                }
+            }
+            else
+            {
+                coll[0].enabled = true;
+            }
+
+            CollisionOff(obj);
+        });
+        //var posi=pos.transform.position
+    }*/
+    public void ObjMoving(GameObject obj,Vector3 pos)
+    {
+        obj.GetComponent<CubesGroupScript>().canPlaceNow = false;
+        obj.GetComponent<CubesGroupScript>().canNotPlace = true;
+        for (int i = 0; i < obj.transform.childCount; i++)
+        {
+            obj.transform.GetChild(i).GetComponent<Collider>().enabled = false;
+            if (obj.transform.GetChild(i).GetComponent<PlayerCubeScript>())
+            {
+                if (obj.transform.GetChild(i).GetComponent<PlayerCubeScript>().stickingCubeObjRef)
+                {
+                    var holdercubeObj = obj.transform.GetChild(i).GetComponent<PlayerCubeScript>()
+                        .stickingCubeObjRef
+                        .GetComponent<HolderCubeScript>();
+                    holdercubeObj.FunCallingObj();
+                }
+                    
+            }
+            if (obj.transform.GetChild(i).GetComponent<PlayerCubeScript>())
+            {
+                if (obj.transform.GetChild(i).transform.localPosition !=
+                    obj.transform.GetChild(i).GetComponent<PlayerCubeScript>().startPos)
+                {
+                    obj.transform.GetChild(i).transform.localPosition =
+                        obj.transform.GetChild(i).GetComponent<PlayerCubeScript>().startPos;
+                }
+            }
+        }
+        var coll=obj.GetComponents<Collider>().ToList();
+        if (coll.Count > 1)
+        {
+            for (int i = 0; i < coll.Count; i++)
+            {
+                coll[i].enabled = false;
+                //coll[i].GetComponent<PlayerCubeScript>().letterDone = true;
+            }
+        }
+        else
+        {
+            coll[0].enabled = false;
+            //coll[0].GetComponent<PlayerCubeScript>().letterDone = true;
+        }
+        var seq = DOTween.Sequence();
+        seq.Append(obj.transform.DOMove(pos, 0.4f).SetEase(Ease.Linear));
+        seq.AppendInterval(0.1f);
+        seq.AppendCallback(() =>
+        {
+            for (int i = 0; i < obj.transform.childCount; i++)
+            {
+                obj.transform.GetChild(i).GetComponent<Collider>().enabled = true;
+            }
+
+            var coll = obj.GetComponents<Collider>().ToList();
+            if (coll.Count > 1)
+            {
+                for (int i = 0; i < coll.Count; i++)
+                {
+                    coll[i].enabled = true;
+                }
+            }
+            else
+            {
+                coll[0].enabled = true;
+            }
+            obj.GetComponent<CubesGroupScript>().canPlaceNow = true;
+            obj.GetComponent<CubesGroupScript>().canNotPlace = false;
+            CollisionOff(obj);
         });
         //var posi=pos.transform.position
     }
+    public void CollisionOff(GameObject obj)
+    {
+        DOVirtual.DelayedCall(0.25f, () =>
+        {
+            for (int i = 0; i < obj.transform.childCount; i++)
+            {
+                if(obj.transform.GetChild(i).GetComponent<Collider>().enabled)
+                    obj.transform.GetChild(i).GetComponent<Collider>().enabled = false;
+            }
+        });
 
+    }
     private bool autoFunCall = false;
     private int blocknum;
 
@@ -829,16 +1211,17 @@ public class GameManager : MonoBehaviour
     private bool ResetCubeFunc(Transform holdersCube, int refNumber)
     {
         var holderCube = holdersCube.GetComponent<HolderCubeScript>();
-        
+       
         if (!holderCube.isFilled) return false;
         if (holderCube.checkNumberRef == refNumber)
         {
             var individualCube = holderCube.objRef.transform;
             var cubeToReset = individualCube.parent;
                 cubeToReset.transform.GetComponent<CubesGroupScript>().canCheckForPlacement = false;
+               
             if (individualCube.GetComponent<PlayerCubeScript>().checknumber != holderCube.checkNumberRef)
             {
-                //print("DOINGJHVAWIDFUAGD");
+                
                 var cubeVec = cubeToReset.transform.position;
                 var cubePos = new Vector3(cubeVec.x, cubeVec.y, -5f);
                 cubeToReset.transform.position = cubePos;
@@ -860,7 +1243,7 @@ public class GameManager : MonoBehaviour
                     
                     //print("I am being Called");
                 }
-
+                
                 cubeToReset.GetComponent<CubesGroupScript>().AutoResetPositionFun();
                 return true;
             }

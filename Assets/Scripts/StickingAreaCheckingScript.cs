@@ -30,7 +30,7 @@ public class StickingAreaCheckingScript : MonoBehaviour
         {
             var madeWord = holderCubeScripts.Aggregate("", (current, hScript) => current + hScript.inputext);
 
-            Debug.Log(madeWord);
+            //Debug.Log(madeWord);
             if (madeWord == answerString)
             {
                 correctWordMade = true;

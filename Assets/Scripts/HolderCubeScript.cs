@@ -14,9 +14,9 @@ public class HolderCubeScript : MonoBehaviour
  
 	[Space(10)]
 
-	public bool isFilled = false;
+	public bool isFilled;
 
-    [HideInInspector] public GameObject objRef;
+     public GameObject objRef;
 
     private void Start()
     {
@@ -49,12 +49,12 @@ public class HolderCubeScript : MonoBehaviour
 		if (other.gameObject.CompareTag("Player_Cube") && !once)
 		{
 			staying = true;
-            print("One DomeBAhv sffsdf");
+            //print("One DomeBAhv sffsdf");
             if (other.gameObject.CompareTag("Player_Cube") && staying)
             {
                 objRef = other.gameObject;
                 other.gameObject.GetComponent<PlayerCubeScript>().stickingCubeObjRef = this.gameObject;
-                print("One DomeBAhv");
+                //print("One DomeBAhv");
                 if (other.gameObject.GetComponent<PlayerCubeScript>() && checkNumberRef != 0 && GameManager.Instance.levelTypeChanged)
                 {
                     var playerscript = other.gameObject.GetComponent<PlayerCubeScript>();
@@ -72,7 +72,7 @@ public class HolderCubeScript : MonoBehaviour
                     }
                     else
                     {
-                        print("One");
+                        //print("One");
                         if (playerscript.anim && playerscript.transform.parent.GetComponent<CubesGroupScript>())
                         {
                             playerscript.transform.parent.GetComponent<CubesGroupScript>().WrongAnimSeq();
@@ -115,6 +115,14 @@ public class HolderCubeScript : MonoBehaviour
 		
 	}
 
+	public void FunCallingObj()
+	{
+		isFilled = false;
+		inputext = "*";
+		once = false;
+		if (staying) staying = false;
+		GameManager.Instance.RemoveWords(rowNo-1,colNo-1);
+	}
     [HideInInspector]
 	public bool staying;
 	private void OnTriggerExit(Collider other)

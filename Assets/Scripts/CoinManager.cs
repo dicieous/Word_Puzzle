@@ -140,11 +140,11 @@ public class CoinManager : MonoBehaviour
         SetHintCount((int)GetCoinsCount() / 50);
         coinCountText.text = GetCoinsCount().ToString();
         hintText.text = GetHintCount().ToString();
-        if (GetCoinsCount() >= 100)
-        {
-            UIManagerScript.Instance.autoWordButton.interactable = false;
-        }
         autoWordCountText.text = ((int)(GetCoinsCount() / 100)).ToString();
+        /*if (GetCoinsCount() >= 100)
+        {
+            UIManagerScript.Instance.autoWordButton.interactable = true;
+        }*/
     }
     public void CoinsIncrease(int x)
     {
@@ -196,7 +196,7 @@ public class CoinManager : MonoBehaviour
     public int Get5050Count() => PlayerPrefs.GetInt("Count5050", 0);
     public void Set5050Count(int count5050) => PlayerPrefs.SetInt("Count5050", count5050);
     
-    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 0);
+    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 10000000);
 
     public void SetCoinCount(int countCoin) => PlayerPrefs.SetInt("Coins Count", countCoin);
 }

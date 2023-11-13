@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Debug = UnityEngine.Debug;
 
 public class CubesGroupScript : MonoBehaviour
@@ -19,12 +20,17 @@ public class CubesGroupScript : MonoBehaviour
 	private Vector3[] initialDir;
 	private Vector3 _offset;
 
+	public Vector3 FinalPosition;
+	
 	private bool isFilledC;
 	//private bool canMove = true;
 	private bool canReset = true;
     [HideInInspector] public bool canCheckForPlacement = true;
-
-	public int number;
+    private int _parentNumberInList;
+	private int _wordNUmberInList;
+	
+	[FormerlySerializedAs("_doneWithWord")] public bool doneWithWord;
+	[FormerlySerializedAs("canPlaceCheck")] public bool canNotPlace;
 	void Start()
 	{
 		_initPos = transform.position;
@@ -36,14 +42,41 @@ public class CubesGroupScript : MonoBehaviour
 			//Debug.Log("Initial Position get " + initialPos[i]);
 		}
 		
+		for (int i = 0; i < GameManager.Instance.completeWordCubesList.Count; i++)
+		{
+			for (int j = 0; j < GameManager.Instance.completeWordCubesList[i].completeWordCubeGroup.Count; j++)
+			{
+				if (gameObject == GameManager.Instance.completeWordCubesList[i].completeWordCubeGroup[j])
+				{
+					_parentNumberInList = i;
+					_wordNUmberInList = j;
+					FinalPosition = GameManager.Instance.completeWordPositionsList[_parentNumberInList].completeWordCubePositionGroup[_wordNUmberInList];
+					print(FinalPosition+"    "+gameObject.name+"          "+transform.parent.name);
+					break;
+				}
+			}
+		}
 		if(GameManager.Instance.levelTypeChanged)
         {
-            transform.GetChild(0).GetComponent<PlayerCubeScript>().anim = true;
+	        if (transform.childCount > 1)
+	        {
+		        transform.GetChild(0).GetComponent<PlayerCubeScript>().anim = true;
+		        for (int i = 1; i < transform.childCount; i++)
+		        {
+			        transform.GetChild(i).GetComponent<PlayerCubeScript>().anim = false;
+		        }
+	        }
+	        else
+	        {
+		        transform.GetChild(0).GetComponent<PlayerCubeScript>().anim = true;
+	        }
+	        transform.GetChild(0).GetComponent<PlayerCubeScript>().anim = true;
         }
 	}
 
     public void AnimSeq()
     {
+//	    print("animseqCall");
         var num = transform.GetComponents<Collider>().Length;
         for (int i = 0; i < num; i++)
         {
@@ -54,26 +87,73 @@ public class CubesGroupScript : MonoBehaviour
     }
 
     private int countnum;
+
+    public void PosCheck()
+    {
+	    DOVirtual.DelayedCall(0.1f, () =>
+	    {
+		    if (GameManager.Instance.autoWordClick)
+		    {
+			    if (transform.position != FinalPosition)
+			    {
+				    transform.position = FinalPosition;
+			    }
+
+			    /*var childscounting = transform.childCount;
+			    if (childscounting > 1)
+			    {
+				    for (int i = 0; i < transform.childCount; i++)
+				    {
+					    if (transform.GetChild(i).transform.localPosition != transform.GetChild(i).GetComponent<PlayerCubeScript>().stratpos)
+						    transform.GetChild(i).transform.localPosition = transform.GetChild(i).GetComponent<PlayerCubeScript>().stratpos;
+				    }
+			    }
+			    else
+			    {
+				    if (transform.GetChild(0).transform.localPosition != transform.GetChild(0).GetComponent<PlayerCubeScript>().stratpos)
+							transform.GetChild(0).transform.localPosition = transform.GetChild(0).GetComponent<PlayerCubeScript>().stratpos;
+			    }*/
+		    }
+	    });
+
+    }
     private void CrctAnimSeqCall()
     {
-        countnum = 0;
-        var seq = DOTween.Sequence();
-        seq.AppendCallback(() =>
-        {
-            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
-                .color = CoinManager.instance.greenColor; 
-            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
-                .color = CoinManager.instance.greenColor;
-            childObjects[countnum].transform.GetChild(0).transform
-                .DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
-                .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
-            childObjects[countnum].transform.GetChild(1).transform
-                .DOScale(new Vector3(20f, 30f, 15f), 0.1f)
-                .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
-            countnum++;
-        });
-        seq.AppendInterval(0.15f);
-        seq.SetLoops(childObjects.Count);
+	    if (!doneWithWord)
+	    {
+		    //PosCheck();
+		    doneWithWord = true;
+		    DOVirtual.DelayedCall(0.5f, () =>
+		    {
+			    countnum = 0;
+			    var seq = DOTween.Sequence();
+			    seq.AppendCallback(() =>
+			    {
+				    if (countnum == childObjects.Count)
+				    {
+					    DOVirtual.DelayedCall(2.5f, () =>
+					    {
+						    GameManager.Instance.autoWordClick = false;
+						    UIManagerScript.Instance.AutoButtonActive();
+					    });
+				    }
+
+				    childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+					    .color = CoinManager.instance.greenColor;
+				    childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+					    .color = CoinManager.instance.greenColor;
+				    childObjects[countnum].transform.GetChild(0).transform
+					    .DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
+					    .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+				    childObjects[countnum].transform.GetChild(1).transform
+					    .DOScale(new Vector3(20f, 30f, 15f), 0.1f)
+					    .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+				    countnum++;
+			    });
+			    seq.AppendInterval(0.15f);
+			    seq.SetLoops(childObjects.Count);
+		    });
+	    }
     }
     
     public void WrongAnimSeq()
@@ -149,16 +229,33 @@ public class CubesGroupScript : MonoBehaviour
 	private bool _once;
 	private void OnMouseDown()
 	{
-		if (!GameManager.Instance.downCheck)
+		
+		if ((!GameManager.Instance.downCheck && !GameManager.Instance.autoWordClick) ||  !GameManager.Instance.scriptOff)
 		{
 			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
-
+            print("wordcheckfalse");
 			var position1 = transform.position;
             GameManager.Instance.canPlaceNow = false;
+            for (int i = 0; i < transform.childCount; i++)
+            {
+	            if (transform.GetChild(i).GetComponent<PlayerCubeScript>())
+	            {
+		            if (transform.GetChild(i).transform.localPosition !=
+		                transform.GetChild(i).GetComponent<PlayerCubeScript>().startPos)
+		            {
+			            transform.GetChild(i).transform.localPosition =
+				            transform.GetChild(i).GetComponent<PlayerCubeScript>().startPos;
+		            }
+	            }
+            }
 			var position = new Vector3(position1.x, position1.y + 3f, position1.z + 2.5f);
 			_offset = position - MouseWorldPosition();
 			if (!GameManager.Instance.wordTouch)
+			{
 				GameManager.Instance.wordTouch = true;
+				UIManagerScript.Instance.autoWordButton.interactable = false;
+			}
+				
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 			if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		}
@@ -166,12 +263,12 @@ public class CubesGroupScript : MonoBehaviour
 
 	private void OnMouseDrag()
 	{
-		if (!GameManager.Instance.downCheck)
+		if ((!GameManager.Instance.downCheck && !GameManager.Instance.autoWordClick) ||  !GameManager.Instance.scriptOff)
 		{
 			if (GameManager.Instance.levelCompleted || GameManager.Instance.scriptOff) return;
 			
 			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
-
+			print("wordcheckfalse");
 			var position1 = transform.position;
 			position1 = MouseWorldPosition() + _offset;
 			position1 = new Vector3(position1.x, position1.y, -3.5f);
@@ -212,14 +309,18 @@ public class CubesGroupScript : MonoBehaviour
 	private void Update()
 	{
 		//Debug.Log("isFilledC Value "+ isFilledC);
-		if (!Input.GetMouseButton(0) && isFilledC)
+		if (!Input.GetMouseButton(0) && isFilledC && !GameManager.Instance.autoWordClick)
 		{
 			ResetPosition();
 		}
-        if(canCheckForPlacement)
+        if(canCheckForPlacement && !canNotPlace)
             CondToAttachCubesInGrid();
-        if(Input.GetMouseButtonUp(0) && GameManager.Instance.wordTouch)
+        if (Input.GetMouseButtonUp(0) && GameManager.Instance.wordTouch)
+        {
 	        GameManager.Instance.wordTouch = false;
+	        UIManagerScript.Instance.AutoButtonActive();
+        }
+	        
 	}
 
 	
@@ -231,7 +332,7 @@ public class CubesGroupScript : MonoBehaviour
         {
             if (canReset && !GameManager.Instance.levelCompleted)
             {
-                canReset = false;
+	            canReset = false;
                 transform.DOMove(_initPos, 0.2f).SetEase(Ease.Flash).OnStart(() =>
                 {
                     canCheckForPlacement = false;
@@ -265,8 +366,9 @@ public class CubesGroupScript : MonoBehaviour
 	    //Debug.Log("Reset Called");
 	    //if(!UIManagerScript.Instance.autoWordDisableWordBool)
 	    {
-		    if (canReset && !GameManager.Instance.levelCompleted)
+		    if (canReset && !GameManager.Instance.levelCompleted && !doneWithWord)
 		    {
+			    print(this.gameObject);
 			    canReset = false;
 			    transform.DOMove(_initPos, 0.2f).SetEase(Ease.Flash).OnStart(() =>
 			    {
@@ -275,6 +377,18 @@ public class CubesGroupScript : MonoBehaviour
 				    {
 					    childCol.enabled = false;
 				    }
+				    var coll = transform.GetComponents<Collider>().ToList();
+				    if (coll.Count > 1)
+				    {
+					    for (int i = 0; i < coll.Count; i++)
+					    {
+						    coll[i].enabled = false;
+					    }
+				    }
+				    else
+				    {
+					    coll[0].enabled = false;
+				    }
                    
 				    //Debug.Log("Check Stop");
 			    }).OnComplete(() =>
@@ -282,6 +396,18 @@ public class CubesGroupScript : MonoBehaviour
 				    foreach (var childCol in childObjects.Select(t => t.transform.GetComponent<Collider>()))
 				    {
 					    childCol.enabled = true;
+				    }
+				    var coll = transform.GetComponents<Collider>().ToList();
+				    if (coll.Count > 1)
+				    {
+					    for (int i = 0; i < coll.Count; i++)
+					    {
+						    coll[i].enabled = true;
+					    }
+				    }
+				    else
+				    {
+					    coll[0].enabled = true;
 				    }
 				    canCheckForPlacement = true;
 				    canReset = true;
@@ -369,7 +495,7 @@ public class CubesGroupScript : MonoBehaviour
 				vector3.z = position.z;
 				
 				child.GetComponent<PlayerCubeScript>().isPlaced = true;
-				Debug.Log("Placed");
+//				Debug.Log("Placed");
 				Instantiate(dustFX, position, Quaternion.identity);
                 //GameManager.Instance.canPlaceNow = false;
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);

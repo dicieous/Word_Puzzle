@@ -1801,6 +1801,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 441681239}
+  - component: {fileID: 441681240}
   m_Layer: 0
   m_Name: Row_02
   m_TagString: Untagged
@@ -1828,6 +1829,20 @@ Transform:
   m_Father: {fileID: 1077563590}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &441681240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441681238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2696a3cb8d8895459b008a632b3de09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  correctWordMade: 0
+  answerString: 
 --- !u!1001 &482374359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2204,6 +2219,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 578415714}
+  - component: {fileID: 578415715}
   m_Layer: 0
   m_Name: Row_01
   m_TagString: Untagged
@@ -2231,6 +2247,20 @@ Transform:
   m_Father: {fileID: 1077563590}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &578415715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578415713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2696a3cb8d8895459b008a632b3de09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  correctWordMade: 0
+  answerString: 
 --- !u!4 &581019909 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3105032407085746626, guid: 2ce8df79e34e9d54ab455f1f1fe4994f, type: 3}
@@ -3139,6 +3169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 959203374}
+  - component: {fileID: 959203375}
   m_Layer: 0
   m_Name: Row_04
   m_TagString: Untagged
@@ -3166,6 +3197,20 @@ Transform:
   m_Father: {fileID: 1077563590}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &959203375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959203373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2696a3cb8d8895459b008a632b3de09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  correctWordMade: 0
+  answerString: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -6297,7 +6342,11 @@ MonoBehaviour:
   - CREAM
   rowColor: []
   wordList: []
-  stickingCubes: []
+  stickingCubes:
+  - {fileID: 578415715}
+  - {fileID: 441681240}
+  - {fileID: 1946002750}
+  - {fileID: 959203375}
   scriptOff: 0
   rowsInGrid: 4
   colInGrid: 5
@@ -6351,8 +6400,11 @@ MonoBehaviour:
   levelCompleted: 0
   levelFail: 0
   removing: 0
+  numberCubeHolders: []
+  objNumbers: 
   wordTouch: 0
   autoWordClick: 0
+  cameraMoving: 0
 --- !u!4 &1870371619
 Transform:
   m_ObjectHideFlags: 0
@@ -6560,6 +6612,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1946002749}
+  - component: {fileID: 1946002750}
   m_Layer: 0
   m_Name: Row_03
   m_TagString: Untagged
@@ -6587,6 +6640,20 @@ Transform:
   m_Father: {fileID: 1077563590}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1946002750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946002748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2696a3cb8d8895459b008a632b3de09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  correctWordMade: 0
+  answerString: 
 --- !u!1001 &1957769010
 PrefabInstance:
   m_ObjectHideFlags: 0

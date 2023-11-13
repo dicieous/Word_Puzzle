@@ -27,6 +27,9 @@ public class UIManagerScript : MonoBehaviour
 	
 	public Button nextButton;
     public Button retryButton;
+    [Header("FailpanelDetails")] 
+    public Button getMovesButton;
+    
     [Header("hint Button Details")] 
     public GameObject hintObj;
 	public Button hintButton;
@@ -71,7 +74,7 @@ public class UIManagerScript : MonoBehaviour
 
 	private void Start()
 	{
-		
+		autoWordButton.interactable = true; 
 		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
 		{
 			//print("One");
@@ -92,18 +95,7 @@ public class UIManagerScript : MonoBehaviour
 			else
 			{
 				levelNo.text = "LEVEL " + GetSpecialLevelNumber();
-				if (!GameManager.Instance.levelTypeChanged)
-				{
-					if (CoinManager.instance.GetCoinsCount() >= 100)
-					{
-						autoWordButton.interactable = true;
-					}
-					else
-					{
-						autoWordButton.interactable = false;
-					}
-				}
-				
+				AutoButtonActive();
 			}
 
 			if (s == '5')
@@ -245,7 +237,7 @@ public class UIManagerScript : MonoBehaviour
                 });
                 DOVirtual.DelayedCall(2f, () =>
                 {
-                    CoinManager.instance.CoinsIncrease(25);
+                    CoinManager.instance.CoinsIncrease(10);
                     //nextButton.interactable = true;
                     if (giftLevel)
                     {
@@ -270,7 +262,7 @@ public class UIManagerScript : MonoBehaviour
                 });
                 DOVirtual.DelayedCall(2f, () =>
                 {
-                    CoinManager.instance.CoinsIncrease(25);
+                    CoinManager.instance.CoinsIncrease(10);
                     DOVirtual.DelayedCall(1f, ()=>
                     {
 	                    MapLevelCall();
@@ -290,12 +282,20 @@ public class UIManagerScript : MonoBehaviour
         failPanel.SetActive(true);
     }
 
+    //private bool _autoButtonActivate;
     public void AutoButtonActive()
     {
         autoWordDisableWordBool = false;
-        if (CoinManager.instance.GetCoinsCount() >= 100 && !GameManager.Instance.levelCompleted && !GameManager.Instance.cameraMoving)
+        if (CoinManager.instance.GetCoinsCount() >= 100 && !GameManager.Instance.levelCompleted)
         {
-            autoWordButton.interactable = true;
+	        if (GameManager.Instance.completeWordCubesList.Count > 0)
+	        {
+		        if (!GameManager.Instance.cameraMoving && !GameManager.Instance.wordTouch)
+		        {
+			        //_autoButtonActivate = true;
+			        autoWordButton.interactable = true; 
+		        }
+	        }
         }
     }
 
@@ -308,13 +308,30 @@ public class UIManagerScript : MonoBehaviour
     {
         if (autoWordButton.interactable && !autoWordDisableWordBool)
         {
-            AutoButtonDisActive();
-            GameManager.Instance.autoWordClick = true;
-            if(GameManager.Instance)
-				GameManager.Instance.AutoCompleteFunc();
-            
-            CoinManager.instance.AutoWordReduce();
-            Debug.Log("AutoComplete");
+	        //AutoButtonDisActive();
+	        if (!GameManager.Instance.autoWordClick /*&& _autoButtonActivate*/)
+	        {
+		        print("autowordclick");
+		        GameManager.Instance.autoWordClick = true;
+		        //_autoButtonActivate = false;
+		        autoWordButton.interactable = false;
+		        autoWordDisableWordBool = true;
+		        CoinManager.instance.AutoWordReduce();
+		        if (GameManager.Instance)
+		        {
+			        GameManager.Instance.AutoCompleteFunc();
+			        GameManager.Instance.scriptOff = true;
+		        }
+			       
+	        }
+	       DOVirtual.DelayedCall(6.5f,() =>
+	       {
+		      // print("One attack::::::::::::::::::::::::::::::::::::::");
+		       GameManager.Instance.autoWordClick = false;
+		       AutoButtonActive();
+	       });
+	       /*print("autoword::::"+autoWordButton.interactable);
+	       print("WordClick::::::::"+GameManager.Instance.autoWordClick);*/
         }
         
     }
@@ -332,24 +349,7 @@ public class UIManagerScript : MonoBehaviour
 			{
 				hintButton.interactable = false;
 			}
-			/*if (Input.GetMouseButtonUp(0))
-			{
-				//AutoButtonDisActive();
-				AutoButtonActive();
-			}
-
-			if (Input.GetMouseButtonDown(0))
-			{
-				// AutoButtonActive();
-				AutoButtonDisActive();
-			}*/
-			if (!GameManager.Instance.autoWordClick && !GameManager.Instance.cameraMoving)
-			{
-				if (GameManager.Instance.wordTouch && autoWordButton.interactable)
-					autoWordButton.interactable = false;
-				else if(!GameManager.Instance.wordTouch && !autoWordButton.interactable)
-					AutoButtonActive();
-			}
+			
 		}
 
 		
@@ -480,6 +480,8 @@ public class UIManagerScript : MonoBehaviour
 			    MapLevelCall();
 		    });
 	    });
+	    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+	    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
     }
     public void MapLevelNextButton()
     {
@@ -507,6 +509,8 @@ public class UIManagerScript : MonoBehaviour
 		    //CoinManager.instance.SetLoaderPercentage(CoinManager.instance.GetLoaderPercent() + ((1f / 9f)));
 	    }
 	    if(GAScript.instance) GAScript.instance.LevelCompleted(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
+	    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+	    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
     }
     public void MapLevelCall()
     {

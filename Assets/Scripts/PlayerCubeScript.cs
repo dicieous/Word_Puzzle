@@ -8,16 +8,17 @@ public class PlayerCubeScript : MonoBehaviour
     public int checknumber;
     public bool anim;
 
-    [HideInInspector] public GameObject stickingCubeObjRef;
+    public GameObject stickingCubeObjRef;
+    public Vector3 startPos;
     
 	private void Start()
 	{
-		
-		transform.GetChild(2).GetComponent<TextMeshPro>().text =
-			transform.GetChild(0).GetComponent<TextMeshPro>().text;
+		var posStart=transform.localPosition;
+		startPos = posStart;
+		transform.GetChild(2).GetComponent<TextMeshPro>().text = transform.GetChild(0).GetComponent<TextMeshPro>().text;
 		
 	}
-    
+	
 	private void Update()
 	{
 		// var rayOrigin = transform.position;
