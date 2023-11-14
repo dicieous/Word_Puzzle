@@ -836,11 +836,6 @@ public class GameManager : MonoBehaviour
    {
        ObjMoving(obj,posi);
        //ObjMovingFunCall(obj,posi);
-       DOVirtual.DelayedCall(0.25f, () =>
-       {
-           if (scriptOff) scriptOff = false;
-           
-       });
    }
    public void AutoCompleteFunc()
    {

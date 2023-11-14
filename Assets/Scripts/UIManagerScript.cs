@@ -286,7 +286,7 @@ public class UIManagerScript : MonoBehaviour
     public void AutoButtonActive()
     {
         autoWordDisableWordBool = false;
-        if (CoinManager.instance.GetCoinsCount() >= 100 && !GameManager.Instance.levelCompleted)
+        if (CoinManager.instance.GetCoinsCount() >= 100 && !GameManager.Instance.levelCompleted && !GameManager.Instance.autoWordClick)
         {
 	        if (GameManager.Instance.completeWordCubesList.Count > 0)
 	        {
@@ -324,6 +324,11 @@ public class UIManagerScript : MonoBehaviour
 		        }
 			       
 	        }
+
+	        DOVirtual.DelayedCall(1.75f, () =>
+	        {
+		        GameManager.Instance.scriptOff = false;
+	        });
 	       DOVirtual.DelayedCall(6.5f,() =>
 	       {
 		      // print("One attack::::::::::::::::::::::::::::::::::::::");
