@@ -458,7 +458,7 @@ public class CubesGroupScript : MonoBehaviour
 			if (hitInfo.collider.GetComponent<HolderCubeScript>().isFilled) return false;
 		}
 
-//		print("all are hitting");
+		print("all are hitting");
 		return true;
 	}
 	//To get position of the Cube Grid Cubes
