@@ -20,7 +20,7 @@ public class CubesGroupScript : MonoBehaviour
 	private Vector3[] initialDir;
 	private Vector3 _offset;
 
-	public Vector3 FinalPosition;
+	[HideInInspector] public Vector3 FinalPosition;
 	
 	private bool isFilledC;
 	//private bool canMove = true;
@@ -51,7 +51,7 @@ public class CubesGroupScript : MonoBehaviour
 					_parentNumberInList = i;
 					_wordNUmberInList = j;
 					FinalPosition = GameManager.Instance.completeWordPositionsList[_parentNumberInList].completeWordCubePositionGroup[_wordNUmberInList];
-					print(FinalPosition+"    "+gameObject.name+"          "+transform.parent.name);
+					//print(FinalPosition+"    "+gameObject.name+"          "+transform.parent.name);
 					break;
 				}
 			}
@@ -233,7 +233,7 @@ public class CubesGroupScript : MonoBehaviour
 		if ((!GameManager.Instance.downCheck && !GameManager.Instance.autoWordClick) ||  !GameManager.Instance.scriptOff)
 		{
 			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
-            print("wordcheckfalse");
+            //print("wordcheckfalse");
 			var position1 = transform.position;
             GameManager.Instance.canPlaceNow = false;
             for (int i = 0; i < transform.childCount; i++)
@@ -268,7 +268,7 @@ public class CubesGroupScript : MonoBehaviour
 			if (GameManager.Instance.levelCompleted || GameManager.Instance.scriptOff) return;
 			
 			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
-			print("wordcheckfalse");
+			//print("wordcheckfalse");
 			var position1 = transform.position;
 			position1 = MouseWorldPosition() + _offset;
 			position1 = new Vector3(position1.x, position1.y, -3.5f);
@@ -458,7 +458,7 @@ public class CubesGroupScript : MonoBehaviour
 			if (hitInfo.collider.GetComponent<HolderCubeScript>().isFilled) return false;
 		}
 
-		print("all are hitting");
+		//print("all are hitting");
 		return true;
 	}
 	//To get position of the Cube Grid Cubes
