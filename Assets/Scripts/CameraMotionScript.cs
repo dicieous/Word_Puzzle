@@ -48,6 +48,8 @@ public class CameraMotionScript : MonoBehaviour
     {
         if(UIManagerScript.Instance.autoWordButton.interactable)
             UIManagerScript.Instance.autoWordButton.interactable = false;
+        if(UIManagerScript.Instance.hintButton.interactable)
+            UIManagerScript.Instance.hintButton.interactable = false;
         if(!GameManager.Instance.cameraMoving)
             GameManager.Instance.cameraMoving = true;
         if (SceneManager.GetActiveScene().isLoaded)
@@ -174,6 +176,7 @@ public class CameraMotionScript : MonoBehaviour
                             else if (i == numColliders)
                             {
                                 UIManagerScript.Instance.AutoButtonActive();
+                                UIManagerScript.Instance.HintButtonActiveFun();
                                 GameManager.Instance.cameraMoving = false;
                             }
                         }

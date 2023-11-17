@@ -254,6 +254,7 @@ public class CubesGroupScript : MonoBehaviour
 			{
 				GameManager.Instance.wordTouch = true;
 				UIManagerScript.Instance.autoWordButton.interactable = false;
+				UIManagerScript.Instance.hintButton.interactable = false;
 			}
 				
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
@@ -319,6 +320,7 @@ public class CubesGroupScript : MonoBehaviour
         {
 	        GameManager.Instance.wordTouch = false;
 	        UIManagerScript.Instance.AutoButtonActive();
+	        UIManagerScript.Instance.HintButtonActiveFun();
         }
 	        
 	}

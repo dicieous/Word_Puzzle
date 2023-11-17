@@ -449,26 +449,30 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("LevelComplete");
             });
         }
-        else if (movesCount == 0 && !levelCompleted && !levelFail)
+        if ((PlayerPrefs.GetInt("Level", 1) <= 11))
         {
-            ButtonsTurnOffFun();
-            
-            DOVirtual.DelayedCall(1f, () =>
+            if (movesCount == 0 && !levelCompleted && !levelFail)
             {
-                if (!levelCompleted)
+                ButtonsTurnOffFun();
+            
+                DOVirtual.DelayedCall(1f, () =>
                 {
-                    //if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
-                    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Fail");
-                    UI.FailPanelActive();
-                    //Debug.Log("Failed");
-                    if (!scriptOff)
-                        scriptOff = true;
-                }
-            });
-            if (!scriptOff)
-                scriptOff = true;
-            levelFail = true;
+                    if (!levelCompleted)
+                    {
+                        //if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Fail");
+                        UI.FailPanelActive();
+                        //Debug.Log("Failed");
+                        if (!scriptOff)
+                            scriptOff = true;
+                    }
+                });
+                if (!scriptOff)
+                    scriptOff = true;
+                levelFail = true;
+            }
         }
+       
     }
 
     private void MakeAndCheckWordNew()
@@ -529,7 +533,7 @@ public class GameManager : MonoBehaviour
         {
             DOVirtual.DelayedCall(1f, () =>
             {
-                if (!levelCompleted)
+                if (!levelCompleted && movesCount == 0)
                 {
                     //if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
                     if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Fail");
@@ -594,6 +598,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(loadedScene);
     }
 
+    public GameObject hintSpawnObject;
     public void ShowTheText()
     {
         foreach (var cube in hintCubesHolder)
@@ -603,6 +608,7 @@ public class GameManager : MonoBehaviour
             if (!IsInstantiated(cube, count))
             {
                 Instantiate(starFX, cube.transform.position, Quaternion.identity);
+                hintSpawnObject = cube;
                 if (PlayerPrefs.GetInt("Level", 1) > 1)
                 {
                     CoinManager.instance.HintReduce();
@@ -1166,6 +1172,8 @@ public class GameManager : MonoBehaviour
             UI.autoWordButton.interactable = false;
         if (MonitizationScript.instance.giftImage.GetComponent<Button>().interactable)
             MonitizationScript.instance.giftImage.GetComponent<Button>().interactable = false;
+        if (MonitizationScript.instance.giftImage.GetComponent<Button>().interactable)
+            MonitizationScript.instance.giftImage.GetComponent<Button>().interactable = false;
     }
 
     public bool wordTouch;
@@ -1254,4 +1262,6 @@ public class GameManager : MonoBehaviour
     {
         public List<GameObject> wordsDataLists;
     }
+
+    public List<GameObject> imageRevel;
 }

@@ -35,6 +35,10 @@ public class CoinManager : MonoBehaviour
 
     public RectTransform winEmoji;
     public List<Sprite> winEmojiSprites;
+    [Header("GiftFillingBar")]
+    public Image giftProgressionBarImage;
+    public TextMeshProUGUI giftProgressionBarText;
+    public Image giftProgressionImage;
     
     private void Awake()
     {
@@ -185,6 +189,8 @@ public class CoinManager : MonoBehaviour
     public float GetLoaderPercent() => PlayerPrefs.GetFloat("LoaderPercentage", 0);
     public void SetLoaderPercentage(float percent) => PlayerPrefs.SetFloat("LoaderPercentage", percent);
     
+    public float GetGiftLoaderPercent() => PlayerPrefs.GetFloat("GiftLoaderPercentCount", 0);
+    public void SetGiftLoaderPercent(float percent) => PlayerPrefs.SetFloat("GiftLoaderPercentCount", percent);
     
     public int GetHintCount() => PlayerPrefs.GetInt("Hint Count", 0);
     public void SetHintCount(int countHint) => PlayerPrefs.SetInt("Hint Count", countHint);

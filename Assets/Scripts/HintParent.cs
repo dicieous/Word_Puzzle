@@ -37,8 +37,13 @@ public class HintParent : MonoBehaviour
 			{
 				transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
 			}
-
+			
 			doneObject = true;
+			if (GameManager.Instance.hintSpawnObject == this.gameObject)
+			{
+				GameManager.Instance.hintSpawnObject = null;
+				UIManagerScript.Instance.HintButtonActiveFun();	
+			}
 		}
 	}
 	
