@@ -280,8 +280,8 @@ public class EmojiManager : MonoBehaviour
     public void FunHint()
     {
         hintCounter++;
-        ByteBrewManager.instance.EmojiEvent(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),
-            hintCounter.ToString(), "EmojiMode", GetListNumbers().ToString(), "Hints");
+        /*ByteBrewManager.instance.EmojiEvent(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),
+            hintCounter.ToString(), "EmojiMode", GetListNumbers().ToString(), "Hints");*/
         if (CoinManager.instance.GetHintCount() > 0)
         {
             /*for (int i = 0; i < panelObj.GetComponent<EmojiClick>().hintPos.Count; i++)

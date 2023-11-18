@@ -3946,6 +3946,7 @@ MonoBehaviour:
   coinStartReference: {fileID: 0}
   nextButton: {fileID: 0}
   retryButton: {fileID: 0}
+  getMovesButton: {fileID: 0}
   hintObj: {fileID: 0}
   hintButton: {fileID: 0}
   restartButton: {fileID: 0}
@@ -3960,12 +3961,19 @@ MonoBehaviour:
   tutorialtext: {fileID: 0}
   targetCongratulationImage: {fileID: 0}
   congratulationsImages: []
-  giftPanel: {fileID: 0}
-  claimButton: {fileID: 0}
-  coinsText: {fileID: 0}
-  gifAnimationObj: {fileID: 0}
   giftLevel: 0
-  diamondIcon: {fileID: 1905652867}
+  giftJumpPLace: {fileID: 0}
+  giftJumpPLace2: {fileID: 0}
+  giftPanel: {fileID: 0}
+  coinsObj: {fileID: 0}
+  giftMagnetObj: {fileID: 0}
+  giftHintObj: {fileID: 0}
+  claimButton: {fileID: 0}
+  giftCoinMovePOs: {fileID: 0}
+  giftDiamondFxParent: {fileID: 0}
+  giftCenterParticleRect: {fileID: 0}
+  giftDiamondParticlesRect: []
+  coinMovePos: {fileID: 1905652867}
   diamondFxParent: {fileID: 220826510}
   centerParticleRect: {fileID: 188722828}
   diamondParticlesRect:
@@ -3997,6 +4005,7 @@ MonoBehaviour:
   gm: {fileID: 0}
   hintText: {fileID: 237410150}
   coinCountText: {fileID: 203623040}
+  autoWordCountText: {fileID: 0}
   colorData:
   - {r: 0.3537736, g: 1, b: 0.7240698, a: 0}
   - {r: 0.35294116, g: 1, b: 0.42567152, a: 0}
@@ -4016,6 +4025,9 @@ MonoBehaviour:
   progressionImageList: []
   winEmoji: {fileID: 0}
   winEmojiSprites: []
+  giftProgressionBarImage: {fileID: 0}
+  giftProgressionBarText: {fileID: 0}
+  giftProgressionImage: {fileID: 0}
 --- !u!1 &1056599160
 GameObject:
   m_ObjectHideFlags: 0
