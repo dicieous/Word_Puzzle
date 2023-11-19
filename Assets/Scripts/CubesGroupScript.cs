@@ -134,7 +134,7 @@ public class CubesGroupScript : MonoBehaviour
 					    DOVirtual.DelayedCall(2.5f, () =>
 					    {
 						    GameManager.Instance.autoWordClick = false;
-						    UIManagerScript.Instance.AutoButtonActive();
+						    UIManagerScript.Instance.AutoButtonActiveFun();
 					    });
 				    }
 
@@ -319,7 +319,7 @@ public class CubesGroupScript : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && GameManager.Instance.wordTouch)
         {
 	        GameManager.Instance.wordTouch = false;
-	        UIManagerScript.Instance.AutoButtonActive();
+	        UIManagerScript.Instance.AutoButtonActiveFun();
 	        UIManagerScript.Instance.HintButtonActiveFun();
         }
 	        

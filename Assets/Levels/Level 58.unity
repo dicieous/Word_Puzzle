@@ -282,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2993427281339464173, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: m_fontSize
-      value: 6.95
+      value: 7.3
       objectReference: {fileID: 0}
     - target: {fileID: 2993427281339464173, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: m_fontStyle
@@ -994,7 +994,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &443556459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1290,29 +1292,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5880647106815872253, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5880647106815872253, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8290938290612111971, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_Name
       value: MainCanvas_Prefab
-      objectReference: {fileID: 0}
-    - target: {fileID: 9220738948923531086, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9220738948923531086, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9220738948923531086, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1862,7 +1844,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &1021375866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3635,6 +3619,7 @@ MonoBehaviour:
   - {fileID: 982728114}
   - {fileID: 1946002750}
   - {fileID: 441681240}
+  spriteRevealImages: []
   scriptOff: 0
   rowsInGrid: 7
   colInGrid: 7
@@ -3827,7 +3812,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &2022009587
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -833,8 +833,8 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: gameanalytics_max_enabled;LK_HAS_LION_ANALYTICS;HAS_LION_ADJUST_SDK;HAS_LION_GAME_ANALYTICS_SDK;HAS_LION_APPLOVIN_SDK;HAS_LION_FACEBOOK_SDK
-    iPhone: gameanalytics_max_enabled;LK_HAS_LION_ANALYTICS
+    Android: gameanalytics_max_enabled;LK_HAS_LION_ANALYTICS;HAS_LION_ADJUST_SDK;HAS_LION_GAME_ANALYTICS_SDK;HAS_LION_APPLOVIN_SDK;HAS_LION_FACEBOOK_SDK;FACEBOOK_PRESENT_AND_ASMDEF_CREATED;ADJUST_PRESENT_AND_ASMDEF_CREATED
+    iPhone: gameanalytics_max_enabled;LK_HAS_LION_ANALYTICS;FACEBOOK_PRESENT_AND_ASMDEF_CREATED;ADJUST_PRESENT_AND_ASMDEF_CREATED;HAS_LION_APPLOVIN_SDK
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

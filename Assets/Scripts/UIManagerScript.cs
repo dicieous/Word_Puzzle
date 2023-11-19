@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DDZ;
 using DG.Tweening;
 using TMPro;
 using Unity.VisualScripting;
@@ -19,7 +20,7 @@ public class UIManagerScript : MonoBehaviour
 {
 	public static UIManagerScript Instance;
 	public CoinManager cm;
-	
+	public GameObject specialLevelObject;
 	public GameObject endScreen,prefab,failPanel;
 	public TextMeshProUGUI levelNo,movesText;
 	public Material originalColor;
@@ -28,19 +29,27 @@ public class UIManagerScript : MonoBehaviour
 	
 	public Button nextButton;
     public Button retryButton;
-    [Header("FailpanelDetails")] 
+    [Header("Special level Button details")]
+    public Button fiftyFiftyButton;
+    public Button shuffleButton;
+    [Header("DoubleCoins Button Details")] 
+    public Button doubleCoinsButton;
+    public Button loseItButton;
+    [Header("FailPanelDetails")] 
     public Button getMovesButton;
     
     [Header("hint Button Details")] 
     public GameObject hintObj;
 	public Button hintButton;
+	public Button specialHintButton;
 	[Header("Restart Button Details")]
 	public Button restartButton;
 	[Header("AutoWord Details")]
     public Button autoWordButton;
     public bool autoWordDisableWordBool;
-    
-	[Header("Levels changing")]
+    [Header("EmojiReveal")] 
+    public Button emojiRevealButton;
+    [Header("Levels changing")]
 	public GameObject starparticleEffect;
 
 	public Image tutorialHand, tutorialHand2;
@@ -79,7 +88,9 @@ public class UIManagerScript : MonoBehaviour
     public Slider slideBar;
     public TextMeshProUGUI slideCoinsText;
     //public Button looseButton;
-
+    [Header("Calender Details")]
+    public GameObject calendarPanel;
+    public Button calenderButton;
     private void Awake()
 	{
 		if (!Instance) Instance = this;
@@ -87,15 +98,19 @@ public class UIManagerScript : MonoBehaviour
 
 	private void Start()
 	{
-		autoWordButton.interactable = true; 
-		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
+		StartButtonActivateFun();
+		// autoWordButton.interactable = true; 
+		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1 
+		    || SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 2)
 		{
+			specialLevelObject.SetActive(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 2);
 			//print("One");
 			hintButton.gameObject.SetActive(false);
 			autoWordButton.gameObject.SetActive(false);
 			restartButton.image.enabled = false;
 			levelNo.gameObject.SetActive(false);
 			movesText.gameObject.SetActive(false);
+			emojiRevealButton.gameObject.SetActive(false);
 		}
 		else
 		{
@@ -110,16 +125,14 @@ public class UIManagerScript : MonoBehaviour
 				levelNo.text = "LEVEL " + GetSpecialLevelNumber();
 				
 				HintButtonActiveFun();
-				AutoButtonActive();
+				AutoButtonActiveFun();
+				EmojiRevelButtonActiveFun();
 			}
 
 			if (s == '5')
 			{
 				giftLevel = true;
 			}
-			
-			StartButtonActivateFun();
-			
 			if(GAScript.instance) GAScript.instance.LevelStart(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
 		}
 
@@ -145,7 +158,11 @@ public class UIManagerScript : MonoBehaviour
 		{
 			autoWordButton.gameObject.SetActive(false);
 		}
-		
+
+		if (GetSpecialLevelNumber() <= 3)
+		{
+			barMeterObj.SetActive(false);
+		}
 		if ((GetSpecialLevelNumber() <= 10))
 		{
 			movesText.gameObject.SetActive(false);
@@ -158,10 +175,18 @@ public class UIManagerScript : MonoBehaviour
 
 		if ((GetSpecialLevelNumber() <= 13))
 		{
-			print("GiftOff Fun");
 			MonitizationScript.instance.giftObject.SetActive(false);
 		}
-		
+
+		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings-1)
+		{
+			calenderButton.gameObject.SetActive(GetSpecialLevelNumber() >= 30);
+		}
+
+		if (GetSpecialLevelNumber() <= 130)
+		{
+			emojiRevealButton.gameObject.SetActive(false);
+		}
 	}
 	public void HelpHand()
 	{
@@ -248,16 +273,38 @@ public class UIManagerScript : MonoBehaviour
 		{
 			
             var s = GetSpecialLevelNumber().ToString()[^1];
+            MonitizationScript.instance.giftObject.SetActive(false);
+            targetCongratulationImage.GetComponent<Image>().sprite =
+	            congratulationsImages[Random.Range(0, congratulationsImages.Count)];
+
             if (s != '0')
+            {
+	            DOVirtual.DelayedCall(0.05f, () => { LevelProgressionBarFun(); },false);
+            }
+            endScreen.SetActive(true);
+	            
+            ///////////----without double coins load bar ---------/////////
+            if (GetSpecialLevelNumber() <= 3)
+            {
+	            CoinsDoubleClaimFun(10);
+	            print(":::::::::::::::::::::::::::::::::::::");
+            }
+            ///////////-------- with double coinsFun -------------/////////
+            else
+            {
+	            CoinsDoubleBarFun(10);
+            }
+            
+            /*if (s != '0' )
             {
 	            MonitizationScript.instance.giftObject.SetActive(false);
 	            targetCongratulationImage.GetComponent<Image>().sprite =
 		            congratulationsImages[Random.Range(0, congratulationsImages.Count)];
-	            DOVirtual.DelayedCall(0.05f, () => { LevelProgressionBarFun(); });
+	            DOVirtual.DelayedCall(0.05f, () => { LevelProgressionBarFun(); },false);
 	            endScreen.SetActive(true);
 	            
 	            ///////////----without double coins load bar ---------/////////
-	            if (GetSpecialLevelNumber() <= 5)
+	            if (GetSpecialLevelNumber() <= 3)
 	            {
 		            CoinsDoubleClaimFun(10);
 	            }
@@ -291,7 +338,7 @@ public class UIManagerScript : MonoBehaviour
 		                });
 	                }
 	            });
-	        }*/
+	        }#1#
             }
             else
             {
@@ -302,65 +349,66 @@ public class UIManagerScript : MonoBehaviour
 	                
                     StartCoroutine(PlayCoinCollectionFx(coinMovePos,diamondFxParent,centerParticleRect,diamondParticlesRect));
                     
-                });
+                },false);
                 DOVirtual.DelayedCall(2f, () =>
                 {
                     CoinManager.instance.CoinsIncrease(10);
                     DOVirtual.DelayedCall(1f, ()=>
                     {
+	                    if(GameEssentials.instance)GameEssentials.ShowInterstitialsAds("LevelComplete");
 	                    MapLevelCall();
-                    });
+                    },false);
                     //EmojiManager.Instance.nextButton.interactable = true;
-                });
+                },false);
                 /*DOVirtual.DelayedCall(0.5f, () =>
                 {
                     CoinManager.instance.CoinsIncrease(25);
-                });*/
-            }
-		});
+                });#1#
+            }*/
+		},false);
 	}
 
 	private Tween _barTween;
 	public void CoinsDoubleBarFun(int x)
 	{
-		int _coinNUm = 0;
+		int _coinNum = 0;
 		_barTween = slideBar.DOValue(1, 0.75f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo).OnUpdate(() =>
 		{
 			var val=slideBar.value;
 			if (val <= 0.17)
 			{
 				print("X2");
-				if (_coinNUm == (x * 2)) return;
-				_coinNUm = (x * 2);
-				slideCoinsText.text = _coinNUm.ToString();
+				if (_coinNum == (x * 2)) return;
+				_coinNum = (x * 2);
+				slideCoinsText.text = _coinNum.ToString();
 			}
 			else if (val > 0.17 && val <= 0.39)
 			{
 				print("X4");
-				if (_coinNUm == (x * 4)) return;
-				_coinNUm = (x * 4);
-				slideCoinsText.text = _coinNUm.ToString();
+				if (_coinNum == (x * 4)) return;
+				_coinNum = (x * 4);
+				slideCoinsText.text = _coinNum.ToString();
 			}
 			else if (val > 0.39 && val <= 0.615)
 			{
 				print("X6");
-				if (_coinNUm == (x * 6)) return;
-				_coinNUm = (x * 6);
-				slideCoinsText.text = _coinNUm.ToString();
+				if (_coinNum == (x * 6)) return;
+				_coinNum = (x * 6);
+				slideCoinsText.text = _coinNum.ToString();
 			}
 			else if (val > 0.615 && val <= 0.84)
 			{
 				print("X8");
-				if (_coinNUm == (x * 8)) return;
-				_coinNUm = (x * 8);
-				slideCoinsText.text = _coinNUm.ToString();
+				if (_coinNum == (x * 8)) return;
+				_coinNum = (x * 8);
+				slideCoinsText.text = _coinNum.ToString();
 			}
 			else if (val > 0.84 && val <= 1.00)
 			{
 				print("X10");
-				if (_coinNUm == (x * 10)) return;
-				_coinNUm = (x * 10);
-				slideCoinsText.text = _coinNUm.ToString();
+				if (_coinNum == (x * 10)) return;
+				_coinNum = (x * 10);
+				slideCoinsText.text = _coinNum.ToString();
 			}
 		});
 	}
@@ -368,6 +416,8 @@ public class UIManagerScript : MonoBehaviour
 	public static int coinIncreaseNum;
 	public void DoubleCoinsButtonFun()
 	{
+		doubleCoinsButton.interactable = false;
+		loseItButton.interactable = false;
 		int num = 0;
 		_barTween.Pause();
 		var val=slideBar.value;
@@ -398,24 +448,34 @@ public class UIManagerScript : MonoBehaviour
 		}
 
 		coinIncreaseNum = num;
-		print("coins number:::::::::::::::::::::: "+coinIncreaseNum);
+		//print("coins number:::::::::::::::::::::: "+coinIncreaseNum);
 		///----------Ad calling-----------
+		
+		GameEssentials.RvType = RewardType.LevelCompleteReward;
+		GameEssentials.ShowRewardedAds("LevelCompleteReward");
+	}
+
+	public void DoubleCoins_CallBack()
+	{
 		CoinsDoubleClaimFun(coinIncreaseNum);
 	}
-	
 	public void CoinsDoubleClaimFun(int x)
 	{
+		if (loseItButton.interactable) loseItButton.interactable = false;
+		_barTween.Pause();
+		if (doubleCoinsButton.interactable) doubleCoinsButton.interactable = false;
+			
 		DOVirtual.DelayedCall(0.5f, () =>
 		{
 			StartCoroutine(PlayCoinCollectionFx(coinMovePos, diamondFxParent, centerParticleRect,
 				diamondParticlesRect));
 		});
-		DOVirtual.DelayedCall(0.5f, () =>
+		/*DOVirtual.DelayedCall(0.5f, () =>
 		{
 	                
 			StartCoroutine(PlayCoinCollectionFx(coinMovePos,diamondFxParent,centerParticleRect,diamondParticlesRect));
 	                
-		});
+		});*/
 		DOVirtual.DelayedCall(2f, () =>
 		{
 			CoinManager.instance.CoinsIncrease(x);
@@ -437,10 +497,11 @@ public class UIManagerScript : MonoBehaviour
 			{
 				DOVirtual.DelayedCall(1f, ()=>
 				{
+					if(GameEssentials.instance)GameEssentials.ShowInterstitialsAds("LevelComplete");
 					MapLevelCall();
-				});
+				},false);
 			}
-		});
+		},false);
 	}
 	public void FailPanelActive()
     {
@@ -448,10 +509,11 @@ public class UIManagerScript : MonoBehaviour
     }
 
     //private bool _autoButtonActivate;
-    public void AutoButtonActive()
+    public void AutoButtonActiveFun()
     {
+	    if(!GameManager.Instance) return;
         autoWordDisableWordBool = false;
-        if (CoinManager.instance.GetCoinsCount() >= 100 && !GameManager.Instance.levelCompleted && !GameManager.Instance.autoWordClick)
+        if (!GameManager.Instance.levelCompleted && !GameManager.Instance.autoWordClick)
         {
 	        if (GameManager.Instance.completeWordCubesList.Count > 0)
 	        {
@@ -459,6 +521,17 @@ public class UIManagerScript : MonoBehaviour
 		        {
 			        //_autoButtonActivate = true;
 			        autoWordButton.interactable = true; 
+			        
+			        var magnetText = autoWordButton.image.rectTransform.GetChild(0).gameObject;
+			        var coinsTxt = autoWordButton.image.rectTransform.GetChild(1).gameObject;
+			        var rvIcon = autoWordButton.image.rectTransform.GetChild(2).gameObject;
+			        var loadingIcon = autoWordButton.image.rectTransform.GetChild(3).gameObject;
+			
+			        magnetText.SetActive(CoinManager.instance.GetCoinsCount()>=100);
+			        coinsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=100);
+			
+			        rvIcon.SetActive(CoinManager.instance.GetCoinsCount()<100 && GameEssentials.IsRvAvailable());
+			        loadingIcon.SetActive(CoinManager.instance.GetCoinsCount()<100 && !GameEssentials.IsRvAvailable());
 		        }
 	        }
         }
@@ -466,49 +539,70 @@ public class UIManagerScript : MonoBehaviour
 
     public void AutoButtonDisActive()
     {
+	    if(!GameManager.Instance) return;
         autoWordDisableWordBool = true;
         autoWordButton.interactable = false;
+        print("autowordclick");
+        GameManager.Instance.autoWordClick = true;
+        //_autoButtonActivate = false;
+        HintButtonDeActiveFun();
+        if (GameManager.Instance)
+        {
+	        GameManager.Instance.AutoCompleteFunc();
+	        GameManager.Instance.scriptOff = true;
+        }
+        var magnetText = autoWordButton.image.rectTransform.GetChild(0).gameObject;
+        var coinsTxt = autoWordButton.image.rectTransform.GetChild(1).gameObject;
+        var rvIcon = autoWordButton.image.rectTransform.GetChild(2).gameObject;
+        var loadingIcon = autoWordButton.image.rectTransform.GetChild(3).gameObject;
+			
+        magnetText.SetActive(CoinManager.instance.GetCoinsCount()>=100);
+        coinsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=100);
+			
+        rvIcon.SetActive(CoinManager.instance.GetCoinsCount()<100 && GameEssentials.IsRvAvailable());
+        loadingIcon.SetActive(CoinManager.instance.GetCoinsCount()<100 && !GameEssentials.IsRvAvailable());
     }
     public void AutoWordCompleteButton()
     {
-        if (autoWordButton.interactable && !autoWordDisableWordBool)
-        {
-	        //AutoButtonDisActive();
-	        if (!GameManager.Instance.autoWordClick /*&& _autoButtonActivate*/)
-	        {
-		        print("autowordclick");
-		        GameManager.Instance.autoWordClick = true;
-		        //_autoButtonActivate = false;
-		        HintButtonDeActiveFun();
-		        autoWordButton.interactable = false;
-		        autoWordDisableWordBool = true;
-		        CoinManager.instance.AutoWordReduce();
-		        if (GameManager.Instance)
-		        {
-			        GameManager.Instance.AutoCompleteFunc();
-			        GameManager.Instance.scriptOff = true;
-		        }
-		        
-	        }
-
-	        DOVirtual.DelayedCall(1.75f, () =>
-	        {
-		        HintButtonActiveFun();
-		        GameManager.Instance.scriptOff = false;
-	        });
-	       DOVirtual.DelayedCall(6.5f,() =>
-	       {
-		      // print("One attack::::::::::::::::::::::::::::::::::::::");
-		       GameManager.Instance.autoWordClick = false;
-		       AutoButtonActive();
-	       });
-	       /*print("autoword::::"+autoWordButton.interactable);
-	       print("WordClick::::::::"+GameManager.Instance.autoWordClick);*/
-        }
-        
+	    if (CoinManager.instance.GetCoinsCount() >= 100)
+	    {
+		    AutoWordComplete_Callback();
+		    CoinManager.instance.AutoWordReduce();
+	    }
+	    else
+	    {
+		    GameEssentials.RvType = RewardType.Magnet;
+		    GameEssentials.ShowRewardedAds("Magnet");
+	    }
     }
-    
-	private void Update()
+
+    // ReSharper disable Unity.PerformanceAnalysis
+    public void AutoWordComplete_Callback()
+    {
+	    if (autoWordButton.interactable && !autoWordDisableWordBool)
+	    {
+		    //AutoButtonDisActive();
+		    if (!GameManager.Instance.autoWordClick /*&& _autoButtonActivate*/)
+		    {
+			    AutoButtonDisActive();
+		    }
+		    DOVirtual.DelayedCall(1.75f, () =>
+		    {
+			    HintButtonActiveFun();
+			    GameManager.Instance.scriptOff = false;
+		    },false);
+		    DOVirtual.DelayedCall(4.5f,() =>
+		    {
+			    // print("One attack::::::::::::::::::::::::::::::::::::::");
+			    GameManager.Instance.autoWordClick = false;
+			    AutoButtonActiveFun();
+		    },false);
+		    /*print("autoword::::"+autoWordButton.interactable);
+		    print("WordClick::::::::"+GameManager.Instance.autoWordClick);*/
+	    }
+    }
+
+    private void Update()
 	{
 		/*var s = GetSpecialLevelNumber().ToString()[^1];
 		if (s != '0' && (SceneManager.GetActiveScene().buildIndex != SceneManager.sceneCountInBuildSettings - 1) && !GameManager.Instance.levelCompleted)
@@ -530,30 +624,164 @@ public class UIManagerScript : MonoBehaviour
 
 	public void OnHintButtonClick()
 	{
-		//Debug.Log("Hint Button");
-		if (GameManager.Instance)
+		if (CoinManager.instance.GetCoinsCount() >= 50) Hint_CallBack();
+		else
 		{
-			HintButtonDeActiveFun();
-			GameManager.Instance.ShowTheText();
-			if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
-			if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+			GameEssentials.RvType = RewardType.Hint;
+			GameEssentials.ShowRewardedAds("Hint");
 		}
 	}
 
+	// ReSharper disable Unity.PerformanceAnalysis
+	public void Hint_CallBack()
+	{
+		if (!GameManager.Instance) return;
+		HintButtonDeActiveFun();
+		GameManager.Instance.ShowTheText();
+		
+		if (!SoundHapticManager.Instance) return;
+		SoundHapticManager.Instance.Vibrate(30);
+		SoundHapticManager.Instance.Play("ButtonClickMG");
+	}
+
+	// ReSharper disable Unity.PerformanceAnalysis
 	public void HintButtonActiveFun()
 	{
-		
-		if (CoinManager.instance.GetCoinsCount() >= 50 && !GameManager.Instance.cameraMoving && !GameManager.Instance.levelCompleted && !GameManager.Instance.wordTouch)
+		if(!GameManager.Instance) return;
+		if (!GameManager.Instance.cameraMoving && !GameManager.Instance.levelCompleted && !GameManager.Instance.wordTouch)
 		{
-			hintButton.interactable = true;
+			if (!GameManager.Instance.hintSpawnObject && !hintButton.interactable)
+			{
+				hintButton.interactable = true;
+			
+				var hintsTxt = hintButton.image.rectTransform.GetChild(0).gameObject;
+				var coinsTxt = hintButton.image.rectTransform.GetChild(1).gameObject;
+				var rvIcon = hintButton.image.rectTransform.GetChild(2).gameObject;
+				var loadingIcon = hintButton.image.rectTransform.GetChild(3).gameObject;
+			
+				hintsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=50);
+				coinsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=50);
+			
+				rvIcon.SetActive(CoinManager.instance.GetCoinsCount()<50 && GameEssentials.IsRvAvailable());
+				loadingIcon.SetActive(CoinManager.instance.GetCoinsCount()<50 && !GameEssentials.IsRvAvailable());
+			}
+			
 		}
 	}
 	public void HintButtonDeActiveFun()
 	{
-		if (hintButton.interactable)
-			hintButton.interactable = false;
+		if (!hintButton.interactable && !GameManager.Instance.hintSpawnObject)
+		{
+			hintButton.interactable = !hintButton.interactable;
+		
+			var hintsTxt = hintButton.image.rectTransform.GetChild(0).gameObject;
+			var coinsTxt = hintButton.image.rectTransform.GetChild(1).gameObject;
+			var rvIcon = hintButton.image.rectTransform.GetChild(2).gameObject;
+			var loadingIcon = hintButton.image.rectTransform.GetChild(3).gameObject;
+			
+			hintsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=50);
+			coinsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=50);
+			
+			rvIcon.SetActive(CoinManager.instance.GetCoinsCount()<50 && GameEssentials.IsRvAvailable());
+			loadingIcon.SetActive(CoinManager.instance.GetCoinsCount()<50 && !GameEssentials.IsRvAvailable());
+		}
+		
 	}
 
+	public void OnEmojiRevelButton()
+	{
+		/*var countNum=GameManager.Instance.stickingCubes.Count;
+		for (int i = 0; i < countNum; i++)
+		{
+			if (GameManager.Instance.stickingCubes[i].gameObject.activeInHierarchy &&
+			    !GameManager.Instance.stickingCubes[i].correctWordMade)
+			{
+				if (GameManager.Instance.stickingCubes[i].emojiRevel)
+				{
+					if (CoinManager.instance.GetCoinsCount() >= 50) Emoji_CallBack();
+					else
+					{
+						GameEssentials.RvType = RewardType.ImageReveal;
+						GameEssentials.ShowRewardedAds("ImageReveal");
+					}
+					break;
+				}
+			}
+		}*/
+		if (CoinManager.instance.GetCoinsCount() >= 50) Emoji_CallBack();
+		else
+		{
+			GameEssentials.RvType = RewardType.ImageReveal;
+			GameEssentials.ShowRewardedAds("ImageReveal");
+		}
+	}
+
+	public void Emoji_CallBack()
+	{
+		var countNum=GameManager.Instance.stickingCubes.Count;
+		for (int i = 0; i < countNum; i++)
+		{
+			if (GameManager.Instance.stickingCubes[i].gameObject.activeInHierarchy &&
+			    !GameManager.Instance.stickingCubes[i].correctWordMade)
+			{
+				if (GameManager.Instance.stickingCubes[i].emojiRevel && !GameManager.Instance.stickingCubes[i].emojiRevel)
+				{
+					EmojiRevelButtonDeActivate();
+					GameManager.Instance.stickingCubes[i].emojiRevel.SetActive(true);
+					break;
+				}
+			}
+		}
+	}
+	public void EmojiRevelButtonActiveFun()
+	{
+		if(!GameManager.Instance) return;
+		if (GameManager.Instance.cameraMoving)
+		{
+			var countNum=GameManager.Instance.stickingCubes.Count;
+			for (int i = 0; i < countNum; i++)
+			{
+				if (GameManager.Instance.stickingCubes[i].gameObject.activeInHierarchy &&
+				    !GameManager.Instance.stickingCubes[i].correctWordMade)
+				{
+					if (GameManager.Instance.stickingCubes[i].emojiRevel && !GameManager.Instance.stickingCubes[i].emojiRevel)
+					{
+						emojiRevealButton.interactable = true;
+						break;
+					}
+				}
+			}
+			var emojiText = emojiRevealButton.image.rectTransform.GetChild(0).gameObject;
+			var coinsTxt = emojiRevealButton.image.rectTransform.GetChild(1).gameObject;
+			var rvIcon = emojiRevealButton.image.rectTransform.GetChild(2).gameObject;
+			var loadingIcon = emojiRevealButton.image.rectTransform.GetChild(3).gameObject;
+			
+			emojiText.SetActive(CoinManager.instance.GetCoinsCount()>=50);
+			coinsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=50);
+			
+			rvIcon.SetActive(CoinManager.instance.GetCoinsCount()<50 && GameEssentials.IsRvAvailable());
+			loadingIcon.SetActive(CoinManager.instance.GetCoinsCount()<50 && !GameEssentials.IsRvAvailable());
+		}
+	}
+
+	public void EmojiRevelButtonDeActivate()
+	{
+		emojiRevealButton.interactable = true;
+		var emojiText = emojiRevealButton.image.rectTransform.GetChild(0).gameObject;
+		var coinsTxt = emojiRevealButton.image.rectTransform.GetChild(1).gameObject;
+		var rvIcon = emojiRevealButton.image.rectTransform.GetChild(2).gameObject;
+		var loadingIcon = emojiRevealButton.image.rectTransform.GetChild(3).gameObject;
+			
+		emojiText.SetActive(CoinManager.instance.GetCoinsCount()>=50);
+		coinsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=50);
+			
+		rvIcon.SetActive(CoinManager.instance.GetCoinsCount()<50 && GameEssentials.IsRvAvailable());
+		loadingIcon.SetActive(CoinManager.instance.GetCoinsCount()<50 && !GameEssentials.IsRvAvailable());
+		DOVirtual.DelayedCall(0.2f, () =>
+		{
+			EmojiRevelButtonActiveFun();
+		},false);
+	}
 	public void LevelProgressionBarFun()
 	{
 		var num = CoinManager.instance.GetLoaderPercent() + ((1f / 9f));
@@ -641,16 +869,25 @@ public class UIManagerScript : MonoBehaviour
 
     public void GetMoreMovesFun()
     {
+	   if(!GameEssentials.instance) return;
+
+	   GameEssentials.RvType = RewardType.NoMoreMoves;
+	   GameEssentials.ShowRewardedAds("NoMoreMoves");
+    }
+
+    public void GetMoreMoves_CallBack()
+    {
 	    failPanel.SetActive(false);
 	    GameManager.Instance.movesCount = 5;
 	    movesText.text = GameManager.Instance.movesCount.ToString();
 	    if(GameManager.Instance.scriptOff)
-			GameManager.Instance.scriptOff = false;
+		    GameManager.Instance.scriptOff = false;
 	    if(GameManager.Instance.levelFail)
-			GameManager.Instance.levelFail = false;
+		    GameManager.Instance.levelFail = false;
 	    hintButton.interactable = true;
 	    autoWordButton.interactable = true;
     }
+
     public void GiftOpenFun(int num)
     {
 	    DOVirtual.DelayedCall(1f, () =>
@@ -729,9 +966,10 @@ public class UIManagerScript : MonoBehaviour
 		    print("coinsincreasenum          "+_coinIncreaseNUm);
 		    DOVirtual.DelayedCall(1f, () =>
 		    {
+			    if(GameEssentials.instance)GameEssentials.ShowInterstitialsAds("LevelComplete");
 			    MapLevelCall();
-		    });
-	    });
+		    },false);
+	    },false);
 	    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 	    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
     }
@@ -782,5 +1020,8 @@ public class UIManagerScript : MonoBehaviour
 
 	public int GetStart100Coins() => PlayerPrefs.GetInt("GetFree100Coins", 0);
 	public void SetStart100Coins(int val) => PlayerPrefs.SetInt("GetFree100Coins", val);
+
+	public void CalendarButtonPress() =>
+		calendarPanel.gameObject.SetActive(!calendarPanel.gameObject.activeInHierarchy);
 }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mime;
+using DDZ;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -31,6 +32,9 @@ public class MonitizationScript : MonoBehaviour
    [Header("*2X Button Details")]
    public GameObject bubble2X;
    public Button bubble2XButton;
+
+   private GameObject rvGiftIcon => giftObject.transform.GetChild(2).gameObject;
+   private GameObject loadingGiftIcon => giftObject.transform.GetChild(3).gameObject;
    private void Awake()
    {
       instance = this;
@@ -41,7 +45,22 @@ public class MonitizationScript : MonoBehaviour
       // StartCoroutine(UpdateMoneyOnWin(instanceImageRef,giftCoinInstancePos,giftCoinMovePosition));
    }
 
+   private void Update()
+   {
+      if(!GameEssentials.instance) return;
+      rvGiftIcon.SetActive(GameEssentials.IsRvAvailable());
+      loadingGiftIcon.SetActive(!GameEssentials.IsRvAvailable());
+   }
+
    public void GiftButtonFun()
+   {
+      if(!GameEssentials.instance) return;
+      GameEssentials.RvType = RewardType.GiftBox;
+      GameEssentials.ShowRewardedAds("InGameGiftBox");
+   }
+
+   // ReSharper disable Unity.PerformanceAnalysis
+   public void GiftBox_CallBack()
    {
       var num = UnityEngine.Random.Range(0, 3);
       giftImage.GetComponent<Button>().interactable = false;
@@ -62,7 +81,13 @@ public class MonitizationScript : MonoBehaviour
          default:
             break;
       }
+
+      DOVirtual.DelayedCall(2, () =>
+      {
+         giftImage.GetComponent<Button>().interactable = true;
+      },false);
    }
+
    public void MagnetSpawn(GameObject instanceObj,GameObject instancePos,GameObject movePosition,int coinIncreaseNumber)
    {
       GameObject obj=Instantiate(instanceObj, instancePos.transform.position, Quaternion.identity);

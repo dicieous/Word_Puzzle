@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     public List<WordData> wordList;
     public List<StickingAreaCheckingScript> stickingCubes;
-
+    public List<GameObject> spriteRevealImages;
     public bool scriptOff;
 
     [Space(10)] public int rowsInGrid;
@@ -611,7 +611,7 @@ public class GameManager : MonoBehaviour
                 hintSpawnObject = cube;
                 if (PlayerPrefs.GetInt("Level", 1) > 1)
                 {
-                    CoinManager.instance.HintReduce();
+                    CoinManager.instance.HintReduce(50);
                 }
 
                 if (PlayerPrefs.GetInt("Level", 1) == 1) UIManagerScript.Instance.HelpHand();
@@ -893,7 +893,7 @@ public class GameManager : MonoBehaviour
                {
                    scriptOff = false;
                    /*autoWordClick = false;
-                   UIManagerScript.Instance.AutoButtonActive();#2#
+                   UIManagerScript.Instance.AutoButtonActiveFun();#2#
                });
 
            }
@@ -926,7 +926,7 @@ public class GameManager : MonoBehaviour
                {
                    scriptOff = false;
                    /*autoWordClick = false;
-                   UIManagerScript.Instance.AutoButtonActive();#1#
+                   UIManagerScript.Instance.AutoButtonActiveFun();#1#
                });
 
            }
@@ -973,7 +973,7 @@ public class GameManager : MonoBehaviour
                 DOVirtual.DelayedCall(0.7f, () =>
                 {
                     autoWordClick = false;
-                    UIManagerScript.Instance.AutoButtonActive();
+                    UIManagerScript.Instance.AutoButtonActiveFun();
                 });
 
             }
@@ -1170,6 +1170,8 @@ public class GameManager : MonoBehaviour
             UI.hintButton.interactable = false;
         if(UI.autoWordButton.interactable)
             UI.autoWordButton.interactable = false;
+        if(UI.emojiRevealButton.interactable)
+            UI.emojiRevealButton.interactable = false;
         if (MonitizationScript.instance.giftImage.GetComponent<Button>().interactable)
             MonitizationScript.instance.giftImage.GetComponent<Button>().interactable = false;
         if (MonitizationScript.instance.giftImage.GetComponent<Button>().interactable)

@@ -4,11 +4,14 @@ using UnityEngine;
 public class StickingAreaCheckingScript : MonoBehaviour
 {
     [HideInInspector] public bool correctWordMade = false;
+    [HideInInspector] public bool imageRevelDone;
     
     public string answerString;
     
     private HolderCubeScript[] holderCubeScripts;
 
+    public GameObject emojiRevel;
+    
     private void Start()
     {
         holderCubeScripts = GetComponentsInChildren<HolderCubeScript>();
@@ -33,7 +36,8 @@ public class StickingAreaCheckingScript : MonoBehaviour
             Debug.Log(madeWord);
             if (madeWord == answerString)
             {
-                correctWordMade = true;
+                if (!emojiRevel) emojiRevel = null; 
+                    correctWordMade = true;
                 return true;
             }
         }

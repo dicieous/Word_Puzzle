@@ -2,9 +2,11 @@ using System;
 using System.Globalization;
 using System.Collections;
 using System.Collections.Generic;
+using DDZ;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -26,6 +28,7 @@ public class DailyChallengesHandler : MonoBehaviour
     [SerializeField]private int currentMonth, currentYrs;
     [SerializeField]private int nextMonth, nextYrs;
     private readonly string[] _levelsData = new[] { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
+    
     private int _selectedDate;
     private DateTime _currentDateTime, _gameStartDateTime;
 
@@ -58,7 +61,7 @@ public class DailyChallengesHandler : MonoBehaviour
     }
     private void GetData()
     {
-        //_gameStartDateTime = GameEssentials.GameStartTime;
+        _gameStartDateTime = GameEssentials.GameStartTime;
         _currentDateTime = DateTime.Now;
         date = _currentDateTime.Day;
         month = _currentDateTime.Month;
@@ -123,16 +126,15 @@ public class DailyChallengesHandler : MonoBehaviour
 
     private void Update()
     {
-        //if (!GameEssentials.instance || GameEssentials.GetUnlimitedItems() == 1 || GameEssentials.GetRemoveAds() == 1 || DebugHandler.isTesting || _selectedDate == date)
+        if (!GameEssentials.instance || _selectedDate == date)
         {
             //playBtn.interactable = true;
             playRvIcon.gameObject.SetActive(false);
             playLoadingIcon.gameObject.SetActive(false);
             return;
         }
-        
-        //playLoadingIcon.gameObject.SetActive(!GameEssentials.IsRvAvailable() && playBtn.interactable);
-        //playRvIcon.gameObject.SetActive(GameEssentials.IsRvAvailable() && playBtn.interactable);
+        playLoadingIcon.gameObject.SetActive(!GameEssentials.IsRvAvailable() && playBtn.interactable);
+        playRvIcon.gameObject.SetActive(GameEssentials.IsRvAvailable() && playBtn.interactable);
        // playBtn.interactable = GameEssentials.IsRvAvailable();
     }
 
@@ -277,7 +279,6 @@ public class DailyChallengesHandler : MonoBehaviour
                 }
             }
         }
-
         _selectedDate = btnNum;
         var levelIndex = _selectedDate - 1;
         levelScene.sprite = levelsSprites[levelIndex];
@@ -289,14 +290,14 @@ public class DailyChallengesHandler : MonoBehaviour
     public void OnPlayBtnPress()
     {
         if(_selectedDate > date) return;
-        /*if (_selectedDate == date || DebugHandler.isTesting)
+        var isPlayed = PlayerPrefs.GetInt("DailyChallenges_" + _selectedDate + month + year, 0);
+        if (_selectedDate == date || isPlayed == 1)
         {
             DailyChallenge_Callback();
             return;
         }
-        GameEssentials.RvType = RewardType.DailyChallenges;
+        GameEssentials.RvType = RewardType.Calendar;
         GameEssentials.ShowRewardedAds("DailyChallenges");
-        LionStudiosManager.DailyChallengesEvent(GameEssentials.GetLevelNumber().ToString(), _levelsData[_selectedDate],_selectedDate.ToString());*/
     }
 
     public void DailyChallenge_Callback()
@@ -305,9 +306,10 @@ public class DailyChallengesHandler : MonoBehaviour
         
         SaveDailyChallenge(_selectedDate);
         CheckIfDailyChallengesCompleted();
-        // LoadLevel();
+        // LoadLevel
+        
+        //SceneManager.LoadScene(_selectedDate);
     }
 
     private void SaveDailyChallenge(int savedDate) => PlayerPrefs.SetInt("DailyChallenges_" + savedDate + month + year, 1);
-    //private void LoadLevel() => GameEssentials.LoadSceneByIndex(_selectedDate);
 }
