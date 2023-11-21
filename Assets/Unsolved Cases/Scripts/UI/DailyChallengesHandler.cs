@@ -14,7 +14,7 @@ public class DailyChallengesHandler : MonoBehaviour
 {
     public static DailyChallengesHandler instance;
     
-    public TMP_Text monthNameTxt, dateMonthTxt;
+    public TMP_Text monthNameTxt, dateMonthTxt, questionTxt;
     public Button leftBtn, rightBtn, playBtn;
     public Image playRvIcon, playLoadingIcon, levelScene ;
     public Sprite playRvSprite, playNormalSprite;
@@ -27,9 +27,39 @@ public class DailyChallengesHandler : MonoBehaviour
     [SerializeField]private int previousMonth, previousYrs;
     [SerializeField]private int currentMonth, currentYrs;
     [SerializeField]private int nextMonth, nextYrs;
-    private readonly string[] _levelsData = new[] { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
+    private readonly string[] _levelsData = new[] { "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8", 
+        "9",
+        "10",
+        "11", 
+        "12", 
+        "13", 
+        "14", 
+        "15", 
+        "16", 
+        "17", 
+        "18", 
+        "19", 
+        "20", 
+        "21", 
+        "22", 
+        "23", 
+        "24", 
+        "25",
+        "26", 
+        "27", 
+        "28", 
+        "29", 
+        "INSTAGRAM FUNCTIONS", 
+        "31" };
     
-    private int _selectedDate;
+    private int _selectedDate, _baseNumber = 127;
     private DateTime _currentDateTime, _gameStartDateTime;
 
     private readonly Dictionary<int, string> _monthIndexName = new()
@@ -58,6 +88,7 @@ public class DailyChallengesHandler : MonoBehaviour
         SetData();
         CheckIfDailyChallengesCompleted();
         CalendarButtonStatus();
+        
     }
     private void GetData()
     {
@@ -106,6 +137,8 @@ public class DailyChallengesHandler : MonoBehaviour
         }
 
         dateMonthTxt.text = "Play "+ date + " " + monthName[..3];
+        questionTxt.text = _levelsData[date - 1];
+        playBtn.interactable = GetDailyChallenge() != 1;
     }
 
     private void CheckIfDailyChallengesCompleted()
@@ -281,17 +314,26 @@ public class DailyChallengesHandler : MonoBehaviour
         }
         _selectedDate = btnNum;
         var levelIndex = _selectedDate - 1;
-        levelScene.sprite = levelsSprites[levelIndex];
+        //levelScene.sprite = levelsSprites[levelIndex];
+        questionTxt.text = _selectedDate > date ? "N/A" : _levelsData[levelIndex];
         playBtn.image.sprite = _selectedDate == date ? playNormalSprite : playRvSprite;
-        playBtn.interactable = _selectedDate <= date;
-        dateMonthTxt.text = "Play "+ _selectedDate + " " + monthName[..3];
+        if (GetDailyChallenge() == 1)
+        {
+            playBtn.interactable = false;
+            dateMonthTxt.text = "Play "+ _selectedDate + " " + monthName[..3];
+        }
+        else
+        {
+            playBtn.interactable = _selectedDate <= date;
+        }
     }
 
     public void OnPlayBtnPress()
     {
         if(_selectedDate > date) return;
         var isPlayed = PlayerPrefs.GetInt("DailyChallenges_" + _selectedDate + month + year, 0);
-        if (_selectedDate == date || isPlayed == 1)
+        if(isPlayed == 1) return;
+        if (_selectedDate == date)
         {
             DailyChallenge_Callback();
             return;
@@ -309,11 +351,10 @@ public class DailyChallengesHandler : MonoBehaviour
         SaveDailyChallenge(_selectedDate);
         CheckIfDailyChallengesCompleted();
         // LoadLevel
-        
-        //SceneManager.LoadScene(_selectedDate);
-        
-        
+        var sceneIndex = _baseNumber + _selectedDate;
+        SceneManager.LoadScene(sceneIndex);
     }
 
     private void SaveDailyChallenge(int savedDate) => PlayerPrefs.SetInt("DailyChallenges_" + savedDate + month + year, 1);
+    private int GetDailyChallenge() => PlayerPrefs.GetInt("DailyChallenges_" + _selectedDate + month + year, 0);
 }

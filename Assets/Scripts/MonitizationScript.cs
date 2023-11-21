@@ -58,6 +58,8 @@ public class MonitizationScript : MonoBehaviour
 
    public void GiftButtonFun()
    {
+      if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+      if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
       if(!GameEssentials.instance) return;
       GameEssentials.RvType = RewardType.GiftBox;
       GameEssentials.ShowRewardedAds("GiftBox");

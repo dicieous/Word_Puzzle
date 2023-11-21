@@ -496,20 +496,20 @@ public class EmojiManager : MonoBehaviour
     
     public void NextButton()
     {
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
         UIManagerScript.Instance.NextMoveFun();
         SetListNumber(GetListNumbers() + 1);
         SetPanelsDone(GetPanelsDone() + 1);
         nextButton.interactable = false;
-        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
-        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
     }
 
     public void RetryButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        retryButton.interactable = false;
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        retryButton.interactable = false;
     }
 
     public void BarFilling()
@@ -610,6 +610,6 @@ public class EmojiManager : MonoBehaviour
     public int GetPanelsDone() => PlayerPrefs.GetInt("Panels Done", 0);
     public void SetPanelsDone(int num) => PlayerPrefs.SetInt("Panels Done", num);
 
-    public int GetListNumbers() => PlayerPrefs.GetInt("Lists Number", 10);
+    public int GetListNumbers() => PlayerPrefs.GetInt("Lists Number", 0);
     public void SetListNumber(int val) => PlayerPrefs.SetInt("Lists Number", val);
 }

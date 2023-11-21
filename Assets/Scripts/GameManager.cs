@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
         }*/
 
         starFX = UI.starparticleEffect;
-        movesCount = hintCubesHolder.Count * 2;
+        movesCount = hintCubesHolder.Count + ((int)(hintCubesHolder.Count/2));
         var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
         if (s == '0')
         {
@@ -449,7 +449,7 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("LevelComplete");
             });
         }
-        if ((PlayerPrefs.GetInt("Level", 1) >= 11))
+        if (UIManagerScript.Instance.GetSpecialLevelNumber() > 10)
         {
             if (movesCount == 0 && !levelCompleted && !levelFail)
             {
@@ -529,7 +529,7 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("LevelComplete");
             });
         }
-        else if (movesCount == 0 && !levelCompleted && !levelFail)
+        else if (movesCount == 0 && !levelCompleted && !levelFail && UIManagerScript.Instance.GetSpecialLevelNumber() > 10)
         {
             DOVirtual.DelayedCall(1f, () =>
             {

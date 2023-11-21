@@ -1,5 +1,8 @@
 
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using DDZ;
 using TMPro;
 using UnityEngine;
 
@@ -14,7 +17,11 @@ public class LevelMapInstantiator : MonoBehaviour
     public GameObject currLevel;
     public GameObject bossLevel;
     public GameObject giftLevel;
-
+    public GameObject powerUpRef;
+    
+    public List<Sprite> powerUpsSprites;
+    public List<int> refLevels;
+    
     public Sprite prevSprite;
     public Sprite currSprite;
     public Color prevCol;
@@ -64,10 +71,17 @@ public class LevelMapInstantiator : MonoBehaviour
         }
         totalLevelCount += 60;
         
-
         SetContentHeight();
-        
+        CheckCalendarIndicator();
     }
+
+    private void CheckCalendarIndicator()
+    {
+        var calenderIndicator = UIManagerScript.Instance.calenderButton.transform.GetChild(2).GetComponent<Image>();
+        var todayDateCheck =  PlayerPrefs.GetInt("DailyChallenges_" + GameEssentials.GameStartTime.Day + GameEssentials.GameStartTime.Month + GameEssentials.GameStartTime.Year, 0);
+        calenderIndicator.enabled = UIManagerScript.Instance.GetSpecialLevelNumber() >= 30 && todayDateCheck == 0;
+    }
+
     private void SetContentHeight()
     {
         var totalContentCount = (float)totalLevelCount;
@@ -184,6 +198,20 @@ public class LevelMapInstantiator : MonoBehaviour
                 image.transform.GetChild(0).GetComponent<Image>().color = prevCol;
             }
             oldLevel = image.transform;
+            
+            if (i + startLevel >=level)
+            {
+                for (int j = 0; j < refLevels.Count; j++)
+                {
+                    if (refLevels[j] == i + startLevel)
+                    {
+                        var refPrefab = Instantiate(powerUpRef, image.transform, false);
+                        refPrefab.transform.GetChild(0).GetComponent<Image>().sprite = powerUpsSprites[j];
+                        refPrefab.GetComponent<RectTransform>().localPosition = Vector3.zero;
+                        refPrefab.GetComponent<RectTransform>().localScale = Vector3.one;
+                    }
+                }
+            }
             //Debug.Log("Called");
         }
 
