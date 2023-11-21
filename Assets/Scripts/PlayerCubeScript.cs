@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class PlayerCubeScript : MonoBehaviour
 {
-	[HideInInspector]public bool isPlaced;
+    [HideInInspector]public bool isPlaced;
 
     public int checknumber;
-    [HideInInspector]public bool anim;
+    public bool anim;
 
-    [HideInInspector]public GameObject stickingCubeObjRef;
-    [HideInInspector]public Vector3 startPos;
+    [HideInInspector] public GameObject stickingCubeObjRef;
+    [HideInInspector] public Vector3 startPos;
     
 	private void Start()
 	{
