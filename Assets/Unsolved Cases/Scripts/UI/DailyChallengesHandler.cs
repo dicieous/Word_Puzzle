@@ -297,7 +297,9 @@ public class DailyChallengesHandler : MonoBehaviour
             return;
         }
         GameEssentials.RvType = RewardType.Calendar;
-        GameEssentials.ShowRewardedAds("DailyChallenges");
+        GameEssentials.ShowRewardedAds("Calendar");
+        if(LionStudiosManager.instance)
+            LionStudiosManager.AdsEvents(true, AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","Calendar",CoinManager.instance.GetCoinsCount());
     }
 
     public void DailyChallenge_Callback()
@@ -309,6 +311,8 @@ public class DailyChallengesHandler : MonoBehaviour
         // LoadLevel
         
         //SceneManager.LoadScene(_selectedDate);
+        
+        
     }
 
     private void SaveDailyChallenge(int savedDate) => PlayerPrefs.SetInt("DailyChallenges_" + savedDate + month + year, 1);

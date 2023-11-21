@@ -255,6 +255,7 @@ public class CubesGroupScript : MonoBehaviour
 				GameManager.Instance.wordTouch = true;
 				UIManagerScript.Instance.autoWordButton.interactable = false;
 				UIManagerScript.Instance.hintButton.interactable = false;
+				UIManagerScript.Instance.emojiRevealButton.interactable = false;
 			}
 				
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
@@ -321,13 +322,15 @@ public class CubesGroupScript : MonoBehaviour
 	        GameManager.Instance.wordTouch = false;
 	        UIManagerScript.Instance.AutoButtonActiveFun();
 	        UIManagerScript.Instance.HintButtonActiveFun();
+	        UIManagerScript.Instance.EmojiRevelButtonActiveFun();
         }
 	        
 	}
 
 	
 	//To reset the Position of the Objects
-    public void ResetPosition()
+	// ReSharper disable Unity.PerformanceAnalysis
+	public void ResetPosition()
     {
 	    if (canReset && !GameManager.Instance.levelCompleted)
         {

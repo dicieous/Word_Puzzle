@@ -95,7 +95,8 @@ public class ApplovinManager : MonoBehaviour
         // Set background or background color for banners to be fully functional
         MaxSdk.SetBannerBackgroundColor(bannerAdUnitId, Color.clear);
         MaxSdk.SetBannerPlacement(bannerAdUnitId,"InGame");
-        
+
+        ShowBannerAds();
     }
 
     private void OnBannerAdCollapsedEvent(string arg1, MaxSdkBase.AdInfo arg2)

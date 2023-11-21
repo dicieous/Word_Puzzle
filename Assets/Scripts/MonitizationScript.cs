@@ -35,6 +35,8 @@ public class MonitizationScript : MonoBehaviour
 
    private GameObject rvGiftIcon => giftObject.transform.GetChild(2).gameObject;
    private GameObject loadingGiftIcon => giftObject.transform.GetChild(3).gameObject;
+
+   private static int _giftBoxCount = 0;
    private void Awake()
    {
       instance = this;
@@ -56,7 +58,9 @@ public class MonitizationScript : MonoBehaviour
    {
       if(!GameEssentials.instance) return;
       GameEssentials.RvType = RewardType.GiftBox;
-      GameEssentials.ShowRewardedAds("InGameGiftBox");
+      GameEssentials.ShowRewardedAds("GiftBox");
+      if(LionStudiosManager.instance)
+         LionStudiosManager.AdsEvents(true, AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","GiftBox",CoinManager.instance.GetCoinsCount());
    }
 
    // ReSharper disable Unity.PerformanceAnalysis
@@ -69,14 +73,29 @@ public class MonitizationScript : MonoBehaviour
          case 0 :
             instanceImageRef.GetComponent<Image>().sprite = coinImage;
             StartCoroutine(UpdateMoneyOnWin(instanceImageRef,giftCoinInstancePos,giftCoinMovePosition,50));
+            if (LionStudiosManager.instance)
+            {
+               LionStudiosManager.GiftBox(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),"Coins","100",_giftBoxCount.ToString());
+               _giftBoxCount++;
+            }
             break;
          case  1:
             instanceImageRef.GetComponent<Image>().sprite = magnetImage;
             MagnetSpawn(instanceImageRef,giftMagnetInstancePosition,giftMagnetMovePosition,100);
+            if (LionStudiosManager.instance)
+            {
+               LionStudiosManager.GiftBox(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),"Coins","100",_giftBoxCount.ToString());
+               _giftBoxCount++;
+            }
             break;
          case 2:
             instanceImageRef.GetComponent<Image>().sprite = hintImage;
             MagnetSpawn(instanceImageRef,giftHintInstancePosition,giftHintMovePosition,50);
+            if (LionStudiosManager.instance)
+            {
+               LionStudiosManager.GiftBox(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),"Coins","100",_giftBoxCount.ToString());
+               _giftBoxCount++;
+            }
             break;
          default:
             break;

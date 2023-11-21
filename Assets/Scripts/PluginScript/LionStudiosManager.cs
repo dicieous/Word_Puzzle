@@ -1,13 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Events.Level.EventArgs;
-using UnityEngine;
+using Events.InGame.EventArgs;
+using System.Collections.Generic;
 using LionStudios.Suite.Analytics;
 using LionStudios.Suite.Analytics.Events;
-using DDZ;
-using Events.InGame.EventArgs;
-using Events.Mission.EventArgs;
 using LionStudios.Suite.Analytics.Events.EventArgs;
 
 
@@ -32,8 +28,7 @@ public class LionStudiosManager : SingletonInstance<LionStudiosManager>
         
         LionAnalytics.GameStart();
     }
-
-
+    
     private void OnApplicationQuit()
     {
         LionAnalytics.GameEnded();
@@ -62,111 +57,127 @@ public class LionStudiosManager : SingletonInstance<LionStudiosManager>
         LionAnalytics.LevelRestart(levelNo, attemptNum, score, missionType, missionName);
     }
 
-    public static void LevelStep(int levelNo)
-    {
-        print("Level_Step:: " + levelNo);
-        var levelData = new LevelStepEventArgs()
-        {
-            LevelNum = levelNo,
-        };
-        LionAnalytics.LevelStep(levelData);
-    }
-
-    public static void Hint(string levelNo, string hintObjIndex, string hintObjName, string hintsCount)
+    public static void Hint(string levelNo, string hintsCount)
     {
         var additionalData = new Dictionary<string, object>
         {
             { "level_number", levelNo },
-            { "hints_count", hintsCount },
-            { "hint_objectname",hintObjName},
-            { "hint_objectindex",hintObjIndex}
+            { "hints_count", hintsCount }
         };
         
         LionAnalytics.ItemActioned("hint", "5", "HintButton", "HintType", additionalData);
-        PowerUpUsedEventArgs data = new PowerUpUsedEventArgs();
-        data.MissionAttempt = int.Parse(hintsCount);
-        data.PowerUpName = "hint";
-        data.MissionID = levelNo;
-
+        
+        var data = new PowerUpUsedEventArgs
+        {
+            MissionAttempt = int.Parse(hintsCount),
+            PowerUpName = "hint",
+            MissionID = levelNo
+        };
         LionAnalytics.PowerUpUsed(data,additionalData);
     }
-
-    public static void Magnet(string levelNo, int numberTimes, string firstObjName, string firstObjId)
+    
+    public static void SpecialHint(string levelNo, string hintsCount)
     {
         var additionalData = new Dictionary<string, object>
         {
             { "level_number", levelNo },
-            { "magnet_count", numberTimes },
-            { "hint_objectname",firstObjName},
-            { "hint_objectindex",firstObjId}
+            { "specialHints_count", hintsCount }
+        };
+        
+        LionAnalytics.ItemActioned("specialHints", "11", "SpecialHintButton", "SpecialHintType", additionalData);
+        
+        var data = new PowerUpUsedEventArgs
+        {
+            MissionAttempt = int.Parse(hintsCount),
+            PowerUpName = "specialHint",
+            MissionID = levelNo
+        };
+        LionAnalytics.PowerUpUsed(data,additionalData);
+    }
+
+    public static void Magnet(string levelNo, int magnetCount)
+    {
+        var additionalData = new Dictionary<string, object>
+        {
+            { "level_number", levelNo },
+            { "magnets_count", magnetCount }
         };
 
         LionAnalytics.ItemActioned("magnet","6","MagnetButton","MagnetType", additionalData);
-        PowerUpUsedEventArgs data = new PowerUpUsedEventArgs();
-        data.MissionAttempt = numberTimes;
-        data.PowerUpName = "magnet";
-        data.MissionID = levelNo;
+        var data = new PowerUpUsedEventArgs
+        {
+            MissionAttempt = magnetCount,
+            PowerUpName = "magnet",
+            MissionID = levelNo
+        };
 
         LionAnalytics.PowerUpUsed(data,additionalData);
-    }
-
-    public static void Navigator(string levelNo, int numberTimes,string hintObjIndex, string hintObjName)
-    {
-        var additionalData = new Dictionary<string, object>
-        {
-            { "level_number", levelNo },
-            { "navigator_count", numberTimes },
-            { "hint_objectname",hintObjName},
-            { "hint_objectindex",hintObjIndex}
-        };
-        
-        LionAnalytics.ItemActioned("navigator", "7", "NavigatorButton", "NavigatorType", additionalData);
-        PowerUpUsedEventArgs data = new PowerUpUsedEventArgs();
-        data.MissionAttempt = numberTimes;
-        data.PowerUpName = "navigator";
-        data.MissionID = levelNo;
-
-        LionAnalytics.PowerUpUsed(data,additionalData);
-        //LionAnalytics.ItemActioned("navigator", additionalData);
-    }
-
-    public static void SpinWheel(string levelNo, string rewardType, string rewardValue, string numberTimes)
-    {
-        var additionalData = new Dictionary<string, object>
-        {
-            { "level_number", levelNo },
-            { "spinwheel_count", numberTimes },
-            { "reward_type", rewardType},
-            { "reward_values",rewardValue}
-        };
-        
-        LionAnalytics.ItemActioned("spinwheel", "9", "SpinWheelButton", "SpinWheelType", additionalData);
     }
     
-    public static void DailyRewards(string levelNo, string rewardType, string rewardValue, string numberTimes)
+    public static void Shuffle(string levelNo, int shuffleCount)
     {
         var additionalData = new Dictionary<string, object>
         {
             { "level_number", levelNo },
-            { "dailyrewards_count", numberTimes },
-            { "reward_type", rewardType},
-            { "reward_values",rewardValue}
+            { "shuffle_count", shuffleCount }
         };
-       
-        LionAnalytics.ItemActioned("dailyrewards", "8", "DailyRewardsButton", "DailyRewardsType", additionalData);
-      
-    }
 
-    public static void BonusGift(string levelNo, string rewardType, string rewardValue, string numberTimes)
+        LionAnalytics.ItemActioned("shuffle","7","ShuffleButton","ShuffleType", additionalData);
+        var data = new PowerUpUsedEventArgs
+        {
+            MissionAttempt = shuffleCount,
+            PowerUpName = "shuffle",
+            MissionID = levelNo
+        };
+        LionAnalytics.PowerUpUsed(data,additionalData);
+    }
+    
+    public static void FiftyFifty(string levelNo, int fiftyfiftyCount)
     {
         var additionalData = new Dictionary<string, object>
         {
             { "level_number", levelNo },
-            { "bonusgift_count", numberTimes },
+            { "fiftyFifty_count", fiftyfiftyCount }
+        };
+
+        LionAnalytics.ItemActioned("shuffle","8","ShuffleButton","ShuffleType", additionalData);
+        var data = new PowerUpUsedEventArgs
+        {
+            MissionAttempt = fiftyfiftyCount,
+            PowerUpName = "shuffle",
+            MissionID = levelNo
+        };
+
+        LionAnalytics.PowerUpUsed(data,additionalData);
+    }
+    
+    public static void ImageReveal(string levelNo, int numberTimes)
+    {
+        var additionalData = new Dictionary<string, object>
+        {
+            { "level_number", levelNo },
+            { "imageReveal_count", numberTimes }
+        };
+
+        LionAnalytics.ItemActioned("imageReveal","9","ImageRevealButton","ImageRevealType", additionalData);
+        var data = new PowerUpUsedEventArgs
+        {
+            MissionAttempt = numberTimes,
+            PowerUpName = "imageReveal",
+            MissionID = levelNo
+        };
+        LionAnalytics.PowerUpUsed(data,additionalData);
+    }
+    
+    public static void LevelCompleteReward(string levelNo, string rewardType, string rewardValue, string numberTimes)
+    {
+        var additionalData = new Dictionary<string, object>
+        {
+            { "level_number", levelNo },
+            { "levelCompleteReward_count", numberTimes },
             { "reward_type", rewardType},
             { "reward_values",rewardValue}
         };
-        
         LionAnalytics.ItemActioned("levelcompletedreward", "10", "BonusGiftButton", "BonusGiftType", additionalData);
     }
 
@@ -179,36 +190,21 @@ public class LionStudiosManager : SingletonInstance<LionStudiosManager>
             { "reward_type", rewardType},
             { "reward_values",rewardValue}
         };
-        
-        LionAnalytics.ItemActioned("giftbox", "10", "GiftBox", "GiftBoxType", additionalData);
+        LionAnalytics.ItemActioned("giftbox", "11", "GiftBox", "GiftBoxType", additionalData);
     }
     
-    public static void RewardChestBox(string levelNo, string rewardType, string rewardValue, string numberTimes)
+    public static void NoMoreMoves(string levelNo, string rewardType, string rewardValue, string numberTimes)
     {
         var additionalData = new Dictionary<string, object>
         {
             { "level_number", levelNo },
-            { "star_count", numberTimes },
+            { "noMoreMoves_count", numberTimes },
             { "reward_type", rewardType},
             { "reward_values",rewardValue}
         };
-        
-        LionAnalytics.ItemActioned("star", "10", "Star", "StarType", additionalData);
+        LionAnalytics.ItemActioned("nomoremoves", "12", "NoMoreMoves", "NoMoreMovesType", additionalData);
     }
     
-    public static void Punishment(string levelNo, string rewardType, string rewardValue, string numberTimes)
-    {
-        var additionalData = new Dictionary<string, object>
-        {
-            { "level_number", levelNo },
-            { "punishment_count", numberTimes },
-            { "reward_type", rewardType},
-            { "reward_values",rewardValue}
-        };
-        
-        LionAnalytics.ItemActioned("giftbox", "10", "Punishment", "PunishmentType", additionalData);
-    }
-
     public static void AdsEvents(bool isRewardAds,AdsEventState state, int levelNumber, string network, string placement, int coinsCount)
     {
         var product = new Product
@@ -316,48 +312,4 @@ public class LionStudiosManager : SingletonInstance<LionStudiosManager>
         };
         LionAnalytics.RewardVideoShowFail(adFailEventArgs);
     }
-
-    public static void MissionStart(int levelNo, int attemptNum, int score)
-    {
-        var missionEventArgs = new MissionEventArgs
-        {
-            IsTutorial = false,
-            MissionAttempt = attemptNum,
-            MissionName = "VIPLevels",
-            MissionID = levelNo.ToString(),
-            UserScore = score,
-            MissionType = "VIP Level"
-        };
-        LionAnalytics.MissionStarted(missionEventArgs);
-    } 
-    
-    public static void MissionComplete(int levelNo, int attemptNum, int score)
-    {
-        var missionEventArgs = new MissionCompletedEventArgs()
-        {
-            IsTutorial = false,
-            MissionAttempt = attemptNum,
-            MissionName = "VIPLevels",
-            MissionID = levelNo.ToString(),
-            UserScore = score,
-            MissionType = "VIP Level"
-        };
-        LionAnalytics.MissionCompleted(missionEventArgs);
-    }
-    
-    public static void MissionFail(int levelNo, int attemptNum, int score)
-    {
-        var missionEventArgs = new MissionEventArgs
-        {
-            IsTutorial = false,
-            MissionAttempt = attemptNum,
-            MissionName = "VIPLevels",
-            MissionID = levelNo.ToString(),
-            UserScore = score,
-            MissionType = "VIP Level"
-        };
-        var missionFailed = new MissionFailedEventArgs(missionEventArgs);
-        LionAnalytics.MissionFailed(missionFailed);
-    }
-
 }

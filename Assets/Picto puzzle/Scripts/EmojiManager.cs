@@ -63,6 +63,8 @@ public class EmojiManager : MonoBehaviour
     public bool _levelCompletemain;
 
     private bool shuffleBo;
+    
+    private static int _shuffleCount = 1, _fiftyFiftyCount = 1, _specialHintCount = 1;
     // public Button
     private void Awake()
     {
@@ -276,6 +278,8 @@ public class EmojiManager : MonoBehaviour
         {
             GameEssentials.RvType = RewardType.Shuffle;
             GameEssentials.ShowRewardedAds("Shuffle");
+            if(LionStudiosManager.instance)
+                LionStudiosManager.AdsEvents(true, AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","Shuffle",CoinManager.instance.GetCoinsCount());
             /////--------------addcall
         }
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
@@ -284,6 +288,11 @@ public class EmojiManager : MonoBehaviour
 
     public void Shuffle_CallBack()
     {
+        if(LionStudiosManager.instance)
+        {
+            LionStudiosManager.Shuffle(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),_shuffleCount);
+            _shuffleCount++;
+        }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void ShuffleButtonActive()
@@ -332,6 +341,8 @@ public class EmojiManager : MonoBehaviour
         {
             GameEssentials.RvType = RewardType.SpecialHint;
             GameEssentials.ShowRewardedAds("SpecialHint");
+            if(LionStudiosManager.instance)
+                LionStudiosManager.AdsEvents(true, AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","SpecialHint",CoinManager.instance.GetCoinsCount());
             /////----------------ad call
         }
         HintButtonDeActiveFun();
@@ -340,26 +351,27 @@ public class EmojiManager : MonoBehaviour
     }
     public void SpecialHint_CallBack()
     {
-        if (panelObj.GetComponent<EmojiClick>().hintPos.Count > 0)
+        if (panelObj.GetComponent<EmojiClick>().hintPos.Count <= 0) return;
+        
+        //var num = UnityEngine.Random.Range(0, panelObj.GetComponent<EmojiClick>().hintPos.Count);
+        for (int i = 0; i < panelObj.GetComponent<EmojiClick>().hintPos.Count; i++)
         {
-            //var num = UnityEngine.Random.Range(0, panelObj.GetComponent<EmojiClick>().hintPos.Count);
-            for (int i = 0; i < panelObj.GetComponent<EmojiClick>().hintPos.Count; i++)
+            if (panelObj.GetComponent<EmojiClick>().hintPos[i].GetComponent<Image>().gameObject
+                .activeInHierarchy)
             {
-                if (panelObj.GetComponent<EmojiClick>().hintPos[i].GetComponent<Image>().gameObject
-                    .activeInHierarchy)
-                {
-                    var temp = panelObj.GetComponent<EmojiClick>().hintPos[i].GetComponent<Image>();
-                    temp.color = new Color(temp.color.r, temp.color.g, temp.color.b, .65f);
-                    temp.enabled = true;
-                    temp.rectTransform.DOScale(1.3f, 0.25f).SetEase(Ease.Linear)
-                        .SetLoops(2, LoopType.Yoyo);
-                    hintDisplayNum = i;
-                    break;
-                }
-                   
+                var temp = panelObj.GetComponent<EmojiClick>().hintPos[i].GetComponent<Image>();
+                temp.color = new Color(temp.color.r, temp.color.g, temp.color.b, .65f);
+                temp.enabled = true;
+                temp.rectTransform.DOScale(1.3f, 0.25f).SetEase(Ease.Linear)
+                    .SetLoops(2, LoopType.Yoyo);
+                hintDisplayNum = i;
+                break;
             }
-                
         }
+        
+        if(!LionStudiosManager.instance) return;
+        LionStudiosManager.SpecialHint(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),_specialHintCount.ToString());
+        _specialHintCount++;
     }
     public void HintButtonActiveFun()
     {
@@ -415,6 +427,8 @@ public class EmojiManager : MonoBehaviour
             /////--------add call
             GameEssentials.RvType = RewardType.FiftyFifty;
             GameEssentials.ShowRewardedAds("FiftyFifty");
+            if(LionStudiosManager.instance)
+                LionStudiosManager.AdsEvents(true, AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","FiftyFifty",CoinManager.instance.GetCoinsCount());
         }
 
         FiftyFiftyButtonDeActiveFun();
@@ -432,6 +446,10 @@ public class EmojiManager : MonoBehaviour
             panelObj.GetComponent<EmojiClick>().optionBtn.RemoveAt(i);
             panelObj.GetComponent<EmojiClick>().optionBtn[i].gameObject.SetActive(false);
         }
+        
+        if(!LionStudiosManager.instance) return;
+        LionStudiosManager.FiftyFifty(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),_fiftyFiftyCount);
+        _fiftyFiftyCount++;
     }
     public void FiftyFiftyButtonActiveFun()
     {

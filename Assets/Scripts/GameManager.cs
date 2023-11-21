@@ -449,7 +449,7 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("LevelComplete");
             });
         }
-        if ((PlayerPrefs.GetInt("Level", 1) <= 11))
+        if ((PlayerPrefs.GetInt("Level", 1) >= 11))
         {
             if (movesCount == 0 && !levelCompleted && !levelFail)
             {
@@ -609,10 +609,10 @@ public class GameManager : MonoBehaviour
             {
                 Instantiate(starFX, cube.transform.position, Quaternion.identity);
                 hintSpawnObject = cube;
-                if (PlayerPrefs.GetInt("Level", 1) > 1)
+                /*if (PlayerPrefs.GetInt("Level", 1) > 1)
                 {
                     CoinManager.instance.HintReduce(50);
-                }
+                }*/
 
                 if (PlayerPrefs.GetInt("Level", 1) == 1) UIManagerScript.Instance.HelpHand();
                 //print("instantiated");
