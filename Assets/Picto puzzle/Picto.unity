@@ -3983,6 +3983,10 @@ MonoBehaviour:
   slideCoinsText: {fileID: 0}
   calendarPanel: {fileID: 0}
   calenderButton: {fileID: 0}
+  claimCoinMovePos: {fileID: 0}
+  claimDiamondFxParent: {fileID: 0}
+  claimCenterParticleRect: {fileID: 0}
+  claimDiamondParticlesRect: []
   coinMovePos: {fileID: 1905652867}
   diamondFxParent: {fileID: 220826510}
   centerParticleRect: {fileID: 188722828}
@@ -5603,6 +5607,14 @@ PrefabInstance:
     - target: {fileID: 2371328186632468328, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4365145502739757275, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 464458907}
+    - target: {fileID: 4365145502739757275, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RetryButton
       objectReference: {fileID: 0}
     - target: {fileID: 7703456645231901653, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

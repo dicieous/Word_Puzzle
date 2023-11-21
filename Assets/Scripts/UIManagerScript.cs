@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Coffee.UIExtensions;
 using DDZ;
 using DG.Tweening;
 using TMPro;
@@ -175,10 +176,10 @@ public class UIManagerScript : MonoBehaviour
 			MonitizationScript.instance.bubble2X.SetActive(false);
 		}*/
 
-		if ((GetSpecialLevelNumber() <= 13))
+		/*if ((GetSpecialLevelNumber() <= 13))
 		{
 			MonitizationScript.instance.giftObject.SetActive(false);
-		}
+		}*/
 
 		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings-1)
 		{
@@ -485,7 +486,12 @@ public class UIManagerScript : MonoBehaviour
 		if (loseItButton.interactable) loseItButton.interactable = false;
 		_barTween.Pause();
 		if (doubleCoinsButton.interactable) doubleCoinsButton.interactable = false;
-			
+		if (SoundHapticManager.Instance)
+		{
+			SoundHapticManager.Instance.Pause("BarMeter");
+			SoundHapticManager.Instance.Play("Pop");
+			SoundHapticManager.Instance.Vibrate(30);
+		}
 		DOVirtual.DelayedCall(0.5f, () =>
 		{
 			if (_claimCoinsClick)
@@ -1031,7 +1037,7 @@ public class UIManagerScript : MonoBehaviour
 	    claimButton.interactable = false;
 	    DOVirtual.DelayedCall(0.5f, () =>
 	    {
-		  
+		    
 		    StartCoroutine(PlayCoinCollectionFx(giftCoinMovePOs,giftDiamondFxParent,giftCenterParticleRect,giftDiamondParticlesRect));
 	    });
 	    DOVirtual.DelayedCall(2f, () =>
@@ -1062,7 +1068,7 @@ public class UIManagerScript : MonoBehaviour
 		    PlayerPrefs.SetInt("Special",0);
 		    if (PlayerPrefs.GetInt("Level") >= (SceneManager.sceneCountInBuildSettings) - 3)
 		    {
-			    var i = Random.Range(2, SceneManager.sceneCountInBuildSettings-3);
+			    var i = Random.Range(11, SceneManager.sceneCountInBuildSettings-3);
 			    PlayerPrefs.SetInt("ThisLevel", i);
 			    SceneManager.LoadScene(i);
 		    }

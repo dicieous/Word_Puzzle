@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mime;
+using Coffee.UIExtensions;
 using DDZ;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,7 +22,8 @@ public class MonitizationScript : MonoBehaviour
    public GameObject giftCoinMovePosition;
    [Header("Gift Details")]
    public Image giftImage;
-   [FormerlySerializedAs("giftMagnet")] [Header("Magnet details")]
+   public UIParticle giftParticle;
+   [Header("Magnet details")]
    public Sprite magnetImage;
    public GameObject giftMagnetInstancePosition;
    public GameObject giftMagnetMovePosition;
@@ -68,6 +70,7 @@ public class MonitizationScript : MonoBehaviour
    {
       var num = UnityEngine.Random.Range(0, 3);
       giftImage.GetComponent<Button>().interactable = false;
+      giftParticle.Play();
       switch (num)
       {
          case 0 :
@@ -105,6 +108,7 @@ public class MonitizationScript : MonoBehaviour
       {
          giftImage.GetComponent<Button>().interactable = true;
       },false);
+      
    }
 
    public void MagnetSpawn(GameObject instanceObj,GameObject instancePos,GameObject movePosition,int coinIncreaseNumber)

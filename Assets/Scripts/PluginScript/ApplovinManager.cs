@@ -64,7 +64,7 @@ public class ApplovinManager : MonoBehaviour
     public void ShowInterstitialAds_120Sec(string placement)
     {
         ShowInterstitialAds(placement);
-        ResetAdsTimeLimit(120);
+       
     }
 
     private void CheckApplovinInitialized()
@@ -239,13 +239,14 @@ public class ApplovinManager : MonoBehaviour
 
         if (!TimeToShowAd())
         {
-            print("Still Time Limit");
+            print("Still Time Limit:: "+ timeLimitToAds);
             return;
         }
 
         Time.timeScale = 0;
         MaxSdk.ShowInterstitial(interstitialAdUnitId, placement);
         LionStudiosManager.AdsEvents(false,AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","LevelComplete",CoinManager.instance.GetCoinsCount());
+        ResetAdsTimeLimit(120);
     }
 
     private void InitializeRewardedAds()
