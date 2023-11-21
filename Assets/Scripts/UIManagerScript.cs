@@ -227,8 +227,12 @@ public class UIManagerScript : MonoBehaviour
 		}
 		
 	}
-	
-	
+	[Header("Claim Coins ParticleEffect")]
+	public RectTransform claimCoinMovePos;
+	public GameObject claimDiamondFxParent;
+	public RectTransform claimCenterParticleRect;
+	public List<RectTransform> claimDiamondParticlesRect;
+	[Header("Coins ParticleEffect")]
 	public RectTransform coinMovePos;
 	public GameObject diamondFxParent;
 	public RectTransform centerParticleRect;
@@ -415,17 +419,23 @@ public class UIManagerScript : MonoBehaviour
 			}
 		});
 		if (!SoundHapticManager.Instance) return;
-		SoundHapticManager.Instance.Play("ButtonClickMG");
+		SoundHapticManager.Instance.Play("BarMeter");
 		//SoundHapticManager.Instance.Vibrate(30);
 	}
 
 	public static int coinIncreaseNum;
+	private bool _claimCoinsClick;
 	public void DoubleCoinsButtonFun()
 	{
+		if (SoundHapticManager.Instance)
+		{
+			SoundHapticManager.Instance.Pause("BarMeter");
+			SoundHapticManager.Instance.Play("Pop");
+			SoundHapticManager.Instance.Vibrate(30);
+		}
 		doubleCoinsButton.interactable = false;
 		loseItButton.interactable = false;
-		if (SoundHapticManager.Instance)
-			SoundHapticManager.Instance.Pause("ButtonClickMG");
+		
 		int num = 0;
 		_barTween.Pause();
 		var val=slideBar.value;
@@ -458,7 +468,8 @@ public class UIManagerScript : MonoBehaviour
 		coinIncreaseNum = num;
 		//print("coins number:::::::::::::::::::::: "+coinIncreaseNum);
 		///----------Ad calling-----------
-		
+
+		_claimCoinsClick = true;
 		GameEssentials.RvType = RewardType.LevelCompleteReward;
 		GameEssentials.ShowRewardedAds("LevelCompleteReward");
 		if(LionStudiosManager.instance)
@@ -477,8 +488,17 @@ public class UIManagerScript : MonoBehaviour
 			
 		DOVirtual.DelayedCall(0.5f, () =>
 		{
-			StartCoroutine(PlayCoinCollectionFx(coinMovePos, diamondFxParent, centerParticleRect,
-				diamondParticlesRect));
+			if (_claimCoinsClick)
+			{
+				StartCoroutine(PlayCoinCollectionFx(claimCoinMovePos, claimDiamondFxParent, claimCenterParticleRect,
+					claimDiamondParticlesRect));
+			}
+			else
+			{
+				StartCoroutine(PlayCoinCollectionFx(coinMovePos, diamondFxParent, centerParticleRect,
+					diamondParticlesRect));
+				
+			}
 		});
 		/*DOVirtual.DelayedCall(0.5f, () =>
 		{
@@ -931,6 +951,8 @@ public class UIManagerScript : MonoBehaviour
     {
 	    DOVirtual.DelayedCall(1f, () =>
 	    {
+		    // if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+		    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
 		    giftPanel.SetActive(true);
 		    giftPanel.transform.GetChild(0).DOLocalRotate(new Vector3(0, 0, 360f), 1f).SetLoops(-1,LoopType.Incremental).SetEase(Ease.Linear);
 		    var countList = new List<int>() {20,30,40,50};
@@ -967,8 +989,10 @@ public class UIManagerScript : MonoBehaviour
     {
 	    _coinIncreaseNUm = randomCoinCount+coinsIncreaseNum;
 	    print(_coinIncreaseNUm+"       "+ randomCoinCount +"          "+coinsIncreaseNum);
-	    DOVirtual.DelayedCall(1.5f, () =>
+	    DOVirtual.DelayedCall(1f, () =>
 	    {
+		    // if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+		    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("RewardOpen");
 		    popObj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "+" + randomCoinCount;
 		    popObj.GetComponent<RectTransform>().DOScale(Vector3.one, 0.65f).SetEase(Ease.OutBounce);
 		    popObj.GetComponent<RectTransform>().DOJumpAnchorPos(popPosition.GetComponent<RectTransform>().anchoredPosition, 400f, 1, 0.5f)
@@ -984,8 +1008,9 @@ public class UIManagerScript : MonoBehaviour
 		    });*/
 		    //coinsObj.GetComponent<RectTransform>().DOJumpAnchorPos(giftJumpPLace.GetComponent<RectTransform>().anchoredPosition, 400f, 1, 1f).SetEase(Ease.Linear);
 	    });
-	    DOVirtual.DelayedCall(1.75f, () =>
+	    DOVirtual.DelayedCall(1.30f, () =>
 	    {
+		    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("RewardOpen");
 		    popObj2.GetComponent<RectTransform>().DOScale(Vector3.one, 0.65f).SetEase(Ease.OutBounce);
 		    popObj2.GetComponent<RectTransform>()
 			    .DOJumpAnchorPos(popPosition2.GetComponent<RectTransform>().anchoredPosition, 400f, 1, 0.5f)
