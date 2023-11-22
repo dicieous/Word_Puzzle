@@ -25,6 +25,8 @@ public class CameraMotionScript : MonoBehaviour
 
     [SerializeField] private List<GameObject> letterGroups;
 
+    [SerializeField] private List<GameObject> hintGroups;
+    
     private int cameraMoved;
 
     private bool levelCompleted = true;
@@ -65,6 +67,7 @@ public class CameraMotionScript : MonoBehaviour
                     StartCoroutine(ActivateStickingCubes(() =>
                     {
                         ActivateLetterCubes();
+                        ActivateHintGroups();
                         ActivateEmojis();
                         cameraMoved++;
                     }));
@@ -92,6 +95,7 @@ public class CameraMotionScript : MonoBehaviour
                 StartCoroutine(ActivateStickingCubes(() =>
                 {
                     ActivateLetterCubes();
+                    ActivateHintGroups();
                     ActivateEmojis();
                     cameraMoved++;
                 }));
@@ -153,7 +157,11 @@ public class CameraMotionScript : MonoBehaviour
 
         callBack.Invoke();
     }
-
+    private void ActivateHintGroups()
+    {
+        if (hintGroups.Count < cameraMoved && hintGroups.Count<=0) return;
+        hintGroups[cameraMoved].SetActive(true);
+    }
     void ActivateLetterCubes()
     {
         if (letterGroups.Count < cameraMoved) return;
