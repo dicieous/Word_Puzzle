@@ -104,10 +104,8 @@ public class UIManagerScript : MonoBehaviour
 	{
 		StartButtonActivateFun();
 		// autoWordButton.interactable = true; 
-		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1 
-		    || SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 2)
+		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
 		{
-			specialLevelObject.SetActive(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 2);
 			//print("One");
 			hintButton.gameObject.SetActive(false);
 			autoWordButton.gameObject.SetActive(false);
@@ -118,11 +116,18 @@ public class UIManagerScript : MonoBehaviour
 		}
 		else
 		{
+			//if(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 2)
 			cm = CoinManager.instance;
 			var s = GetSpecialLevelNumber().ToString()[^1];
+			specialLevelObject.SetActive(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 2);
 			if (s == '0')
 			{
 				levelNo.text = "LEVEL " + GetSpecialLevelNumber() +"\n(Boss Level)";
+				hintButton.gameObject.SetActive(false);
+				autoWordButton.gameObject.SetActive(false);
+				restartButton.image.enabled = false;
+				movesText.gameObject.SetActive(false);
+				emojiRevealButton.gameObject.SetActive(false);
 				endScreen.transform.GetChild(4).gameObject.SetActive(false);
 				endScreen.transform.GetChild(5).gameObject.SetActive(false);
 			}
@@ -980,7 +985,7 @@ public class UIManagerScript : MonoBehaviour
     {
 	    failPanel.SetActive(false);
 	    GameManager.Instance.movesCount = 5;
-	    movesText.text = GameManager.Instance.movesCount.ToString();
+	    movesText.text = "Moves: " + GameManager.Instance.movesCount;
 	    if(GameManager.Instance.scriptOff)
 		    GameManager.Instance.scriptOff = false;
 	    if(GameManager.Instance.levelFail)
