@@ -16,9 +16,13 @@ public class CoinManager : MonoBehaviour
     public UIParticle confettiFx1;
     public GameManager gm;
     public TextMeshProUGUI hintText;
+    public TextMeshProUGUI specialLevelHintText;
+    public TextMeshProUGUI shuffleCountText;
+    public TextMeshProUGUI fiftyFiftyCountText;
     public TextMeshProUGUI coinCountText;
     public TextMeshProUGUI autoWordCountText;
-
+    public TextMeshProUGUI emojiRevelCountText;
+    
     public List<Color> colorData;
     [HideInInspector] public Color singleColor;
     public Color redColor;
@@ -35,6 +39,10 @@ public class CoinManager : MonoBehaviour
 
     public RectTransform winEmoji;
     public List<Sprite> winEmojiSprites;
+    [Header("GiftFillingBar")]
+    public Image giftProgressionBarImage;
+    public TextMeshProUGUI giftProgressionBarText;
+    public Image giftProgressionImage;
     
     private void Awake()
     {
@@ -71,6 +79,7 @@ public class CoinManager : MonoBehaviour
                 var countNum = (int)GetCoinsCount() / 50;
                 SetHintCount(countNum);
                 hintText.text = GetHintCount().ToString();
+                specialLevelHintText.text = GetHintCount().ToString();
                 if (GetCoinsCount() >= 100)
                 {
                     autoWordCountText.text = ((int)(GetCoinsCount() / 100f)).ToString();
@@ -84,6 +93,7 @@ public class CoinManager : MonoBehaviour
             {
                 SetHintCount(0);
                 hintText.text = GetHintCount().ToString();
+                specialLevelHintText.text = GetHintCount().ToString();
             }
             
             progressionBarImage.fillAmount = GetLoaderPercent();
@@ -101,46 +111,63 @@ public class CoinManager : MonoBehaviour
                 SetLoaderImageCount(GetLoaderImageCount() + 1);
             }
             progressionImage.sprite = progressionImageList[GetLoaderImageCount()];
-            winEmoji.GetComponent<Image>().sprite = winEmojiSprites[Random.Range(0, winEmojiSprites.Count - 1)];
+            
         }
+        winEmoji.GetComponent<Image>().sprite = winEmojiSprites[Random.Range(0, winEmojiSprites.Count - 1)];
     }
 
-    public void HintReduce()
+    public void ShuffleReduce(int x)
     {
-        if (GetHintCount() > 0)
-        {
-            hintCounter++;
-            if (ByteBrewManager.instance)
-            {
-                ByteBrewManager.instance.ProgressEvent(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),
-                    hintCounter.ToString(), "NormalMode", "Hints");
-            }
-            //SetHintCount(GetHintCount() - 1);
-            SetCoinCount(GetCoinsCount() - 50);
-            SetHintCount((int)GetCoinsCount() / 50);
-            coinCountText.text = GetCoinsCount().ToString();
-            hintText.text = GetHintCount().ToString();
-            if (GetCoinsCount() < 100)
-            {
-                UIManagerScript.Instance.autoWordButton.interactable = false;
-                autoWordCountText.text = ((int)0).ToString();
-            }
-        }
+        CountTextDetails(x);
     }
 
+    public void FiftyFiftyReduce(int x)
+    {
+        CountTextDetails(x);
+    }
+    public void HintReduce(int x)
+    {
+        hintCounter++;
+        if (ByteBrewManager.instance)
+        {
+            ByteBrewManager.instance.ProgressEvent(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),
+                hintCounter.ToString(), "NormalMode", "Hints");
+        }
+
+        CountTextDetails(x);
+    }
+
+    public void EmojiReduce()
+    {
+        CountTextDetails(50);
+    }
+    public void CountTextDetails(int cutNum)
+    {
+        var totalCoins = GetCoinsCount() - cutNum;
+        totalCoins = totalCoins <= 0 ? 0 : totalCoins;
+        SetCoinCount(totalCoins);
+        SetHintCount((int)totalCoins / 50);
+        coinCountText.text = totalCoins.ToString();
+        hintText.text = GetHintCount().ToString();
+        specialLevelHintText.text = GetHintCount().ToString();
+        shuffleCountText.text = ((int)(totalCoins / 25)).ToString();
+        fiftyFiftyCountText.text=((int)(totalCoins / 25)).ToString();
+        autoWordCountText.text = ((int)(totalCoins / 100)).ToString();
+        if (totalCoins < 100)
+        {
+            //UIManagerScript.Instance.autoWordButton.interactable = false;
+            autoWordCountText.text = "0";
+        }
+    }
     public void AutoWordReduce()
     {
+        CountTextDetails(100);
         /*if (ByteBrewManager.instance)
            {
                ByteBrewManager.instance.ProgressEvent(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),
                    hintCounter.ToString(), "NormalMode", "Hints");
            }*/
         //SetHintCount(GetHintCount() - 1);
-        SetCoinCount(GetCoinsCount() - 100);
-        SetHintCount((int)GetCoinsCount() / 50);
-        coinCountText.text = GetCoinsCount().ToString();
-        hintText.text = GetHintCount().ToString();
-        autoWordCountText.text = ((int)(GetCoinsCount() / 100)).ToString();
         /*if (GetCoinsCount() >= 100)
         {
             UIManagerScript.Instance.autoWordButton.interactable = true;
@@ -165,7 +192,7 @@ public class CoinManager : MonoBehaviour
         {
             if (GetCoinsCount() >= 100)
             {
-                UIManagerScript.Instance.AutoButtonActive();
+                UIManagerScript.Instance.AutoButtonActiveFun();
                 autoWordCountText.text = ((int)(GetCoinsCount() / 100)).ToString();
             }
             else
@@ -176,6 +203,9 @@ public class CoinManager : MonoBehaviour
         
         coinCountText.text = GetCoinsCount().ToString();
         hintText.text = GetHintCount().ToString();
+        specialLevelHintText.text = GetHintCount().ToString();
+        shuffleCountText.text = ((int)(GetCoinsCount() / 25)).ToString();
+        fiftyFiftyCountText.text=((int)(GetCoinsCount() / 25)).ToString();;
 
     }
     
@@ -184,7 +214,6 @@ public class CoinManager : MonoBehaviour
     
     public float GetLoaderPercent() => PlayerPrefs.GetFloat("LoaderPercentage", 0);
     public void SetLoaderPercentage(float percent) => PlayerPrefs.SetFloat("LoaderPercentage", percent);
-    
     
     public int GetHintCount() => PlayerPrefs.GetInt("Hint Count", 0);
     public void SetHintCount(int countHint) => PlayerPrefs.SetInt("Hint Count", countHint);
@@ -196,7 +225,7 @@ public class CoinManager : MonoBehaviour
     public int Get5050Count() => PlayerPrefs.GetInt("Count5050", 0);
     public void Set5050Count(int count5050) => PlayerPrefs.SetInt("Count5050", count5050);
     
-    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 10000000);
+    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 100);
 
     public void SetCoinCount(int countCoin) => PlayerPrefs.SetInt("Coins Count", countCoin);
 }

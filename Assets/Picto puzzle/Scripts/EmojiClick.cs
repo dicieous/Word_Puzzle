@@ -91,8 +91,11 @@ public class EmojiClick : MonoBehaviour
                     EmojiManager.Instance.button5050.interactable = false;
                     EmojiManager.Instance._levelCompletemain = true;
                 }*/
-                EmojiManager.Instance.shuffle.interactable = false;
-                EmojiManager.Instance.button5050.interactable = false;
+                EmojiManager.Instance.HintButtonDeActiveFun();
+                EmojiManager.Instance.ShuffleButtonDeActiveFun();
+                EmojiManager.Instance.FiftyFiftyButtonDeActiveFun();
+                //EmojiManager.Instance.shuffle.interactable = false;
+                //EmojiManager.Instance.button5050.interactable = false;
                 EmojiManager.Instance._levelCompletemain = true;
                 for (int i = 0; i < optionBtn.Count; i++)
                 {
@@ -116,6 +119,10 @@ public class EmojiClick : MonoBehaviour
             {
                 //UIManager.instance.LosePanel();
                 //AudioManager.instance.Play("Lose");
+                EmojiManager.Instance.HintButtonDeActiveFun();
+                EmojiManager.Instance.ShuffleButtonDeActiveFun();
+                EmojiManager.Instance.FiftyFiftyButtonDeActiveFun();
+                
                 _levelfail = true;
                 EmojiManager.Instance.losePanel.SetActive(true);
                 Debug.Log("GameOver");
@@ -208,17 +215,10 @@ public class EmojiClick : MonoBehaviour
                         temp.GetComponent<Image>().enabled = false;
                         var colorTemp = correctPos[0].GetComponent<Image>();
                         colorTemp.color = new Color(colorTemp.color.r, colorTemp.color.g, colorTemp.color.b, 1f);
-                        if (CoinManager.instance.GetHintCount() > 0)
+                        hintPos[0].gameObject.SetActive(false);
+                        if (EmojiManager.Instance.hintDisplayNum == 0)
                         {
-                            EmojiManager.Instance.hintButton.interactable = true;
-                            for (int i = 0; i < hintPos.Count; i++)
-                            {
-                                if (hintPos[i].transform.parent == correctPos[0].transform.parent)
-                                {
-                                    hintPos.RemoveAt(i);
-                                }
-                            }
-                           
+                            EmojiManager.Instance.HintButtonActiveFun();
                         }
                     });
                 if (EmojiManager.Instance.GetListNumbers() == 0)
@@ -245,7 +245,12 @@ public class EmojiClick : MonoBehaviour
                         colorTemp.color = new Color(colorTemp.color.r, colorTemp.color.g, colorTemp.color.b, 1f);
                         
                     });
-                if (CoinManager.instance.GetHintCount() > 0)
+                hintPos[1].gameObject.SetActive(false);
+                if (EmojiManager.Instance.hintDisplayNum == 1)
+                {
+                    EmojiManager.Instance.HintButtonActiveFun();
+                }
+                /*if (CoinManager.instance.GetHintCount() > 0)
                 {
                     EmojiManager.Instance.hintButton.interactable = true;
                     for (int i = 0; i < hintPos.Count; i++)
@@ -255,7 +260,7 @@ public class EmojiClick : MonoBehaviour
                             hintPos.RemoveAt(i);
                         }
                     }
-                }
+                }*/
                 if (EmojiManager.Instance.GetListNumbers() == 0)
                 {
                     if (EmojiManager.Instance.hand1.activeInHierarchy)
@@ -278,7 +283,12 @@ public class EmojiClick : MonoBehaviour
                         colorTemp.color = new Color(colorTemp.color.r, colorTemp.color.g, colorTemp.color.b, 1f);
                         
                     });
-                if (CoinManager.instance.GetHintCount() > 0)
+                hintPos[2].gameObject.SetActive(false);
+                if (EmojiManager.Instance.hintDisplayNum == 2)
+                {
+                    EmojiManager.Instance.HintButtonActiveFun();
+                }
+                /*if (CoinManager.instance.GetHintCount() > 0)
                 {
                     EmojiManager.Instance.hintButton.interactable = true;
                     for (int i = 0; i < hintPos.Count; i++)
@@ -289,7 +299,7 @@ public class EmojiClick : MonoBehaviour
                         }
                     }
                            
-                }
+                }*/
             }
             else if (temp.GetComponent<Image>().sprite == correctList[3])
             {
@@ -304,7 +314,12 @@ public class EmojiClick : MonoBehaviour
                         var colorTemp = correctPos[3].GetComponent<Image>();
                         colorTemp.color = new Color(colorTemp.color.r, colorTemp.color.g, colorTemp.color.b, 1f);
                     });
-                if (CoinManager.instance.GetHintCount() > 0)
+                hintPos[3].gameObject.SetActive(false);
+                if (EmojiManager.Instance.hintDisplayNum == 3)
+                {
+                    EmojiManager.Instance.HintButtonActiveFun();
+                }
+                /*if (CoinManager.instance.GetHintCount() > 0)
                 {
                     EmojiManager.Instance.hintButton.interactable = true;
                     for (int i = 0; i < hintPos.Count; i++)
@@ -315,7 +330,7 @@ public class EmojiClick : MonoBehaviour
                         }
                     }
                            
-                }
+                }*/
             }
             correctCheckList.Add(temp.gameObject);
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Pop");

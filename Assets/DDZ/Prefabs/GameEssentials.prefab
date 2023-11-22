@@ -1,0 +1,416 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3687509794042231742
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6083706924304278595}
+  - component: {fileID: 3067964065981477687}
+  m_Layer: 0
+  m_Name: BG
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6083706924304278595
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3687509794042231742}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8730832291510410682}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &3067964065981477687
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3687509794042231742}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!1 &4406166029384633924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4588240975098604437}
+  - component: {fileID: 7734823169788760305}
+  m_Layer: 0
+  m_Name: GameEssentials
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4588240975098604437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4406166029384633924}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8730832291510410682}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7734823169788760305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4406166029384633924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cad5ada1b1beed44e99dcb8688b181e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shm: {fileID: 2359065073342103220}
+  remoteConfigVal: 0
+--- !u!1 &8207866607206106842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8730832291510410682}
+  - component: {fileID: 2359065073342103220}
+  m_Layer: 0
+  m_Name: SHM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8730832291510410682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8207866607206106842}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6083706924304278595}
+  m_Father: {fileID: 4588240975098604437}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2359065073342103220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8207866607206106842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e56d380b793f984fb186b10035ea2f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bg: {fileID: 3067964065981477687}
+  sounds:
+  - name: CupboardOpening
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 5c970d664256ab7419c3ced08c8c302b, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Find
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: e8adbdb09ceff884caa614438fa0c828, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Swipe
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 28ad87ef9cd5db241a2e3112449397b8, type: 3}
+    volume: 0.5
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Wrong
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: bba87ed3bef67894aa205cf59d257d65, type: 3}
+    volume: 0.5
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Tap
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: f4c4ff646f2f71b4cad45262b61bc1c5, type: 3}
+    volume: 0.3
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: ObjDrop
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 99cc0a57d70567b49be05269ce1d9eee, type: 3}
+    volume: 1
+    pitch: 3
+    priority: 0
+    source: {fileID: 0}
+  - name: Fan
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 756e22d0ebf438249bbcf1c99463871d, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Open
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 4531210e882313341a356e9a2be41504, type: 3}
+    volume: 0.3
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Duck
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: e60cee5364f832246ae3ffcb87ac62a8, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Hint
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 60a7c63add3d6f04e8e76d52f51672f1, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Mouse
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: c2e3e93228525fc4a95a1429ee7c8985, type: 3}
+    volume: 0.35
+    pitch: 0.85
+    priority: 0
+    source: {fileID: 0}
+  - name: GlassBreak
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 5d0a847e85fe220409f3a9f39dd7fc1b, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: DRAWER
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: cdbd5fef1143951479f58a2f3c934c74, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Correct
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 6fe2f3220dc85bd4a872143a776e9cc8, type: 3}
+    volume: 0.25
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: BookFall
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 2241e82ea1e599f4fb2dafc43a4a76a1, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Camera
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 11c815395a9ccfb4c94edf191bb0e179, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Curtain
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: f0ca91a71d030094ab84f183be83118b, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Drawer
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: bd44032c6d9290946b98d2a6a42f0157, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Guitar
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: cc6bf663699f38a4382560d53c7a67f4, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Card
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 1d37260420091b94e8d4c18f22b40018, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: BarClip
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 303fcd4e14b062940bf73288010d13a4, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Cry
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: f930a7fc9b8901f4ebf6e4b1740c8691, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Dog
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 415a36d0d6d8c4840bb076735a4bcaff, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}
+  - name: Tv
+    mute: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 79e4bddc283a34d4193a3cb1f3e9ca27, type: 3}
+    volume: 1
+    pitch: 1
+    priority: 0
+    source: {fileID: 0}

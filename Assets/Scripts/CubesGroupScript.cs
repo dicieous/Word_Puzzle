@@ -134,7 +134,7 @@ public class CubesGroupScript : MonoBehaviour
 					    DOVirtual.DelayedCall(2.5f, () =>
 					    {
 						    GameManager.Instance.autoWordClick = false;
-						    UIManagerScript.Instance.AutoButtonActive();
+						    UIManagerScript.Instance.AutoButtonActiveFun();
 					    });
 				    }
 
@@ -254,6 +254,8 @@ public class CubesGroupScript : MonoBehaviour
 			{
 				GameManager.Instance.wordTouch = true;
 				UIManagerScript.Instance.autoWordButton.interactable = false;
+				UIManagerScript.Instance.hintButton.interactable = false;
+				UIManagerScript.Instance.emojiRevealButton.interactable = false;
 			}
 				
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
@@ -318,14 +320,17 @@ public class CubesGroupScript : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && GameManager.Instance.wordTouch)
         {
 	        GameManager.Instance.wordTouch = false;
-	        UIManagerScript.Instance.AutoButtonActive();
+	        UIManagerScript.Instance.AutoButtonActiveFun();
+	        UIManagerScript.Instance.HintButtonActiveFun();
+	        UIManagerScript.Instance.EmojiRevelButtonActiveFun();
         }
 	        
 	}
 
 	
 	//To reset the Position of the Objects
-    public void ResetPosition()
+	// ReSharper disable Unity.PerformanceAnalysis
+	public void ResetPosition()
     {
 	    if (canReset && !GameManager.Instance.levelCompleted)
         {

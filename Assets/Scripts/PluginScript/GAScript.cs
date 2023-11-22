@@ -11,18 +11,10 @@ public class GAScript : MonoBehaviour
 
     private void Awake()
     {
-        if (!instance)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            DestroyImmediate(gameObject);
-        }
+        instance = this;
     }
 
-    private void Start()
+    public static void Init()
     {
         GameAnalytics.Initialize();
     }

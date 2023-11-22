@@ -48,6 +48,10 @@ public class CameraMotionScript : MonoBehaviour
     {
         if(UIManagerScript.Instance.autoWordButton.interactable)
             UIManagerScript.Instance.autoWordButton.interactable = false;
+        if(UIManagerScript.Instance.hintButton.interactable)
+            UIManagerScript.Instance.hintButton.interactable = false;
+        if(UIManagerScript.Instance.emojiRevealButton.interactable)
+            UIManagerScript.Instance.emojiRevealButton.interactable = false;
         if(!GameManager.Instance.cameraMoving)
             GameManager.Instance.cameraMoving = true;
         if (SceneManager.GetActiveScene().isLoaded)
@@ -75,6 +79,10 @@ public class CameraMotionScript : MonoBehaviour
     {
         if(UIManagerScript.Instance.autoWordButton.interactable)
             UIManagerScript.Instance.autoWordButton.interactable = false;
+        if(UIManagerScript.Instance.hintButton.interactable)
+            UIManagerScript.Instance.hintButton.interactable = false;
+        if(UIManagerScript.Instance.emojiRevealButton.interactable)
+            UIManagerScript.Instance.emojiRevealButton.interactable = false;
         if(!GameManager.Instance.cameraMoving)
             GameManager.Instance.cameraMoving = true;
         DOVirtual.DelayedCall(.5f, () =>
@@ -173,8 +181,10 @@ public class CameraMotionScript : MonoBehaviour
                             }
                             else if (i == numColliders)
                             {
-                                UIManagerScript.Instance.AutoButtonActive();
                                 GameManager.Instance.cameraMoving = false;
+                                UIManagerScript.Instance.AutoButtonActiveFun();
+                                UIManagerScript.Instance.HintButtonActiveFun(); 
+                                UIManagerScript.Instance.EmojiRevelButtonActiveFun();
                             }
                         }
                     });
