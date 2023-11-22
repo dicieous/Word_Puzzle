@@ -3935,6 +3935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cm: {fileID: 0}
   specialLevelObject: {fileID: 0}
+  question: 
   endScreen: {fileID: 0}
   prefab: {fileID: 0}
   failPanel: {fileID: 0}
@@ -5512,18 +5513,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 464458907}
-    - target: {fileID: 407871222233865027, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: FunHint
-      objectReference: {fileID: 0}
     - target: {fileID: 1269175135430875683, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 464458907}
-    - target: {fileID: 1269175135430875683, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: FunShuffle
-      objectReference: {fileID: 0}
     - target: {fileID: 2371328186632468328, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -5612,25 +5605,13 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 464458907}
-    - target: {fileID: 4365145502739757275, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RetryButton
-      objectReference: {fileID: 0}
     - target: {fileID: 7703456645231901653, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 464458907}
-    - target: {fileID: 7703456645231901653, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Fun5050
-      objectReference: {fileID: 0}
     - target: {fileID: 8290938290612111971, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_Name
       value: MainCanvas_Prefab
-      objectReference: {fileID: 0}
-    - target: {fileID: 8344019617740734466, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
