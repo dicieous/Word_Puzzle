@@ -20,7 +20,6 @@ namespace DDZ
     {
         None,
         Hint,
-        SpecialHint,
         LevelCompleteReward,
         BubbleRv,
         Magnet,
@@ -210,10 +209,9 @@ namespace DDZ
               case RewardType.None:
                   break;
               case RewardType.Hint:
-                  UIManagerScript.Instance.Hint_CallBack();
-                  break;
-              case RewardType.SpecialHint:
-                  EmojiManager.Instance.SpecialHint_CallBack();
+                  var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
+                  if(s=='0') EmojiManager.Instance.SpecialHint_CallBack();
+                  else UIManagerScript.Instance.Hint_CallBack();
                   break;
               case RewardType.LevelCompleteReward: 
                   UIManagerScript.Instance.DoubleCoins_CallBack();

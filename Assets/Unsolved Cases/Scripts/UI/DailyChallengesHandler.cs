@@ -27,36 +27,37 @@ public class DailyChallengesHandler : MonoBehaviour
     [SerializeField]private int previousMonth, previousYrs;
     [SerializeField]private int currentMonth, currentYrs;
     [SerializeField]private int nextMonth, nextYrs;
-    private readonly string[] _levelsData = new[] { "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8", 
-        "9",
-        "10",
-        "11", 
-        "12", 
-        "13", 
-        "14", 
-        "15", 
-        "16", 
-        "17", 
-        "18", 
-        "19", 
-        "20", 
-        "21", 
-        "22", 
-        "23", 
-        "24", 
-        "25",
-        "26", 
-        "27", 
-        "28", 
-        "29", 
-        "INSTAGRAM FUNCTIONS", 
+    private readonly string[] _levelsData = new[] { 
+        "CAN BE ADDICTIVE",
+        "PEOPLE MAY CRY HERE",
+        "DATING ACTIVITIES",
+        "MONEY MATTERS",
+        "TOUCH IT WITH YOUR LIPS",
+        "IT'S STICKY",
+        "INSTAGRAM FUNCTIONS",
+        "START & END WITH SAME LETTER", 
+        "WORD CONTAINING 'HA'",
+        "REASONS FOR MARRIAGE",
+        "BAD FEELING", 
+        "INVISIBLE THINGS", 
+        "PLACES WITH A LOT OF DOORS", 
+        "PEOPLE MAY CRY HERE", 
+        "FLIES WITHOUT WINGS", 
+        "COLOUR OF LIPSTICK", 
+        "IN THE BEDROOM", 
+        "I GLOVE MY JOB",
+        "Love Symbol", 
+        "Things that require two people", 
+        "People can book it", 
+        "Throw it away after breaking up", 
+        "Changes all the Time", 
+        "Keeping Fit", 
+        "Disney princess Names",
+        "You only use it once", 
+        "You need a card to enter", 
+        "Used in the shower", 
+        "Crops that start with 'P'", 
+        "Things naked people do", 
         "31" };
     
     private int _selectedDate, _baseNumber = 127;
@@ -320,12 +321,13 @@ public class DailyChallengesHandler : MonoBehaviour
         if (GetDailyChallenge() == 1)
         {
             playBtn.interactable = false;
-            dateMonthTxt.text = "Play "+ _selectedDate + " " + monthName[..3];
+           
         }
         else
         {
             playBtn.interactable = _selectedDate <= date;
         }
+        dateMonthTxt.text = "Play "+ _selectedDate + " " + monthName[..3];
     }
 
     public void OnPlayBtnPress()

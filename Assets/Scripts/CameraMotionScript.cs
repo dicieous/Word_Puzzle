@@ -159,7 +159,7 @@ public class CameraMotionScript : MonoBehaviour
     }
     private void ActivateHintGroups()
     {
-        if (hintGroups.Count < cameraMoved && hintGroups.Count<=0) return;
+        if (hintGroups.Count < cameraMoved && hintGroups.Count==0) return;
         hintGroups[cameraMoved].SetActive(true);
     }
     void ActivateLetterCubes()
