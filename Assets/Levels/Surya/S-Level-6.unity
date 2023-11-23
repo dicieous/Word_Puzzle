@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.41385436, g: 0.43987173, b: 0.45213437, a: 1}
+  m_IndirectSpecularColor: {r: 0.41137204, g: 0.43704596, b: 0.4502241, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -722,7 +722,7 @@ GameObject:
   - component: {fileID: 92317478}
   - component: {fileID: 92317479}
   m_Layer: 0
-  m_Name: HINT-15
+  m_Name: HINT-19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2313,7 +2313,7 @@ GameObject:
   - component: {fileID: 199450633}
   - component: {fileID: 199450634}
   m_Layer: 0
-  m_Name: HINT-18
+  m_Name: HINT-20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5426,7 +5426,7 @@ GameObject:
   - component: {fileID: 561696709}
   - component: {fileID: 561696710}
   m_Layer: 0
-  m_Name: HINT-12
+  m_Name: HINT-15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7146,7 +7146,7 @@ GameObject:
   - component: {fileID: 761326365}
   - component: {fileID: 761326366}
   m_Layer: 0
-  m_Name: HINT-14
+  m_Name: HINT-17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11730,7 +11730,7 @@ GameObject:
   - component: {fileID: 1330495497}
   - component: {fileID: 1330495498}
   m_Layer: 0
-  m_Name: HINT-11
+  m_Name: HINT-14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16829,7 +16829,7 @@ GameObject:
   - component: {fileID: 1709177591}
   - component: {fileID: 1709177592}
   m_Layer: 0
-  m_Name: HINT-10
+  m_Name: HINT-13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17359,7 +17359,7 @@ GameObject:
   - component: {fileID: 1741679625}
   - component: {fileID: 1741679626}
   m_Layer: 0
-  m_Name: HINT-19
+  m_Name: HINT-21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18055,6 +18055,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: hintGroups.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: camPos.Array.data[0].x
       value: 13.03
       objectReference: {fileID: 0}
@@ -18076,7 +18080,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: camPos.Array.data[2].x
-      value: 18.34
+      value: 16.03
       objectReference: {fileID: 0}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: camPos.Array.data[2].y
@@ -18114,6 +18118,14 @@ PrefabInstance:
       propertyPath: orthoSize.Array.data[3]
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: hintGroups.Array.data[0]
+      value: 
+      objectReference: {fileID: 107931735}
+    - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
+      propertyPath: hintGroups.Array.data[1]
+      value: 
+      objectReference: {fileID: 522784890}
     - target: {fileID: 5936441269488425250, guid: 44c43d29fb80a2046929b556811afd67, type: 3}
       propertyPath: letterGroups.Array.data[0]
       value: 
@@ -18736,7 +18748,7 @@ GameObject:
   - component: {fileID: 1840781168}
   - component: {fileID: 1840781169}
   m_Layer: 0
-  m_Name: HINT-17
+  m_Name: HINT-18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19501,7 +19513,7 @@ MonoBehaviour:
     - {x: 12.882046, y: -6.0655785, z: -3.5}
   - completeWordCubePositionGroup:
     - {x: 9.552465, y: -4.7088437, z: -3.5}
-    - {x: 18.741777, y: -1.6057925, z: -3.5}
+    - {x: 10.625385, y: -2.366922, z: -3.5}
   - completeWordCubePositionGroup:
     - {x: 10.839276, y: -9.357393, z: -3.5}
     - {x: 15.507586, y: -9.41399, z: -3.5}
@@ -19557,6 +19569,9 @@ MonoBehaviour:
   - {fileID: 1304414636}
   - {fileID: 209122452}
   - {fileID: 1113693897}
+  - {fileID: 1709177590}
+  - {fileID: 1330495496}
+  - {fileID: 561696708}
   - {fileID: 2123572811}
   - {fileID: 761326364}
   - {fileID: 1840781167}
@@ -19567,7 +19582,7 @@ MonoBehaviour:
   starFX: {fileID: 4703598324225116034, guid: cf6696c35ed2218498ac4f5624ae2a23, type: 3}
   complementPrefab: {fileID: 7116642006971059512, guid: 1aae8e157f13b7347accb9d2c8564567, type: 3}
   instPos: {fileID: 60355732}
-  wordsAfterWhichToMoveCam: 050000000a000000
+  wordsAfterWhichToMoveCam: 050000000b000000
   levelCompleted: 0
   levelFail: 0
   removing: 0
@@ -21781,7 +21796,7 @@ GameObject:
   - component: {fileID: 2089780263}
   - component: {fileID: 2089780264}
   m_Layer: 0
-  m_Name: HINT-16
+  m_Name: HINT-22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22251,7 +22266,7 @@ GameObject:
   - component: {fileID: 2123572812}
   - component: {fileID: 2123572813}
   m_Layer: 0
-  m_Name: HINT-13
+  m_Name: HINT-16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
