@@ -737,6 +737,10 @@ public class UIManagerScript : MonoBehaviour
 	public void Hint_CallBack()
 	{
 		HintButtonDeActiveFun();
+        DOVirtual.DelayedCall(0.1f, () =>
+        {
+            HintButtonActiveFun();
+        });
 		GameManager.Instance.ShowTheText();
 		
 		if (!SoundHapticManager.Instance) return;
@@ -751,7 +755,7 @@ public class UIManagerScript : MonoBehaviour
 	// ReSharper disable Unity.PerformanceAnalysis
 	public void HintButtonActiveFun()
 	{
-		if (!GameManager.Instance.hintSpawnObject)
+		if (GameManager.Instance.hintCubesHolder[0].activeInHierarchy && GameManager.Instance.hintCubesHolder.Count > 0)
 		{
 			if (!GameManager.Instance.cameraMoving && !GameManager.Instance.levelCompleted && !GameManager.Instance.wordTouch)
 			{
@@ -834,10 +838,11 @@ public class UIManagerScript : MonoBehaviour
 			if (GameManager.Instance.stickingCubes[i].gameObject.activeInHierarchy &&
 			    !GameManager.Instance.stickingCubes[i].correctWordMade)
 			{
-				if (GameManager.Instance.stickingCubes[i].emojiRevel && !GameManager.Instance.stickingCubes[i].emojiRevel)
+				if (GameManager.Instance.stickingCubes[i].GetComponent<StickingAreaCheckingScript>().emojiRevel)
 				{
-					EmojiRevelButtonDeActivate();
 					GameManager.Instance.stickingCubes[i].emojiRevel.SetActive(true);
+                    GameManager.Instance.stickingCubes[i].GetComponent<StickingAreaCheckingScript>().emojiRevel = null;
+					EmojiRevelButtonDeActivate();
 					break;
 				}
 			}

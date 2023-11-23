@@ -1328,7 +1328,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1 &386708119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,7 +1486,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &432619901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1642,7 +1646,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &521058243
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1872,11 +1878,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1692701609025638357, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_text
-      value: COLOUR OF LIPSTICK
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1692701609025638357, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_fontSize
-      value: 40.9
+      value: 51.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268805544716723623, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
+      propertyPath: question
+      value: COLOUR OF LIPSTICK
       objectReference: {fileID: 0}
     - target: {fileID: 2371328186632468328, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_Pivot.x
@@ -2327,7 +2337,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1 &620040679
 GameObject:
   m_ObjectHideFlags: 0
@@ -3814,7 +3826,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &1040719344
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7338,6 +7352,7 @@ MonoBehaviour:
   - {fileID: 441681240}
   - {fileID: 371193975}
   - {fileID: 427286240}
+  spriteRevealImages: []
   scriptOff: 0
   rowsInGrid: 7
   colInGrid: 7
@@ -7410,11 +7425,13 @@ MonoBehaviour:
   levelCompleted: 0
   levelFail: 0
   removing: 0
+  hintSpawnObject: {fileID: 0}
   numberCubeHolders: []
   objNumbers: 
   wordTouch: 0
   autoWordClick: 0
   cameraMoving: 0
+  imageRevel: []
 --- !u!4 &1870371619
 Transform:
   m_ObjectHideFlags: 0
@@ -7823,7 +7840,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &1978203570
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
 
 
     [SerializeField] private List<GameObject> _allCubeObjects;
-    [Space(10)] [SerializeField] private List<GameObject> hintCubesHolder;
+    [Space(10)]public List<GameObject> hintCubesHolder;
 
     [Space(10)] [SerializeField] private GameObject starFX;
 
@@ -601,7 +601,7 @@ public class GameManager : MonoBehaviour
     public GameObject hintSpawnObject;
     public void ShowTheText()
     {
-        foreach (var cube in hintCubesHolder)
+        /*foreach (var cube in hintCubesHolder)
         {
             int count = cube.GetComponentsInChildren<TextMeshPro>().Length;
             if (count == 0) continue;
@@ -612,7 +612,7 @@ public class GameManager : MonoBehaviour
                 /*if (PlayerPrefs.GetInt("Level", 1) > 1)
                 {
                     CoinManager.instance.HintReduce(50);
-                }*/
+                }#1#
 
                 if (PlayerPrefs.GetInt("Level", 1) == 1) UIManagerScript.Instance.HelpHand();
                 //print("instantiated");
@@ -627,11 +627,76 @@ public class GameManager : MonoBehaviour
             }
 
             break;
+        }*/
+        if (UIManagerScript.Instance.GetSpecialLevelNumber() == 1)
+        {
+            foreach (var cube in hintCubesHolder)
+            {
+                int count = cube.GetComponentsInChildren<TextMeshPro>().Length;
+                if (count == 0) continue;
+                if (!IsInstantiated(cube, count))
+                {
+                    Instantiate(starFX, cube.transform.position, Quaternion.identity);
+                    hintSpawnObject = cube;
+                    /*if (PlayerPrefs.GetInt("Level", 1) > 1)
+                    {
+                        CoinManager.instance.HintReduce(50);
+                    }*/
+
+                    if (PlayerPrefs.GetInt("Level", 1) == 1) UIManagerScript.Instance.HelpHand();
+                    //print("instantiated");
+                }
+
+                for (int j = 0; j < count; j++)
+                {
+                    var obj = cube;
+                    obj.GetComponentsInChildren<TextMeshPro>()[j].DOFade(217f / 255f, 2f);
+
+                    obj.GetComponentsInChildren<HighlightTextScript>()[j].isVisible = true;
+                }
+
+                break;
+            }
+        }
+        else
+        {
+            if (hintCubesHolder.Count == 0) return;
+            if (hintCubesHolder[0].gameObject.activeInHierarchy && !hintCubesHolder[0].GetComponent<HintParent>().doneObject)
+            {
+                var selectObj = hintCubesHolder[0];
+                Instantiate(starFX, selectObj.transform.position, Quaternion.identity);
+                for (int j = 0; j <= selectObj.transform.childCount; j++)
+                {
+                    if (j < selectObj.transform.childCount)
+                    {
+                        var obj = selectObj.transform.GetChild(j);
+                        obj.GetChild(0).GetComponent<TextMeshPro>().DOFade(217f / 255f, 2f);
+                    }
+                    else
+                    {
+                        if (hintCubesHolder.Contains(selectObj))
+                        {
+                            print(":::::::::::::::::::::::::::::::::::::::::::::");
+                            hintCubesHolder.RemoveAt(0);
+                        }
+                    }
+                    
+                    /*for (int i = 0; i < obj.childCount; i++)
+                    {
+                        obj.GetChild(i).GetComponent<TextMeshPro>().DOFade(217f / 255f, 2f);
+                    }*/
+                    //obj.GetComponentsInChildren<TextMeshPro>()[j].DOFade(217f / 255f, 2f);
+                    
+                    //obj.GetComponentsInChildren<HighlightTextScript>()[j].isVisible = true;
+                }
+            } 
         }
     }
 
     private bool IsInstantiated(GameObject obj, int count)
     {
+        
+        
         for (int i = 0; i < count; i++)
         {
             var isVisible = obj.GetComponentsInChildren<HighlightTextScript>()[i].isVisible;

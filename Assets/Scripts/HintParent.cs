@@ -39,11 +39,23 @@ public class HintParent : MonoBehaviour
 			}
 			
 			doneObject = true;
+            
 			if (GameManager.Instance.hintSpawnObject == this.gameObject)
 			{
 				GameManager.Instance.hintSpawnObject = null;
 				UIManagerScript.Instance.HintButtonActiveFun();	
 			}
+            
+            if (GameManager.Instance.hintCubesHolder.Count > 0 && GameManager.Instance.hintCubesHolder.Contains(gameObject))
+            {
+                for (int i = 0; i < GameManager.Instance.hintCubesHolder.Count; i++)
+                {
+                    if (GameManager.Instance.hintCubesHolder[i].gameObject == gameObject)
+                    {
+                        GameManager.Instance.hintCubesHolder.RemoveAt(i);
+                    }
+                }
+            }
 		}
 	}
 	
