@@ -75,25 +75,6 @@ public class LionStudiosManager : SingletonInstance<LionStudiosManager>
         };
         LionAnalytics.PowerUpUsed(data,additionalData);
     }
-    
-    public static void SpecialHint(string levelNo, string hintsCount)
-    {
-        var additionalData = new Dictionary<string, object>
-        {
-            { "level_number", levelNo },
-            { "specialHints_count", hintsCount }
-        };
-        
-        LionAnalytics.ItemActioned("specialHints", "11", "SpecialHintButton", "SpecialHintType", additionalData);
-        
-        var data = new PowerUpUsedEventArgs
-        {
-            MissionAttempt = int.Parse(hintsCount),
-            PowerUpName = "specialHint",
-            MissionID = levelNo
-        };
-        LionAnalytics.PowerUpUsed(data,additionalData);
-    }
 
     public static void Magnet(string levelNo, int magnetCount)
     {

@@ -298,7 +298,6 @@ public class ApplovinManager : MonoBehaviour
         {
             RewardType.BubbleRv => "HintBubble2X",
             RewardType.Hint => "Hint",
-            RewardType.SpecialHint => "SpecialHint",
             RewardType.Magnet => "Magnet",
             RewardType.LevelCompleteReward => "LevelCompleteReward",
             RewardType.GiftBox => "GiftBox",
@@ -323,7 +322,6 @@ public class ApplovinManager : MonoBehaviour
         {
             RewardType.BubbleRv => "HintBubble2X",
             RewardType.Hint => "Hint",
-            RewardType.SpecialHint => "SpecialHint",
             RewardType.Magnet => "Magnet",
             RewardType.LevelCompleteReward => "LevelCompleteReward",
             RewardType.GiftBox => "GiftBox",
@@ -355,7 +353,6 @@ public class ApplovinManager : MonoBehaviour
         {
             RewardType.BubbleRv => "HintBubble2X",
             RewardType.Hint => "Hint",
-            RewardType.SpecialHint => "SpecialHint",
             RewardType.Magnet => "Magnet",
             RewardType.LevelCompleteReward => "LevelCompleteReward",
             RewardType.GiftBox => "GiftBox",
@@ -391,7 +388,6 @@ public class ApplovinManager : MonoBehaviour
         {
             RewardType.BubbleRv => "HintBubble2X",
             RewardType.Hint => "Hint",
-            RewardType.SpecialHint => "SpecialHint",
             RewardType.Magnet => "Magnet",
             RewardType.LevelCompleteReward => "LevelCompleteReward",
             RewardType.GiftBox => "GiftBox",

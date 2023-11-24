@@ -80,6 +80,11 @@ public class UIManagerScript : MonoBehaviour
     public GameObject coinsObj;
     public GameObject giftMagnetObj;
     public GameObject giftHintObj;
+    public GameObject giftMagnetInstancePos;
+    public GameObject giftMagnetMovePosition;
+    public GameObject giftHintMovePosition;
+    public TextMeshProUGUI giftMagnetCountTemp;
+    public TextMeshProUGUI giftHintCountTemp;
     public Button claimButton;
     public RectTransform giftCoinMovePOs;
     public GameObject giftDiamondFxParent;
@@ -94,7 +99,7 @@ public class UIManagerScript : MonoBehaviour
     public GameObject calendarPanel;
     public Button calenderButton;
 
-    private static int _hintCount = 1, _magnetCount = 1, _imageRevealCount = 1, _levelCompleteRewardCount = 1, _noMoreMovesCount = 1;
+    public static int _hintCount = 1, _magnetCount = 1, _imageRevealCount = 1, _levelCompleteRewardCount = 1, _noMoreMovesCount = 1;
     private void Awake()
 	{
 		if (!Instance) Instance = this;
@@ -207,10 +212,14 @@ public class UIManagerScript : MonoBehaviour
 			MonitizationScript.instance.giftObject.SetActive(false);
 		}
 
-		/*if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings-1)
+		if (GetSpecialLevelNumber() == 121)
 		{
-			calenderButton.gameObject.SetActive(GetSpecialLevelNumber() >= 11);
-		}*/
+			levelNo.transform.GetChild(1).gameObject.SetActive(true);
+		}
+		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings-1)
+		{
+			calenderButton.gameObject.SetActive(GetSpecialLevelNumber() <= 11);
+		}
 
 		/*if (GetSpecialLevelNumber() <= 130)
 		{
@@ -552,11 +561,15 @@ public class UIManagerScript : MonoBehaviour
 				if (GetSpecialLevelNumber() == 5)
 				{
 					GiftOpenFun(1);
+					giftMagnetCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 100).ToString();
+					giftHintCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 50).ToString();
 				}
 				else
 				{
 					var num = Random.Range(0, 2);
 					GiftOpenFun(num);
+					giftMagnetCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 100).ToString();
+					giftHintCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 50).ToString();
 				}
 	                   
 			}
@@ -1012,6 +1025,7 @@ public class UIManagerScript : MonoBehaviour
 		    {
 			    case 0:
 				    GiftPopFun(coinsObj, giftHintObj,giftJumpPLace,giftJumpPLace2, 50,coinCount);
+				    _magnetOrHint = "Hint";
 				    if (LionStudiosManager.instance)
 				    {
 					    LionStudiosManager.LevelCompleteReward(GetSpecialLevelNumber().ToString(),"Coins","50",_levelCompleteRewardCount.ToString());
@@ -1021,6 +1035,7 @@ public class UIManagerScript : MonoBehaviour
 				    break;
 			    case 1:
 				    GiftPopFun(coinsObj, giftMagnetObj,giftJumpPLace,giftJumpPLace2, 100,coinCount);
+				    _magnetOrHint = "Magnet";
 				    if (LionStudiosManager.instance)
 				    {
 					    LionStudiosManager.LevelCompleteReward(GetSpecialLevelNumber().ToString(),"Coins","100",_levelCompleteRewardCount.ToString());
@@ -1074,15 +1089,36 @@ public class UIManagerScript : MonoBehaviour
 	    });
     }
 
+    private string _magnetOrHint;
     private int _coinIncreaseNUm;
     //private string _revelItem;
     public void GiftClaimFun()
     {
 	    claimButton.interactable = false;
-	    DOVirtual.DelayedCall(0.5f, () =>
+	   
+	    DOVirtual.DelayedCall(0.25f, () =>
 	    {
 		    
 		    StartCoroutine(PlayCoinCollectionFx(giftCoinMovePOs,giftDiamondFxParent,giftCenterParticleRect,giftDiamondParticlesRect));
+	    });
+	    DOVirtual.DelayedCall(1.7f, () =>
+	    {
+		    var instanceObj = MonitizationScript.instance.instanceImageRef;
+		    switch (_magnetOrHint)
+		    {
+			    case "Magnet":
+				    instanceObj.GetComponent<Image>().sprite = MonitizationScript.instance.magnetImage;
+				    var magnetNum = CoinManager.instance.GetCoinsCount() / 100;
+				    MagnetSpawn(instanceObj, giftJumpPLace2, giftMagnetMovePosition, "Magnet",magnetNum);
+				    break;
+			    case "Hint":
+				    instanceObj.GetComponent<Image>().sprite = MonitizationScript.instance.hintImage;
+				    var hintNum = CoinManager.instance.GetCoinsCount() / 50;
+				    MagnetSpawn(instanceObj, giftJumpPLace2, giftHintMovePosition, "Hint",hintNum);
+				    break;
+			    default:
+				    break;
+		    }
 	    });
 	    DOVirtual.DelayedCall(2f, () =>
 	    {
@@ -1096,6 +1132,30 @@ public class UIManagerScript : MonoBehaviour
 	    },false);
 	    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 	    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+    }
+    public void MagnetSpawn(GameObject instanceObj,GameObject instancePos,GameObject movePosition,string spawnObj,int countNum)
+    {
+	    GameObject obj=Instantiate(instanceObj, instancePos.transform.position, Quaternion.identity);
+	    //magnet.transform.DOScale(Vector3.zero, 0.15f).From();
+	    obj.transform.SetParent(instancePos.transform.parent);
+	    obj.GetComponent<RectTransform>().anchoredPosition = instancePos.GetComponent<RectTransform>().anchoredPosition;
+	    obj.GetComponent<RectTransform>().DOScale(obj.transform.localScale * 2.5f, 0.65f).OnComplete(() =>
+	    {
+		    obj.GetComponent<RectTransform>().DOScale(Vector3.zero, 0.75f).SetEase(Ease.Linear);
+	    });
+	    obj.GetComponent<RectTransform>()
+		    .DOJumpAnchorPos(movePosition.GetComponent<RectTransform>().anchoredPosition, 300f, 1, 1f)
+		    .SetEase(Ease.Linear).OnComplete(() =>
+		    {
+			    //magnet.GetComponent<RectTransform>().DOPunchAnchorPos(Vector2.one * 2.5f, 0.15f, 2);
+			    if (spawnObj == "Magnet")  giftMagnetCountTemp.text = (countNum + 1).ToString();
+			    else if(spawnObj == "Hint") giftHintCountTemp.text = (countNum + 1).ToString();
+			    DOVirtual.DelayedCall(0.2f, () =>
+			    {
+				    obj.gameObject.SetActive(false);
+				    Destroy(obj);
+			    });
+		    });
     }
     public void MapLevelNextButton()
     {
@@ -1145,9 +1205,7 @@ public class UIManagerScript : MonoBehaviour
     }
 	public int GetSpecialLevelNumber() => PlayerPrefs.GetInt("SpecialLevelNumber", 1);
 	public void SetSpecialLevelNumber(int levelNum) => PlayerPrefs.SetInt("SpecialLevelNumber", levelNum);
-
-	public int GetStart100Coins() => PlayerPrefs.GetInt("GetFree100Coins", 0);
-	public void SetStart100Coins(int val) => PlayerPrefs.SetInt("GetFree100Coins", val);
+	
 
 	public int GetLevelNumberDetails() => PlayerPrefs.GetInt("LevelNumberDetails", 1);
 	public void SetLevelNumberDetails(int levelNum) => PlayerPrefs.SetInt("LevelNumberDetails", levelNum);
@@ -1166,7 +1224,7 @@ public class UIManagerScript : MonoBehaviour
 	{
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
-		if (GetSpecialLevelNumber() < 30)
+		/*if (GetSpecialLevelNumber() < 30)
 		{
 			var calval = calenderButton.transform.GetChild(1).transform;
 			if (calval.localScale.x == 0)
@@ -1178,7 +1236,7 @@ public class UIManagerScript : MonoBehaviour
 				});
 			}
 			return;
-		}
+		}*/
 		calendarPanel.gameObject.SetActive(!calendarPanel.gameObject.activeInHierarchy);
 		
 	}

@@ -341,10 +341,10 @@ public class EmojiManager : MonoBehaviour
         }
         else
         {
-            GameEssentials.RvType = RewardType.SpecialHint;
-            GameEssentials.ShowRewardedAds("SpecialHint");
+            GameEssentials.RvType = RewardType.Hint;
+            GameEssentials.ShowRewardedAds("Hint");
             if(LionStudiosManager.instance)
-                LionStudiosManager.AdsEvents(true, AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","SpecialHint",CoinManager.instance.GetCoinsCount());
+                LionStudiosManager.AdsEvents(true, AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","Hint",CoinManager.instance.GetCoinsCount());
             /////----------------ad call
         }
         HintButtonDeActiveFun();
@@ -374,8 +374,8 @@ public class EmojiManager : MonoBehaviour
         }
         
         if(!LionStudiosManager.instance) return;
-        LionStudiosManager.SpecialHint(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),_specialHintCount.ToString());
-        _specialHintCount++;
+        LionStudiosManager.Hint(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),UIManagerScript._hintCount.ToString());
+        UIManagerScript._hintCount++;
     }
     public void HintButtonActiveFun()
     {
