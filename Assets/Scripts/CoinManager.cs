@@ -155,7 +155,7 @@ public class CoinManager : MonoBehaviour
         autoWordCountText.text = ((int)(totalCoins / 100)).ToString();
         if (totalCoins < 100)
         {
-            //UIManagerScript.Instance.autoWordButton.interactable = false;
+            UIManagerScript.Instance.AutoButtonActiveFun();
             autoWordCountText.text = "0";
         }
     }
@@ -225,7 +225,7 @@ public class CoinManager : MonoBehaviour
     public int Get5050Count() => PlayerPrefs.GetInt("Count5050", 0);
     public void Set5050Count(int count5050) => PlayerPrefs.SetInt("Count5050", count5050);
     
-    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 10000);
+    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 100000000);
 
     public void SetCoinCount(int countCoin) => PlayerPrefs.SetInt("Coins Count", countCoin);
 }

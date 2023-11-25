@@ -246,7 +246,7 @@ public class ApplovinManager : MonoBehaviour
         Time.timeScale = 0;
         MaxSdk.ShowInterstitial(interstitialAdUnitId, placement);
         LionStudiosManager.AdsEvents(false,AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","LevelComplete",CoinManager.instance.GetCoinsCount());
-        ResetAdsTimeLimit(120);
+        ResetAdsTimeLimit(180);
     }
 
     private void InitializeRewardedAds()
@@ -406,7 +406,7 @@ public class ApplovinManager : MonoBehaviour
 
         Reward_Callback();
         LoadRewardedAd();
-        ResetAdsTimeLimit(120);
+        ResetAdsTimeLimit(180);
         
     }
 

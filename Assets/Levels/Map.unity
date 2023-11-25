@@ -211,8 +211,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2971b4333cef6d247acf1a06791b3855, type: 3}
   - {fileID: 21300000, guid: ad1a89681d31d4f41a08cebdefb18398, type: 3}
   - {fileID: 21300000, guid: 74f142ed3dfb9ac43a52ad5907a8381d, type: 3}
-  - {fileID: 21300000, guid: dc21dccd939d9f542854ff37c84c6df6, type: 3}
   - {fileID: 21300000, guid: 70ea05399d5981e4d8f1c8e84e116d5b, type: 3}
+  - {fileID: 21300000, guid: dc21dccd939d9f542854ff37c84c6df6, type: 3}
   - {fileID: 21300000, guid: 2ef16d2bd57dc6e4e8c9b2e0551df757, type: 3}
   - {fileID: 21300000, guid: 1bf0ad175a30f3745a65f4abf65fb7d7, type: 3}
   - {fileID: 21300000, guid: bea2a8542fd9ff14fbc1aabe10b14abf, type: 3}
@@ -902,8 +902,11 @@ MonoBehaviour:
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
   levelFail: 0
+  wordsMade: 0
+  totalAutoWordsNumber: 0
   removing: 0
   hintSpawnObject: {fileID: 0}
+  wordsDeleteNumber: 0
   numberCubeHolders: []
   objNumbers: 
   wordTouch: 0

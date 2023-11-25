@@ -149,14 +149,15 @@ public class UIManagerScript : MonoBehaviour
 				AutoButtonActiveFun();
 				EmojiRevelButtonActiveFun();
 			}
-			if (s == '5')
+			if (s == '5' || ((SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 33 &&
+			                     SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 2)))
 			{
 				giftLevel = true;
 			}
-			else if ((SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 33 &&
-			          SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 2))
+			else 
 			{
-				giftLevel = true;
+				giftLevel = false;
+				// levelNo.gameObject.SetActive(false);
 			}
 			if(GAScript.instance) GAScript.instance.LevelStart(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
 		}
@@ -216,10 +217,10 @@ public class UIManagerScript : MonoBehaviour
 		{
 			levelNo.transform.GetChild(1).gameObject.SetActive(true);
 		}
-		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings-1)
+		/*if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings-1)
 		{
 			calenderButton.gameObject.SetActive(GetSpecialLevelNumber() <= 11);
-		}
+		}*/
 
 		/*if (GetSpecialLevelNumber() <= 130)
 		{
@@ -523,7 +524,7 @@ public class UIManagerScript : MonoBehaviour
 	}
 	public void CoinsDoubleClaimFun(int x)
 	{
-		if (loseItButton.interactable) loseItButton.interactable = false;
+		
 		_barTween.Pause();
 		if (doubleCoinsButton.interactable) doubleCoinsButton.interactable = false;
 		if (SoundHapticManager.Instance)
@@ -582,6 +583,7 @@ public class UIManagerScript : MonoBehaviour
 				},false);
 			}
 		},false);
+		if (loseItButton.interactable) loseItButton.interactable = false;
 	}
 	public void FailPanelActive()
     {
@@ -680,7 +682,7 @@ public class UIManagerScript : MonoBehaviour
 			    HintButtonActiveFun();
 			    GameManager.Instance.scriptOff = false;
 		    },false);
-		    DOVirtual.DelayedCall(4.5f,() =>
+		    DOVirtual.DelayedCall(2.5f,() =>
 		    {
 			    // print("One attack::::::::::::::::::::::::::::::::::::::");
 			    GameManager.Instance.autoWordClick = false;
@@ -755,29 +757,36 @@ public class UIManagerScript : MonoBehaviour
 	// ReSharper disable Unity.PerformanceAnalysis
 	public void HintButtonActiveFun()
 	{
-		if (GameManager.Instance.hintCubesHolder[0].activeInHierarchy && GameManager.Instance.hintCubesHolder.Count > 0)
+		DOVirtual.DelayedCall(0.2f, () =>
 		{
-			if (!GameManager.Instance.cameraMoving && !GameManager.Instance.levelCompleted && !GameManager.Instance.wordTouch)
+			if (GameManager.Instance.hintCubesHolder.Count == 0) return;
+
+			if (GameManager.Instance.hintCubesHolder[0].activeInHierarchy)
 			{
-				if (!hintButton.interactable)
+				if (!GameManager.Instance.cameraMoving && !GameManager.Instance.levelCompleted &&
+				    !GameManager.Instance.wordTouch)
 				{
-					hintButton.interactable = true;
-			
-					var hintsTxt = hintButton.image.rectTransform.GetChild(0).gameObject;
-					var coinsTxt = hintButton.image.rectTransform.GetChild(1).gameObject;
-					var rvIcon = hintButton.image.rectTransform.GetChild(2).gameObject;
-					var loadingIcon = hintButton.image.rectTransform.GetChild(3).gameObject;
-			
-					hintsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=50);
-					coinsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=50);
-			
-					rvIcon.SetActive(CoinManager.instance.GetCoinsCount()<50 && GameEssentials.IsRvAvailable());
-					loadingIcon.SetActive(CoinManager.instance.GetCoinsCount()<50 && !GameEssentials.IsRvAvailable());
+					if (!hintButton.interactable)
+					{
+						hintButton.interactable = true;
+
+						var hintsTxt = hintButton.image.rectTransform.GetChild(0).gameObject;
+						var coinsTxt = hintButton.image.rectTransform.GetChild(1).gameObject;
+						var rvIcon = hintButton.image.rectTransform.GetChild(2).gameObject;
+						var loadingIcon = hintButton.image.rectTransform.GetChild(3).gameObject;
+
+						hintsTxt.SetActive(CoinManager.instance.GetCoinsCount() >= 50);
+						coinsTxt.SetActive(CoinManager.instance.GetCoinsCount() >= 50);
+
+						rvIcon.SetActive(CoinManager.instance.GetCoinsCount() < 50 && GameEssentials.IsRvAvailable());
+						loadingIcon.SetActive(CoinManager.instance.GetCoinsCount() < 50 &&
+						                      !GameEssentials.IsRvAvailable());
+					}
+
 				}
-			
 			}
-		}
-		
+		},false);
+
 	}
 	public void HintButtonDeActiveFun()
 	{
@@ -1175,9 +1184,9 @@ public class UIManagerScript : MonoBehaviour
 	    {
 		    levelAttempts = 0;
 		    PlayerPrefs.SetInt("Special",0);
-		    if (PlayerPrefs.GetInt("Level") > (SceneManager.sceneCountInBuildSettings) - 3)
+		    if (PlayerPrefs.GetInt("Level") > (SceneManager.sceneCountInBuildSettings) - 33)
 		    {
-			    var i = Random.Range(11, SceneManager.sceneCountInBuildSettings-3);
+			    var i = Random.Range(11, SceneManager.sceneCountInBuildSettings - 33);
 			    PlayerPrefs.SetInt("ThisLevel", i);
 			    SceneManager.LoadScene(i);
 		    }
@@ -1200,7 +1209,7 @@ public class UIManagerScript : MonoBehaviour
 	    }
 	    //if(SceneManager.GetActiveScene().buildIndex)
 	    var s = GetSpecialLevelNumber().ToString()[^1];
-	    if (s != '0' && SceneManager.GetActiveScene().buildIndex <= SceneManager.sceneCountInBuildSettings - 2)
+	    if (s != '0' && SceneManager.GetActiveScene().buildIndex <= SceneManager.sceneCountInBuildSettings - 32)
 	    {
 		    PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
 	    }

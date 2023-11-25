@@ -242,18 +242,6 @@ public class EmojiManager : MonoBehaviour
         panelObject.emojiName.text = emojiDataScript.detailsLists[listNumber].emojiName;
         panelObject.winCount = emojiDataScript.detailsLists[listNumber].correctList.ToList().Count;
         panelObject.StartFun();
-        if (panelObj.GetComponent<EmojiClick>().options.Count <= 5)
-        {
-            //button5050.interactable = false;
-            //FiftyFiftyButtonDeActiveFun();
-            UIManagerScript.Instance.fiftyFiftyButton.GetComponent<Image>().gameObject.SetActive(false);
-        }
-        else
-        {
-            // button5050.interactable = true;
-            FiftyFiftyButtonActiveFun();
-            //UIManagerScript.Instance.fiftyFiftyButton.gameObject.GetComponent<Image>().enabled = true;
-        }
 
         if (GetListNumbers() > 2)
         {
@@ -267,6 +255,18 @@ public class EmojiManager : MonoBehaviour
         _levelCompletemain = false;
         HintButtonActiveFun();
         ShuffleButtonActive();
+        if (panelObj.GetComponent<EmojiClick>().options.Count <= 5)
+        {
+            //button5050.interactable = false;
+            //FiftyFiftyButtonDeActiveFun();
+            UIManagerScript.Instance.fiftyFiftyButton.GetComponent<Image>().gameObject.SetActive(false);
+        }
+        else
+        {
+            // button5050.interactable = true;
+            FiftyFiftyButtonActiveFun();
+            //UIManagerScript.Instance.fiftyFiftyButton.gameObject.GetComponent<Image>().enabled = true;
+        }
     }
 
     public void FunShuffle()
@@ -292,7 +292,8 @@ public class EmojiManager : MonoBehaviour
     {
         if(LionStudiosManager.instance)
         {
-            LionStudiosManager.Shuffle(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),_shuffleCount);
+            LionStudiosManager.
+                Shuffle(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),_shuffleCount);
             _shuffleCount++;
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -461,10 +462,7 @@ public class EmojiManager : MonoBehaviour
     }
     public void FiftyFiftyButtonActiveFun()
     {
-        if (!_fiftyFifty)
-        {
-            UIManagerScript.Instance.fiftyFiftyButton.interactable = true;
-        }
+        UIManagerScript.Instance.fiftyFiftyButton.interactable = true;
         var fun5050Text = UIManagerScript.Instance.fiftyFiftyButton.image.rectTransform.GetChild(0).gameObject;
         var coinsTxt = UIManagerScript.Instance.fiftyFiftyButton.image.rectTransform.GetChild(1).gameObject;
         var rvIcon = UIManagerScript.Instance.fiftyFiftyButton.image.rectTransform.GetChild(2).gameObject;

@@ -54,6 +54,7 @@ public class MonitizationScript : MonoBehaviour
       if(!GameEssentials.instance) return;
       rvGiftIcon.SetActive(GameEssentials.IsRvAvailable());
       loadingGiftIcon.SetActive(!GameEssentials.IsRvAvailable());
+      giftImage.GetComponent<Button>().interactable = GameEssentials.IsRvAvailable();
    }
 
    public void GiftButtonFun()
