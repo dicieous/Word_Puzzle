@@ -5,17 +5,11 @@ using Coffee.UIExtensions;
 using DDZ;
 using DG.Tweening;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
-
-
-// [System.Serializable]
-// public class HintWords { public List<int> wordNoToShow; }
 
 
 public class UIManagerScript : MonoBehaviour
@@ -74,8 +68,8 @@ public class UIManagerScript : MonoBehaviour
 
     //public GameObject gifAnimationObj;
     [Header("Gift Details")] 
-    private int _dailyRewardNumber;
-    public String dailyRewardDetails;
+    public int _dailyRewardNumber;
+    public static String dailyRewardDetails;
     public bool giftLevel;
     public GameObject giftJumpPLace;
     public GameObject giftJumpPLace2;
@@ -101,12 +95,20 @@ public class UIManagerScript : MonoBehaviour
     [Header("Calender Details")]
     public GameObject calendarPanel;
     public Button calenderButton;
-
+    public Image calIndicator;
     public static int _hintCount = 1, _magnetCount = 1, _imageRevealCount = 1, _levelCompleteRewardCount = 1, _noMoreMovesCount = 1;
     private void Awake()
 	{
 		if (!Instance) Instance = this;
+		//CalendarIndicatorCheck();
 	}
+
+    private void CalendarIndicatorCheck()
+    {
+	    var canShowCalIndicator =
+		    PlayerPrefs.GetInt("DailyChallenges_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year, 0) == 0 && GetSpecialLevelNumber() <= 30; 
+	    calIndicator.gameObject.SetActive(canShowCalIndicator);
+    }
 
 	private void Start()
 	{
@@ -172,18 +174,23 @@ public class UIManagerScript : MonoBehaviour
 		{
 			case "C*200 H*1":
 				_dailyRewardNumber = 1;
+				print("dailyReward:::::::::::"+_dailyRewardNumber);
 				break;
 			case "C*100 H*2":
 				_dailyRewardNumber = 2;
+				print("dailyReward:::::::::::"+_dailyRewardNumber);
 				break;
 			case "C*50 M*1":
 				_dailyRewardNumber = 3;
+				print("dailyReward:::::::::::"+_dailyRewardNumber);
 				break;
 			case "C*100 M*1":
 				_dailyRewardNumber = 4;
+				print("dailyReward:::::::::::"+_dailyRewardNumber);
 				break;
-			case "C*100 M*2":
+			case "C*150 H*2":
 				_dailyRewardNumber = 5;
+				print("dailyReward:::::::::::"+_dailyRewardNumber);
 				break;
 			default:
 				break;
@@ -585,24 +592,30 @@ public class UIManagerScript : MonoBehaviour
 			//nextButton.interactable = true;
 			if (giftLevel)
 			{
-				if((SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 33 &&
-				        SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 2))
+				if((SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 33))
 				{
 					switch (_dailyRewardNumber)
 					{
 						case 1:
+							GiftOpenFun(2);
 							break;
 						case 2:
+							GiftOpenFun(3);
 							break;
 						case 3:
+							GiftOpenFun(4);
 							break;
 						case 4:
+							GiftOpenFun(5);
 							break;
 						case 5:
+							GiftOpenFun(6);
 							break;
 						default:
 							break;
 					}
+					giftMagnetCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 100).ToString();
+					giftHintCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 50).ToString();
 				}
 				else
 				{
@@ -667,6 +680,8 @@ public class UIManagerScript : MonoBehaviour
 			
 			        rvIcon.SetActive(CoinManager.instance.GetCoinsCount()<100 && GameEssentials.IsRvAvailable());
 			        loadingIcon.SetActive(CoinManager.instance.GetCoinsCount()<100 && !GameEssentials.IsRvAvailable());
+			        autoWordButton.interactable=(CoinManager.instance.GetCoinsCount() < 50 &&
+			                                 !GameEssentials.IsRvAvailable());
 		        }
 	        }
         }
@@ -747,21 +762,6 @@ public class UIManagerScript : MonoBehaviour
 
     private void Update()
 	{
-		/*var s = GetSpecialLevelNumber().ToString()[^1];
-		if (s != '0' && (SceneManager.GetActiveScene().buildIndex != SceneManager.sceneCountInBuildSettings - 1) && !GameManager.Instance.levelCompleted)
-		{
-			if (cm.GetCoinsCount() >= 50 && !hintButton.interactable)
-			{
-				hintButton.interactable = true;
-			}
-			else if(cm.GetCoinsCount() < 50 && hintButton.interactable)
-			{
-				hintButton.interactable = false;
-			}
-			
-		}
-		*/
-
 		
 	}
 
@@ -803,6 +803,7 @@ public class UIManagerScript : MonoBehaviour
 		_hintCount++;
 	}
 
+	private bool _hintActive;
 	// ReSharper disable Unity.PerformanceAnalysis
 	public void HintButtonActiveFun()
 	{
@@ -818,7 +819,7 @@ public class UIManagerScript : MonoBehaviour
 					if (!hintButton.interactable)
 					{
 						hintButton.interactable = true;
-
+						_hintActive = true;
 						var hintsTxt = hintButton.image.rectTransform.GetChild(0).gameObject;
 						var coinsTxt = hintButton.image.rectTransform.GetChild(1).gameObject;
 						var rvIcon = hintButton.image.rectTransform.GetChild(2).gameObject;
@@ -830,6 +831,8 @@ public class UIManagerScript : MonoBehaviour
 						rvIcon.SetActive(CoinManager.instance.GetCoinsCount() < 50 && GameEssentials.IsRvAvailable());
 						loadingIcon.SetActive(CoinManager.instance.GetCoinsCount() < 50 &&
 						                      !GameEssentials.IsRvAvailable());
+						hintButton.interactable=(CoinManager.instance.GetCoinsCount() < 50 &&
+						                                              !GameEssentials.IsRvAvailable());
 					}
 
 				}
@@ -842,6 +845,7 @@ public class UIManagerScript : MonoBehaviour
 		if (hintButton.interactable && !GameManager.Instance.hintSpawnObject)
 		{
 			hintButton.interactable = !hintButton.interactable;
+			_hintActive = false;
 			var hintsTxt = hintButton.image.rectTransform.GetChild(0).gameObject;
 			var coinsTxt = hintButton.image.rectTransform.GetChild(1).gameObject;
 			var rvIcon = hintButton.image.rectTransform.GetChild(2).gameObject;
@@ -1087,7 +1091,7 @@ public class UIManagerScript : MonoBehaviour
 		    switch (num)
 		    {
 			    case 0:
-				    GiftPopFun(coinsObj, giftHintObj,giftJumpPLace,giftJumpPLace2, 50,coinCount);
+				    GiftPopFun(coinsObj, giftHintObj,giftJumpPLace,giftJumpPLace2,coinCount, 50,1);
 				    _magnetOrHint = "Hint";
 				    if (LionStudiosManager.instance)
 				    {
@@ -1097,7 +1101,7 @@ public class UIManagerScript : MonoBehaviour
 				    //_revelItem = "Hint";
 				    break;
 			    case 1:
-				    GiftPopFun(coinsObj, giftMagnetObj,giftJumpPLace,giftJumpPLace2, 100,coinCount);
+				    GiftPopFun(coinsObj, giftMagnetObj,giftJumpPLace,giftJumpPLace2, coinCount,100,1);
 				    _magnetOrHint = "Magnet";
 				    if (LionStudiosManager.instance)
 				    {
@@ -1106,22 +1110,43 @@ public class UIManagerScript : MonoBehaviour
 				    }
 				    //_revelItem = "Magnet";
 				    break;
+			    case 2:
+				    GiftPopFun(coinsObj, giftHintObj,giftJumpPLace,giftJumpPLace2,200, 50,1);
+				    _magnetOrHint = "Hint";
+				    break;
+			    case 3:
+				    GiftPopFun(coinsObj, giftHintObj,giftJumpPLace,giftJumpPLace2, 100,100,2);
+				    _magnetOrHint = "Hint";
+				    break;
+			    case 4:
+				    GiftPopFun(coinsObj, giftMagnetObj,giftJumpPLace,giftJumpPLace2, 100,100,1);
+				    _magnetOrHint = "Magnet";
+				    break;
+			    case 5:
+				    GiftPopFun(coinsObj, giftMagnetObj,giftJumpPLace,giftJumpPLace2, 100,100,1);
+				    _magnetOrHint = "Magnet";
+				    break;
+			    case 6:
+				    GiftPopFun(coinsObj, giftHintObj,giftJumpPLace,giftJumpPLace2, 100,100,2);
+				    _magnetOrHint = "Hint";
+				    break;
 			    default:
 				    break;
 		    }
 		    
 	    });
     }
-
-    public void GiftPopFun(GameObject popObj,GameObject popObj2,GameObject popPosition,GameObject popPosition2,int coinsIncreaseNum,int randomCoinCount)
+    
+    public void GiftPopFun(GameObject popObj,GameObject popObj2,GameObject popPosition,GameObject popPosition2,int randomCoinCount,int magnetOrHintCoins,int magnetOrHintCount)
     {
-	    _coinIncreaseNUm = randomCoinCount+coinsIncreaseNum;
-	    print(_coinIncreaseNUm+"       "+ randomCoinCount +"          "+coinsIncreaseNum);
+	    _coinIncreaseNUm = randomCoinCount + magnetOrHintCoins;
+	    //print(_coinIncreaseNUm+"       "+ randomCoinCount +"          "+coinsIncreaseNum);
 	    DOVirtual.DelayedCall(1.3f, () =>
 	    {
 		    // if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("RewardOpen");
 		    popObj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "+" + randomCoinCount;
+		    popObj2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "+" + magnetOrHintCount;
 		    popObj.GetComponent<RectTransform>().DOScale(Vector3.one, 0.65f).SetEase(Ease.OutBounce);
 		    popObj.GetComponent<RectTransform>().DOJumpAnchorPos(popPosition.GetComponent<RectTransform>().anchoredPosition, 400f, 1, 0.5f)
 			    .SetEase(Ease.Linear);
@@ -1300,10 +1325,10 @@ public class UIManagerScript : MonoBehaviour
 			}
 			return;
 		}*/
+		
 		calendarPanel.gameObject.SetActive(!calendarPanel.gameObject.activeInHierarchy);
 		
 	}
-	
-		
+
 }
 

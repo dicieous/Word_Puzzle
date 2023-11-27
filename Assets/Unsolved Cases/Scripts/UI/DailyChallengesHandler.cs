@@ -14,7 +14,7 @@ public class DailyChallengesHandler : MonoBehaviour
 {
     public static DailyChallengesHandler instance;
 
-    public TMP_Text monthNameTxt, dateMonthTxt, questionTxt;
+    public TMP_Text monthNameTxt, dateMonthTxt, questionTxt,playOnText;
     public Button leftBtn, rightBtn, playBtn;
     public Image playRvIcon, playLoadingIcon, levelScene;
     public Sprite playRvSprite, playNormalSprite;
@@ -146,7 +146,7 @@ public class DailyChallengesHandler : MonoBehaviour
         dateMonthTxt.text = "Play " + date + " " + monthName[..3];
         questionTxt.text = _levelsData[date - 1];
         RewardCoins(date);
-        playBtn.interactable = GetDailyChallenge() != 1;
+        playBtn.gameObject.SetActive(GetDailyChallenge() != 1);
     }
 
     private void CheckIfDailyChallengesCompleted()
@@ -336,13 +336,15 @@ public class DailyChallengesHandler : MonoBehaviour
         playBtn.image.sprite = _selectedDate == date ? playNormalSprite : playRvSprite;
         if (GetDailyChallenge() == 1)
         {
-            playBtn.interactable = false;
+            playBtn.gameObject.SetActive(false);
         }
         else
         {
-            playBtn.interactable = _selectedDate <= date;
+            playBtn.gameObject.SetActive(_selectedDate <= date);
         }
 
+        playOnText.text="You can Play On "+_selectedDate + " " + monthName[..3];
+        playOnText.gameObject.SetActive(_selectedDate>date);
         dateMonthTxt.text = "Play " + _selectedDate + " " + monthName[..3];
     }
 
@@ -372,6 +374,7 @@ public class DailyChallengesHandler : MonoBehaviour
         CheckIfDailyChallengesCompleted();
         // LoadLevel
         var sceneIndex = _baseNumber + _selectedDate;
+        RewardCoins(_selectedDate);
         SceneManager.LoadScene(sceneIndex);
     }
     [SerializeField] private Sprite coinRefImage;
@@ -492,50 +495,51 @@ public class DailyChallengesHandler : MonoBehaviour
                 image2.sprite = hintRefImage;
                 count1 = 200;
                 count2 = 1;
+                ////----Coins Count = 250-----
                 count1Text.text = count1.ToString();
                 count2Text.text = count2.ToString();
-                if (GameManager.Instance)
-                    UIManagerScript.Instance.dailyRewardDetails = "C*200 H*1";
+                UIManagerScript.dailyRewardDetails = "C*200 H*1";
                 break;
             case 2:
                 image1.sprite = coinRefImage;
                 image2.sprite = hintRefImage;
                 count1 = 100;
                 count2 = 2;
+                ////----Coins Count = 200-----
                 count1Text.text = count1.ToString();
                 count2Text.text = count2.ToString();
-                if (GameManager.Instance)
-                    UIManagerScript.Instance.dailyRewardDetails = "C*100 H*2";
+                UIManagerScript.dailyRewardDetails = "C*100 H*2";
                 break;
             case 3:
                 image1.sprite = coinRefImage;
                 image2.sprite = magnetRefImage;
                 count1 = 50;
                 count2 = 1;
+                ////----Coins Count = 150-----
                 count1Text.text = count1.ToString();
                 count2Text.text = count2.ToString();
-                if (GameManager.Instance)
-                    UIManagerScript.Instance.dailyRewardDetails = "C*50 M*1";
+                UIManagerScript.dailyRewardDetails = "C*50 M*1";
                 break;
             case 4:
                 image1.sprite = coinRefImage;
                 image2.sprite = magnetRefImage;
                 count1 = 100;
                 count2 = 1;
+                ////----Coins Count = 200-----
                 count1Text.text = count1.ToString();
                 count2Text.text = count2.ToString();
-                if (GameManager.Instance)
-                    UIManagerScript.Instance.dailyRewardDetails = "C*100 M*1";
+                UIManagerScript.dailyRewardDetails = "C*100 M*1";
+               
                 break;
             case 5:
                 image1.sprite = coinRefImage;
                 image2.sprite = hintRefImage;
-                count1 = 100;
+                count1 = 150;
                 count2 = 2;
+                ////----Coins Count = 250-----
                 count1Text.text = count1.ToString();
                 count2Text.text = count2.ToString();
-                if (GameManager.Instance)
-                    UIManagerScript.Instance.dailyRewardDetails = "C*100 M*2";
+                UIManagerScript.dailyRewardDetails = "C*150 H*2";
                 break;
             default:
                 break;
