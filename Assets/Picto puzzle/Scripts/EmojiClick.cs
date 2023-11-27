@@ -99,6 +99,7 @@ public class EmojiClick : MonoBehaviour
                 EmojiManager.Instance._levelCompletemain = true;
                 for (int i = 0; i < optionBtn.Count; i++)
                 {
+                    // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
                     optionBtn[i].gameObject.GetComponent<Button>().interactable = false;
                 }
                 _levelComplete = true;

@@ -996,7 +996,7 @@ MonoBehaviour:
   correctWordMade: 0
   imageRevelDone: 0
   answerString: 
-  emojiRevel: {fileID: 0}
+  emojiRevel: {fileID: 6427876936704331759}
 --- !u!1001 &443556459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2646,7 +2646,7 @@ MonoBehaviour:
   correctWordMade: 0
   imageRevelDone: 0
   answerString: 
-  emojiRevel: {fileID: 0}
+  emojiRevel: {fileID: 6427876936704331761}
 --- !u!1001 &1021375866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4614,7 +4614,7 @@ MonoBehaviour:
   correctWordMade: 0
   imageRevelDone: 0
   answerString: 
-  emojiRevel: {fileID: 0}
+  emojiRevel: {fileID: 6427876936704331760}
 --- !u!1001 &2022009587
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4820,6 +4820,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 729967882238156734, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2077105156735298826, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -4880,6 +4884,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.85
       objectReference: {fileID: 0}
+    - target: {fileID: 3149127827766546903, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3217499454218424373, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
       propertyPath: m_Name
       value: Emojis
@@ -4906,6 +4914,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4186468922394613196, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5742540649647649439, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5925643920732930686, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
@@ -4970,6 +4982,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+--- !u!1 &6427876936704331759 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3149127827766546903, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+  m_PrefabInstance: {fileID: 6427876936704331758}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6427876936704331760 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 729967882238156734, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+  m_PrefabInstance: {fileID: 6427876936704331758}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6427876936704331761 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5742540649647649439, guid: 8db494459a7a66e4883a0faa00147b57, type: 3}
+  m_PrefabInstance: {fileID: 6427876936704331758}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7895009989981726850
 PrefabInstance:
   m_ObjectHideFlags: 0

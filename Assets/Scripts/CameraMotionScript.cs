@@ -98,6 +98,7 @@ public class CameraMotionScript : MonoBehaviour
                     ActivateHintGroups();
                     ActivateEmojis();
                     cameraMoved++;
+                    // print("cameramoved:::::::::::"+cameraMoved);
                 }));
             });
         });
@@ -159,14 +160,14 @@ public class CameraMotionScript : MonoBehaviour
     }
     private void ActivateHintGroups()
     {
-        if (hintGroups.Count < cameraMoved && hintGroups.Count==0) return;
+        if (hintGroups.Count==0 && hintGroups.Count < cameraMoved) return;
         hintGroups[cameraMoved].SetActive(true);
     }
     void ActivateLetterCubes()
     {
         if (letterGroups.Count < cameraMoved) return;
-        //Debug.Log("Letter Cubes Activated " + letterGroups.Count);
-        //Debug.Log("Camera Moved "+ cameraMoved );
+        /*Debug.Log("Letter Cubes Activated " + letterGroups.Count);
+        Debug.Log("Camera Moved "+ cameraMoved );*/
         var t = letterGroups[cameraMoved];
         t.SetActive(true);
         var cubes = t.transform;

@@ -321,8 +321,8 @@ public class CubesGroupScript : MonoBehaviour
         {
 	        GameManager.Instance.wordTouch = false;
 	        UIManagerScript.Instance.AutoButtonActiveFun();
-	        UIManagerScript.Instance.HintButtonActiveFun();
 	        UIManagerScript.Instance.EmojiRevelButtonActiveFun();
+	        UIManagerScript.Instance.HintButtonActiveFun();
         }
 	        
 	}
