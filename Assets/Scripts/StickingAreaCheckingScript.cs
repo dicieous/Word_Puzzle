@@ -5,7 +5,7 @@ using UnityEngine;
 public class StickingAreaCheckingScript : MonoBehaviour
 {
     [HideInInspector] public bool correctWordMade = false;
-    [HideInInspector] public bool imageRevelDone;
+    [HideInInspector] public bool countDone;
     
     public string answerString;
     
@@ -61,7 +61,7 @@ public class StickingAreaCheckingScript : MonoBehaviour
 
     public void ColliderFun()
     {
-        DOVirtual.DelayedCall(0.5f, () =>
+        DOVirtual.DelayedCall(2.5f, () =>
         {
             for (int i = 0; i < transform.childCount; i++)
             {

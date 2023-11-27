@@ -4190,7 +4190,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2268805544716723623, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: question
-      value: ANOTHER WORD FOR MONEY
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2371328186632468328, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_Pivot.x
@@ -17983,6 +17983,7 @@ MonoBehaviour:
   - BIL
   - CON
   rowColor: []
+  question: ANOTHER WORD FOR MONEY
   wordList: []
   stickingCubes:
   - {fileID: 1995394097}
@@ -18115,8 +18116,11 @@ MonoBehaviour:
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
   levelFail: 0
+  wordsMade: 0
+  totalAutoWordsNumber: 0
   removing: 0
   hintSpawnObject: {fileID: 0}
+  wordsDeleteNumber: 0
   numberCubeHolders: []
   objNumbers: 
   wordTouch: 0
