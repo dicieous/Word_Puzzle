@@ -494,6 +494,8 @@ public class DailyChallengesHandler : MonoBehaviour
                 count2 = 1;
                 count1Text.text = count1.ToString();
                 count2Text.text = count2.ToString();
+                if (GameManager.Instance)
+                    UIManagerScript.Instance.dailyRewardDetails = "C*200 H*1";
                 break;
             case 2:
                 image1.sprite = coinRefImage;
@@ -502,6 +504,8 @@ public class DailyChallengesHandler : MonoBehaviour
                 count2 = 2;
                 count1Text.text = count1.ToString();
                 count2Text.text = count2.ToString();
+                if (GameManager.Instance)
+                    UIManagerScript.Instance.dailyRewardDetails = "C*100 H*2";
                 break;
             case 3:
                 image1.sprite = coinRefImage;
@@ -510,6 +514,8 @@ public class DailyChallengesHandler : MonoBehaviour
                 count2 = 1;
                 count1Text.text = count1.ToString();
                 count2Text.text = count2.ToString();
+                if (GameManager.Instance)
+                    UIManagerScript.Instance.dailyRewardDetails = "C*50 M*1";
                 break;
             case 4:
                 image1.sprite = coinRefImage;
@@ -518,6 +524,8 @@ public class DailyChallengesHandler : MonoBehaviour
                 count2 = 1;
                 count1Text.text = count1.ToString();
                 count2Text.text = count2.ToString();
+                if (GameManager.Instance)
+                    UIManagerScript.Instance.dailyRewardDetails = "C*100 M*1";
                 break;
             case 5:
                 image1.sprite = coinRefImage;
@@ -526,6 +534,8 @@ public class DailyChallengesHandler : MonoBehaviour
                 count2 = 2;
                 count1Text.text = count1.ToString();
                 count2Text.text = count2.ToString();
+                if (GameManager.Instance)
+                    UIManagerScript.Instance.dailyRewardDetails = "C*100 M*2";
                 break;
             default:
                 break;

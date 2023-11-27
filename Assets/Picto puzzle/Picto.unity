@@ -1792,7 +1792,7 @@ MonoBehaviour:
   circle4: {fileID: 1110080235}
   circle5: {fileID: 1110080234}
   nextButton: {fileID: 800891077}
-  retryButton: {fileID: 0}
+  retryButton: {fileID: 1207902249}
   losePanel: {fileID: 1151693342}
   popperBlast: {fileID: 1796312183}
   hand1: {fileID: 1110080233}
@@ -3967,6 +3967,7 @@ MonoBehaviour:
   tutorialtext: {fileID: 0}
   targetCongratulationImage: {fileID: 0}
   congratulationsImages: []
+  dailyRewardDetails: 
   giftLevel: 0
   giftJumpPLace: {fileID: 0}
   giftJumpPLace2: {fileID: 0}
@@ -3974,6 +3975,11 @@ MonoBehaviour:
   coinsObj: {fileID: 0}
   giftMagnetObj: {fileID: 0}
   giftHintObj: {fileID: 0}
+  giftMagnetInstancePos: {fileID: 0}
+  giftMagnetMovePosition: {fileID: 0}
+  giftHintMovePosition: {fileID: 0}
+  giftMagnetCountTemp: {fileID: 0}
+  giftHintCountTemp: {fileID: 0}
   claimButton: {fileID: 0}
   giftCoinMovePOs: {fileID: 0}
   giftDiamondFxParent: {fileID: 0}
@@ -4706,6 +4712,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1195320596}
   m_CullTransparentMesh: 1
+--- !u!114 &1207902249 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4365145502739757275, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
+  m_PrefabInstance: {fileID: 1796312182}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1237970819
 GameObject:
   m_ObjectHideFlags: 0

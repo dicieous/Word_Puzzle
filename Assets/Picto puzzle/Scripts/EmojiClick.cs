@@ -91,17 +91,24 @@ public class EmojiClick : MonoBehaviour
                     EmojiManager.Instance.button5050.interactable = false;
                     EmojiManager.Instance._levelCompletemain = true;
                 }*/
+                for (int i = 0; i < optionBtn.Count; i++)
+                {
+                    // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
+                    /*if (optionBtn[i].gameObject.GetComponent<Button>().interactable)
+                    {
+                        // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
+                        optionBtn[i].gameObject.GetComponent<Button>().interactable = false;
+                    }*/
+                    {
+                        optionBtn[i].GetComponent<Button>().enabled = false;
+                    }
+                }
                 EmojiManager.Instance.HintButtonDeActiveFun();
                 EmojiManager.Instance.ShuffleButtonDeActiveFun();
                 EmojiManager.Instance.FiftyFiftyButtonDeActiveFun();
                 //EmojiManager.Instance.shuffle.interactable = false;
                 //EmojiManager.Instance.button5050.interactable = false;
                 EmojiManager.Instance._levelCompletemain = true;
-                for (int i = 0; i < optionBtn.Count; i++)
-                {
-                    // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-                    optionBtn[i].gameObject.GetComponent<Button>().interactable = false;
-                }
                 _levelComplete = true;
                 DOVirtual.DelayedCall(0.5f, () =>
                 {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Coffee.UIExtensions;
@@ -10,7 +11,7 @@ using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
-
+using Random = UnityEngine.Random;
 
 
 // [System.Serializable]
@@ -73,6 +74,8 @@ public class UIManagerScript : MonoBehaviour
 
     //public GameObject gifAnimationObj;
     [Header("Gift Details")] 
+    private int _dailyRewardNumber;
+    public String dailyRewardDetails;
     public bool giftLevel;
     public GameObject giftJumpPLace;
     public GameObject giftJumpPLace2;
@@ -139,11 +142,14 @@ public class UIManagerScript : MonoBehaviour
 			else
 			{
 				levelNo.text = "LEVEL " + GetSpecialLevelNumber();
-				if (question.Length != 0)
+				if (GameManager.Instance)
 				{
-					levelNo.transform.GetChild(0).gameObject.SetActive(false);
-					levelNo.transform.GetChild(1).gameObject.SetActive(true);
-					levelNo.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = question;
+					if (GameManager.Instance.question!=null)
+					{
+						levelNo.transform.GetChild(0).gameObject.SetActive(false);
+						levelNo.transform.GetChild(1).gameObject.SetActive(true);
+						levelNo.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = question;
+					}
 				}
 				HintButtonActiveFun();
 				AutoButtonActiveFun();
@@ -162,6 +168,26 @@ public class UIManagerScript : MonoBehaviour
 			if(GAScript.instance) GAScript.instance.LevelStart(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
 		}
 
+		switch (dailyRewardDetails)
+		{
+			case "C*200 H*1":
+				_dailyRewardNumber = 1;
+				break;
+			case "C*100 H*2":
+				_dailyRewardNumber = 2;
+				break;
+			case "C*50 M*1":
+				_dailyRewardNumber = 3;
+				break;
+			case "C*100 M*1":
+				_dailyRewardNumber = 4;
+				break;
+			case "C*100 M*2":
+				_dailyRewardNumber = 5;
+				break;
+			default:
+				break;
+		}
 	}
 
 	public void StartButtonActivateFun()
@@ -559,20 +585,42 @@ public class UIManagerScript : MonoBehaviour
 			//nextButton.interactable = true;
 			if (giftLevel)
 			{
-				if (GetSpecialLevelNumber() == 5)
+				if((SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 33 &&
+				        SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 2))
 				{
-					GiftOpenFun(1);
-					giftMagnetCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 100).ToString();
-					giftHintCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 50).ToString();
+					switch (_dailyRewardNumber)
+					{
+						case 1:
+							break;
+						case 2:
+							break;
+						case 3:
+							break;
+						case 4:
+							break;
+						case 5:
+							break;
+						default:
+							break;
+					}
 				}
 				else
 				{
-					var num = Random.Range(0, 2);
-					GiftOpenFun(num);
-					giftMagnetCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 100).ToString();
-					giftHintCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 50).ToString();
+					if (GetSpecialLevelNumber() == 5)
+					{
+						GiftOpenFun(1);
+						giftMagnetCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 100).ToString();
+						giftHintCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 50).ToString();
+					}
+					else
+					{
+						var num = Random.Range(0, 2);
+						GiftOpenFun(num);
+						giftMagnetCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 100).ToString();
+						giftHintCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 50).ToString();
+					}
 				}
-	                   
+				     
 			}
 			else
 			{
@@ -719,12 +767,11 @@ public class UIManagerScript : MonoBehaviour
 
 	public void OnHintButtonClick()
 	{
-		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
-		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+		
 		if (CoinManager.instance.GetCoinsCount() >= 50)
 		{
-			CoinManager.instance.HintReduce(50);
 			Hint_CallBack();
+			CoinManager.instance.HintReduce(50);
 		}
 		else
 		{
@@ -733,6 +780,8 @@ public class UIManagerScript : MonoBehaviour
 			if(LionStudiosManager.instance)
 				LionStudiosManager.AdsEvents(true, AdsEventState.Start,GetSpecialLevelNumber(),"Applovin","Hint",CoinManager.instance.GetCoinsCount());
 		}
+		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 	}
 
 	// ReSharper disable Unity.PerformanceAnalysis

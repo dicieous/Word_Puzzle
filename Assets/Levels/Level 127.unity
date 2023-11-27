@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.41133603, g: 0.43699887, b: 0.45013523, a: 1}
+  m_IndirectSpecularColor: {r: 0.41385436, g: 0.43987173, b: 0.45213437, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1063,7 +1063,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1 &254730088
 GameObject:
   m_ObjectHideFlags: 0
@@ -2216,7 +2218,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1 &386708119
 GameObject:
   m_ObjectHideFlags: 0
@@ -2673,7 +2677,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &443556459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3787,7 +3793,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &583024422
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5411,7 +5419,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &809566802
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6760,7 +6770,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &991653739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11086,7 +11098,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1 &1602589059
 GameObject:
   m_ObjectHideFlags: 0
@@ -14386,6 +14400,7 @@ MonoBehaviour:
   - KINKY
   - LNG
   rowColor: []
+  question: WORD FOR "HAIR"
   wordList: []
   stickingCubes:
   - {fileID: 982728114}
@@ -14398,6 +14413,7 @@ MonoBehaviour:
   - {fileID: 1594475434}
   - {fileID: 792171123}
   - {fileID: 249899626}
+  spriteRevealImages: []
   scriptOff: 0
   rowsInGrid: 7
   colInGrid: 7
@@ -14507,12 +14523,17 @@ MonoBehaviour:
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
   levelFail: 0
+  wordsMade: 0
+  totalAutoWordsNumber: 0
   removing: 0
+  hintSpawnObject: {fileID: 0}
+  wordsDeleteNumber: 0
   numberCubeHolders: []
   objNumbers: 
   wordTouch: 0
   autoWordClick: 0
   cameraMoving: 0
+  imageRevel: []
 --- !u!4 &1870371619
 Transform:
   m_ObjectHideFlags: 0
@@ -14930,7 +14951,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1 &1946002748
 GameObject:
   m_ObjectHideFlags: 0
@@ -14979,7 +15002,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &1962745377
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15590,7 +15615,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  imageRevelDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1 &2014895483
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     public List<string> answers;
     public List<Color> rowColor;
-
+    public string question;
     public List<WordData> wordList;
     public List<StickingAreaCheckingScript> stickingCubes;
     public List<GameObject> spriteRevealImages;
@@ -111,15 +111,18 @@ public class GameManager : MonoBehaviour
         //Debug.Log($"Words Made {wordsMade}");
         wordCompleted = new bool[rowsInGrid];
         InitializeWordComplete();
-        for (int i = 0; i < rowsInGrid; i++)
+        if (!levelTypeChanged)
         {
-            var wordData = new WordData
+            for (int i = 0; i < rowsInGrid; i++)
             {
-                wordsDataLists = new List<GameObject>()
-            };
-            wordList.Add(wordData);
+                var wordData = new WordData
+                {
+                    wordsDataLists = new List<GameObject>()
+                };
+                wordList.Add(wordData);
+            }
         }
-
+        
         totalAutoWordsNumber =completeWordCubesList.Count;
         if (levelTypeChanged) AssignAnswersToStickingCubes();
         /*for (int var = 0, i = 0; i < rowsInGrid; i++)
@@ -215,7 +218,7 @@ public class GameManager : MonoBehaviour
         {
             canInstantiate = true;
         }
-        if (!levelCompleted && completeWordCubesList.Count == 0 && !_checkAllWordsClear)
+        /*if (!levelCompleted && completeWordCubesList.Count == 0 && !_checkAllWordsClear)
         {
             ButtonsTurnOffFun();
             _checkAllWordsClear = true;
@@ -237,7 +240,7 @@ public class GameManager : MonoBehaviour
                     });
                 }
             });
-        }
+        }*/
         if (Input.GetKeyDown(KeyCode.A))
         {
             print("Nextfuncall");
@@ -477,7 +480,7 @@ public class GameManager : MonoBehaviour
        
     }
 
-    private void MakeAndCheckWordNew()
+    public void MakeAndCheckWordNew()
     {
         if (levelCompleted) return;
         for (int i = 0; i < stickingCubes.Count; i++)
@@ -485,20 +488,28 @@ public class GameManager : MonoBehaviour
             var s = stickingCubes[i];
             if (!s.correctWordMade && s.IsAllPlacesFullCheck() && s.CheckForAnswer())
             {
-                if (wordsMade != wordsMade + 1)
+                if (!stickingCubes[i].countDone)
                 {
+                    stickingCubes[i].countDone = true;
                     wordsMade++;
                 }
+                /*if (wordsMade != wordsMade + 1 && wordsMade < stickingCubes.Count)
+                {
+                    wordsMade++;
+                }*/
                 
                 s.correctWordMade = true;
                 //Debug.Log("Correct Word");
                 Debug.Log("Words Made " + wordsMade);
-                foreach (var wordNo in wordsAfterWhichToMoveCam)
+                if (wordsAfterWhichToMoveCam.Count > 0)
                 {
-                    if (wordNo == wordsMade /*|| wordsDeleteNumber == wordNo*/)
+                    foreach (var wordNo in wordsAfterWhichToMoveCam)
                     {
-                        print(":::::"+wordNo+":::::"+wordsMade);
-                        OnPartComplete?.Invoke(this, EventArgs.Empty);
+                        if (wordNo == wordsMade /*|| wordsDeleteNumber == wordNo*/)
+                        {
+                            print(":::::"+wordNo+":::::"+wordsMade);
+                            OnPartComplete?.Invoke(this, EventArgs.Empty);
+                        }
                     }
                 }
                 
@@ -514,15 +525,34 @@ public class GameManager : MonoBehaviour
             if (s.correctWordMade && !stickingCubes[i].IsAllPlacesFullCheck())
             {
                 s.correctWordMade = false;
-                print("worddata::::::::::");
+                //print("worddata::::::::::");
                 //wordsMade--;
                 /*var tempword = wordsMade;
                 if(words)
                 wordsMade--;*/
             }
+            
+            if (wordsMade == stickingCubes.Count /*&& CheckIfAllBlocksFullNew()*/)
+            {
+                //do anything after all words are made
+                levelCompleted = true;
+                Debug.Log("LevelComplete");
+            
+                ButtonsTurnOffFun();
+            
+                DOVirtual.DelayedCall(1.5f, () =>
+                {
+                    CoinManager.instance.confettiFx.Play();
+                    CoinManager.instance.confettiFx1.Play();
+                    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
+                    UI.WinPanelActive();
+                    // BlockSeqCall();
+                    //Debug.Log("LevelComplete");
+                });
+            }
         }
 
-        if (wordsMade == stickingCubes.Count && CheckIfAllBlocksFullNew())
+        /*if (wordsMade == stickingCubes.Count && CheckIfAllBlocksFullNew())
         {
             //do anything after all words are made
             levelCompleted = true;
@@ -539,8 +569,8 @@ public class GameManager : MonoBehaviour
                 // BlockSeqCall();
                 //Debug.Log("LevelComplete");
             });
-        }
-        else if (movesCount == 0 && !levelCompleted && !levelFail && UIManagerScript.Instance.GetSpecialLevelNumber() > 10)
+        }*/
+        if (movesCount == 0 && !levelCompleted && !levelFail && UIManagerScript.Instance.GetSpecialLevelNumber() > 10)
         {
             DOVirtual.DelayedCall(1f, () =>
             {

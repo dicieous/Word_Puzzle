@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.41133603, g: 0.43699887, b: 0.45013523, a: 1}
+  m_IndirectSpecularColor: {r: 0.41385436, g: 0.43987173, b: 0.45213437, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2203,7 +2203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2268805544716723623, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: question
-      value: THINGS NAKED PEOPLE DO
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2371328186632468328, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_Pivot.x
@@ -8294,6 +8294,7 @@ MonoBehaviour:
   - HOWER
   - BRN
   rowColor: []
+  question: THINGS NAKED PEOPLE DO
   wordList: []
   stickingCubes:
   - {fileID: 982728114}
@@ -8375,8 +8376,11 @@ MonoBehaviour:
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
   levelFail: 0
+  wordsMade: 0
+  totalAutoWordsNumber: 0
   removing: 0
   hintSpawnObject: {fileID: 0}
+  wordsDeleteNumber: 0
   numberCubeHolders: []
   objNumbers: 
   wordTouch: 0

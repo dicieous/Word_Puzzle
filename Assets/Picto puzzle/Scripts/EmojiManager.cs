@@ -349,8 +349,8 @@ public class EmojiManager : MonoBehaviour
             /////----------------ad call
         }
         HintButtonDeActiveFun();
-        ShuffleButtonActive();
-        FiftyFiftyButtonActiveFun();
+        //ShuffleButtonActive();
+        //FiftyFiftyButtonActiveFun();
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
     }
@@ -420,7 +420,7 @@ public class EmojiManager : MonoBehaviour
         loadingIcon.SetActive(CoinManager.instance.GetCoinsCount()<100 && !GameEssentials.IsRvAvailable());
     }
 
-    private bool _fiftyFifty;
+    //private bool _fiftyFifty;
     public void Fun5050()
     {
         if (CoinManager.instance.GetCoinsCount() >= 25)
@@ -437,10 +437,10 @@ public class EmojiManager : MonoBehaviour
                 LionStudiosManager.AdsEvents(true, AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","FiftyFifty",CoinManager.instance.GetCoinsCount());
         }
 
-        _fiftyFifty = true;
-        FiftyFiftyButtonDeActiveFun();
-        ShuffleButtonActive();
-        HintButtonDeActiveFun();
+        //_fiftyFifty = true;
+        //FiftyFiftyButtonDeActiveFun();
+        //ShuffleButtonActive();
+        //HintButtonDeActiveFun();
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
     }
@@ -453,7 +453,10 @@ public class EmojiManager : MonoBehaviour
         for (int i = 0; i < num; i++)
         {
             panelObj.GetComponent<EmojiClick>().optionBtn.RemoveAt(i);
-            panelObj.GetComponent<EmojiClick>().optionBtn[i].gameObject.SetActive(false);
+            panelObj.GetComponent<EmojiClick>().optionBtn[i].GetComponent<Button>().interactable = false;
+            panelObj.GetComponent<EmojiClick>().optionBtn[i].GetComponent<Image>().color = new Color(0, 0, 0, 0);
+            panelObj.GetComponent<EmojiClick>().optionBtn[i].GetComponent<Image>().raycastTarget = false;
+            //panelObj.GetComponent<EmojiClick>().optionBtn[i].gameObject.SetActive(false);
         }
         
         if(!LionStudiosManager.instance) return;
@@ -504,10 +507,10 @@ public class EmojiManager : MonoBehaviour
 
     public void RetryButton()
     {
+        retryButton.interactable = false;
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        retryButton.interactable = false;
     }
 
     public void BarFilling()
