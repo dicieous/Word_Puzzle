@@ -114,7 +114,7 @@ public class EmojiClick : MonoBehaviour
                 {
                     EmojiManager.Instance.PanelAndListUpdate();
                     
-                });
+                },false);
                 ///FindObjectOfType<Button>().enabled = false;
                 //UIManager.instance.WinPanel();
                 /////hintBtn.transform.DOScale(Vector3.zero, 0.25f);

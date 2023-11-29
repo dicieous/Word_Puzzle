@@ -147,6 +147,7 @@ public class DailyChallengesHandler : MonoBehaviour
         questionTxt.text = _levelsData[date - 1];
         RewardCoins(date);
         playBtn.gameObject.SetActive(GetDailyChallenge() != 1);
+        _savedDateString = "DailyChallenges_";
     }
 
     private void CheckIfDailyChallengesCompleted()
@@ -350,7 +351,10 @@ public class DailyChallengesHandler : MonoBehaviour
 
     public void OnPlayBtnPress()
     {
+        
         if (_selectedDate > date) return;
+        SoundHapticManager.Instance.Play("Pop");
+        SoundHapticManager.Instance.Vibrate(30);
         var isPlayed = PlayerPrefs.GetInt("DailyChallenges_" + _selectedDate + month + year, 0);
         if (isPlayed == 1) return;
         if (_selectedDate == date)
@@ -358,7 +362,6 @@ public class DailyChallengesHandler : MonoBehaviour
             DailyChallenge_Callback();
             return;
         }
-
         GameEssentials.RvType = RewardType.Calendar;
         GameEssentials.ShowRewardedAds("Calendar");
         if (LionStudiosManager.instance)

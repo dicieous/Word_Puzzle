@@ -447,7 +447,7 @@ public class GameManager : MonoBehaviour
                 UI.WinPanelActive();
                 BlockSeqCall();
                 //Debug.Log("LevelComplete");
-            });
+            },false);
         }
         if (UIManagerScript.Instance.GetSpecialLevelNumber() > 10)
         {
@@ -466,7 +466,7 @@ public class GameManager : MonoBehaviour
                         if (!scriptOff)
                             scriptOff = true;
                     }
-                });
+                },false);
                 if (!scriptOff)
                     scriptOff = true;
                 levelFail = true;
@@ -543,7 +543,7 @@ public class GameManager : MonoBehaviour
                     UI.WinPanelActive();
                     // BlockSeqCall();
                     //Debug.Log("LevelComplete");
-                });
+                },false);
             }
         }
 
@@ -578,7 +578,7 @@ public class GameManager : MonoBehaviour
                     if (!scriptOff)
                         scriptOff = true;
                 }
-            });
+            },false);
             if (!scriptOff)
                 scriptOff = true;
             levelFail = true;
@@ -766,7 +766,7 @@ public class GameManager : MonoBehaviour
         {
             //Time.timeScale = 2f;
             BlockSeq();
-        });
+        },false);
     }
     public int wordsDeleteNumber;
     //To Remove the word from the AutoWordCompleteLists list after it's placed
@@ -891,7 +891,7 @@ public class GameManager : MonoBehaviour
                    }
                }
            }
-       });
+       },false);
 
        DOVirtual.DelayedCall(0.5f, () =>
        {
@@ -900,7 +900,7 @@ public class GameManager : MonoBehaviour
                FunWaitCall(completeWordCubesList[0].completeWordCubeGroup[i],
                    completeWordPositionsList[0].completeWordCubePositionGroup[i]);
            }
-       });
+       },false);
    }
 
    public void ResetObjects(GameObject resetObj)
@@ -1222,7 +1222,7 @@ public class GameManager : MonoBehaviour
                 if(obj.transform.GetChild(i).GetComponent<Collider>().enabled)
                     obj.transform.GetChild(i).GetComponent<Collider>().enabled = false;
             }
-        });
+        },false);
 
     }
     private bool autoFunCall = false;
@@ -1258,7 +1258,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                DOVirtual.DelayedCall(1.25f, () => { UI.NextMoveFun(); });
+                DOVirtual.DelayedCall(1.25f, () => { UI.NextMoveFun(); },false);
             }
         });
         seq.AppendInterval(0.1f);

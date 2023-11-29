@@ -375,6 +375,12 @@ public class ApplovinManager : MonoBehaviour
         Time.timeScale = 1;
         LoadRewardedAd();
         print("Reward Ad Hidden::"+ adInfo.Placement+"::"+adInfo.NetworkName);
+        if (GameEssentials.RvType == RewardType.LevelCompleteReward)
+        {
+            UIManagerScript.Instance.claimButton.interactable = true;
+            UIManagerScript.Instance.loseItButton.interactable = true;
+        }
+        
     }
 
     private void OnRewardedAdReceivedRewardEvent(string adUnitId, MaxSdk.Reward reward, MaxSdkBase.AdInfo adInfo)

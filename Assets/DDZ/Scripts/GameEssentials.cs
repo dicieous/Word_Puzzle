@@ -192,6 +192,7 @@ namespace DDZ
         {
             if(!IsRvAvailable() || !ConnectedToInternet()) return;
              print("showing Rewarded Ads");
+             
              ApplovinManager.instance.ShowRewardedAds(placement);
         }
 

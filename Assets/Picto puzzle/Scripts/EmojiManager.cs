@@ -149,7 +149,7 @@ public class EmojiManager : MonoBehaviour
             DOVirtual.DelayedCall(1f, () =>
             {
                 if(UIManagerScript.Instance) UIManagerScript.Instance.WinPanelActive();
-            });
+            },false);
         }
 
         
@@ -208,7 +208,7 @@ public class EmojiManager : MonoBehaviour
         {
             OneBYOneFun();
             panelObj.GetComponent<EmojiClick>().levelStarted = true;
-        });
+        },false);
     }
 
     public void ButtonsDisable()

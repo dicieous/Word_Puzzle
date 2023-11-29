@@ -136,7 +136,7 @@ public class MonitizationScript : MonoBehaviour
       rvIconBubble.gameObject.SetActive(false);
       loadingBubble.gameObject.SetActive(false);
       hintBubble.transform.GetChild(0).GetComponent<UIParticle>().Play();
-      var obj = Instantiate(instanceObj, Vector3.zero, Quaternion.identity);
+      var obj = Instantiate(instanceObj, Vector3.zero, instanceObj.transform.rotation);
             print("BubbleCallback ::" + _powerName);
       switch (_powerName)
       {
@@ -174,12 +174,13 @@ public class MonitizationScript : MonoBehaviour
           .DOJumpAnchorPos(popPosition2.GetComponent<RectTransform>().anchoredPosition, 400f, 1, 0.5f)
           .SetEase(Ease.Linear).OnComplete(() =>
           {
+             popObj2.transform.GetChild(0).GetComponent<UIParticle>().Play();
              DOVirtual.DelayedCall(0.25f, () =>
              {
                 popObj2.GetComponent<RectTransform>().localScale = Vector3.zero;
                 hintBubble.GetComponent<RectTransform>().anchoredPosition=bubbleWayPoints[0].anchoredPosition;
                 bubbleWayPointIndex = 0;
-             });
+             },false);
           });
     }
    public void GiftButtonFun()
@@ -242,7 +243,7 @@ public class MonitizationScript : MonoBehaviour
 
    public void MagnetSpawn(GameObject instanceObj,GameObject instancePos,GameObject movePosition,int coinIncreaseNumber)
    {
-      GameObject obj=Instantiate(instanceObj, instancePos.transform.position, Quaternion.identity);
+      GameObject obj=Instantiate(instanceObj, instancePos.transform.position,instanceObj.transform.rotation);
       //magnet.transform.DOScale(Vector3.zero, 0.15f).From();
       obj.transform.SetParent(instancePos.transform.parent);
       obj.GetComponent<RectTransform>().anchoredPosition = instancePos.GetComponent<RectTransform>().anchoredPosition;
@@ -260,7 +261,7 @@ public class MonitizationScript : MonoBehaviour
             {
                obj.gameObject.SetActive(false);
                Destroy(obj);
-            });
+            },false);
          });
    }
    // ReSharper disable Unity.PerformanceAnalysis
@@ -269,10 +270,10 @@ public class MonitizationScript : MonoBehaviour
       DOVirtual.DelayedCall(2f, () =>
       {
          CoinManager.instance.CoinsIncrease(coinIncreaseNumber);
-      });
+      },false);
       for (int i = 0; i < 10; i++)
       {
-         GameObject obj = Instantiate(instanceObj, instancePos.transform.position, Quaternion.identity);
+         GameObject obj = Instantiate(instanceObj, instancePos.transform.position, instancePos.transform.rotation);
          obj.transform.DOScale(Vector3.zero, 0.3f).From();
          //moneyUI.transform.parent = moneyDisplayContent.transform;
          obj.transform.SetParent(instancePos.transform.parent);
