@@ -2,6 +2,7 @@ using System;
 using Events.Level.EventArgs;
 using Events.InGame.EventArgs;
 using System.Collections.Generic;
+using Events.Mission.EventArgs;
 using LionStudios.Suite.Analytics;
 using LionStudios.Suite.Analytics.Events;
 using LionStudios.Suite.Analytics.Events.EventArgs;
@@ -57,6 +58,48 @@ public class LionStudiosManager : SingletonInstance<LionStudiosManager>
         LionAnalytics.LevelRestart(levelNo, attemptNum, score, missionType, missionName);
     }
 
+    public static void MissionStart(int levelNo, int attemptNum, int score)
+    {
+        var missionEventArgs = new MissionEventArgs
+        {
+            IsTutorial = false,
+            MissionAttempt = attemptNum,
+            MissionName = "CalendarLevels",
+            MissionID = levelNo.ToString(),
+            UserScore = score,
+            MissionType = "Calendar Level"
+        };
+        LionAnalytics.MissionStarted(missionEventArgs);
+    } 
+    
+    public static void MissionComplete(int levelNo, int attemptNum, int score)
+    {
+        var missionEventArgs = new MissionCompletedEventArgs()
+        {
+            IsTutorial = false,
+            MissionAttempt = attemptNum,
+            MissionName = "CalendarLevels",
+            MissionID = levelNo.ToString(),
+            UserScore = score,
+            MissionType = "Calendar Level"
+        };
+        LionAnalytics.MissionCompleted(missionEventArgs);
+    }
+    
+    public static void MissionFail(int levelNo, int attemptNum, int score)
+    {
+        var missionEventArgs = new MissionEventArgs
+        {
+            IsTutorial = false,
+            MissionAttempt = attemptNum,
+            MissionName = "CalendarLevels",
+            MissionID = levelNo.ToString(),
+            UserScore = score,
+            MissionType = "Calendar Level"
+        };
+        var missionFailed = new MissionFailedEventArgs(missionEventArgs);
+        LionAnalytics.MissionFailed(missionFailed);
+    }
     public static void Hint(string levelNo, string hintsCount)
     {
         var additionalData = new Dictionary<string, object>
@@ -121,11 +164,11 @@ public class LionStudiosManager : SingletonInstance<LionStudiosManager>
             { "fiftyFifty_count", fiftyfiftyCount }
         };
 
-        LionAnalytics.ItemActioned("shuffle","8","ShuffleButton","ShuffleType", additionalData);
+        LionAnalytics.ItemActioned("fiftyfifty","8","FiftyFiftyButton","FiftyFiftyType", additionalData);
         var data = new PowerUpUsedEventArgs
         {
             MissionAttempt = fiftyfiftyCount,
-            PowerUpName = "shuffle",
+            PowerUpName = "fiftyfifty",
             MissionID = levelNo
         };
 
@@ -159,7 +202,7 @@ public class LionStudiosManager : SingletonInstance<LionStudiosManager>
             { "reward_type", rewardType},
             { "reward_values",rewardValue}
         };
-        LionAnalytics.ItemActioned("levelcompletedreward", "10", "BonusGiftButton", "BonusGiftType", additionalData);
+        LionAnalytics.ItemActioned("levelcompletedreward", "10", "LevelCompleteRewardButton", "LevelCompleteRewardType", additionalData);
     }
 
     public static void GiftBox(string levelNo, string rewardType, string rewardValue, string numberTimes)

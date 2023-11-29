@@ -296,7 +296,7 @@ public class ApplovinManager : MonoBehaviour
     {
         var placement = GameEssentials.RvType switch
         {
-            RewardType.BubbleRv => "HintBubble2X",
+            RewardType.BubbleRv => "Bubble2X",
             RewardType.Hint => "Hint",
             RewardType.Magnet => "Magnet",
             RewardType.LevelCompleteReward => "LevelCompleteReward",
@@ -320,7 +320,7 @@ public class ApplovinManager : MonoBehaviour
         LoadRewardedAd();
         var placement = GameEssentials.RvType switch
         {
-            RewardType.BubbleRv => "HintBubble2X",
+            RewardType.BubbleRv => "Bubble2X",
             RewardType.Hint => "Hint",
             RewardType.Magnet => "Magnet",
             RewardType.LevelCompleteReward => "LevelCompleteReward",
@@ -351,7 +351,7 @@ public class ApplovinManager : MonoBehaviour
     {
         var placement = GameEssentials.RvType switch
         {
-            RewardType.BubbleRv => "HintBubble2X",
+            RewardType.BubbleRv => "Bubble2X",
             RewardType.Hint => "Hint",
             RewardType.Magnet => "Magnet",
             RewardType.LevelCompleteReward => "LevelCompleteReward",
@@ -386,7 +386,7 @@ public class ApplovinManager : MonoBehaviour
         
         var placement = GameEssentials.RvType switch
         {
-            RewardType.BubbleRv => "HintBubble2X",
+            RewardType.BubbleRv => "Bubble2X",
             RewardType.Hint => "Hint",
             RewardType.Magnet => "Magnet",
             RewardType.LevelCompleteReward => "LevelCompleteReward",

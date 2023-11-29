@@ -7,8 +7,9 @@ using DDZ;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 public class MonitizationScript : MonoBehaviour
 {
@@ -32,9 +33,15 @@ public class MonitizationScript : MonoBehaviour
    public GameObject giftHintInstancePosition;
    public GameObject giftHintMovePosition;
    [Header("*2X Button Details")]
-   public GameObject bubble2X;
-   public Button bubble2XButton;
-
+   public GameObject bubble2XParent;
+   public GameObject hintBubble;
+  // public GameObject magnetBubble;
+   public GameObject instanceObj;
+   public Sprite hintSprite;
+   public Sprite magnetSprite;
+   public GameObject hintMovePos;
+   public GameObject magnetMovePos;
+   public RectTransform[] bubbleWayPoints;
    private GameObject rvGiftIcon => giftObject.transform.GetChild(2).gameObject;
    private GameObject loadingGiftIcon => giftObject.transform.GetChild(3).gameObject;
 
@@ -55,10 +62,129 @@ public class MonitizationScript : MonoBehaviour
       rvGiftIcon.SetActive(GameEssentials.IsRvAvailable());
       loadingGiftIcon.SetActive(!GameEssentials.IsRvAvailable());
       giftImage.GetComponent<Button>().interactable = GameEssentials.IsRvAvailable();
+      BubbleCheck();
    }
 
+   public void MagnetOrHintDecider()
+   {
+      var num = Random.value;
+      if (num >= 0.5f)
+      {
+         _powerName = "Magnet";
+         //_powerObj = magnetBubble;
+         hintBubble.GetComponent<Animator>().SetTrigger("Magnet");
+      }
+      else
+      {
+         _powerName = "Hint";
+         //_powerObj = hintBubble;
+         ///--hint
+      }
+   }
+   private void BubbleCheck()
+   {
+      if(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings-1) return;
+      
+     // bubbleTimeLimit -= Time.deltaTime;
+      if (bubbleTimeLimit <= 0 && UIManagerScript.Instance.GetSpecialLevelNumber() > 5)
+      {
+         GameEssentials.instance.bubbleTime = hintBubble.GetComponent<Image>().enabled ? 30f : 120f;
+         hintBubble.GetComponent<Image>().enabled = true;
+         MagnetOrHintDecider();
+         BubbleMovement();
+         
+         rvIconBubble.gameObject.SetActive(GameEssentials.IsRvAvailable());
+         loadingBubble.gameObject.SetActive(!GameEssentials.IsRvAvailable());
+      }
+   }
+   public Image rvIconBubble,loadingBubble;
+   public float bubbleTimeLimit => GameEssentials.instance.bubbleTime;
+   public int bubbleWayPointIndex ;
+   private void BubbleMovement()
+   {
+      if (!hintBubble.GetComponent<Image>().enabled) return;
+      
+      hintBubble.GetComponent<Image>().rectTransform.DOAnchorPos(bubbleWayPoints[bubbleWayPointIndex].anchoredPosition, 3f)
+         .SetEase(Ease.Flash).OnComplete(() =>
+         {
+            bubbleWayPointIndex++;
+            bubbleWayPointIndex = bubbleWayPointIndex >= bubbleWayPoints.Length ? 0 : bubbleWayPointIndex;
+            BubbleMovement();
+         });
+   }
+
+   private void OnBubbleBtnPress()
+   {
+      GameEssentials.instance.bubbleTime = 120f;
+      GameEssentials.RvType = RewardType.BubbleRv;
+      GameEssentials.ShowRewardedAds("Bubble2X");
+   }
+   public void BubbleFunHit()
+   {
+      if (!GameEssentials.IsRvAvailable()) return;
+      if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+      if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+      OnBubbleBtnPress();
+      //Bubble2X_CallBack();
+   }
+
+   //private static GameObject _powerObj;
+   private string _powerName;
+   public void Bubble2X_CallBack()
+   {
+      hintBubble.GetComponent<Image>().enabled = false;
+      rvIconBubble.gameObject.SetActive(false);
+      loadingBubble.gameObject.SetActive(false);
+      hintBubble.transform.GetChild(0).GetComponent<UIParticle>().Play();
+      var obj = Instantiate(instanceObj, Vector3.zero, Quaternion.identity);
+            print("BubbleCallback ::" + _powerName);
+      switch (_powerName)
+      {
+         
+         case "Magnet":
+            print("BubbleCallback Magnet");
+           
+            obj.GetComponent<Image>().sprite = magnetSprite;
+            obj.transform.parent = hintBubble.transform.parent;
+            obj.transform.GetComponent<RectTransform>().anchoredPosition =
+               hintBubble.GetComponent<RectTransform>().anchoredPosition;
+            BubblePopFun(obj, magnetMovePos, 200);
+            // BubblePopFun(powerObj.transform.GetChild(1))
+            break;
+         case "Hint":
+            print("BubbleCallback Hint");
+            obj.GetComponent<Image>().sprite = hintSprite;
+            obj.transform.parent = hintBubble.transform.parent;
+            obj.transform.GetComponent<RectTransform>().anchoredPosition =
+               hintBubble.GetComponent<RectTransform>().anchoredPosition;
+            BubblePopFun(obj, hintMovePos, 100);
+            break;
+         default:
+            break;
+      }
+      
+   }
+   
+    public void BubblePopFun(GameObject popObj2,GameObject popPosition2,int coinsCount)
+    {
+       // if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("RewardOpen");
+       CoinManager.instance.CoinsIncrease(coinsCount);
+       popObj2.GetComponent<RectTransform>().DOScale(Vector3.one, 0.45f).SetEase(Ease.OutBounce);
+       popObj2.GetComponent<RectTransform>()
+          .DOJumpAnchorPos(popPosition2.GetComponent<RectTransform>().anchoredPosition, 400f, 1, 0.5f)
+          .SetEase(Ease.Linear).OnComplete(() =>
+          {
+             DOVirtual.DelayedCall(0.25f, () =>
+             {
+                popObj2.GetComponent<RectTransform>().localScale = Vector3.zero;
+                hintBubble.GetComponent<RectTransform>().anchoredPosition=bubbleWayPoints[0].anchoredPosition;
+                bubbleWayPointIndex = 0;
+             });
+          });
+    }
    public void GiftButtonFun()
    {
+      if (!GameEssentials.IsRvAvailable()) return;
       if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
       if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
       if(!GameEssentials.instance) return;
@@ -67,7 +193,7 @@ public class MonitizationScript : MonoBehaviour
       if(LionStudiosManager.instance)
          LionStudiosManager.AdsEvents(true, AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","GiftBox",CoinManager.instance.GetCoinsCount());
    }
-
+   
    // ReSharper disable Unity.PerformanceAnalysis
    public void GiftBox_CallBack()
    {

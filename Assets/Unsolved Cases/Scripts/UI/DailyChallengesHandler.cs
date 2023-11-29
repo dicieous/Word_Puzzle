@@ -60,11 +60,11 @@ public class DailyChallengesHandler : MonoBehaviour
         "Used in the shower",
         "Crops that start with 'P'",
         "Things naked people do",
-        "31"
+        "WITH EYES CLOSED"
     };
 
     //public readonly Dictionary<int,dtring>
-    private int _selectedDate, _baseNumber = 160;
+    private int _selectedDate, _baseNumber = 159;
     private DateTime _currentDateTime, _gameStartDateTime;
 
     private readonly Dictionary<int, string> _monthIndexName = new()
@@ -155,7 +155,7 @@ public class DailyChallengesHandler : MonoBehaviour
         {
             var num = index + 1;
             var t = days[index];
-            var isCompleted = PlayerPrefs.GetInt("DailyChallenges_" + num + currentMonth + year, 0);
+            var isCompleted = PlayerPrefs.GetInt("DailyChallenges_" + num + currentMonth + currentYrs, 0);
             t.transform.GetChild(1).gameObject.SetActive(isCompleted != 0);
         }
     }
@@ -370,7 +370,8 @@ public class DailyChallengesHandler : MonoBehaviour
     {
         if (_selectedDate == 0) return;
 
-        SaveDailyChallenge(_selectedDate);
+        //SaveDailyChallenge(_selectedDate);
+        _savedDateString =_savedDateString +""+ _selectedDate +""+ currentMonth +""+ currentYrs;
         CheckIfDailyChallengesCompleted();
         // LoadLevel
         var sceneIndex = _baseNumber + _selectedDate;
@@ -545,8 +546,19 @@ public class DailyChallengesHandler : MonoBehaviour
                 break;
         }
     }
-    private void SaveDailyChallenge(int savedDate) =>
-        PlayerPrefs.SetInt("DailyChallenges_" + savedDate + month + year, 1);
+    private void SaveDailyChallenge(int savedDate) => PlayerPrefs.SetInt("DailyChallenges_" + savedDate + month + year, 1);
 
-    private int GetDailyChallenge() => PlayerPrefs.GetInt("DailyChallenges_" + _selectedDate + month + year, 0);
+    private static string _savedDateString = "DailyChallenges_";
+
+    public static void SaveDailyChallengeAtLc()
+    {
+        print(_savedDateString);
+        PlayerPrefs.SetInt(_savedDateString, 1);
+    }
+
+    private int GetDailyChallenge()
+    {
+       print("DailyChallenges_" + _selectedDate + currentMonth + currentYrs);
+        return  PlayerPrefs.GetInt("DailyChallenges_" + _selectedDate + currentMonth + currentYrs, 0);
+    } 
 }

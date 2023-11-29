@@ -43,6 +43,8 @@ namespace DDZ
         private static OurPlatforms _platforms;
 
         public static DateTime GameStartTime;
+        
+        public float bubbleTime=120f;
         protected override void Awake()
         {
             base.Awake();
@@ -95,6 +97,11 @@ namespace DDZ
         private void Start()
         {
             Invoke(nameof(GetRemoteConfigValue),2.5f);
+        }
+
+        private void Update()
+        {
+            if (bubbleTime > 0) bubbleTime -= Time.deltaTime;
         }
 
         private void GetRemoteConfigValue()
@@ -216,7 +223,8 @@ namespace DDZ
               case RewardType.LevelCompleteReward: 
                   UIManagerScript.Instance.DoubleCoins_CallBack();
                   break;
-              case RewardType.BubbleRv: 
+              case RewardType.BubbleRv:
+                  MonitizationScript.instance.Bubble2X_CallBack();
                   break;
               case RewardType.Magnet:
                   UIManagerScript.Instance.AutoWordComplete_Callback();

@@ -1,17 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using DG.Tweening;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
-using Sequence = DG.Tweening.Sequence;
 
 public class GameManager : MonoBehaviour
 {
@@ -218,7 +213,7 @@ public class GameManager : MonoBehaviour
         {
             canInstantiate = true;
         }
-        /*if (!levelCompleted && completeWordCubesList.Count == 0 && !_checkAllWordsClear)
+        if (!levelCompleted && completeWordCubesList.Count == 0 && !_checkAllWordsClear)
         {
             ButtonsTurnOffFun();
             _checkAllWordsClear = true;
@@ -240,7 +235,7 @@ public class GameManager : MonoBehaviour
                     });
                 }
             });
-        }*/
+        }
         if (Input.GetKeyDown(KeyCode.A))
         {
             print("Nextfuncall");
@@ -532,7 +527,7 @@ public class GameManager : MonoBehaviour
                 wordsMade--;*/
             }
             
-            if (wordsMade == stickingCubes.Count /*&& CheckIfAllBlocksFullNew()*/)
+            if (wordsMade == stickingCubes.Count && !levelCompleted/*&& CheckIfAllBlocksFullNew()*/)
             {
                 //do anything after all words are made
                 levelCompleted = true;

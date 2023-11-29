@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.41133603, g: 0.43699887, b: 0.45013523, a: 1}
+  m_IndirectSpecularColor: {r: 0.41385436, g: 0.43987173, b: 0.45213437, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1849,7 +1849,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  countDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &443556459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2464,22 +2466,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1085611884545982984, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1085611884545982984, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1386715370896144066, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_text
-      value: Level 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 1440550713922343379, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_Name
-      value: NextButton
-      objectReference: {fileID: 0}
     - target: {fileID: 2371328186632468328, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2564,41 +2550,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2446023301524287216, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4862706779092243883, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -145.40002
-      objectReference: {fileID: 0}
-    - target: {fileID: 4862706779092243883, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -131.7002
-      objectReference: {fileID: 0}
-    - target: {fileID: 6173385307857804132, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: redColor.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6173385307857804132, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: redColor.b
-      value: 0.3066038
-      objectReference: {fileID: 0}
-    - target: {fileID: 6173385307857804132, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: redColor.g
-      value: 0.3066038
-      objectReference: {fileID: 0}
-    - target: {fileID: 6173385307857804132, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: redColor.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8290938290612111971, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_Name
       value: MainCanvas_Prefab
-      objectReference: {fileID: 0}
-    - target: {fileID: 8344019617740734466, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2757,7 +2711,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  countDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1 &644172422 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7617961761573801963, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
@@ -3823,7 +3779,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  countDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -3968,7 +3926,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  countDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &1005682480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7695,6 +7655,7 @@ MonoBehaviour:
   - TRAIN
   - ON
   rowColor: []
+  question: 
   wordList: []
   stickingCubes:
   - {fileID: 982728114}
@@ -7702,6 +7663,7 @@ MonoBehaviour:
   - {fileID: 578415715}
   - {fileID: 441681240}
   - {fileID: 959203375}
+  spriteRevealImages: []
   scriptOff: 0
   rowsInGrid: 7
   colInGrid: 7
@@ -7758,9 +7720,17 @@ MonoBehaviour:
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
   levelFail: 0
+  wordsMade: 0
+  totalAutoWordsNumber: 0
   removing: 0
+  hintSpawnObject: {fileID: 0}
+  wordsDeleteNumber: 0
+  numberCubeHolders: []
+  objNumbers: 
   wordTouch: 0
   autoWordClick: 0
+  cameraMoving: 0
+  imageRevel: []
 --- !u!4 &1870371619
 Transform:
   m_ObjectHideFlags: 0
@@ -7908,7 +7878,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  countDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &1969275925
 PrefabInstance:
   m_ObjectHideFlags: 0

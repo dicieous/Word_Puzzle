@@ -1146,10 +1146,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1386715370896144066, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
-      propertyPath: m_text
-      value: Level 24
-      objectReference: {fileID: 0}
     - target: {fileID: 2371328186632468328, guid: e73106741411d514099b28f0a2ed99a5, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1663,7 +1659,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  countDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1806,7 +1804,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  countDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &1031565821
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3691,11 +3691,13 @@ MonoBehaviour:
   - CT
   - CAR
   rowColor: []
+  question: 
   wordList: []
   stickingCubes:
   - {fileID: 982728114}
   - {fileID: 1946002750}
   - {fileID: 959203375}
+  spriteRevealImages: []
   scriptOff: 0
   rowsInGrid: 7
   colInGrid: 7
@@ -3736,9 +3738,17 @@ MonoBehaviour:
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
   levelFail: 0
+  wordsMade: 0
+  totalAutoWordsNumber: 0
   removing: 0
+  hintSpawnObject: {fileID: 0}
+  wordsDeleteNumber: 0
+  numberCubeHolders: []
+  objNumbers: 
   wordTouch: 0
   autoWordClick: 0
+  cameraMoving: 0
+  imageRevel: []
 --- !u!4 &1870371619
 Transform:
   m_ObjectHideFlags: 0
@@ -3801,7 +3811,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  countDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &2022009587
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,11 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using Coffee.UIExtensions;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -225,7 +223,7 @@ public class CoinManager : MonoBehaviour
     public int Get5050Count() => PlayerPrefs.GetInt("Count5050", 0);
     public void Set5050Count(int count5050) => PlayerPrefs.SetInt("Count5050", count5050);
     
-    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 10000000);
+    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 0);
 
     public void SetCoinCount(int countCoin) => PlayerPrefs.SetInt("Coins Count", countCoin);
 }

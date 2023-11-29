@@ -1,18 +1,13 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using Coffee.UIExtensions;
 using DDZ;
 using DG.Tweening;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
-using Random = System.Random;
 
 public class EmojiManager : MonoBehaviour
 {
