@@ -222,7 +222,7 @@ public class GameManager : MonoBehaviour
                 if (!levelCompleted)
                 {
                     levelCompleted = true;
-                    ButtonsTurnOffFun();
+                    //ButtonsTurnOffFun();
             
                     DOVirtual.DelayedCall(.75f, () =>
                     {
@@ -235,6 +235,28 @@ public class GameManager : MonoBehaviour
                     });
                 }
             });
+        }
+        if (UIManagerScript.Instance.GetSpecialLevelNumber() > 10)
+        {
+            if (movesCount <= 0 && !levelCompleted && !levelFail)
+            {
+               print("Failed1");
+                if (!scriptOff)
+                    scriptOff = true;
+                ButtonsTurnOffFun();
+                print("Failed2");
+                DOVirtual.DelayedCall(1f, () =>
+                {
+                    if (!levelCompleted)
+                    {
+                        //if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Fail");
+                        UI.FailPanelActive();
+                        print("Failed");
+                    }
+                },false);
+                levelFail = true;
+            }
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -449,30 +471,6 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("LevelComplete");
             },false);
         }
-        if (UIManagerScript.Instance.GetSpecialLevelNumber() > 10)
-        {
-            if (movesCount == 0 && !levelCompleted && !levelFail)
-            {
-                ButtonsTurnOffFun();
-            
-                DOVirtual.DelayedCall(1f, () =>
-                {
-                    if (!levelCompleted)
-                    {
-                        //if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
-                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Fail");
-                        UI.FailPanelActive();
-                        //Debug.Log("Failed");
-                        if (!scriptOff)
-                            scriptOff = true;
-                    }
-                },false);
-                if (!scriptOff)
-                    scriptOff = true;
-                levelFail = true;
-            }
-        }
-       
     }
 
     public void MakeAndCheckWordNew()
@@ -565,7 +563,7 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("LevelComplete");
             });
         }*/
-        if (movesCount == 0 && !levelCompleted && !levelFail && UIManagerScript.Instance.GetSpecialLevelNumber() > 10)
+        /*if (movesCount == 0 && !levelCompleted && !levelFail && UIManagerScript.Instance.GetSpecialLevelNumber() > 10)
         {
             DOVirtual.DelayedCall(1f, () =>
             {
@@ -582,7 +580,7 @@ public class GameManager : MonoBehaviour
             if (!scriptOff)
                 scriptOff = true;
             levelFail = true;
-        }
+        }*/
     }
 
     public DOTween vardo;

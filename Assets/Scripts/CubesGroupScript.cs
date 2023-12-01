@@ -229,8 +229,8 @@ public class CubesGroupScript : MonoBehaviour
 	private bool _once;
 	private void OnMouseDown()
 	{
-		
-		if ((!GameManager.Instance.downCheck && !GameManager.Instance.autoWordClick) ||  !GameManager.Instance.scriptOff)
+		if (GameManager.Instance.scriptOff) return;
+		if ((!GameManager.Instance.downCheck && !GameManager.Instance.autoWordClick))
 		{
 			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
             //print("wordcheckfalse");
@@ -265,9 +265,10 @@ public class CubesGroupScript : MonoBehaviour
 
 	private void OnMouseDrag()
 	{
-		if ((!GameManager.Instance.downCheck && !GameManager.Instance.autoWordClick) ||  !GameManager.Instance.scriptOff)
+		if (GameManager.Instance.scriptOff) return;
+		if ((!GameManager.Instance.downCheck && !GameManager.Instance.autoWordClick))
 		{
-			if (GameManager.Instance.levelCompleted || GameManager.Instance.scriptOff) return;
+			if (GameManager.Instance.levelCompleted) return;
 			
 			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
 			//print("wordcheckfalse");

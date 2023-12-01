@@ -272,10 +272,6 @@ public class UIManagerScript : MonoBehaviour
 		if (GetSpecialLevelNumber() == 121)
 		{
 			levelNo.transform.GetChild(2).gameObject.SetActive(true);
-			DOVirtual.DelayedCall(1f, () =>
-			{
-				levelNo.transform.GetChild(2).gameObject.SetActive(false);
-			},false);
 		}
 		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings-1)
 		{
