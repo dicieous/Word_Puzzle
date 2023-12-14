@@ -115,7 +115,7 @@ public class MonitizationScript : MonoBehaviour
 
    private void OnBubbleBtnPress()
    {
-      GameEssentials.instance.bubbleTime = 120f;
+      GameEssentials.instance.bubbleTime =UIManagerScript.Instance.GetSpecialLevelNumber() < 31 ? 60 : 80;
       GameEssentials.RvType = RewardType.BubbleRv;
       GameEssentials.ShowRewardedAds("Bubble2X");
    }
