@@ -1357,7 +1357,7 @@ public class UIManagerScript : MonoBehaviour
 		    SetSpecialLevelNumber(GetSpecialLevelNumber() + 1);
 		    SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
 	    }
-	    //if(GAScript.instance) GAScript.instance.LevelStart(GetSpecialLevelNumber().ToString(),levelAttempts);
+	    ///if(GAScript.instance) GAScript.instance.LevelStart(GetSpecialLevelNumber().ToString(),levelAttempts);
     }
 	public int GetSpecialLevelNumber() => PlayerPrefs.GetInt("SpecialLevelNumber", 1);
 	public void SetSpecialLevelNumber(int levelNum) => PlayerPrefs.SetInt("SpecialLevelNumber", levelNum);
