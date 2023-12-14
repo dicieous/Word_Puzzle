@@ -258,11 +258,11 @@ public class GameManager : MonoBehaviour
                 levelFail = true;
             }
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        /*if (Input.GetKeyDown(KeyCode.A))
         {
             print("Nextfuncall");
             UI.NextMoveFun();
-        }
+        }*/
     }
 
 

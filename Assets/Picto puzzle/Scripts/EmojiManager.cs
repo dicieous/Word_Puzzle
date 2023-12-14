@@ -494,7 +494,7 @@ public class EmojiManager : MonoBehaviour
     {
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
-        UIManagerScript.Instance.NextMoveFun();
+        //UIManagerScript.Instance.NextMoveFun();
         SetListNumber(GetListNumbers() + 1);
         SetPanelsDone(GetPanelsDone() + 1);
         nextButton.interactable = false;

@@ -190,7 +190,13 @@ public class UIManagerScript : MonoBehaviour
 				giftLevel = false;
 				// levelNo.gameObject.SetActive(false);
 			}
-			if(GAScript.instance) GAScript.instance.LevelStart(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
+
+			if ((SceneManager.GetActiveScene().buildIndex <= SceneManager.sceneCountInBuildSettings - 33 ||
+			     SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 2))
+			{
+				if(GAScript.instance) GAScript.instance.LevelStart(GetSpecialLevelNumber().ToString(),levelAttempts);
+			}
+			
 		}
 
 		switch (dailyRewardDetails)
@@ -1032,7 +1038,7 @@ public class UIManagerScript : MonoBehaviour
         {
             NextMoveFun();
         }*/
-        NextMoveFun();
+        //NextMoveFun();
 		nextButton.interactable = false;
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
@@ -1073,7 +1079,7 @@ public class UIManagerScript : MonoBehaviour
             CoinManager.instance.SetLoaderPercentage(CoinManager.instance.GetLoaderPercent() + ((1f / 9f)));
             
 		}
-        if(GAScript.instance) GAScript.instance.LevelCompleted(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
+        //if(GAScript.instance) GAScript.instance.LevelCompleted(PlayerPrefs.GetInt("Level", 1).ToString(),levelAttempts);
 
 	}
 	public void ResetScreenOnClick()
@@ -1333,7 +1339,7 @@ public class UIManagerScript : MonoBehaviour
 	    }
 	    else
 	    {
-		    if(GAScript.instance) GAScript.instance.LevelCompleted(GetSpecialLevelNumber().ToString(),levelAttempts);
+		    
 		    if (EmojiManager.Instance)
 		    {
 			    EmojiManager.Instance.SetListNumber(EmojiManager.Instance.GetListNumbers() + 1);
@@ -1345,12 +1351,13 @@ public class UIManagerScript : MonoBehaviour
 		    {
 			    PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
 		    }
+		    if(GAScript.instance) GAScript.instance.LevelCompleted(GetSpecialLevelNumber().ToString(),levelAttempts);
 		    CoinManager.instance.SetLoaderPercentage(CoinManager.instance.GetLoaderPercent() + ((1f / 9f)));
 		    
 		    SetSpecialLevelNumber(GetSpecialLevelNumber() + 1);
 		    SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
 	    }
-	   
+	    //if(GAScript.instance) GAScript.instance.LevelStart(GetSpecialLevelNumber().ToString(),levelAttempts);
     }
 	public int GetSpecialLevelNumber() => PlayerPrefs.GetInt("SpecialLevelNumber", 1);
 	public void SetSpecialLevelNumber(int levelNum) => PlayerPrefs.SetInt("SpecialLevelNumber", levelNum);
