@@ -243,6 +243,7 @@ public class UIManagerScript : MonoBehaviour
 		{
 			levelNo.transform.GetChild(1).gameObject.SetActive(true);
 		}
+		
 		/*if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings-1)
 		{
 			calenderButton.gameObject.SetActive(GetSpecialLevelNumber() <= 11);
