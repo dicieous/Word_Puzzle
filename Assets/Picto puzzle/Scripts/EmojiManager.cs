@@ -360,11 +360,18 @@ public class EmojiManager : MonoBehaviour
                 .activeInHierarchy)
             {
                 var temp = panelObj.GetComponent<EmojiClick>().hintPos[i].GetComponent<Image>();
+                if (temp.gameObject.transform.childCount != 0)
+                {
+                    temp.gameObject.transform.GetChild(0).GetComponent<UIParticle>().Play();
+                    //print(temp.gameObject.transform.GetChild(0).name+":::::::::::::::::::::");
+                }
+                
                 temp.color = new Color(temp.color.r, temp.color.g, temp.color.b, .65f);
                 temp.enabled = true;
                 temp.rectTransform.DOScale(1.3f, 0.25f).SetEase(Ease.Linear)
                     .SetLoops(2, LoopType.Yoyo);
                 hintDisplayNum = i;
+                
                 break;
             }
         }

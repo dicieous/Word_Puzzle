@@ -35,27 +35,27 @@ public class LionStudiosManager : SingletonInstance<LionStudiosManager>
         LionAnalytics.GameEnded();
     }
 
-    public static void LevelStart(int levelNo, int attemptNum, int? score = null, string missionType = null, string missionName = null)
+    public static void LevelStart(int levelNo, int attemptNum, int? score = null)
     {
         print("Level_Start:: " + levelNo);
-        LionAnalytics.LevelStart(levelNo, attemptNum, score, null,null, missionType, missionName);
+        LionAnalytics.LevelStart(levelNo, attemptNum, score, null,null, null, null);
     } 
     
-    public static void LevelComplete(int levelNo, int attemptNum, int? score = null, string missionType = null, string missionName = null)
+    public static void LevelComplete(int levelNo, int attemptNum, int? score = null)
     {
         print("Level_Completed:: " + levelNo);
-        LionAnalytics.LevelComplete(levelNo, attemptNum, score,null, null,null,missionType, missionName);
+        LionAnalytics.LevelComplete(levelNo, attemptNum, score,null, null,null,null, null);
     }
     
-    public static void LevelFail(int levelNo, int attemptNum, int? score = null, string missionType = null, string missionName = null)
+    public static void LevelFail(int levelNo, int attemptNum, int? score = null)
     {
         print("Level_Fail:: " + levelNo);
-        LionAnalytics.LevelFail(levelNo, attemptNum, score, missionType, missionName);
+        LionAnalytics.LevelFail(levelNo, attemptNum, score, null, null,null,null);
     } 
     
-    public static void LevelRestart(int levelNo, int attemptNum, int? score = null, string missionType = null, string missionName = null)
+    public static void LevelRestart(int levelNo, int attemptNum, int? score = null)
     {
-        LionAnalytics.LevelRestart(levelNo, attemptNum, score, missionType, missionName);
+        LionAnalytics.LevelRestart(levelNo, attemptNum, score, null, null,null,null);
     }
 
     public static void MissionStart(int levelNo, int attemptNum, int score)

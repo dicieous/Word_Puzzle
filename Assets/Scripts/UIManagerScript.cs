@@ -101,6 +101,7 @@ public class UIManagerScript : MonoBehaviour
     public GameObject calendarPanel;
     public Button calenderButton;
     public Image calIndicator;
+    public Image calenderRvImage;
     public static int _hintCount = 1, _magnetCount = 1, _imageRevealCount = 1, _levelCompleteRewardCount = 1, _noMoreMovesCount = 1;
     private void Awake()
 	{
@@ -287,7 +288,11 @@ public class UIManagerScript : MonoBehaviour
 				calenderButton.GetComponent<DOTweenAnimation>().DOPlay();
 			}
 		}
-		
+
+		if (GetSpecialLevelNumber() == 30 && GetCalenderUnlockCheck() != "Unlock")
+		{
+			SetCalenderUnlockCheck("Unlock");
+		}
 		/*if (GetSpecialLevelNumber() <= 130)
 		{
 			emojiRevealButton.gameObject.SetActive(false);
@@ -1316,7 +1321,7 @@ public class UIManagerScript : MonoBehaviour
 		    PlayerPrefs.SetInt("Special",0);
 		    if (PlayerPrefs.GetInt("Level") > (SceneManager.sceneCountInBuildSettings) - 34)
 		    {
-			    var i = Random.Range(11, SceneManager.sceneCountInBuildSettings - 34);
+			    var i = Random.Range(109, SceneManager.sceneCountInBuildSettings - 34);
 			    PlayerPrefs.SetInt("ThisLevel", i);
 			    SceneManager.LoadScene(i);
 		    }
@@ -1366,6 +1371,8 @@ public class UIManagerScript : MonoBehaviour
 	public int GetLevelNumberDetails() => PlayerPrefs.GetInt("LevelNumberDetails", 1);
 	public void SetLevelNumberDetails(int levelNum) => PlayerPrefs.SetInt("LevelNumberDetails", levelNum);
 
+	public string GetCalenderUnlockCheck() => PlayerPrefs.GetString("CalenderUnlockCheck", "Lock");
+	public void SetCalenderUnlockCheck(string lockCheck) => PlayerPrefs.SetString("CalenderUnlockCheck", lockCheck);
 	public void SkipLevelFun()
 	{
 		WinPanelActive();
@@ -1376,10 +1383,55 @@ public class UIManagerScript : MonoBehaviour
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 	}
+
+	
+	public void CalenderUnLockButton()
+	{
+		CalenderUnlock_CallBack();
+	}
+	// ReSharper disable Unity.PerformanceAnalysis
+	public void CalenderUnlock_CallBack()
+	{
+		SetCalenderUnlockCheck("Unlock");
+		CalendarButtonPress();
+	}
 	public void CalendarButtonPress()
 	{
-		
-		if (GetSpecialLevelNumber() < 30)
+		if (GetCalenderUnlockCheck() == "Unlock")
+		{
+			calendarPanel.gameObject.SetActive(!calendarPanel.gameObject.activeInHierarchy);
+			SetCalenderUnlockCheck("Lock");
+		}
+		else
+		{
+			if (GetSpecialLevelNumber() < 30)
+			{
+				var calVal = calenderButton.transform.GetChild(1).transform;
+				var calRv=calenderButton.transform.GetChild(3).transform;
+				var calLoad=calenderButton.transform.GetChild(4).transform;
+				if (calVal.localScale.x == 0)
+				{
+					calVal.DOScale(Vector3.one, 0.15f).SetEase(Ease.OutBack);
+					DOVirtual.DelayedCall(2f, () => { calVal.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce); },
+						false);
+					if (GameEssentials.IsRvAvailable())
+					{
+						calRv.DOScale(Vector3.one, 0.15f).SetEase(Ease.OutBack);
+						DOVirtual.DelayedCall(2f, () => { calRv.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce); },
+							false);
+					}
+					else
+					{
+						calLoad.DOScale(Vector3.one, 0.15f).SetEase(Ease.OutBack);
+						DOVirtual.DelayedCall(2f, () => { calLoad.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce); },
+							false);
+					}
+					
+				}
+				return;
+			}
+		}
+		/*if (GetSpecialLevelNumber() < 30)
 		{
 			var calVal = calenderButton.transform.GetChild(1).transform;
 			if (calVal.localScale.x == 0)
@@ -1392,10 +1444,17 @@ public class UIManagerScript : MonoBehaviour
 			}
 			return;
 		}
-		calendarPanel.gameObject.SetActive(!calendarPanel.gameObject.activeInHierarchy);
+		calendarPanel.gameObject.SetActive(!calendarPanel.gameObject.activeInHierarchy);*/
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 		
 	}
 
+	private void Update()
+	{
+		if (Input.GetKey(KeyCode.R))
+		{
+			CalenderUnlock_CallBack();
+		}
+	}
 }

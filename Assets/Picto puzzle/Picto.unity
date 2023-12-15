@@ -3935,7 +3935,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cm: {fileID: 0}
   specialLevelObject: {fileID: 0}
-  question: 
   endScreen: {fileID: 0}
   prefab: {fileID: 0}
   failPanel: {fileID: 0}
@@ -3951,6 +3950,10 @@ MonoBehaviour:
   doubleCoinsButton: {fileID: 0}
   loseItButton: {fileID: 0}
   getMovesButton: {fileID: 0}
+  instanceImageRef: {fileID: 0}
+  instancePos: {fileID: 0}
+  magnetPosDeduct: {fileID: 0}
+  hintPosDeduct: {fileID: 0}
   hintObj: {fileID: 0}
   hintButton: {fileID: 0}
   specialHintButton: {fileID: 0}
@@ -3967,7 +3970,7 @@ MonoBehaviour:
   tutorialtext: {fileID: 0}
   targetCongratulationImage: {fileID: 0}
   congratulationsImages: []
-  dailyRewardDetails: 
+  _dailyRewardNumber: 0
   giftLevel: 0
   giftJumpPLace: {fileID: 0}
   giftJumpPLace2: {fileID: 0}
@@ -3990,6 +3993,8 @@ MonoBehaviour:
   slideCoinsText: {fileID: 0}
   calendarPanel: {fileID: 0}
   calenderButton: {fileID: 0}
+  calIndicator: {fileID: 0}
+  calenderRvImage: {fileID: 0}
   claimCoinMovePos: {fileID: 0}
   claimDiamondFxParent: {fileID: 0}
   claimCenterParticleRect: {fileID: 0}

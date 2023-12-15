@@ -1933,7 +1933,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  countDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1 &644172422 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7617961761573801963, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
@@ -2529,7 +2531,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 13
+  orthographic size: 14
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2612,7 +2614,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  countDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &1021375866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5027,11 +5031,13 @@ MonoBehaviour:
   - HNEY
   - BE
   rowColor: []
+  question: 
   wordList: []
   stickingCubes:
   - {fileID: 982728114}
   - {fileID: 1946002750}
   - {fileID: 578415715}
+  spriteRevealImages: []
   scriptOff: 0
   rowsInGrid: 7
   colInGrid: 7
@@ -5076,9 +5082,17 @@ MonoBehaviour:
   wordsAfterWhichToMoveCam: 
   levelCompleted: 0
   levelFail: 0
+  wordsMade: 0
+  totalAutoWordsNumber: 0
   removing: 0
+  hintSpawnObject: {fileID: 0}
+  wordsDeleteNumber: 0
+  numberCubeHolders: []
+  objNumbers: 
   wordTouch: 0
   autoWordClick: 0
+  cameraMoving: 0
+  imageRevel: []
 --- !u!4 &1870371619
 Transform:
   m_ObjectHideFlags: 0
@@ -5225,7 +5239,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctWordMade: 0
+  countDone: 0
   answerString: 
+  emojiRevel: {fileID: 0}
 --- !u!1001 &2031787717
 PrefabInstance:
   m_ObjectHideFlags: 0
