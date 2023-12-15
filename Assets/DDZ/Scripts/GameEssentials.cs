@@ -28,7 +28,8 @@ namespace DDZ
         ImageReveal,
         FiftyFifty,
         Shuffle,
-        Calendar
+        Calendar,
+        SpinWheel
     }
 
     public class GameEssentials : Singleton<GameEssentials>
@@ -142,8 +143,8 @@ namespace DDZ
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_platforms), _platforms, null);
             }
-        }
-
+        } 
+        
         public static bool IsRvAvailable() => ApplovinManager.instance.RewardAdsAvailable();
         public static bool IsBannerAvailable() => ApplovinManager.instance.BannerAdsAvailable();
         public static bool IsInterstitialAvailable() => ApplovinManager.instance.InterstitialAdsAvailable();
@@ -247,6 +248,9 @@ namespace DDZ
                   break;
               case RewardType.Calendar:
                   DailyChallengesHandler.instance.DailyChallenge_Callback();
+                  break;
+              case RewardType.SpinWheel:
+                  SpinWheelManager.instance.StopTheSpin_Callback();
                   break;
               default:
                   print("default");

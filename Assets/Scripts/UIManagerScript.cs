@@ -103,6 +103,9 @@ public class UIManagerScript : MonoBehaviour
     public Image calIndicator;
     public Image calenderRvImage;
     public static int _hintCount = 1, _magnetCount = 1, _imageRevealCount = 1, _levelCompleteRewardCount = 1, _noMoreMovesCount = 1;
+    [Header("SpinWheel")] 
+    public Button spinwheel;
+    
     private void Awake()
 	{
 		if (!Instance) Instance = this;
@@ -292,6 +295,10 @@ public class UIManagerScript : MonoBehaviour
 		if (GetSpecialLevelNumber() == 30 && GetCalenderUnlockCheck() != "Unlock")
 		{
 			SetCalenderUnlockCheck("Unlock");
+		}
+		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
+		{
+			spinwheel.gameObject.SetActive(true);
 		}
 		/*if (GetSpecialLevelNumber() <= 130)
 		{
