@@ -1,18 +1,13 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using Coffee.UIExtensions;
 using DDZ;
 using DG.Tweening;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
-using Random = System.Random;
 
 public class EmojiManager : MonoBehaviour
 {
@@ -154,7 +149,7 @@ public class EmojiManager : MonoBehaviour
             DOVirtual.DelayedCall(1f, () =>
             {
                 if(UIManagerScript.Instance) UIManagerScript.Instance.WinPanelActive();
-            });
+            },false);
         }
 
         
@@ -213,7 +208,7 @@ public class EmojiManager : MonoBehaviour
         {
             OneBYOneFun();
             panelObj.GetComponent<EmojiClick>().levelStarted = true;
-        });
+        },false);
     }
 
     public void ButtonsDisable()
@@ -499,7 +494,7 @@ public class EmojiManager : MonoBehaviour
     {
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
-        UIManagerScript.Instance.NextMoveFun();
+        //UIManagerScript.Instance.NextMoveFun();
         SetListNumber(GetListNumbers() + 1);
         SetPanelsDone(GetPanelsDone() + 1);
         nextButton.interactable = false;

@@ -114,7 +114,7 @@ public class CubesGroupScript : MonoBehaviour
 							transform.GetChild(0).transform.localPosition = transform.GetChild(0).GetComponent<PlayerCubeScript>().stratpos;
 			    }*/
 		    }
-	    });
+	    },false);
 
     }
     private void CrctAnimSeqCall()
@@ -135,7 +135,7 @@ public class CubesGroupScript : MonoBehaviour
 					    {
 						    GameManager.Instance.autoWordClick = false;
 						    UIManagerScript.Instance.AutoButtonActiveFun();
-					    });
+					    },false);
 				    }
 
 				    childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
@@ -152,7 +152,7 @@ public class CubesGroupScript : MonoBehaviour
 			    });
 			    seq.AppendInterval(0.15f);
 			    seq.SetLoops(childObjects.Count);
-		    });
+		    },false);
 	    }
     }
     
@@ -167,7 +167,7 @@ public class CubesGroupScript : MonoBehaviour
         DOVirtual.DelayedCall(0.15f, () =>
         {
             WrongBackAnimSeq();
-        });
+        },false);
         var seq = DOTween.Sequence();
         seq.AppendCallback(() =>
         {
@@ -229,8 +229,8 @@ public class CubesGroupScript : MonoBehaviour
 	private bool _once;
 	private void OnMouseDown()
 	{
-		
-		if ((!GameManager.Instance.downCheck && !GameManager.Instance.autoWordClick) ||  !GameManager.Instance.scriptOff)
+		if (GameManager.Instance.scriptOff) return;
+		if ((!GameManager.Instance.downCheck && !GameManager.Instance.autoWordClick))
 		{
 			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
             //print("wordcheckfalse");
@@ -265,9 +265,10 @@ public class CubesGroupScript : MonoBehaviour
 
 	private void OnMouseDrag()
 	{
-		if ((!GameManager.Instance.downCheck && !GameManager.Instance.autoWordClick) ||  !GameManager.Instance.scriptOff)
+		if (GameManager.Instance.scriptOff) return;
+		if ((!GameManager.Instance.downCheck && !GameManager.Instance.autoWordClick))
 		{
-			if (GameManager.Instance.levelCompleted || GameManager.Instance.scriptOff) return;
+			if (GameManager.Instance.levelCompleted) return;
 			
 			if (UIManagerScript.Instance.endScreen.activeInHierarchy) return;
 			//print("wordcheckfalse");
@@ -512,7 +513,7 @@ public class CubesGroupScript : MonoBehaviour
 							GameManager.Instance.ShowTheText();
 							check2done = true;
 						}
-					});
+					},false);
 				}
 				
 			}

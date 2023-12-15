@@ -1,17 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using DG.Tweening;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
-using Sequence = DG.Tweening.Sequence;
 
 public class GameManager : MonoBehaviour
 {
@@ -218,7 +213,7 @@ public class GameManager : MonoBehaviour
         {
             canInstantiate = true;
         }
-        /*if (!levelCompleted && completeWordCubesList.Count == 0 && !_checkAllWordsClear)
+        if (!levelCompleted && completeWordCubesList.Count == 0 && !_checkAllWordsClear)
         {
             ButtonsTurnOffFun();
             _checkAllWordsClear = true;
@@ -227,7 +222,7 @@ public class GameManager : MonoBehaviour
                 if (!levelCompleted)
                 {
                     levelCompleted = true;
-                    ButtonsTurnOffFun();
+                    //ButtonsTurnOffFun();
             
                     DOVirtual.DelayedCall(.75f, () =>
                     {
@@ -240,12 +235,34 @@ public class GameManager : MonoBehaviour
                     });
                 }
             });
-        }*/
-        if (Input.GetKeyDown(KeyCode.A))
+        }
+        if (UIManagerScript.Instance.GetSpecialLevelNumber() > 10)
+        {
+            if (movesCount <= 0 && !levelCompleted && !levelFail)
+            {
+               print("Failed1");
+                if (!scriptOff)
+                    scriptOff = true;
+                ButtonsTurnOffFun();
+                print("Failed2");
+                DOVirtual.DelayedCall(1f, () =>
+                {
+                    if (!levelCompleted)
+                    {
+                        //if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Fail");
+                        UI.FailPanelActive();
+                        print("Failed");
+                    }
+                },false);
+                levelFail = true;
+            }
+        }
+        /*if (Input.GetKeyDown(KeyCode.A))
         {
             print("Nextfuncall");
             UI.NextMoveFun();
-        }
+        }*/
     }
 
 
@@ -452,32 +469,8 @@ public class GameManager : MonoBehaviour
                 UI.WinPanelActive();
                 BlockSeqCall();
                 //Debug.Log("LevelComplete");
-            });
+            },false);
         }
-        if (UIManagerScript.Instance.GetSpecialLevelNumber() > 10)
-        {
-            if (movesCount == 0 && !levelCompleted && !levelFail)
-            {
-                ButtonsTurnOffFun();
-            
-                DOVirtual.DelayedCall(1f, () =>
-                {
-                    if (!levelCompleted)
-                    {
-                        //if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
-                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Fail");
-                        UI.FailPanelActive();
-                        //Debug.Log("Failed");
-                        if (!scriptOff)
-                            scriptOff = true;
-                    }
-                });
-                if (!scriptOff)
-                    scriptOff = true;
-                levelFail = true;
-            }
-        }
-       
     }
 
     public void MakeAndCheckWordNew()
@@ -532,7 +525,7 @@ public class GameManager : MonoBehaviour
                 wordsMade--;*/
             }
             
-            if (wordsMade == stickingCubes.Count /*&& CheckIfAllBlocksFullNew()*/)
+            if (wordsMade == stickingCubes.Count && !levelCompleted/*&& CheckIfAllBlocksFullNew()*/)
             {
                 //do anything after all words are made
                 levelCompleted = true;
@@ -548,7 +541,7 @@ public class GameManager : MonoBehaviour
                     UI.WinPanelActive();
                     // BlockSeqCall();
                     //Debug.Log("LevelComplete");
-                });
+                },false);
             }
         }
 
@@ -570,7 +563,7 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("LevelComplete");
             });
         }*/
-        if (movesCount == 0 && !levelCompleted && !levelFail && UIManagerScript.Instance.GetSpecialLevelNumber() > 10)
+        /*if (movesCount == 0 && !levelCompleted && !levelFail && UIManagerScript.Instance.GetSpecialLevelNumber() > 10)
         {
             DOVirtual.DelayedCall(1f, () =>
             {
@@ -583,11 +576,11 @@ public class GameManager : MonoBehaviour
                     if (!scriptOff)
                         scriptOff = true;
                 }
-            });
+            },false);
             if (!scriptOff)
                 scriptOff = true;
             levelFail = true;
-        }
+        }*/
     }
 
     public DOTween vardo;
@@ -771,7 +764,7 @@ public class GameManager : MonoBehaviour
         {
             //Time.timeScale = 2f;
             BlockSeq();
-        });
+        },false);
     }
     public int wordsDeleteNumber;
     //To Remove the word from the AutoWordCompleteLists list after it's placed
@@ -896,7 +889,7 @@ public class GameManager : MonoBehaviour
                    }
                }
            }
-       });
+       },false);
 
        DOVirtual.DelayedCall(0.5f, () =>
        {
@@ -905,7 +898,7 @@ public class GameManager : MonoBehaviour
                FunWaitCall(completeWordCubesList[0].completeWordCubeGroup[i],
                    completeWordPositionsList[0].completeWordCubePositionGroup[i]);
            }
-       });
+       },false);
    }
 
    public void ResetObjects(GameObject resetObj)
@@ -1227,7 +1220,7 @@ public class GameManager : MonoBehaviour
                 if(obj.transform.GetChild(i).GetComponent<Collider>().enabled)
                     obj.transform.GetChild(i).GetComponent<Collider>().enabled = false;
             }
-        });
+        },false);
 
     }
     private bool autoFunCall = false;
@@ -1263,7 +1256,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                DOVirtual.DelayedCall(1.25f, () => { UI.NextMoveFun(); });
+                DOVirtual.DelayedCall(1.25f, () => { UI.NextMoveFun(); },false);
             }
         });
         seq.AppendInterval(0.1f);

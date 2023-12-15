@@ -296,7 +296,7 @@ public class ApplovinManager : MonoBehaviour
     {
         var placement = GameEssentials.RvType switch
         {
-            RewardType.BubbleRv => "HintBubble2X",
+            RewardType.BubbleRv => "Bubble2X",
             RewardType.Hint => "Hint",
             RewardType.Magnet => "Magnet",
             RewardType.LevelCompleteReward => "LevelCompleteReward",
@@ -320,7 +320,7 @@ public class ApplovinManager : MonoBehaviour
         LoadRewardedAd();
         var placement = GameEssentials.RvType switch
         {
-            RewardType.BubbleRv => "HintBubble2X",
+            RewardType.BubbleRv => "Bubble2X",
             RewardType.Hint => "Hint",
             RewardType.Magnet => "Magnet",
             RewardType.LevelCompleteReward => "LevelCompleteReward",
@@ -351,7 +351,7 @@ public class ApplovinManager : MonoBehaviour
     {
         var placement = GameEssentials.RvType switch
         {
-            RewardType.BubbleRv => "HintBubble2X",
+            RewardType.BubbleRv => "Bubble2X",
             RewardType.Hint => "Hint",
             RewardType.Magnet => "Magnet",
             RewardType.LevelCompleteReward => "LevelCompleteReward",
@@ -375,6 +375,12 @@ public class ApplovinManager : MonoBehaviour
         Time.timeScale = 1;
         LoadRewardedAd();
         print("Reward Ad Hidden::"+ adInfo.Placement+"::"+adInfo.NetworkName);
+        if (GameEssentials.RvType == RewardType.LevelCompleteReward)
+        {
+            UIManagerScript.Instance.claimButton.interactable = true;
+            UIManagerScript.Instance.loseItButton.interactable = true;
+        }
+        
     }
 
     private void OnRewardedAdReceivedRewardEvent(string adUnitId, MaxSdk.Reward reward, MaxSdkBase.AdInfo adInfo)
@@ -386,7 +392,7 @@ public class ApplovinManager : MonoBehaviour
         
         var placement = GameEssentials.RvType switch
         {
-            RewardType.BubbleRv => "HintBubble2X",
+            RewardType.BubbleRv => "Bubble2X",
             RewardType.Hint => "Hint",
             RewardType.Magnet => "Magnet",
             RewardType.LevelCompleteReward => "LevelCompleteReward",

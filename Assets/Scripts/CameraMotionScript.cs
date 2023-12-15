@@ -72,7 +72,7 @@ public class CameraMotionScript : MonoBehaviour
                         cameraMoved++;
                     }));
                 });
-            });
+            },false);
         }
 
         GameManager.Instance.OnPartComplete += InstanceOnOnPartComplete;
@@ -101,7 +101,7 @@ public class CameraMotionScript : MonoBehaviour
                     // print("cameramoved:::::::::::"+cameraMoved);
                 }));
             });
-        });
+        },false);
     }
 
     private void Update()

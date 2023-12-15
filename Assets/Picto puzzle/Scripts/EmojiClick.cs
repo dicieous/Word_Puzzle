@@ -114,7 +114,7 @@ public class EmojiClick : MonoBehaviour
                 {
                     EmojiManager.Instance.PanelAndListUpdate();
                     
-                });
+                },false);
                 ///FindObjectOfType<Button>().enabled = false;
                 //UIManager.instance.WinPanel();
                 /////hintBtn.transform.DOScale(Vector3.zero, 0.25f);
@@ -188,7 +188,6 @@ public class EmojiClick : MonoBehaviour
     public void SelectEmoji()
     {
         //AudioManager.instance.Play("Tap");
-        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         var temp = EventSystem.current.currentSelectedGameObject.GetComponent<Image>();
         temp.GetComponent<Button>().enabled = false;
         // UIManager.instance.SmokeOn();
@@ -345,6 +344,7 @@ public class EmojiClick : MonoBehaviour
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
             //Vibration.Vibrate(20);
         }
+        //if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
     }
 
     public void PickRandomCorrect()
