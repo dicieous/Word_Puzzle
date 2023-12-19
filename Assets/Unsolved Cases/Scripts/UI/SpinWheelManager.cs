@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 
 using Coffee.UIExtensions;
@@ -36,6 +37,16 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
     private Image StopRvIcon => stopBtn.transform.GetChild(0).GetComponent<Image>();
     private Image StopLoading => stopBtn.transform.GetChild(1).GetComponent<Image>();
     
+    
+    // private void Awake()
+    // {
+    //     totalSpinWheel = CoinManager.instance.GetSpinCount();
+    // }
+    private void Start()
+    {
+        totalSpinWheel = CoinManager.instance.GetSpinCount();
+    }
+
     private void Update()
     {
         CheckSpinWheelRvButtons();
@@ -50,6 +61,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
 
     public void SpinTheWheel()
     {
+        print(":!:::::::::::::::::"+CoinManager.instance.GetSpinCount());
         if (totalSpinWheel <= 0)
         {
             //ad call and event
@@ -57,8 +69,11 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
             GameEssentials.ShowRewardedAds("SpinWheel");
             return;
         }
-
         StopTheSpin_Callback();
+        /*if (CoinManager.instance.GetSpinCount() > 0)
+        {
+            CoinManager.instance.SetSpinCount(CoinManager.instance.GetSpinCount() - 1);
+        }*/
     }
     
     private void TickSoundHandler()
@@ -114,6 +129,11 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
     private void StopSpin()
     {
         totalSpinWheel--;
+        if (totalSpinWheel < 0)
+        {
+            remainingTxt.text = "0";
+        }
+        CoinManager.instance.SetSpinCount(totalSpinWheel);
         _stopPressed = true;
         stopBtn.interactable = false;
         closeBtn.interactable = false;
@@ -131,7 +151,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
             pin.localEulerAngles = Vector3.zero;
             StartCoroutine(GiveTheReward());
             startSpin = false;
-            DOVirtual.DelayedCall(1, (() =>
+            DOVirtual.DelayedCall(1.3f, (() =>
             {
                 stopBtn.interactable = true;
                 closeBtn.interactable = true;
@@ -171,6 +191,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
                 {
                     dummyObj.rectTransform.DOAnchorPos(coinPos.anchoredPosition, 1.25f).OnComplete(() =>
                     {
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
                         closeBtn.interactable = true;
                         dummyObj.rectTransform.anchoredPosition = Vector2.zero;
                         dummyObj.gameObject.SetActive(false);
@@ -192,6 +213,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
                 dummyObj.GetComponent<AudioSource>().Play();
                 dummyObj.rectTransform.DOAnchorPos(spinPos.anchoredPosition, 1.5f).OnComplete(() =>
                 {
+                    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
                     closeBtn.interactable = true;
                     dummyObj.rectTransform.anchoredPosition = Vector2.zero;
                     dummyObj.gameObject.SetActive(false);
@@ -216,6 +238,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
                 {
                     dummyObj.rectTransform.DOAnchorPos(hintPos.anchoredPosition, 1.25f).OnComplete(() =>
                     {
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
                         closeBtn.interactable = true;
                         dummyObj.rectTransform.anchoredPosition = Vector2.zero;
                         dummyObj.gameObject.SetActive(false);
@@ -241,6 +264,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
                 {
                     dummyObj.rectTransform.DOAnchorPos(coinPos.anchoredPosition, 1.25f).OnComplete(() =>
                     {
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
                         closeBtn.interactable = true;
                         dummyObj.rectTransform.anchoredPosition = Vector2.zero;
                         dummyObj.gameObject.SetActive(false);
@@ -266,6 +290,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
                 {
                     dummyObj.rectTransform.DOAnchorPos(magnetPos.anchoredPosition, 1.25f).OnComplete(() =>
                     {
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
                         closeBtn.interactable = true;
                         dummyObj.rectTransform.anchoredPosition = Vector2.zero;
                         dummyObj.gameObject.SetActive(false);
@@ -291,6 +316,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
                 {
                     dummyObj.rectTransform.DOAnchorPos(coinPos.anchoredPosition, 1.25f).OnComplete(() =>
                     {
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
                         closeBtn.interactable = true;
                         dummyObj.rectTransform.anchoredPosition = Vector2.zero;
                         dummyObj.gameObject.SetActive(false);
@@ -316,6 +342,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
                 {
                     dummyObj.rectTransform.DOAnchorPos(hintPos.anchoredPosition, 1.25f).OnComplete(() =>
                     {
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
                         closeBtn.interactable = true;
                         dummyObj.rectTransform.anchoredPosition = Vector2.zero;
                         dummyObj.gameObject.SetActive(false);
@@ -346,6 +373,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
 
     public void CloseTheWheel()
     {
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         stopBtn.interactable = false;
         closeBtn.interactable = false;
         spinWheelPanel.SetActive(false);
@@ -354,6 +382,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
 
     public void OpenSpinWheel()
     {
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         spinWheelPanel.SetActive(true);
         InitSpinWheel();
         stopBtn.interactable = true;

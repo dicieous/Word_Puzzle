@@ -29,7 +29,8 @@ namespace DDZ
         FiftyFifty,
         Shuffle,
         Calendar,
-        SpinWheel
+        SpinWheel,
+        DailyReward
     }
 
     public class GameEssentials : Singleton<GameEssentials>
@@ -251,6 +252,9 @@ namespace DDZ
                   break;
               case RewardType.SpinWheel:
                   SpinWheelManager.instance.StopTheSpin_Callback();
+                  break;
+              case RewardType.DailyReward:
+                  DailyRewardManager.instance.DailyCallBack();
                   break;
               default:
                   print("default");

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using DDZ;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -24,7 +26,7 @@ public class DayContent : MonoBehaviour
     public TMP_Text dayTxt;
     public RectTransform rewardState;
     public string getKey;
-    
+
     private Image _circle, _square;
     private readonly Dictionary<int, string> _monthIndexName = new()
     {
@@ -112,24 +114,37 @@ public class DayContent : MonoBehaviour
     public void OnButtonPress()
     {
         if(dayState is not (DayState.Claim or DayState.ClaimAd)) return;
-
+        DailyRewardManager.instance.selectedDayContent = this;
         switch (dayState)
         {
             case DayState.Claim:
             print("Change to claimed");
+            CoinManager.instance.CoinsIncrease(150);
             SaveDay();
             break;
             case DayState.ClaimAd:
             print("Show ad and Change to claimed");
-            SaveDay();
+            GameEssentials.RvType = RewardType.DailyReward;
+            GameEssentials.ShowRewardedAds("DailyReward");
+            //SaveDay();
             break;
         }
     }
 
-    private void SaveDay()
+    public void SaveDay()
     {
         PlayerPrefs.SetInt(getKey, 1);
         dayState = DayState.Claimed;
         SetButtonData(dayInt, dayState );
+    }
+
+
+    private void Update()
+    {
+        if(!GameEssentials.instance) return;
+        if(dayState != DayState.ClaimAd) return;
+        print(dayState +" sd");
+        rvImage.gameObject.SetActive(GameEssentials.IsRvAvailable());
+        loadingImage.gameObject.SetActive(!GameEssentials.IsRvAvailable());
     }
 }

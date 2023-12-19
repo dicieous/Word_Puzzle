@@ -5,28 +5,31 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DailyRewardManager : MonoBehaviour
+public class DailyRewardManager : SingletonInstance<DailyRewardManager>
 {
     public Canvas mainCanvas;
     public ScrollRect scrollRect;
     public List<DayContent> days;
     public DateTime currentDateTime;
     
+    public DayContent selectedDayContent;
     private DayContent _currentDayContent;
    
+    public GameObject dailyRewardPanel, dairlyRewardBtr, spinWheelBtr;
     private static int GetSavedValue(int day, int month, int year) =>
         PlayerPrefs.GetInt("SavedDate_" + day + "" + month + "" + year);
-    private void Awake()
+
+    public void DailyCallBack()
+    {
+        selectedDayContent.SaveDay();
+    }
+    
+    
+    private void Start()
     {
         currentDateTime = DateTime.Now;
         scrollRect.vertical = false;
-        /*var height = GetComponent<RectTransform>().rect.height * 0.8f;
-        var size = new Vector2(0, height <= 1835 ? 1835 : height); 
-        scrollRect.transform.parent.GetComponent<RectTransform>().sizeDelta = size ;*/
-    }
-
-    private void Start()
-    {
+        
         for (var i = 0; i < days.Count; i++)
         {
             var date = i + 1;
@@ -56,13 +59,9 @@ public class DailyRewardManager : MonoBehaviour
                         : DayState.Claimed);
             }
         }
-        
-        MoveScrollToCurrentDate(_currentDayContent.GetComponent<RectTransform>(), () =>
-        {
-            scrollRect.vertical = true;
-        });
-    }
 
+       
+    }
 
     private void MoveScrollToCurrentDate(RectTransform currentDay, Action callback)
     {
@@ -79,5 +78,33 @@ public class DailyRewardManager : MonoBehaviour
             0 - (viewportLocalPosition.y + childLocalPosition.y)
         );
         return result;
+    }
+    
+    public void OpenPanel()
+    {
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+        dailyRewardPanel.transform.DOScale(1, 1);
+        dailyRewardPanel.SetActive(true);
+
+        dairlyRewardBtr.SetActive(false);
+        spinWheelBtr.SetActive(false);
+        DOVirtual.DelayedCall(0.2f, () =>
+        {
+            MoveScrollToCurrentDate(_currentDayContent.GetComponent<RectTransform>(), () =>
+            {
+                scrollRect.vertical = true;
+            });
+        });
+    }
+
+    public void ClosePanel()
+    {
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+        dailyRewardPanel.transform.DOScale(0.9f, 0.2f).OnComplete((() =>
+        {
+            dailyRewardPanel.SetActive(false);
+        }));
+        dairlyRewardBtr.SetActive(true);
+        spinWheelBtr.SetActive(true);
     }
 }
