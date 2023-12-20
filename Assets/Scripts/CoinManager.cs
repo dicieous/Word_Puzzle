@@ -226,4 +226,8 @@ public class CoinManager : MonoBehaviour
     public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 0);
 
     public void SetCoinCount(int countCoin) => PlayerPrefs.SetInt("Coins Count", countCoin);
+    
+    public int GetSpinCount() => PlayerPrefs.GetInt("Spins Count", 2);
+    public void SetSpinCount(int countSpin) => PlayerPrefs.SetInt("Spins Count", countSpin);
+    
 }

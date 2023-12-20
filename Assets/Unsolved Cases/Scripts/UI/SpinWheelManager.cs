@@ -1,10 +1,12 @@
 
+using System;
 using System.Collections;
 
 using Coffee.UIExtensions;
 using DDZ;
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -14,10 +16,10 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
     public GameObject spinWheelPanel;
     public Button spinWheelBtn;
   
-    public Image dummyObj;
-    public Sprite hintSpr, spinWheelSpr;
+    public Image dummyObj , raySpr;
+    public Sprite hintSpr, spinWheelSpr, magnetSpr, coinSpr;
 
-    public RectTransform hintPos, spinPos;
+    public RectTransform hintPos, magnetPos, coinPos, spinPos;
 
     // Spin Wheel
     public TMP_Text remainingTxt;
@@ -25,22 +27,53 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
     public RectTransform spinBoard, pin, glow;
     public AudioSource tickingSound;
     public Image smiley;
-
+    public GameObject coinEffect, hintEffect, magnetEffect;
+    
     [SerializeField] private float speed, pinSpeed, audioSpeed;
     [SerializeField] private float tickFrequency = 0.5f;
     [SerializeField]private int totalSpinWheel;
-    private bool _spinNow, _stopPressed, _stopTickSound;
+    private bool _spinNow, _stopPressed, _stopTickSound, startSpin;
     
     private Image StopRvIcon => stopBtn.transform.GetChild(0).GetComponent<Image>();
     private Image StopLoading => stopBtn.transform.GetChild(1).GetComponent<Image>();
     
+    
+    // private void Awake()
+    // {
+    //     totalSpinWheel = CoinManager.instance.GetSpinCount();
+    // }
+    private void Start()
+    {
+        totalSpinWheel = CoinManager.instance.GetSpinCount();
+    }
+
     private void Update()
     {
         CheckSpinWheelRvButtons();
-        if (!_spinNow) return;
-        spinBoard.Rotate(new Vector3(0, 0, 10f) * (speed * Time.deltaTime));
-        glow.Rotate(new Vector3(0, 0, -5f) * (speed * Time.deltaTime));
-        TickSoundHandler();
+        if (startSpin)
+        {
+            if (!_spinNow) return;
+            spinBoard.Rotate(new Vector3(0, 0, 10f) * (speed * Time.deltaTime));
+            glow.Rotate(new Vector3(0, 0, -5f) * (speed * Time.deltaTime));
+            TickSoundHandler();
+        }
+    }
+
+    public void SpinTheWheel()
+    {
+        print(":!:::::::::::::::::"+CoinManager.instance.GetSpinCount());
+        if (totalSpinWheel <= 0)
+        {
+            //ad call and event
+            GameEssentials.RvType = RewardType.SpinWheel;
+            GameEssentials.ShowRewardedAds("SpinWheel");
+            return;
+        }
+        StopTheSpin_Callback();
+        /*if (CoinManager.instance.GetSpinCount() > 0)
+        {
+            CoinManager.instance.SetSpinCount(CoinManager.instance.GetSpinCount() - 1);
+        }*/
     }
     
     private void TickSoundHandler()
@@ -71,28 +104,43 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
         pin.DORotate(new Vector3(0, 0, -15f), pinSpeed).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
     }
 
-    public void StopTheSpin()
-    {
-        if (totalSpinWheel <= 0)
-        {
-            //ad call and event
-            GameEssentials.RvType = RewardType.SpinWheel;
-            GameEssentials.ShowRewardedAds("SpinWheel");
-            return;
-        }
-        StopTheSpin_Callback();
-        // GameEssentials.instance.shm.PlayAudio("Find");
-    }
+    // public void StopTheSpin()
+    // {
+    //     if (totalSpinWheel <= 0)
+    //     {
+    //         //ad call and event
+    //         GameEssentials.RvType = RewardType.SpinWheel;
+    //         GameEssentials.ShowRewardedAds("SpinWheel");
+    //         return;
+    //     }
+    //     StopTheSpin_Callback();
+    //     // GameEssentials.instance.shm.PlayAudio("Find");
+    // }
 
     public void StopTheSpin_Callback()
     {
+        startSpin = true;
+        stopBtn.interactable = false;
+        closeBtn.interactable = false;
+        PinRotate();
+        DOVirtual.DelayedCall(3.5f, StopSpin);
+    }
+
+    private void StopSpin()
+    {
         totalSpinWheel--;
+        if (totalSpinWheel < 0)
+        {
+            remainingTxt.text = "0";
+        }
+        CoinManager.instance.SetSpinCount(totalSpinWheel);
         _stopPressed = true;
         stopBtn.interactable = false;
         closeBtn.interactable = false;
         totalSpinWheel = totalSpinWheel <= 0 ? 0 : totalSpinWheel;
         remainingTxt.text = "Remaining Spins : " + totalSpinWheel;
         stopBtn.image.rectTransform.GetChild(0).gameObject.SetActive(totalSpinWheel <= 0);
+        //PinRotate();
         pin.DOKill();
         pinSpeed = 0.25f;
         audioSpeed = 0.5f;
@@ -102,7 +150,12 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
             pin.DOKill();
             pin.localEulerAngles = Vector3.zero;
             StartCoroutine(GiveTheReward());
-            closeBtn.interactable = true;
+            startSpin = false;
+            DOVirtual.DelayedCall(1.3f, (() =>
+            {
+                stopBtn.interactable = true;
+                closeBtn.interactable = true;
+            }));
         });
     }
 
@@ -111,10 +164,10 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
         RewardBasedOnRotation(spinBoard.localEulerAngles.z);
         // Give Reward
         yield return new WaitForSeconds(3f);
-        _stopPressed = false;
-        _stopTickSound = true;
+         _stopPressed = false;
+         _stopTickSound = true;
         DOTween.To(() => speed, x => speed = x, 35, 0.5f).OnComplete(() => { stopBtn.interactable = true; });
-        PinRotate();
+       // PinRotate();
     }
 
     private void RewardBasedOnRotation(float val)
@@ -126,36 +179,41 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
 
         switch (val)
         {
-            case >= 0 and <= 25f:
-            case >= 325f and <= 360f:
-                print("4 Hints");
-                dummyObj.sprite = hintSpr;
+            case >= 337 and <= 359:
+            case >= 0 and <= 22f:
+                print("250 Coins");
+                dummyObj.sprite = coinSpr;
                 dummyObj.gameObject.SetActive(true);
+                dummyObj.gameObject.transform.DOScale(1, 1);
+                raySpr.gameObject.transform.DOScale(1, 1);
                 dummyObj.GetComponent<AudioSource>().Play();
-                dummyObj.rectTransform.DOAnchorPos(hintPos.anchoredPosition, 1.25f).OnComplete(() =>
+                DOVirtual.DelayedCall(2, (() =>
                 {
-                    closeBtn.interactable = true;
-                    dummyObj.rectTransform.anchoredPosition = Vector2.zero;
-                    dummyObj.gameObject.SetActive(false);
-                    GameEssentials.VibrationOrHaptic( 13);
-                });
+                    dummyObj.rectTransform.DOAnchorPos(coinPos.anchoredPosition, 1.25f).OnComplete(() =>
+                    {
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
+                        closeBtn.interactable = true;
+                        dummyObj.rectTransform.anchoredPosition = Vector2.zero;
+                        dummyObj.gameObject.SetActive(false);
+                        raySpr.gameObject.transform.DOScale(0, 1);
+                        GameEssentials.VibrationOrHaptic( 13);
+                        CoinManager.instance.CoinsIncrease(250);
+                        coinEffect.GetComponent<ParticleSystem>().Play();
+                        DOVirtual.DelayedCall(0.5f, (() =>
+                        {
+                            coinEffect.GetComponent<ParticleSystem>().Stop();
+                        }));
+                    });
+                }));
                 break;
-            case >= 26f and <= 85f:
-                print("Smiley");
-                //dummyObj.sprite = hintSpr;
-                smiley.gameObject.SetActive(true);
-                smiley.GetComponent<AudioSource>().Play();
-                var da = smiley.GetComponent<DOTweenAnimation>();
-                da.onComplete.AddListener(() => { da.DOPlayBackwards(); });
-                da.DOPlayForward();
-                break;
-            case >= 86f and <= 145f:
+            case >= 23f and <= 66f:
                 print("Extra Spin Wheel");
                 dummyObj.sprite = spinWheelSpr;
                 dummyObj.gameObject.SetActive(true);
                 dummyObj.GetComponent<AudioSource>().Play();
                 dummyObj.rectTransform.DOAnchorPos(spinPos.anchoredPosition, 1.5f).OnComplete(() =>
                 {
+                    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
                     closeBtn.interactable = true;
                     dummyObj.rectTransform.anchoredPosition = Vector2.zero;
                     dummyObj.gameObject.SetActive(false);
@@ -166,61 +224,165 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
                     remainingTxt.rectTransform.GetChild(0).GetComponent<UIParticle>().Play();
                     remainingTxt.GetComponent<AudioSource>().Play();
                     GameEssentials.VibrationOrHaptic( 13);
+                    
                 });
                 break;
-            case >= 146f and <= 205f:
-                print("1 Hint");
-                dummyObj.sprite = hintSpr;
-                dummyObj.gameObject.SetActive(true);
-                dummyObj.GetComponent<AudioSource>().Play();
-                dummyObj.rectTransform.DOAnchorPos(hintPos.anchoredPosition, 1.25f).OnComplete(() =>
-                {
-                    closeBtn.interactable = true;
-                    dummyObj.rectTransform.anchoredPosition = Vector2.zero;
-                    dummyObj.gameObject.SetActive(false);
-                    GameEssentials.VibrationOrHaptic( 13);
-                });
-                break;
-            case >= 206f and <= 265f:
+            case >= 67f and <= 111f:
                 print("2 Hints");
                 dummyObj.sprite = hintSpr;
                 dummyObj.gameObject.SetActive(true);
+                dummyObj.gameObject.transform.DOScale(1, 1);
+                raySpr.gameObject.transform.DOScale(1, 1);
                 dummyObj.GetComponent<AudioSource>().Play();
-                dummyObj.rectTransform.DOAnchorPos(hintPos.anchoredPosition, 1.25f).OnComplete(() =>
+                DOVirtual.DelayedCall(2, (() =>
                 {
-                    closeBtn.interactable = true;
-                    dummyObj.rectTransform.anchoredPosition = Vector2.zero;
-                    dummyObj.gameObject.SetActive(false);
-                    GameEssentials.VibrationOrHaptic( 13);
-                });
+                    dummyObj.rectTransform.DOAnchorPos(hintPos.anchoredPosition, 1.25f).OnComplete(() =>
+                    {
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
+                        closeBtn.interactable = true;
+                        dummyObj.rectTransform.anchoredPosition = Vector2.zero;
+                        dummyObj.gameObject.SetActive(false);
+                        raySpr.gameObject.transform.DOScale(0, 1);
+                        GameEssentials.VibrationOrHaptic( 13);
+                        CoinManager.instance.CoinsIncrease(100);
+                        hintEffect.GetComponent<ParticleSystem>().Play();
+                        DOVirtual.DelayedCall(0.5f, (() =>
+                        {
+                            hintEffect.GetComponent<ParticleSystem>().Stop();
+                        }));
+                    });
+                }));
                 break;
-            default:
-                print("3 Hints");
+            case >= 112f and <= 157f:
+                print("100 coins");
+                dummyObj.sprite = coinSpr;
+                dummyObj.gameObject.SetActive(true);
+                dummyObj.gameObject.transform.DOScale(1, 1);
+                raySpr.gameObject.transform.DOScale(1, 1);
+                dummyObj.GetComponent<AudioSource>().Play();
+                DOVirtual.DelayedCall(2, (() =>
+                {
+                    dummyObj.rectTransform.DOAnchorPos(coinPos.anchoredPosition, 1.25f).OnComplete(() =>
+                    {
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
+                        closeBtn.interactable = true;
+                        dummyObj.rectTransform.anchoredPosition = Vector2.zero;
+                        dummyObj.gameObject.SetActive(false);
+                        raySpr.gameObject.transform.DOScale(0, 1);
+                        GameEssentials.VibrationOrHaptic( 13);
+                        CoinManager.instance.CoinsIncrease(100);
+                        coinEffect.GetComponent<ParticleSystem>().Play();
+                        DOVirtual.DelayedCall(0.5f, (() =>
+                        {
+                            coinEffect.GetComponent<ParticleSystem>().Stop();
+                        }));
+                    });
+                }));
+                break;
+            case >= 158f and <= 201f:
+                print("2 magnet");
+                dummyObj.sprite = magnetSpr;
+                dummyObj.gameObject.SetActive(true);
+                dummyObj.gameObject.transform.DOScale(1, 1);
+                raySpr.gameObject.transform.DOScale(1, 1);
+                dummyObj.GetComponent<AudioSource>().Play();
+                DOVirtual.DelayedCall(2, (() =>
+                {
+                    dummyObj.rectTransform.DOAnchorPos(magnetPos.anchoredPosition, 1.25f).OnComplete(() =>
+                    {
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
+                        closeBtn.interactable = true;
+                        dummyObj.rectTransform.anchoredPosition = Vector2.zero;
+                        dummyObj.gameObject.SetActive(false);
+                        raySpr.gameObject.transform.DOScale(0, 1);
+                        GameEssentials.VibrationOrHaptic( 13);
+                        CoinManager.instance.CoinsIncrease(200);
+                        magnetEffect.GetComponent<ParticleSystem>().Play();
+                        DOVirtual.DelayedCall(0.5f, (() =>
+                        {
+                            magnetEffect.GetComponent<ParticleSystem>().Stop();;
+                        }));
+                    });
+                }));
+                break;
+            case >= 202f and <= 246f:
+                print("200 coins");
+                dummyObj.sprite = coinSpr;
+                dummyObj.gameObject.SetActive(true);
+                dummyObj.gameObject.transform.DOScale(1, 1);
+                raySpr.gameObject.transform.DOScale(1, 1);
+                dummyObj.GetComponent<AudioSource>().Play();
+                DOVirtual.DelayedCall(2, (() =>
+                {
+                    dummyObj.rectTransform.DOAnchorPos(coinPos.anchoredPosition, 1.25f).OnComplete(() =>
+                    {
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
+                        closeBtn.interactable = true;
+                        dummyObj.rectTransform.anchoredPosition = Vector2.zero;
+                        dummyObj.gameObject.SetActive(false);
+                        raySpr.gameObject.transform.DOScale(0, 1);
+                        GameEssentials.VibrationOrHaptic( 13);
+                        CoinManager.instance.CoinsIncrease(200);
+                        coinEffect.GetComponent<ParticleSystem>().Play();
+                        DOVirtual.DelayedCall(0.5f, (() =>
+                        {
+                            coinEffect.GetComponent<ParticleSystem>().Stop();
+                        }));
+                    });
+                }));
+                break;
+            case >=247 and <= 292f:
+                print("1 hint");
                 dummyObj.sprite = hintSpr;
                 dummyObj.gameObject.SetActive(true);
+                dummyObj.gameObject.transform.DOScale(1, 1);
+                raySpr.gameObject.transform.DOScale(1, 1);
                 dummyObj.GetComponent<AudioSource>().Play();
-                dummyObj.rectTransform.DOAnchorPos(hintPos.anchoredPosition, 1.25f).OnComplete(() =>
+                DOVirtual.DelayedCall(2, (() =>
                 {
-                    closeBtn.interactable = true;
-                    dummyObj.rectTransform.anchoredPosition = Vector2.zero;
-                    dummyObj.gameObject.SetActive(false);
-                    GameEssentials.VibrationOrHaptic(13);
-                });
+                    dummyObj.rectTransform.DOAnchorPos(hintPos.anchoredPosition, 1.25f).OnComplete(() =>
+                    {
+                        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
+                        closeBtn.interactable = true;
+                        dummyObj.rectTransform.anchoredPosition = Vector2.zero;
+                        dummyObj.gameObject.SetActive(false);
+                        raySpr.gameObject.transform.DOScale(0, 1);
+                        GameEssentials.VibrationOrHaptic( 13);
+                        CoinManager.instance.CoinsIncrease(50);
+                        hintEffect.GetComponent<ParticleSystem>().Play();
+                        DOVirtual.DelayedCall(0.5f, (() =>
+                        {
+                            hintEffect.GetComponent<ParticleSystem>().Stop();
+                        }));
+                    });
+                }));
+                break;
+            case >= 293f and <= 336f:
+                print("Smiley");
+                smiley.gameObject.SetActive(true);
+                smiley.GetComponent<AudioSource>().Play();
+                var da = smiley.GetComponent<DOTweenAnimation>();
+                da.onComplete.AddListener(() => { da.DOPlayBackwards(); });
+                da.DOPlayForward();
+                break;
+            default:
+                print("default");
                 break;
         }
     }
 
     public void CloseTheWheel()
     {
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         stopBtn.interactable = false;
         closeBtn.interactable = false;
         spinWheelPanel.SetActive(false);
         spinWheelBtn.gameObject.SetActive(true);
-
     }
 
     public void OpenSpinWheel()
     {
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         spinWheelPanel.SetActive(true);
         InitSpinWheel();
         stopBtn.interactable = true;
@@ -230,7 +392,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
 
     private void InitSpinWheel()
     {
-        PinRotate();
+        //PinRotate();
         audioSpeed = tickFrequency;
         _spinNow = true;
         _stopTickSound = true;
