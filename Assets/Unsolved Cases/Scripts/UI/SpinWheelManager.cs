@@ -10,6 +10,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Random = System.Random;
 
 public class SpinWheelManager : SingletonInstance<SpinWheelManager>
 {
@@ -61,7 +62,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
 
     public void SpinTheWheel()
     {
-        print(":!:::::::::::::::::"+CoinManager.instance.GetSpinCount());
+        //print(":!:::::::::::::::::"+CoinManager.instance.GetSpinCount());
         if (totalSpinWheel <= 0)
         {
             //ad call and event
@@ -123,22 +124,23 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
         stopBtn.interactable = false;
         closeBtn.interactable = false;
         PinRotate();
-        DOVirtual.DelayedCall(3.5f, StopSpin);
+        var ranRange = UnityEngine.Random.Range(3f, 5f);
+        DOVirtual.DelayedCall(ranRange, StopSpin);
     }
 
     private void StopSpin()
     {
         totalSpinWheel--;
-        if (totalSpinWheel < 0)
-        {
-            remainingTxt.text = "0";
-        }
         CoinManager.instance.SetSpinCount(totalSpinWheel);
         _stopPressed = true;
         stopBtn.interactable = false;
         closeBtn.interactable = false;
         totalSpinWheel = totalSpinWheel <= 0 ? 0 : totalSpinWheel;
         remainingTxt.text = "Remaining Spins : " + totalSpinWheel;
+        if (totalSpinWheel <= 0)
+        {
+            remainingTxt.text = "Remaining Spins : " + 0;
+        }
         stopBtn.image.rectTransform.GetChild(0).gameObject.SetActive(totalSpinWheel <= 0);
         //PinRotate();
         pin.DOKill();
@@ -383,6 +385,18 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
     public void OpenSpinWheel()
     {
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+        if (UIManagerScript.Instance.GetSpecialLevelNumber() < 20)
+        {
+            var calVal = spinWheelBtn.transform.GetChild(0);
+            print(":Scale"+calVal.localScale.x);
+            if (calVal.localScale.x == 0)
+            {
+                calVal.DOScale(Vector3.one, 0.15f).SetEase(Ease.OutBack);
+                DOVirtual.DelayedCall(2f, () => { calVal.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce); },
+                    false);
+            }
+            return;
+        }
         spinWheelPanel.SetActive(true);
         InitSpinWheel();
         stopBtn.interactable = true;
@@ -398,6 +412,10 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
         _stopTickSound = true;
         // _totalSpinWheel = GameEssentials.GetTotalSpinWheel();
         remainingTxt.text = "Remaining Spins : " + totalSpinWheel;
+        if (totalSpinWheel <= 0)
+        {
+            remainingTxt.text = "Remaining Spins : " + 0;
+        }
         stopBtn.image.rectTransform.GetChild(0).gameObject.SetActive(totalSpinWheel <= 0);
         DOTween.To(() => speed, x => speed = x, 35, 1f).SetEase(Ease.InOutQuad);
         DOTween.To(() => pinSpeed, x => pinSpeed = x, 0.1f, 1f).SetEase(Ease.InOutQuad);

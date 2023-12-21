@@ -71,6 +71,7 @@ public class EmojiClick : MonoBehaviour
         {
             optionBtn[i].GetComponent<Image>().sprite = options[i];
             optionBtn[i].gameObject.tag = "Wrong";
+            optionBtn[i].raycastTarget = true;
         }
         PickRandomCorrect();
         // Gamepanel Animations...
@@ -354,6 +355,7 @@ public class EmojiClick : MonoBehaviour
             int ran = Random.Range(0, optionBtn.Count);
             optionBtn[ran].GetComponent<Image>().sprite = correctList[i];
             optionBtn[ran].gameObject.tag = "Correct";
+            optionBtn[ran].raycastTarget = true;
             optionBtn.Remove(optionBtn[ran]);
         }
     }

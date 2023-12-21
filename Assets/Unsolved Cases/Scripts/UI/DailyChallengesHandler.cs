@@ -64,7 +64,7 @@ public class DailyChallengesHandler : MonoBehaviour
     };
 
     //public readonly Dictionary<int,dtring>
-    private int _selectedDate, _baseNumber = 159;
+    private int _selectedDate, _baseNumber = 189;
     private DateTime _currentDateTime, _gameStartDateTime;
 
     private readonly Dictionary<int, string> _monthIndexName = new()
@@ -378,6 +378,9 @@ public class DailyChallengesHandler : MonoBehaviour
         CheckIfDailyChallengesCompleted();
         // LoadLevel
         var sceneIndex = _baseNumber + _selectedDate;
+        print( "BaseNUmber::::"+_baseNumber);
+        print( "BaseNUmber::::selected"+(_baseNumber + _selectedDate));
+        print( "::::selected"+(_selectedDate));
         RewardCoins(_selectedDate);
         SceneManager.LoadScene(sceneIndex);
     }

@@ -306,6 +306,8 @@ public class ApplovinManager : MonoBehaviour
             RewardType.FiftyFifty => "FiftyFifty",
             RewardType.ImageReveal => "ImageReveal",
             RewardType.NoMoreMoves => "NoMoreMoves",
+            RewardType.CalenderStart => "CalenderStart",
+            RewardType.SpinWheel => "SpinWheel",
             _=> "None"
         };
         
@@ -330,6 +332,8 @@ public class ApplovinManager : MonoBehaviour
             RewardType.FiftyFifty => "FiftyFifty",
             RewardType.ImageReveal => "ImageReveal",
             RewardType.NoMoreMoves => "NoMoreMoves",
+            RewardType.CalenderStart => "CalenderStart",
+            RewardType.SpinWheel => "SpinWheel",
             _=> "None"
         };
         var adeErrorType = errorInfo.Code switch
@@ -361,6 +365,8 @@ public class ApplovinManager : MonoBehaviour
             RewardType.FiftyFifty => "FiftyFifty",
             RewardType.ImageReveal => "ImageReveal",
             RewardType.NoMoreMoves => "NoMoreMoves",
+            RewardType.CalenderStart => "CalenderStart",
+            RewardType.SpinWheel => "SpinWheel",
             _=> "None"
         };
         
@@ -402,6 +408,8 @@ public class ApplovinManager : MonoBehaviour
             RewardType.FiftyFifty => "FiftyFifty",
             RewardType.ImageReveal => "ImageReveal",
             RewardType.NoMoreMoves => "NoMoreMoves",
+            RewardType.CalenderStart => "CalenderStart",
+            RewardType.SpinWheel => "SpinWheel",
             _=> "None"
         };
         if (placement is not "None")

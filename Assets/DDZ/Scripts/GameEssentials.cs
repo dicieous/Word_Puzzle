@@ -30,7 +30,8 @@ namespace DDZ
         Shuffle,
         Calendar,
         SpinWheel,
-        DailyReward
+        DailyReward,
+        CalenderStart
     }
 
     public class GameEssentials : Singleton<GameEssentials>
@@ -255,6 +256,9 @@ namespace DDZ
                   break;
               case RewardType.DailyReward:
                   DailyRewardManager.instance.DailyCallBack();
+                  break;
+              case RewardType.CalenderStart:
+                  UIManagerScript.Instance.CalenderUnlock_CallBack();
                   break;
               default:
                   print("default");

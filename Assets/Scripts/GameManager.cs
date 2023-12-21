@@ -132,7 +132,15 @@ public class GameManager : MonoBehaviour
         }*/
 
         starFX = UI.starparticleEffect;
-        movesCount = hintCubesHolder.Count + ((int)(hintCubesHolder.Count/2));
+        if (UIManagerScript.Instance.GetSpecialLevelNumber() < 20)
+        {
+            var num = (int)(hintCubesHolder.Count / 4);
+            movesCount = hintCubesHolder.Count+ num + ((int)(hintCubesHolder.Count/2));
+        }
+        else
+        {
+            movesCount = hintCubesHolder.Count + ((int)(hintCubesHolder.Count/2));
+        }
         var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
         if (s == '0')
         {

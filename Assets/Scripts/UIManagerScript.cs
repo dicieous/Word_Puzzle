@@ -301,10 +301,10 @@ public class UIManagerScript : MonoBehaviour
 		{
 			spinwheel.gameObject.SetActive(true);
 		}
-		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
+		/*if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
 		{
 			dailyRewardBtr.gameObject.SetActive(true);
-		}
+		}*/
 		/*if (GetSpecialLevelNumber() <= 130)
 		{
 			emojiRevealButton.gameObject.SetActive(false);
@@ -1399,43 +1399,50 @@ public class UIManagerScript : MonoBehaviour
 	
 	public void CalenderUnLockButton()
 	{
+		GameEssentials.RvType = RewardType.CalenderStart;
+		GameEssentials.ShowRewardedAds("CalenderStart");
 		CalenderUnlock_CallBack();
 	}
 	// ReSharper disable Unity.PerformanceAnalysis
 	public void CalenderUnlock_CallBack()
 	{
 		SetCalenderUnlockCheck("Unlock");
-		CalendarButtonPress();
+		calenderPanelPop.transform.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce);
+		calendarPanel.gameObject.SetActive(true);
 	}
+
+	public GameObject calenderPanelPop;
 	public void CalendarButtonPress()
 	{
 		if (GetCalenderUnlockCheck() == "Unlock")
 		{
-			calendarPanel.gameObject.SetActive(!calendarPanel.gameObject.activeInHierarchy);
-			SetCalenderUnlockCheck("Lock");
+			if (!calendarPanel.gameObject.activeInHierarchy)
+			{
+				calendarPanel.gameObject.SetActive(true);
+			}
 		}
 		else
 		{
 			if (GetSpecialLevelNumber() < 30)
 			{
-				var calVal = calenderButton.transform.GetChild(1).transform;
-				var calRv=calenderButton.transform.GetChild(3).transform;
-				var calLoad=calenderButton.transform.GetChild(4).transform;
+				var calVal = calenderPanelPop.transform;
+				var calRv=calenderPanelPop.transform.GetChild(0).GetChild(0).GetChild(0).transform;
+				var calLoad=calenderPanelPop.transform.GetChild(0).GetChild(0).GetChild(1).transform;
 				if (calVal.localScale.x == 0)
 				{
 					calVal.DOScale(Vector3.one, 0.15f).SetEase(Ease.OutBack);
-					DOVirtual.DelayedCall(2f, () => { calVal.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce); },
+					DOVirtual.DelayedCall(5f, () => {calVal.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce); },
 						false);
 					if (GameEssentials.IsRvAvailable())
 					{
 						calRv.DOScale(Vector3.one, 0.15f).SetEase(Ease.OutBack);
-						DOVirtual.DelayedCall(2f, () => { calRv.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce); },
+						DOVirtual.DelayedCall(5f, () => { calRv.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce); },
 							false);
 					}
 					else
 					{
 						calLoad.DOScale(Vector3.one, 0.15f).SetEase(Ease.OutBack);
-						DOVirtual.DelayedCall(2f, () => { calLoad.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce); },
+						DOVirtual.DelayedCall(5f, () => { calLoad.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce); },
 							false);
 					}
 					
@@ -1462,11 +1469,12 @@ public class UIManagerScript : MonoBehaviour
 		
 	}
 
-	private void Update()
+	public void CalenderClose()
 	{
-		if (Input.GetKey(KeyCode.R))
+		var calVal = calenderPanelPop.transform;
+		if (calVal.localScale.x != 0)
 		{
-			CalenderUnlock_CallBack();
+			calVal.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce);
 		}
 	}
 }

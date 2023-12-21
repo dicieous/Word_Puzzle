@@ -143,7 +143,7 @@ public class DayContent : MonoBehaviour
     {
         if(!GameEssentials.instance) return;
         if(dayState != DayState.ClaimAd) return;
-        print(dayState +" sd");
+        //print(dayState +" sd");
         rvImage.gameObject.SetActive(GameEssentials.IsRvAvailable());
         loadingImage.gameObject.SetActive(!GameEssentials.IsRvAvailable());
     }

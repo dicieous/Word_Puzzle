@@ -119,6 +119,7 @@ public class CameraMotionScript : MonoBehaviour
     {
         
         //Debug.Log($"CameraMoved {cameraMoved} times");
+        if (cameraMoved > camPos.Count) return;
         mainCamera.transform.DOMove(camPos[cameraMoved], moveDuration).SetEase(Ease.Linear);
         if (!levelCompleted)
         {
