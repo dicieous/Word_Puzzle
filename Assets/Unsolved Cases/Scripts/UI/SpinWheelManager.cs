@@ -71,6 +71,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
             return;
         }
         StopTheSpin_Callback();
+        if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         /*if (CoinManager.instance.GetSpinCount() > 0)
         {
             CoinManager.instance.SetSpinCount(CoinManager.instance.GetSpinCount() - 1);

@@ -1401,14 +1401,20 @@ public class UIManagerScript : MonoBehaviour
 	{
 		GameEssentials.RvType = RewardType.CalenderStart;
 		GameEssentials.ShowRewardedAds("CalenderStart");
-		CalenderUnlock_CallBack();
+		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+		//CalenderUnlock_CallBack();
 	}
 	// ReSharper disable Unity.PerformanceAnalysis
 	public void CalenderUnlock_CallBack()
 	{
 		SetCalenderUnlockCheck("Unlock");
-		calenderPanelPop.transform.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce);
-		calendarPanel.gameObject.SetActive(true);
+		if (calenderPanelPop.transform.localScale.x != 0)
+		{
+			calenderPanelPop.transform.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce);
+			calendarPanel.gameObject.SetActive(true);
+		}
+		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 	}
 
 	public GameObject calenderPanelPop;
@@ -1420,6 +1426,8 @@ public class UIManagerScript : MonoBehaviour
 			{
 				calendarPanel.gameObject.SetActive(true);
 			}
+			if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+			if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		}
 		else
 		{
@@ -1431,23 +1439,24 @@ public class UIManagerScript : MonoBehaviour
 				if (calVal.localScale.x == 0)
 				{
 					calVal.DOScale(Vector3.one, 0.15f).SetEase(Ease.OutBack);
-					DOVirtual.DelayedCall(5f, () => {calVal.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce); },
+					DOVirtual.DelayedCall(10f, () => {calVal.DOScale(Vector3.zero, 0.15f).SetEase(Ease.Linear);},
 						false);
 					if (GameEssentials.IsRvAvailable())
 					{
 						calRv.DOScale(Vector3.one, 0.15f).SetEase(Ease.OutBack);
-						DOVirtual.DelayedCall(5f, () => { calRv.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce); },
+						DOVirtual.DelayedCall(10f, () => { calRv.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce); },
 							false);
 					}
 					else
 					{
 						calLoad.DOScale(Vector3.one, 0.15f).SetEase(Ease.OutBack);
-						DOVirtual.DelayedCall(5f, () => { calLoad.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce); },
+						DOVirtual.DelayedCall(10f, () => { calLoad.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce); },
 							false);
 					}
 					
 				}
-				return;
+				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 			}
 		}
 		/*if (GetSpecialLevelNumber() < 30)
@@ -1464,9 +1473,7 @@ public class UIManagerScript : MonoBehaviour
 			return;
 		}
 		calendarPanel.gameObject.SetActive(!calendarPanel.gameObject.activeInHierarchy);*/
-		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
-		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
-		
+
 	}
 
 	public void CalenderClose()
@@ -1476,5 +1483,8 @@ public class UIManagerScript : MonoBehaviour
 		{
 			calVal.DOScale(Vector3.zero, 0.15f).SetEase(Ease.OutBounce);
 		}
+		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+		
 	}
 }
