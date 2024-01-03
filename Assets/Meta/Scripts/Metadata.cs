@@ -11,15 +11,16 @@ public class Metadata : MonoBehaviour
     public GameObject mainParentObj;
     private float _objMoveDistance = 40;
     public float posNumber;
+
+    public ParticleSystem unlockEffect;
     
-    //public Material currentMat;
     private void Awake()
     {
         instance = this;
     }
     
     ////---Required number to Construct object
-    public static int GetTotalBricksRequired() => PlayerPrefs.GetInt("TotalBricksRequired", 100);
+    public static int GetTotalBricksRequired() => PlayerPrefs.GetInt("TotalBricksRequired", 0);
     public static void SetTotalBricksRequired(int reqNum) => PlayerPrefs.SetInt("TotalBricksRequired", reqNum);
     ////---Bar meter percentagevalue
     public static float GetBarPercentage() => PlayerPrefs.GetFloat("barPercentage",1);
