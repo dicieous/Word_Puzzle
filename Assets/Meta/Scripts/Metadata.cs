@@ -20,7 +20,7 @@ public class Metadata : MonoBehaviour
     }
     
     ////---Required number to Construct object
-    public static int GetTotalBricksRequired() => PlayerPrefs.GetInt("TotalBricksRequired", 0);
+    public static int GetTotalBricksRequired() => PlayerPrefs.GetInt("TotalBricksRequired", 10000);
     public static void SetTotalBricksRequired(int reqNum) => PlayerPrefs.SetInt("TotalBricksRequired", reqNum);
     ////---Bar meter percentagevalue
     public static float GetBarPercentage() => PlayerPrefs.GetFloat("barPercentage",1);
@@ -38,8 +38,12 @@ public class Metadata : MonoBehaviour
     public static void SetMaterialStartCheck(string objNamingCheck,int startOrNot) => PlayerPrefs.SetInt(objNamingCheck, startOrNot);
     
     
-    public static float GetMaterialFill(string objNaming)=> PlayerPrefs.GetFloat(objNaming, 0);
-    public static void SetMaterialFill(string objNaming,float val) => PlayerPrefs.SetFloat(objNaming, val);
+    public static float GetMaterialFillAmount(string objNaming)=> PlayerPrefs.GetFloat(objNaming, 0);
+    public static void SetMaterialFillAmount(string objNaming,float val) => PlayerPrefs.SetFloat(objNaming, val);
+
+    public static int GetObjectDoneOrNot(string objDoneNaming) => PlayerPrefs.GetInt(objDoneNaming, 0);
+    public static void SetObjectDoneOrNot(string objDoneNaming,int num) => PlayerPrefs.SetInt(objDoneNaming, num);
+    
     
     [Serializable]
     public class PropertyClass

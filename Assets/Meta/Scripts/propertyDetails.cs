@@ -9,8 +9,8 @@ public enum IslandData
 {
     None,
     BoatIsland,
-    
     NightCamp,
+    Park,
     Japan,
     London
 }
@@ -22,10 +22,14 @@ public enum DataGeting
     FireLight,
     Van,
     
+    JainWheel,
+    Carousel,
+    Temple,
+    JainWheelLondon,
+    BigBen,
     Bus,
     Bridge
 }
-
 public class propertyDetails : MonoBehaviour
 {
     public float punchValue;
@@ -41,14 +45,15 @@ public class propertyDetails : MonoBehaviour
     public float percentValueIncrease;
     public int coinsRequired;
     //private int _coinsCount;
-    public string objName,objNameRefCheck;
+    public string objName,objNameRefCheck,objNameDone;
     
     //private static readonly int DisAmount = Shader.PropertyToID("_DisAmount");
 
     private void Awake()
     {
         objName = gameObject.name;
-        objNameRefCheck = gameObject.name + "Checker" ;
+        objNameRefCheck = name + "Checker" ;
+        objNameDone = name + "Done" ;
     }
 
     private void Start()
@@ -62,7 +67,7 @@ public class propertyDetails : MonoBehaviour
         if (Metadata.GetMaterialStartCheck(objNameRefCheck) == 0)
         {
             dissolveMaterial.DOFloat(rangeStartNumber, $"_DisAmount", 0.01f);
-            Metadata.SetMaterialFill(objName, rangeStartNumber);
+            Metadata.SetMaterialFillAmount(objName, rangeStartNumber);
             if (attachObjects.Count != 0)
             {
                 for (int i = 0; i < attachObjects.Count; i++)
@@ -74,16 +79,16 @@ public class propertyDetails : MonoBehaviour
         }
         else if (Metadata.GetMaterialStartCheck(objNameRefCheck) == 1)
         {
-            dissolveMaterial.DOFloat(Metadata.GetMaterialFill(objName), $"_DisAmount", 0.01f);
+            dissolveMaterial.DOFloat(Metadata.GetMaterialFillAmount(objName), $"_DisAmount", 0.01f);
             if (attachObjects.Count != 0)
             {
                 for (int i = 0; i < attachObjects.Count; i++)
                 {
                     var obj= attachObjects[i].transform.GetComponent<MeshRenderer>().materials[0];
-                    obj.DOFloat(Metadata.GetMaterialFill(objName), $"_DisAmount", 0.01f);
+                    obj.DOFloat(Metadata.GetMaterialFillAmount(objName), $"_DisAmount", 0.01f);
                 }
             }
-            if (getDataEnum != DataGeting.None)
+            if (getDataEnum != DataGeting.None && (Metadata.GetObjectDoneOrNot(objNameDone) == 1))
             {
                 DataFun(islandDataGet.ToString(),getDataEnum.ToString());
             }
@@ -107,30 +112,45 @@ public class propertyDetails : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     public void FillingAmount()
     {
-        var tempval = Metadata.GetMaterialFill(objName) - percentValueIncrease;
-        // print(Metadata.GetMaterialFill(objName));
+        var tempval = Metadata.GetMaterialFillAmount(objName) - percentValueIncrease;
+        // print(Metadata.GetMaterialFillAmount(objName));
         if (tempval <= (rangeFinishNumber-percentValueIncrease) && !_done)
         {
             _done = true;
             var checkObj = Metadata.instance.propertyClassList[Metadata.GetParentNumber()].propertiesList;
             if (Metadata.GetChildNumber() == checkObj.Count - 1)
             {
-                print(Metadata.GetChildNumber());
-                Metadata.SetChildNumber(0);
-                Metadata.SetParentNumber(Metadata.GetParentNumber() + 1);
-                DOVirtual.DelayedCall(1.5f, () =>
+                var parent = transform.parent;
+                var childCount = parent.transform.childCount; 
+                parent.transform.GetChild(childCount-1).GetComponent<ParticleSystem>().Play();
+                if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("MetaObjDone");
+                if (getDataEnum != DataGeting.None && (Metadata.GetObjectDoneOrNot(objNameDone) != 1))
                 {
-                    FunctionManager.instance.ColoredIteamsData();
-                    MetaManager.instance.RightButtonPress();
-                });
-                DOVirtual.DelayedCall(2f, () =>
+                    Metadata.SetObjectDoneOrNot(objNameDone,1);
+                    DataFun(islandDataGet.ToString(),getDataEnum.ToString());
+                }
+
+                if (Metadata.GetParentNumber() < Metadata.instance.propertyClassList.Count - 1)
                 {
-                    Metadata.instance.unlockEffect.Play();
-                });
-                DOVirtual.DelayedCall(3.5f, () =>
-                {
-                    MetaManager.instance.notBuild = false;
-                });
+                    Metadata.SetChildNumber(0);
+                    Metadata.SetParentNumber(Metadata.GetParentNumber() + 1);
+                    
+                    DOVirtual.DelayedCall(1.5f, () =>
+                    {
+                        FunctionManager.instance.ColoredIteamsData();
+                        MetaManager.instance.RightButtonPress();
+                    });
+                    DOVirtual.DelayedCall(2f, () =>
+                    {
+                        Metadata.instance.unlockEffect.Play();
+                        if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("MetaNewLand");
+                    });
+                    DOVirtual.DelayedCall(3.5f, () =>
+                    {
+                        MetaManager.instance.notBuild = false;
+                    });
+                }
+               
             }
             else
             {
@@ -138,15 +158,17 @@ public class propertyDetails : MonoBehaviour
                 var parent = transform.parent;
                 var childCount = parent.transform.childCount; 
                 parent.transform.GetChild(childCount-1).GetComponent<ParticleSystem>().Play();
-                if (getDataEnum != DataGeting.None)
+                if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("MetaObjDone");
+                if (getDataEnum != DataGeting.None && (Metadata.GetObjectDoneOrNot(objNameDone) != 1))
                 {
+                    Metadata.SetObjectDoneOrNot(objNameDone,1);
                     DataFun(islandDataGet.ToString(),getDataEnum.ToString());
                 }
-
                 DOVirtual.DelayedCall(1f, () =>
                 {
                     MetaManager.instance.notBuild = false;
                 });
+                
             }
             MetaManager.instance.notBuild = true;
             MetaManager.instance.RevelingObject();
@@ -162,7 +184,7 @@ public class propertyDetails : MonoBehaviour
             MetaManager.instance._jumping = true;
             dissolveMaterial.DOFloat(tempval, $"_DisAmount", 0.15f).OnComplete(() =>
             {
-                Metadata.SetMaterialFill(objName, tempval);
+                Metadata.SetMaterialFillAmount(objName, tempval);
             });
             if (attachObjects.Count != 0)
             {
@@ -180,7 +202,6 @@ public class propertyDetails : MonoBehaviour
         if (Metadata.GetMaterialStartCheck(objNameRefCheck) == 0)
         {
             Metadata.SetMaterialStartCheck(objNameRefCheck, 1);
-            print(Metadata.GetMaterialStartCheck(objNameRefCheck));
         }
         
     }
@@ -195,6 +216,12 @@ public class propertyDetails : MonoBehaviour
                 break;
             case "NightCamp":
                 fM.nightCampData.DecidingFun(callingFun);
+                break;
+            case "Park":
+                fM.parkData.DecidingFun(callingFun);
+                break;
+            case "Japan":
+                fM.japanData.DecidingFun(callingFun);
                 break;
             case "London":
                 fM.londonData.DecidingFun(callingFun);

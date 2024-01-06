@@ -14,6 +14,10 @@ public class MetaManager : MonoBehaviour
    
    private int bricksCount;
    private int bricksRequired;
+   [Header("BricksCount TextDetails")] 
+   public TextMeshProUGUI totalBricksText;
+   public TextMeshProUGUI remainingBricksText;
+   
    [Header("Build Button Details")]
    public Image buildImage;
 
@@ -45,7 +49,9 @@ public class MetaManager : MonoBehaviour
       if (SceneManager.GetActiveScene().buildIndex != SceneManager.sceneCountInBuildSettings - 1) return;
       bricksRequired = Metadata.GetTotalBricksRequired();
       bricksCount = bricksRequired;
-      print("Bricks Count:::::::::::::"+bricksCount);
+      remainingBricksText.text = bricksRequired.ToString();
+      totalBricksText.text = bricksCount.ToString();
+      
       buildImage.fillAmount = Metadata.GetBarPercentage();
       RevelingObject();
       
@@ -71,6 +77,8 @@ public class MetaManager : MonoBehaviour
    void Update()
    {
       // Check for user input or other conditions to trigger instantiation
+      //if (Metadata.GetParentNumber() > Metadata.instance.propertyClassList.Count - 1) return;
+
       if (Input.GetMouseButton(0) && !notBuild)
       {
          if (bricksCount <= 0)
@@ -138,8 +146,13 @@ public class MetaManager : MonoBehaviour
       {
          Metadata.SetBarPercentage(buildImage.fillAmount);
       });
+     
       bricksCount--;
       Metadata.SetTotalBricksRequired(bricksCount);
+      if (bricksCount > 0)
+      {
+         remainingBricksText.text = bricksCount.ToString();
+      }
       /*if (bricksCount == 1)
       {
          Metadata.SetBarPercentage(buildImage.fillAmount);
@@ -158,7 +171,10 @@ public class MetaManager : MonoBehaviour
       {
          jumpPower = 1000f;
       }
-      obj.transform.DOLocalJump(objpos.transform.localPosition, jumpPower, 1, 1f).OnComplete(() =>
+
+      obj.transform.GetChild(0).GetComponent<ParticleSystem>().DOPlay();
+      obj.transform.GetChild(1).GetComponent<ParticleSystem>().DOPlay();
+      obj.transform.DOLocalJump(objpos.transform.position, jumpPower, 1, 1f).OnComplete(() =>
       {
          obj.gameObject.SetActive(false);
       });
@@ -261,10 +277,14 @@ public class MetaManager : MonoBehaviour
       Metadata.instance.posNumber -= 40;
       objPos = new Vector3((Metadata.instance.posNumber), 0f, 0f);
       Metadata.instance.mainParentObj.transform.DOLocalMove(objPos, 0.25f);
-      if (num <= (4 * -40)) rightButton.transform.gameObject.SetActive(false);
+      if (Metadata.GetTotalBricksRequired() <= 0)
+      {
+         if (num <= (4 * -40)) rightButton.transform.gameObject.SetActive(false);
+      }
       
       if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
       if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+      if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("MetaOut");
    }
    public void LeftButtonPress()
    {
@@ -276,12 +296,13 @@ public class MetaManager : MonoBehaviour
       Metadata.instance.posNumber += 40;
       objPos = new Vector3((Metadata.instance.posNumber), 0f, 0f);
       Metadata.instance.mainParentObj.transform.DOLocalMove(objPos, 0.25f);
-      if (incNUm >= 0)
+      if (Metadata.GetTotalBricksRequired() <= 0)
       {
-         leftButton.transform.gameObject.SetActive(false);
+         if (incNUm >= 0)  leftButton.transform.gameObject.SetActive(false);
       }
       if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
       if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+      if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("MetaIn");
    }
 
    public List<GameObject> obj;
