@@ -20,8 +20,14 @@ public class Metadata : MonoBehaviour
     }
     
     ////---Required number to Construct object
-    public static int GetTotalBricksRequired() => PlayerPrefs.GetInt("TotalBricksRequired", 10000);
-    public static void SetTotalBricksRequired(int reqNum) => PlayerPrefs.SetInt("TotalBricksRequired", reqNum);
+    public static int GetTotalBricks() => PlayerPrefs.GetInt("TotalBricks", 1000);
+    public static void SetTotalBricks(int reqNum) => PlayerPrefs.SetInt("TotalBricks", reqNum);
+    
+    //Bricks Required For Object
+    public static int GetBricksRequired(string bricksObjName) => PlayerPrefs.GetInt(bricksObjName, 0);
+    public static void SetBricksRequired(string bricksObjName,int brickCount) => PlayerPrefs.SetInt(bricksObjName, brickCount);
+    
+    
     ////---Bar meter percentagevalue
     public static float GetBarPercentage() => PlayerPrefs.GetFloat("barPercentage",1);
     public static void SetBarPercentage(float percent) => PlayerPrefs.SetFloat("barPercentage", percent);

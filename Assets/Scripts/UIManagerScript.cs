@@ -690,14 +690,15 @@ public class UIManagerScript : MonoBehaviour
 				DOVirtual.DelayedCall(1f, ()=>
 				{
 					if(GameEssentials.instance)GameEssentials.ShowInterstitialsAds("LevelComplete");
-					if (GetSpecialLevelNumber() <= 5)
+					/*if (GetSpecialLevelNumber() <= 5)
 					{
 						NextMoveFun();
 					}
 					else
 					{
 						MapLevelCall();
-					}
+					}*/
+					MapLevelCall();
 				},false);
 			}
 		},false);
@@ -1365,14 +1366,14 @@ public class UIManagerScript : MonoBehaviour
     {
 	    if (GetSpecialLevelNumber() == 5)
 	    {
-		    Metadata.SetTotalBricksRequired(110);
+		    Metadata.SetTotalBricks(110);
 	    }
 	    else if(GetSpecialLevelNumber() > 5)
 	    {
 		    var countList = new List<int>() {20,30,35,40};
 		    countList.Sort((a, b) => 1 - 2 * Random.Range(0, countList.Count));
 		    var coinCount = countList[0];
-		    Metadata.SetTotalBricksRequired(Metadata.GetTotalBricksRequired() + coinCount);
+		    Metadata.SetTotalBricks(Metadata.GetTotalBricks() + coinCount);
 	    }
 	    
 	    if ((SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 33 &&

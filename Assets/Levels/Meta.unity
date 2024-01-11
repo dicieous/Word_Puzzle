@@ -209,7 +209,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 70e728e0477aa9c4f9648341f4041d70, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1557048612}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 70e728e0477aa9c4f9648341f4041d70, type: 3}
       insertIndex: -1
@@ -244,12 +247,14 @@ MonoBehaviour:
   getDataEnum: 7
   fM: {fileID: 0}
   rangeStartNumber: 8.5
-  rangeFinishNumber: -6.6
+  rangeFinishNumber: -6.7
   percentValueIncrease: 0
-  coinsRequired: 150
+  bricksRequired: 10
+  brickRequiredCountObject: {fileID: 1557048611}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!1001 &88623474
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -829,6 +834,77 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 192808193}
   m_Mesh: {fileID: 4300000, guid: 51e25606d0a72014a9f433379d3eaac9, type: 2}
+--- !u!1001 &193112796
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 19789469828613661}
+    m_Modifications:
+    - target: {fileID: 5319005197655120742, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_Name
+      value: button_arrow_up
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 316.99997
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 507.99994
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -112.00004
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.031298988
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.9995101
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -176.413
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+--- !u!4 &193112797 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+  m_PrefabInstance: {fileID: 193112796}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &193112798 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5319005197655120742, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+  m_PrefabInstance: {fileID: 193112796}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &202685212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1824,7 +1900,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93ba5cddcdf9e9a48ab10fa20c76fefd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1289370606}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 93ba5cddcdf9e9a48ab10fa20c76fefd, type: 3}
       insertIndex: -1
@@ -1861,10 +1940,12 @@ MonoBehaviour:
   rangeStartNumber: 8
   rangeFinishNumber: -6.5
   percentValueIncrease: 0
-  coinsRequired: 180
+  bricksRequired: 180
+  brickRequiredCountObject: {fileID: 1289370607}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!1001 &411897787
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2210,6 +2291,100 @@ Transform:
   m_Father: {fileID: 4192900339882213417}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: 0}
+--- !u!1001 &423181681
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 508422746}
+    m_Modifications:
+    - target: {fileID: 5319005197655120742, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_Name
+      value: button_arrow_up
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319005197655120742, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -192
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 276
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99986726
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.016296182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 1.867
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965595897140164806, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965595897140164806, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965595897140164806, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965595897140164806, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3580458809808262248, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+  m_SourcePrefab: {fileID: 100100000, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+--- !u!4 &423181682 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+  m_PrefabInstance: {fileID: 423181681}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &423181683 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5319005197655120742, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+  m_PrefabInstance: {fileID: 423181681}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &432587287
 GameObject:
   m_ObjectHideFlags: 0
@@ -2376,10 +2551,12 @@ MonoBehaviour:
   rangeStartNumber: 2
   rangeFinishNumber: -0.25
   percentValueIncrease: 0
-  coinsRequired: 280
+  bricksRequired: 280
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!1001 &508422745
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2462,7 +2639,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: f525f6a38abfd3945b930b642f7cf59f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 423181682}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f525f6a38abfd3945b930b642f7cf59f, type: 3}
       insertIndex: -1
@@ -2499,10 +2679,12 @@ MonoBehaviour:
   rangeStartNumber: 3.1
   rangeFinishNumber: -1.4
   percentValueIncrease: 0
-  coinsRequired: 50
+  bricksRequired: 50
+  brickRequiredCountObject: {fileID: 423181683}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!1001 &514351131
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3023,10 +3205,12 @@ MonoBehaviour:
   rangeStartNumber: 2.9
   rangeFinishNumber: -3
   percentValueIncrease: 0
-  coinsRequired: 180
+  bricksRequired: 180
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!1001 &605785704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4689,10 +4873,12 @@ MonoBehaviour:
   rangeStartNumber: 0.8
   rangeFinishNumber: -7.5
   percentValueIncrease: 0
-  coinsRequired: 120
+  bricksRequired: 120
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!1001 &1053066416
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5439,6 +5625,77 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 420096, guid: 36bdc02b23d9ca94d93bd715c0cca5c0, type: 3}
   m_PrefabInstance: {fileID: 1283841496}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1289370605
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 409067325}
+    m_Modifications:
+    - target: {fileID: 5319005197655120742, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_Name
+      value: button_arrow_up
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 356
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 171
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.39385659
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.919172
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 133.611
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+--- !u!4 &1289370606 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+  m_PrefabInstance: {fileID: 1289370605}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1289370607 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5319005197655120742, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+  m_PrefabInstance: {fileID: 1289370605}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1323310044
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5790,10 +6047,12 @@ MonoBehaviour:
   rangeStartNumber: 2.3
   rangeFinishNumber: -0.5
   percentValueIncrease: 0
-  coinsRequired: 300
+  bricksRequired: 300
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!4 &1457976912 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1403027584324100988, guid: 9ec673573fd237c46a38da1121dff124, type: 3}
@@ -5933,10 +6192,22 @@ MonoBehaviour:
   rangeStartNumber: 2.5
   rangeFinishNumber: -0.6
   percentValueIncrease: 0
-  coinsRequired: 500
+  bricksRequired: 500
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
+--- !u!1 &1557048611 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5319005197655120742, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+  m_PrefabInstance: {fileID: 5758715214482353110}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1557048612 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+  m_PrefabInstance: {fileID: 5758715214482353110}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1591087625
 GameObject:
   m_ObjectHideFlags: 0
@@ -6823,10 +7094,12 @@ MonoBehaviour:
   rangeStartNumber: 8.6
   rangeFinishNumber: -6.8
   percentValueIncrease: 0
-  coinsRequired: 180
+  bricksRequired: 180
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!1 &1806836196
 GameObject:
   m_ObjectHideFlags: 0
@@ -6983,10 +7256,12 @@ MonoBehaviour:
   rangeStartNumber: 0.8
   rangeFinishNumber: -5
   percentValueIncrease: 0
-  coinsRequired: 150
+  bricksRequired: 150
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!1001 &1814061994
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7216,10 +7491,12 @@ MonoBehaviour:
   rangeStartNumber: 2.8
   rangeFinishNumber: -1
   percentValueIncrease: 0
-  coinsRequired: 125
+  bricksRequired: 125
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!1001 &1839891376
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7424,6 +7701,77 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1001 &1893300269
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2222355375673763189}
+    m_Modifications:
+    - target: {fileID: 5319005197655120742, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_Name
+      value: button_arrow_up
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 70.0299
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 817.99945
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 80.00214
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.00124884
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0020516203
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.99998695
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.004508451
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -0.517
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -179.858
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.234
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+--- !u!4 &1893300270 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+  m_PrefabInstance: {fileID: 1893300269}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1893300271 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5319005197655120742, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+  m_PrefabInstance: {fileID: 1893300269}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1910915678
 GameObject:
   m_ObjectHideFlags: 0
@@ -7680,10 +8028,12 @@ MonoBehaviour:
   rangeStartNumber: 8.6
   rangeFinishNumber: -6.8
   percentValueIncrease: 0
-  coinsRequired: 180
+  bricksRequired: 180
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!1 &1969912653
 GameObject:
   m_ObjectHideFlags: 0
@@ -8755,7 +9105,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -5.588104, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 193112797}
   m_Father: {fileID: 4586041130242345191}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
@@ -24661,7 +25012,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1893300270}
   m_Father: {fileID: 5234662181315730997}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -0.258553, y: 0.11540096, z: -0.11754968}
@@ -27083,10 +27435,12 @@ MonoBehaviour:
   rangeStartNumber: 9.2
   rangeFinishNumber: -7.2
   percentValueIncrease: 0
-  coinsRequired: 380
+  bricksRequired: 380
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!33 &3469287837343683036
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27116,10 +27470,12 @@ MonoBehaviour:
   rangeStartNumber: 2.7
   rangeFinishNumber: -0.8
   percentValueIncrease: 0
-  coinsRequired: 150
+  bricksRequired: 150
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!33 &3469287837637237904
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27149,10 +27505,12 @@ MonoBehaviour:
   rangeStartNumber: 4
   rangeFinishNumber: -2.2
   percentValueIncrease: 0
-  coinsRequired: 185
+  bricksRequired: 185
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!33 &3469287837739991250
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27182,10 +27540,12 @@ MonoBehaviour:
   rangeStartNumber: 5
   rangeFinishNumber: -3.1
   percentValueIncrease: 0
-  coinsRequired: 480
+  bricksRequired: 480
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!33 &3469287838022366044
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27215,10 +27575,12 @@ MonoBehaviour:
   rangeStartNumber: 4.5
   rangeFinishNumber: -2.7
   percentValueIncrease: 0
-  coinsRequired: 160
+  bricksRequired: 160
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!114 &3469287838022366046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27364,10 +27726,12 @@ MonoBehaviour:
   rangeStartNumber: 3.1
   rangeFinishNumber: -1.3
   percentValueIncrease: 0
-  coinsRequired: 190
+  bricksRequired: 190
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!33 &3469287838362038518
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -43316,6 +43680,67 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1001 &5758715214482353110
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 86137199}
+    m_Modifications:
+    - target: {fileID: 5319005197655120742, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_Name
+      value: button_arrow_up
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -528
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 230.99994
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653868139476485949, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9792bb513ea7f29408e0be5e35d7c74a, type: 3}
 --- !u!4 &5759574566913637559
 Transform:
   m_ObjectHideFlags: 0
@@ -44952,10 +45377,12 @@ MonoBehaviour:
   rangeStartNumber: 1
   rangeFinishNumber: -13.2
   percentValueIncrease: 0
-  coinsRequired: 380
+  bricksRequired: 380
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!4 &6456865012921924678
 Transform:
   m_ObjectHideFlags: 0
@@ -45499,10 +45926,12 @@ MonoBehaviour:
   rangeStartNumber: 0.8
   rangeFinishNumber: -3.5
   percentValueIncrease: 0
-  coinsRequired: 250
+  bricksRequired: 250
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!4 &6641632345969618378
 Transform:
   m_ObjectHideFlags: 0
@@ -45728,10 +46157,12 @@ MonoBehaviour:
   rangeStartNumber: 0.9
   rangeFinishNumber: -3.2
   percentValueIncrease: 0
-  coinsRequired: 30
+  bricksRequired: 30
+  brickRequiredCountObject: {fileID: 193112798}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!114 &6777078577463753753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47094,10 +47525,12 @@ MonoBehaviour:
   rangeStartNumber: 0.9
   rangeFinishNumber: -5.6
   percentValueIncrease: 0
-  coinsRequired: 160
+  bricksRequired: 160
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!23 &7380951363346346028
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -47361,10 +47794,12 @@ MonoBehaviour:
   rangeStartNumber: 1
   rangeFinishNumber: -4.5
   percentValueIncrease: 0
-  coinsRequired: 380
+  bricksRequired: 380
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!4 &7543438847067174419
 Transform:
   m_ObjectHideFlags: 0
@@ -48065,10 +48500,12 @@ MonoBehaviour:
   rangeStartNumber: 1
   rangeFinishNumber: -5.3
   percentValueIncrease: 0
-  coinsRequired: 200
+  bricksRequired: 200
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!1 &7914904681674369203
 GameObject:
   m_ObjectHideFlags: 0
@@ -48636,15 +49073,17 @@ MonoBehaviour:
   dissolveMaterial: {fileID: 0}
   attachObjects: []
   islandDataGet: 5
-  getDataEnum: 9
+  getDataEnum: 10
   fM: {fileID: 0}
   rangeStartNumber: 0
   rangeFinishNumber: -8.1
   percentValueIncrease: 0
-  coinsRequired: 130
+  bricksRequired: 130
+  brickRequiredCountObject: {fileID: 1893300271}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!33 &8285676317750771297
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51078,10 +51517,12 @@ MonoBehaviour:
   rangeStartNumber: 1.5
   rangeFinishNumber: -0.4
   percentValueIncrease: 0
-  coinsRequired: 180
+  bricksRequired: 180
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!1 &8465633851396401482
 GameObject:
   m_ObjectHideFlags: 0
@@ -54397,10 +54838,12 @@ MonoBehaviour:
   rangeStartNumber: 1.3
   rangeFinishNumber: -2.5
   percentValueIncrease: 0
-  coinsRequired: 210
+  bricksRequired: 210
+  brickRequiredCountObject: {fileID: 0}
   objName: 
   objNameRefCheck: 
   objNameDone: 
+  objBricksName: 
 --- !u!4 &9159159453640701321
 Transform:
   m_ObjectHideFlags: 0

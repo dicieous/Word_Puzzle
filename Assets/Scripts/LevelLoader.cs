@@ -22,7 +22,8 @@ public class LevelLoader : MonoBehaviour
             {
                 SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 2);
             }*/
-            if (PlayerPrefs.GetInt("Level", 1) >= 6)
+            SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
+            /*if (PlayerPrefs.GetInt("Level", 1) >= 6)
             {
                 SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
             }
@@ -31,7 +32,7 @@ public class LevelLoader : MonoBehaviour
                 SceneManager.LoadScene(PlayerPrefs.GetInt("Level") >= SceneManager.sceneCountInBuildSettings 
                     ? PlayerPrefs.GetInt("ThisLevel")
                     : PlayerPrefs.GetInt("Level", 1));
-            }
+            }*/
         }
     }
 }

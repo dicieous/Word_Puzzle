@@ -47,12 +47,14 @@ public class MetaManager : MonoBehaviour
    private void Start()
    {
       if (SceneManager.GetActiveScene().buildIndex != SceneManager.sceneCountInBuildSettings - 1) return;
-      bricksRequired = Metadata.GetTotalBricksRequired();
+      bricksRequired = Metadata.GetTotalBricks();
       bricksCount = bricksRequired;
       remainingBricksText.text = bricksRequired.ToString();
       totalBricksText.text = bricksCount.ToString();
       
-      buildImage.fillAmount = Metadata.GetBarPercentage();
+      // buildImage.fillAmount = Metadata.GetBarPercentage();
+      
+      buildImage.fillAmount = 1f;
       RevelingObject();
       
       var num = Metadata.GetParentNumber();
@@ -60,10 +62,15 @@ public class MetaManager : MonoBehaviour
       objPos = new Vector3((objPos.x + (num * -40)), 0f, 0f);
       Metadata.instance.mainParentObj.transform.localPosition = objPos;
       Metadata.instance.posNumber = objPos.x;
-      if (Metadata.GetTotalBricksRequired() > 0)
+      if (Metadata.GetTotalBricks() > 0)
       {
          buildButton.SetActive(true);
          playButton.SetActive(false);
+      }
+      else
+      {
+         playButton.SetActive(true);
+         LeftRightButtonsFun();
       }
       var value = Remap(bricksCount,bricksRequired, 0, 1, 0);
       buildImage.DOFillAmount(value, 0.25f).SetEase(Ease.Linear).OnComplete(() =>
@@ -97,7 +104,8 @@ public class MetaManager : MonoBehaviour
          if (elapsedTime >= instantiationInterval)
          {
             InstantiateObjectAtUIPosition();
-            revelingObject.GetComponent<propertyDetails>().FillingAmount();
+            //revelingObject.GetComponent<propertyDetails>().FillingAmount();
+            //revelingObject.GetComponent<propertyDetails>().coinsCount += 1;
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("MetaCube");
             elapsedTime = 0f;
@@ -139,6 +147,7 @@ public class MetaManager : MonoBehaviour
       }
    }
 
+   // ReSharper disable Unity.PerformanceAnalysis
    public void InstanceObjectJumpFun(GameObject obj)
    {
       var value = Remap(bricksCount,bricksRequired, 0, 1, 0);
@@ -148,7 +157,7 @@ public class MetaManager : MonoBehaviour
       });
      
       bricksCount--;
-      Metadata.SetTotalBricksRequired(bricksCount);
+      Metadata.SetTotalBricks(bricksCount);
       if (bricksCount > 0)
       {
          remainingBricksText.text = bricksCount.ToString();
@@ -176,6 +185,7 @@ public class MetaManager : MonoBehaviour
       obj.transform.GetChild(1).GetComponent<ParticleSystem>().DOPlay();
       obj.transform.DOLocalJump(objpos.transform.position, jumpPower, 1, 1f).OnComplete(() =>
       {
+         revelingObject.GetComponent<propertyDetails>().FillingAmount();
          obj.gameObject.SetActive(false);
       });
    }
@@ -277,7 +287,7 @@ public class MetaManager : MonoBehaviour
       Metadata.instance.posNumber -= 40;
       objPos = new Vector3((Metadata.instance.posNumber), 0f, 0f);
       Metadata.instance.mainParentObj.transform.DOLocalMove(objPos, 0.25f);
-      if (Metadata.GetTotalBricksRequired() <= 0)
+      if (Metadata.GetTotalBricks() <= 0)
       {
          if (num <= (4 * -40)) rightButton.transform.gameObject.SetActive(false);
       }
@@ -296,7 +306,7 @@ public class MetaManager : MonoBehaviour
       Metadata.instance.posNumber += 40;
       objPos = new Vector3((Metadata.instance.posNumber), 0f, 0f);
       Metadata.instance.mainParentObj.transform.DOLocalMove(objPos, 0.25f);
-      if (Metadata.GetTotalBricksRequired() <= 0)
+      if (Metadata.GetTotalBricks() <= 0)
       {
          if (incNUm >= 0)  leftButton.transform.gameObject.SetActive(false);
       }
