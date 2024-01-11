@@ -771,7 +771,7 @@ public class GameManager : MonoBehaviour
         DOVirtual.DelayedCall(0.5f, () =>
         {
             //Time.timeScale = 2f;
-            BlockSeq();
+            //BlockSeq();
         },false);
     }
     public int wordsDeleteNumber;
@@ -1262,10 +1262,10 @@ public class GameManager : MonoBehaviour
 
                 blocknum++;
             }
-            else
+            /*else
             {
                 DOVirtual.DelayedCall(1.25f, () => { UI.NextMoveFun(); },false);
-            }
+            }*/
         });
         seq.AppendInterval(0.1f);
         seq.SetLoops(_allCubeObjects.Count + 1);

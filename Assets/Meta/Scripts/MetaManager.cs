@@ -2,7 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MetaManager : MonoBehaviour
@@ -11,8 +14,19 @@ public class MetaManager : MonoBehaviour
    
    private int bricksCount;
    private int bricksRequired;
+   [Header("BricksCount TextDetails")] 
+   public TextMeshProUGUI totalBricksText;
+   public TextMeshProUGUI remainingBricksText;
+   
    [Header("Build Button Details")]
    public Image buildImage;
+
+   public GameObject playButton;
+   public TextMeshProUGUI playButtonText;
+   public GameObject buildButton;
+   public Button rightButton;
+   public Button leftButton;
+   
    [Header("JumpPosition")] 
    public GameObject revelingObject;
    public RectTransform uiImageRectTransform;
@@ -21,7 +35,10 @@ public class MetaManager : MonoBehaviour
    public float instantiationInterval = 1f;
    private bool _isButtonHeld = false;
    [SerializeField]public float elapsedTime = 0f;
+   public bool notBuild;
 
+   [Header("StartFunctioning Details")] public List<GameObject> objectDetails;
+   
    private void Awake()
    {
       instance = this;
@@ -29,10 +46,15 @@ public class MetaManager : MonoBehaviour
 
    private void Start()
    {
-      bricksRequired = Metadata.GetTotalBricksRequired();
+      if (SceneManager.GetActiveScene().buildIndex != SceneManager.sceneCountInBuildSettings - 1) return;
+      bricksRequired = Metadata.GetTotalBricks();
       bricksCount = bricksRequired;
-      print("Bricks Count:::::::::::::"+bricksCount);
-      buildImage.fillAmount = Metadata.GetBarPercentage();
+      remainingBricksText.text = bricksRequired.ToString();
+      totalBricksText.text = bricksCount.ToString();
+      
+      // buildImage.fillAmount = Metadata.GetBarPercentage();
+      
+      buildImage.fillAmount = 1f;
       RevelingObject();
       
       var num = Metadata.GetParentNumber();
@@ -40,34 +62,64 @@ public class MetaManager : MonoBehaviour
       objPos = new Vector3((objPos.x + (num * -40)), 0f, 0f);
       Metadata.instance.mainParentObj.transform.localPosition = objPos;
       Metadata.instance.posNumber = objPos.x;
-
+      if (Metadata.GetTotalBricks() > 0)
+      {
+         buildButton.SetActive(true);
+         playButton.SetActive(false);
+      }
+      else
+      {
+         playButton.SetActive(true);
+         LeftRightButtonsFun();
+      }
+      var value = Remap(bricksCount,bricksRequired, 0, 1, 0);
+      buildImage.DOFillAmount(value, 0.25f).SetEase(Ease.Linear).OnComplete(() =>
+      {
+         Metadata.SetBarPercentage(buildImage.fillAmount);
+      });
+      playButtonText.text = "Play " + UIManagerScript.Instance.GetSpecialLevelNumber();
+      
    }
 
    void Update()
    {
       // Check for user input or other conditions to trigger instantiation
-      if (Input.GetKey(KeyCode.A))
+      //if (Metadata.GetParentNumber() > Metadata.instance.propertyClassList.Count - 1) return;
+
+      if (Input.GetMouseButton(0) && !notBuild)
       {
-         if (bricksCount <= 0) return;
+         if (bricksCount <= 0)
+         {
+            if (!playButton.activeInHierarchy)
+            {
+               buildButton.SetActive(false);
+               playButton.SetActive(true);
+               LeftRightButtonsFun();
+            }
+            return;
+         }
          elapsedTime += Time.deltaTime;
          /*if (!_isButtonHeld) return;
             elapsedTime += Time.deltaTime;*/
          if (elapsedTime >= instantiationInterval)
          {
             InstantiateObjectAtUIPosition();
-            revelingObject.GetComponent<propertyDetails>().FillingAmount();
+            //revelingObject.GetComponent<propertyDetails>().FillingAmount();
+            //revelingObject.GetComponent<propertyDetails>().coinsCount += 1;
+            if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+            if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("MetaCube");
             elapsedTime = 0f;
          }
       }
 
-      if (Input.GetKeyDown(KeyCode.R))
+      /*if (Input.GetKeyDown(KeyCode.R))
       {
          RightButtonPress();
       }
       if (Input.GetKeyDown(KeyCode.L))
       {
          LeftButtonPress();
-      }
+      }*/
    }
    void InstantiateObjectAtUIPosition()
    {
@@ -86,11 +138,16 @@ public class MetaManager : MonoBehaviour
       if (RectTransformUtility.ScreenPointToWorldPointInRectangle(uiImageRectTransform, screenPos, Camera.main, out worldPos))
       {
          // Instantiate the object at the world position
+         var WP = worldPos;
+         WP.y = (worldPos.y + 50);
+         WP.z = (worldPos.y + 2);
+         worldPos = WP;
          var obj=Instantiate(objectToInstantiate, worldPos, Quaternion.identity);
          InstanceObjectJumpFun(obj);
       }
    }
 
+   // ReSharper disable Unity.PerformanceAnalysis
    public void InstanceObjectJumpFun(GameObject obj)
    {
       var value = Remap(bricksCount,bricksRequired, 0, 1, 0);
@@ -98,26 +155,44 @@ public class MetaManager : MonoBehaviour
       {
          Metadata.SetBarPercentage(buildImage.fillAmount);
       });
+     
       bricksCount--;
-      Metadata.SetTotalBricksRequired(bricksCount);
+      Metadata.SetTotalBricks(bricksCount);
+      if (bricksCount > 0)
+      {
+         remainingBricksText.text = bricksCount.ToString();
+      }
       /*if (bricksCount == 1)
       {
          Metadata.SetBarPercentage(buildImage.fillAmount);
       }*/
       obj.transform.parent = revelingObject.transform;
-      obj.transform.DOLocalJump(revelingObject.transform.position, 20, 1, 1f);
       var metaParentNum = Metadata.GetParentNumber();
       var metaChildNum = Metadata.GetChildNumber();
-      if (_jumping) return;
-      Metadata.instance.propertyClassList[metaParentNum].propertiesList[metaChildNum].transform
-         .DOPunchPosition(new Vector3(0f, 0.1f, 0f), 0.15f, 5, 0.5f).SetEase(Ease.Flash).OnComplete(() =>
-         {
-            _jumping = false;
-         });
-      _jumping = true;
-   }
+      var objpos = Metadata.instance.propertyClassList[metaParentNum].propertiesList[metaChildNum].transform
+         .GetChild(0);
+      var dis = (obj.transform.localPosition - objpos.transform.localPosition);
+      if (dis.z >= -1500)
+      {
+         jumpPower = 10f;
+      }
+      else
+      {
+         jumpPower = 1000f;
+      }
 
-   private bool _jumping;
+      obj.transform.GetChild(0).GetComponent<ParticleSystem>().DOPlay();
+      obj.transform.GetChild(1).GetComponent<ParticleSystem>().DOPlay();
+      obj.transform.DOLocalJump(objpos.transform.position, jumpPower, 1, 1f).OnComplete(() =>
+      {
+         revelingObject.GetComponent<propertyDetails>().FillingAmount();
+         obj.gameObject.SetActive(false);
+      });
+   }
+[SerializeField]
+   public bool _jumping;
+   public float jumpPower;
+   
    public static float Remap(float value, float from1, float to1, float from2, float to2, bool isClamped = false)
    {
       if (isClamped)
@@ -129,9 +204,16 @@ public class MetaManager : MonoBehaviour
 
    public void RevelingObject()
    {
-      if(!Metadata.instance.propertyClassList[Metadata.GetParentNumber()].propertiesList[Metadata.GetChildNumber()].activeInHierarchy)
-            Metadata.instance.propertyClassList[Metadata.GetParentNumber()].propertiesList[Metadata.GetChildNumber()].SetActive(true);
-      print("Meta data parent num :::::::::::::::::::::::"+Metadata.GetParentNumber());
+      if (Metadata.GetParentNumber() > Metadata.instance.propertyClassList.Count - 1) return;
+      if (!Metadata.instance.propertyClassList[Metadata.GetParentNumber()].propertiesList[Metadata.GetChildNumber()]
+             .activeInHierarchy)
+      {
+         Metadata.instance.propertyClassList[Metadata.GetParentNumber()].propertiesList[Metadata.GetChildNumber()].SetActive(true);
+         Metadata.instance.propertyClassList[Metadata.GetParentNumber()].propertiesList[Metadata.GetChildNumber()].transform
+            .DOPunchPosition(new Vector3(0f, -2.5f, 0f), 0.4f, 10, 1f).SetEase(Ease.OutBounce);
+      }
+            
+      //print("Meta data parent num :::::::::::::::::::::::"+Metadata.GetParentNumber());
       if (Metadata.GetParentNumber() > 0)
       {
          for (int i = 0; i <= Metadata.GetParentNumber(); i++)
@@ -177,28 +259,61 @@ public class MetaManager : MonoBehaviour
          .propertiesList[Metadata.GetChildNumber()].transform.GetChild(0).gameObject;
    }
 
+   public void LeftRightButtonsFun()
+   {
+      if (Metadata.instance.posNumber == 0)
+      {
+         leftButton.transform.gameObject.SetActive(false);
+         rightButton.transform.gameObject.SetActive(true);
+      }
+      else if (Metadata.instance.posNumber <= (-5 * 40))
+      {
+         leftButton.transform.gameObject.SetActive(true);
+         rightButton.transform.gameObject.SetActive(false);
+      }
+      else
+      {
+         leftButton.transform.gameObject.SetActive(true);
+         rightButton.transform.gameObject.SetActive(true);
+      }
+   }
    public void RightButtonPress()
    {
+      if(!leftButton.transform.gameObject.activeInHierarchy) leftButton.transform.gameObject.SetActive(true);
       var objPos = Metadata.instance.mainParentObj.transform.localPosition;
-      var num= Metadata.instance.posNumber -40;
+      var num= Metadata.instance.posNumber - 40;
       if (objPos.x <= (5 * -40)) return;
       if (num <= (5 * -40)) return;
       Metadata.instance.posNumber -= 40;
-      //var num = Metadata.GetParentNumber();
       objPos = new Vector3((Metadata.instance.posNumber), 0f, 0f);
-      //Metadata.instance.mainParentObj.transform.localPosition = objPos;
-      Metadata.instance.mainParentObj.transform.DOLocalMove(objPos, 0.15f);
+      Metadata.instance.mainParentObj.transform.DOLocalMove(objPos, 0.25f);
+      if (Metadata.GetTotalBricks() <= 0)
+      {
+         if (num <= (4 * -40)) rightButton.transform.gameObject.SetActive(false);
+      }
+      
+      if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+      if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+      if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("MetaOut");
    }
    public void LeftButtonPress()
    {
+      if(!rightButton.transform.gameObject.activeInHierarchy) rightButton.transform.gameObject.SetActive(true);
       var objPos = Metadata.instance.mainParentObj.transform.localPosition;
       var incNUm= Metadata.instance.posNumber + 40;
       if (objPos.x >= 0) return;
       if (incNUm >= 40) return;
       Metadata.instance.posNumber += 40;
-      //var num = Metadata.GetParentNumber();
       objPos = new Vector3((Metadata.instance.posNumber), 0f, 0f);
-      //Metadata.instance.mainParentObj.transform.localPosition = objPos;
-      Metadata.instance.mainParentObj.transform.DOLocalMove(objPos, 0.15f);
+      Metadata.instance.mainParentObj.transform.DOLocalMove(objPos, 0.25f);
+      if (Metadata.GetTotalBricks() <= 0)
+      {
+         if (incNUm >= 0)  leftButton.transform.gameObject.SetActive(false);
+      }
+      if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+      if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+      if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("MetaIn");
    }
+
+   public List<GameObject> obj;
 }
