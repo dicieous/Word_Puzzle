@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,11 +8,23 @@ public class RaceStatusUI : MonoBehaviour
 {
     [SerializeField] private Button continueButton;
 
+    [SerializeField] private Button levelForwardButton;
+
+    private void OnEnable()
+    {
+        
+    }
+
     private void Awake()
     {
+        levelForwardButton.onClick.AddListener( () =>
+        {
+            PlayerDataUpdater.PlayerLevel++;
+        });
+        
         continueButton.onClick.AddListener(() =>
         {
-            StopWatchTimer.SaveData();
+            Timer.SaveData();
             Hide();
         });
         Hide();

@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class RaceStartUI : MonoBehaviour
 {
+    public event EventHandler OnStartButtonClicked;
+
+    [SerializeField] private Timer timer;
+    
     [SerializeField] private Button startRaceButton;
 
     [SerializeField] private RaceStatusUI raceStatusUI;
@@ -14,9 +18,13 @@ public class RaceStartUI : MonoBehaviour
     {
         startRaceButton.onClick.AddListener(() =>
         {
+            timer.StartTheTimer();
             
-            Hide();
             raceStatusUI.Show();
+            
+            Debug.Log(raceStatusUI.isActiveAndEnabled + " Is Active?");
+            OnStartButtonClicked?.Invoke(this,EventArgs.Empty);
+            Hide();
         });
         Hide();
     }
