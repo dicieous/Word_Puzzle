@@ -150,7 +150,7 @@ public class LevelMapInstantiator : MonoBehaviour
             {
                 levelImages = bossLevel;
             }
-            else if((i + startLevel) % 5 == 0)
+            else if((i + startLevel) % 5 == 0 && (i + startLevel != 5))
             {
                 levelImages = giftLevel;
             }
@@ -171,7 +171,7 @@ public class LevelMapInstantiator : MonoBehaviour
             //    image.transform.GetChild(1).GetComponent <Image>().color=Color.red;
 
             //}else
-            if ((i + startLevel) % 5 == 0&&( (i + startLevel) % 10 != 0)&&(i+startLevel)<level)
+            if (((i + startLevel) % 5 == 0 && (i + startLevel) != 5) && ( (i + startLevel) % 10 != 0) && (i + startLevel) < level)
             {
                image.transform.GetChild(2).gameObject.SetActive(false);
             }

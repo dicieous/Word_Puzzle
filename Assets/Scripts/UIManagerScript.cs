@@ -27,6 +27,9 @@ public class UIManagerScript : MonoBehaviour
     [Header("Special level Button details")]
     public Button fiftyFiftyButton;
     public Button shuffleButton;
+    [Header("WinPanel coins details")] 
+    public int coinsCountAfterLevelWin;
+    public TextMeshProUGUI coinsCountAfterLevelWinText;
     [Header("DoubleCoins Button Details")] 
     public Button doubleCoinsButton;
     public Button loseItButton;
@@ -76,6 +79,7 @@ public class UIManagerScript : MonoBehaviour
     public int _dailyRewardNumber;
     public static String dailyRewardDetails;
     public bool giftLevel;
+    public GameObject giftObj;
     public GameObject giftJumpPLace;
     public GameObject giftJumpPLace2;
     public GameObject giftPanel; 
@@ -92,6 +96,9 @@ public class UIManagerScript : MonoBehaviour
     public GameObject giftDiamondFxParent;
     public RectTransform giftCenterParticleRect;
     public List<RectTransform> giftDiamondParticlesRect;
+    public Button openAgainButton;
+    public Button noThanksButton;
+    public Button reClaimButton;
     [Header("CoinDouble BarMeter Details")]
     public GameObject barMeterObj;
     public Slider slideBar;
@@ -151,6 +158,7 @@ public class UIManagerScript : MonoBehaviour
 				endScreen.transform.GetChild(4).gameObject.SetActive(false);
 				endScreen.transform.GetChild(5).gameObject.SetActive(false);
 				MonitizationScript.instance.giftObject.SetActive(false);
+				coinsCountAfterLevelWin = 10;
 			}
 			else
 			{
@@ -171,11 +179,13 @@ public class UIManagerScript : MonoBehaviour
 						levelNo.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GameManager.Instance.question;
 					}
 				}
+				//////----assign coins count after win
+				if (GameManager.Instance) coinsCountAfterLevelWin = GameManager.Instance.stickingCubes.Count;
 				HintButtonActiveFun();
 				AutoButtonActiveFun();
 				EmojiRevelButtonActiveFun();
 			}
-			if (s == '5' || SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 33 &&
+			if ((s == '5' && GetSpecialLevelNumber() != 5) || SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 33 &&
 			    SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 2)
 			{
 				if (((SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 33 &&
@@ -230,7 +240,8 @@ public class UIManagerScript : MonoBehaviour
 				break;
 		}
 	}
-
+	
+     ////////------Where Boosters and magnet , hint should unlock-----------------
 	public void StartButtonActivateFun()
 	{
 		if ((PlayerPrefs.GetInt("Level", 1) == 1))
@@ -412,13 +423,15 @@ public class UIManagerScript : MonoBehaviour
             ///////////----without double coins load bar ---------/////////
             if (GetSpecialLevelNumber() <= 3)
             {
-	            CoinsDoubleClaimFun(10);
+	            coinsCountAfterLevelWinText.text = "+" + coinsCountAfterLevelWin;
+	            CoinsDoubleClaimFun(GameManager.Instance.stickingCubes.Count);
 	            //print(":::::::::::::::::::::::::::::::::::::");
             }
             ///////////-------- with double coinsFun -------------/////////
             else
             {
-	            CoinsDoubleBarFun(10);
+	            coinsCountAfterLevelWinText.text = "+" + coinsCountAfterLevelWin;
+	            CoinsDoubleBarFun(GameManager.Instance.stickingCubes.Count);
             }
             
             /*if (s != '0' )
@@ -559,27 +572,27 @@ public class UIManagerScript : MonoBehaviour
 		if (val <= 0.17)
 		{
 			//print("X2");
-			num = 20;
+			num = coinsCountAfterLevelWin * 2;
 		}
 		else if (val > 0.17 && val <= 0.39)
 		{
 			//print("X4");
-			num = 40;
+			num = coinsCountAfterLevelWin * 4;
 		}
 		else if (val > 0.39 && val <= 0.615)
 		{
 			//print("X6");
-			num = 60;
+			num = coinsCountAfterLevelWin * 6;
 		}
 		else if (val > 0.615 && val <= 0.84)
 		{
 			//print("X8");
-			num = 80;
+			num = coinsCountAfterLevelWin * 8;
 		}
 		else if (val > 0.84 && val <= 1.00)
 		{
 			//print("X10");
-			num = 100;
+			num = coinsCountAfterLevelWin * 10;
 		}
 
 		coinIncreaseNum = num;
@@ -604,6 +617,11 @@ public class UIManagerScript : MonoBehaviour
 	public void DoubleCoins_CallBack()
 	{
 		CoinsDoubleClaimFun(coinIncreaseNum);
+	}
+
+	public void CoinsLoseItFun()
+	{
+		CoinsDoubleClaimFun(coinsCountAfterLevelWin);
 	}
 	public void CoinsDoubleClaimFun(int x)
 	{
@@ -642,48 +660,7 @@ public class UIManagerScript : MonoBehaviour
 			//nextButton.interactable = true;
 			if (giftLevel)
 			{
-				if((SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 33))
-				{
-					switch (_dailyRewardNumber)
-					{
-						case 1:
-							GiftOpenFun(2);
-							break;
-						case 2:
-							GiftOpenFun(3);
-							break;
-						case 3:
-							GiftOpenFun(4);
-							break;
-						case 4:
-							GiftOpenFun(5);
-							break;
-						case 5:
-							GiftOpenFun(6);
-							break;
-						default:
-							break;
-					}
-					giftMagnetCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 100).ToString();
-					giftHintCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 50).ToString();
-				}
-				else
-				{
-					if (GetSpecialLevelNumber() == 5)
-					{
-						GiftOpenFun(1);
-						giftMagnetCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 100).ToString();
-						giftHintCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 50).ToString();
-					}
-					else
-					{
-						var num = Random.Range(0, 2);
-						GiftOpenFun(num);
-						giftMagnetCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 100).ToString();
-						giftHintCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 50).ToString();
-					}
-				}
-				     
+				GiftCoinsAssignFun();
 			}
 			else
 			{
@@ -703,6 +680,55 @@ public class UIManagerScript : MonoBehaviour
 			}
 		},false);
 		if (loseItButton.interactable) loseItButton.interactable = false;
+	}
+	
+	public void GiftCoinsAssignFun()
+	{
+		if((SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 33))
+		{
+			switch (_dailyRewardNumber)
+			{
+				case 1:
+					GiftOpenFun(2);
+					break;
+				case 2:
+					GiftOpenFun(3);
+					break;
+				case 3:
+					GiftOpenFun(4);
+					break;
+				case 4:
+					GiftOpenFun(5);
+					break;
+				case 5:
+					GiftOpenFun(6);
+					break;
+				default:
+					break;
+			}
+			giftMagnetCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 100).ToString();
+			giftHintCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 50).ToString();
+		}
+		else
+		{
+			/////------For coins , magnet , hints pop
+			/*if (GetSpecialLevelNumber() == 5)
+			{
+				//GiftOpenFun(1);
+				giftMagnetCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 100).ToString();
+				giftHintCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 50).ToString();
+			}
+			else
+			{
+				var num = Random.Range(0, 2);
+				GiftOpenFun(num);
+				
+				giftMagnetCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 100).ToString();
+				giftHintCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / 50).ToString();
+			}*/
+			/////----Just for coins pop Only
+			GiftCoinOpenFun(false);
+		}
 	}
 	public void FailPanelActive()
     {
@@ -1158,6 +1184,140 @@ public class UIManagerScript : MonoBehaviour
 	    _noMoreMovesCount++;
     }
 
+    public void GiftCoinOpenFun(bool reclaim)
+    {
+	    DOVirtual.DelayedCall(1f, () =>
+	    {
+		    // if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+		    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
+		    var countList = new List<int>() {40,60,80,100};
+		    countList.Sort((a, b) => 1 - 2 * Random.Range(0, countList.Count));
+		    var coinCount = countList[0];
+		    if (reclaim)
+		    {
+			    giftObj.GetComponent<Animator>().enabled = true;
+			    GiftCoinPopUpFun(coinsObj,giftJumpPLace,coinCount,true);
+		    }
+		    else
+		    {
+			    giftPanel.SetActive(true);
+			    giftObj.SetActive(true);
+			    giftObj.GetComponent<RectTransform>().DOScale(Vector3.one, 0.25f).SetEase(Ease.Linear);
+			    giftPanel.GetComponent<RectTransform>().GetChild(0).DOLocalRotate(new Vector3(0, 0, 360f), 1f).SetLoops(-1,LoopType.Incremental).SetEase(Ease.Linear);
+			    GiftCoinPopUpFun(coinsObj,giftJumpPLace,coinCount,false);
+		    }
+	    },false);
+	    
+    }
+
+    public void GiftCoinPopUpFun(GameObject popObj,GameObject popPosition,int randomCoinCount,bool reclaim)
+    {
+	    _coinIncreaseNUm = randomCoinCount;
+	    //print(_coinIncreaseNUm+"       "+ randomCoinCount +"          "+coinsIncreaseNum);
+	    DOVirtual.DelayedCall(1.3f, () =>
+	    {
+		    openAgainButton.GetComponent<RectTransform>().DOScale(Vector3.zero, 0.4f);
+		    noThanksButton.GetComponent<RectTransform>().DOScale(Vector3.zero, 0.4f);
+		    
+		    // if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+		    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("RewardOpen");
+		    popObj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "+" + randomCoinCount;
+		    popObj.GetComponent<RectTransform>().DOScale(Vector3.one, 0.65f).SetEase(Ease.OutBounce);
+		    popObj.GetComponent<RectTransform>().DOJumpAnchorPos(popPosition.GetComponent<RectTransform>().anchoredPosition, 400f, 1, 0.5f)
+			    .SetEase(Ease.Linear).OnComplete(() =>
+			    {
+				    if (reclaim)
+				    {
+					    reClaimButton.GetComponent<RectTransform>().DOScale(Vector3.one, 0.35f).OnComplete(() =>
+					    {
+						    reClaimButton.interactable = true;
+					    });
+				    }
+				    else
+				    {
+					    claimButton.GetComponent<RectTransform>().DOScale(Vector3.one, 0.35f).OnComplete(() =>
+					    {
+						    claimButton.interactable = true;
+					    });
+				    }
+			    });
+	    },false);
+    }
+    public void GiftCoinClaimFun()
+    {
+	    claimButton.interactable = false;
+	    DOVirtual.DelayedCall(0.25f, () =>
+	    {
+		    StartCoroutine(PlayCoinCollectionFx(giftCoinMovePOs,giftDiamondFxParent,giftCenterParticleRect,giftDiamondParticlesRect));
+	    },false);
+	    DOVirtual.DelayedCall(1.25f, () =>
+	    {
+		    CoinManager.instance.CoinsIncrease(_coinIncreaseNUm);
+		    claimButton.GetComponent<RectTransform>().DOScale(Vector3.zero, 0.35f);
+		    giftObj.GetComponent<RectTransform>().DOScale(Vector3.zero, 0.35f).OnComplete(() =>
+		    {
+			    giftObj.SetActive(false);
+		    });
+		    coinsObj.GetComponent<RectTransform>().DOScale(Vector3.zero, 0.25f);
+		    coinsObj.GetComponent<DOTweenAnimation>().DOPlay();
+	    });
+	    DOVirtual.DelayedCall(1.7f, () =>
+	    {
+		    DOVirtual.DelayedCall(1f, () =>
+		    {
+			    giftObj.SetActive(true);
+			    giftObj.GetComponent<Animator>().enabled = false;
+			    giftObj.GetComponent<RectTransform>().DOScale(Vector3.one, 0.25f).SetEase(Ease.Linear);
+			    
+			    openAgainButton.GetComponent<RectTransform>().DOScale(Vector3.one, 0.25f).OnComplete(() =>
+			    {
+				    openAgainButton.interactable = true;
+			    });
+			    noThanksButton.GetComponent<RectTransform>().DOScale(Vector3.one, 0.25f).OnComplete(() =>
+			    {
+				    noThanksButton.interactable = true;
+			    });
+		    },false);
+	    },false);
+	    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+	    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+    }
+    public void GiftOpenAgainClaimFun()
+    {
+	    GiftOpenAgainClaimFun_Callback();
+    }
+    public void GiftOpenAgainClaimFun_Callback()
+    {
+	    reClaimButton.interactable = false;
+	    reClaimButton.GetComponent<RectTransform>().DOScale(Vector3.zero, 0.05f);
+	    DOVirtual.DelayedCall(0.25f, () =>
+	    {
+		    StartCoroutine(PlayCoinCollectionFx(giftCoinMovePOs,giftDiamondFxParent,giftCenterParticleRect,giftDiamondParticlesRect));
+	    },false);
+	    DOVirtual.DelayedCall(1.7f, () =>
+	    {
+		    CoinManager.instance.CoinsIncrease(_coinIncreaseNUm);
+		    print("coinsincreasenum          "+_coinIncreaseNUm);
+		    coinsObj.GetComponent<RectTransform>().DOScale(Vector3.zero, 0.05f);
+		    DOVirtual.DelayedCall(1f, () =>
+		    {
+			    if(GameEssentials.instance)GameEssentials.ShowInterstitialsAds("LevelComplete");
+			    /*if (GetSpecialLevelNumber() <= 5)
+			    {
+				    NextMoveFun();
+			    }
+			    else
+			    {
+				    MapLevelCall();
+			    }*/
+			    MapLevelCall();
+		    },false);
+	    },false);
+	    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
+	    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
+    }
+    
+    
     public void GiftOpenFun(int num)
     {
 	    DOVirtual.DelayedCall(1f, () =>
@@ -1216,8 +1376,8 @@ public class UIManagerScript : MonoBehaviour
 		    }
 		    
 	    },false);
+	    
     }
-    
     public void GiftPopFun(GameObject popObj,GameObject popObj2,GameObject popPosition,GameObject popPosition2,int randomCoinCount,int magnetOrHintCoins,int magnetOrHintCount)
     {
 	    _coinIncreaseNUm = randomCoinCount + magnetOrHintCoins;
@@ -1364,7 +1524,7 @@ public class UIManagerScript : MonoBehaviour
     }
     public void MapLevelCall()
     {
-	    if (GetSpecialLevelNumber() == 5)
+	    /*if (GetSpecialLevelNumber() == 5)
 	    {
 		    Metadata.SetTotalBricks(110);
 	    }
@@ -1374,7 +1534,7 @@ public class UIManagerScript : MonoBehaviour
 		    countList.Sort((a, b) => 1 - 2 * Random.Range(0, countList.Count));
 		    var coinCount = countList[0];
 		    Metadata.SetTotalBricks(Metadata.GetTotalBricks() + coinCount);
-	    }
+	    }*/
 	    
 	    if ((SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 33 &&
 	         SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 2))
