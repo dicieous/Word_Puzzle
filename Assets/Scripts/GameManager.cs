@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
         starFX = UI.starparticleEffect;
         
         movesCount = hintCubesHolder.Count + ((int)(hintCubesHolder.Count/2));
-        var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
+        var s = SaveData.GetSpecialLevelNumber().ToString()[^1];
         if (s == '0')
         {
             UIManagerScript.Instance.movesText.enabled = false;
@@ -237,7 +237,7 @@ public class GameManager : MonoBehaviour
                 }
             });
         }
-        if (UIManagerScript.Instance.GetSpecialLevelNumber() > 10)
+        if (SaveData.GetSpecialLevelNumber() > 10)
         {
             if (movesCount <= 0 && !levelCompleted && !levelFail)
             {
@@ -663,7 +663,7 @@ public class GameManager : MonoBehaviour
 
             break;
         }*/
-        if (UIManagerScript.Instance.GetSpecialLevelNumber() == 1)
+        if (SaveData.GetSpecialLevelNumber() == 1)
         {
             foreach (var cube in hintCubesHolder)
             {

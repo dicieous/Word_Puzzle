@@ -86,7 +86,7 @@ public class MonitizationScript : MonoBehaviour
       if(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings-1) return;
       
      // bubbleTimeLimit -= Time.deltaTime;
-      if (bubbleTimeLimit <= 0 && UIManagerScript.Instance.GetSpecialLevelNumber() > 5)
+      if (bubbleTimeLimit <= 0 && SaveData.GetSpecialLevelNumber() > 5)
       {
          GameEssentials.instance.bubbleTime = hintBubble.GetComponent<Image>().enabled ? 30f : 120f;
          hintBubble.GetComponent<Image>().enabled = true;
@@ -115,7 +115,7 @@ public class MonitizationScript : MonoBehaviour
 
    private void OnBubbleBtnPress()
    {
-      GameEssentials.instance.bubbleTime =UIManagerScript.Instance.GetSpecialLevelNumber() < 31 ? 60 : 80;
+      GameEssentials.instance.bubbleTime =SaveData.GetSpecialLevelNumber() < 31 ? 60 : 80;
       GameEssentials.RvType = RewardType.BubbleRv;
       GameEssentials.ShowRewardedAds("Bubble2X");
    }
@@ -192,7 +192,7 @@ public class MonitizationScript : MonoBehaviour
       GameEssentials.RvType = RewardType.GiftBox;
       GameEssentials.ShowRewardedAds("GiftBox");
       if(LionStudiosManager.instance)
-         LionStudiosManager.AdsEvents(true, AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","GiftBox",CoinManager.instance.GetCoinsCount());
+         LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","GiftBox",SaveData.GetCoinsCount());
    }
    
    // ReSharper disable Unity.PerformanceAnalysis
@@ -208,7 +208,7 @@ public class MonitizationScript : MonoBehaviour
             StartCoroutine(UpdateMoneyOnWin(instanceImageRef,giftCoinInstancePos,giftCoinMovePosition,50));
             if (LionStudiosManager.instance)
             {
-               LionStudiosManager.GiftBox(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),"Coins","100",_giftBoxCount.ToString());
+               LionStudiosManager.GiftBox(SaveData.GetSpecialLevelNumber().ToString(),"Coins","100",_giftBoxCount.ToString());
                _giftBoxCount++;
             }
             break;
@@ -217,7 +217,7 @@ public class MonitizationScript : MonoBehaviour
             MagnetSpawn(instanceImageRef,giftMagnetInstancePosition,giftMagnetMovePosition,100);
             if (LionStudiosManager.instance)
             {
-               LionStudiosManager.GiftBox(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),"Coins","100",_giftBoxCount.ToString());
+               LionStudiosManager.GiftBox(SaveData.GetSpecialLevelNumber().ToString(),"Coins","100",_giftBoxCount.ToString());
                _giftBoxCount++;
             }
             break;
@@ -226,7 +226,7 @@ public class MonitizationScript : MonoBehaviour
             MagnetSpawn(instanceImageRef,giftHintInstancePosition,giftHintMovePosition,50);
             if (LionStudiosManager.instance)
             {
-               LionStudiosManager.GiftBox(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),"Coins","100",_giftBoxCount.ToString());
+               LionStudiosManager.GiftBox(SaveData.GetSpecialLevelNumber().ToString(),"Coins","100",_giftBoxCount.ToString());
                _giftBoxCount++;
             }
             break;

@@ -45,7 +45,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
     // }
     private void Start()
     {
-        totalSpinWheel = CoinManager.instance.GetSpinCount();
+        totalSpinWheel = SaveData.GetSpinCount();
     }
 
     private void Update()
@@ -132,7 +132,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
     private void StopSpin()
     {
         totalSpinWheel--;
-        CoinManager.instance.SetSpinCount(totalSpinWheel);
+        SaveData.SetSpinCount(totalSpinWheel);
         _stopPressed = true;
         stopBtn.interactable = false;
         closeBtn.interactable = false;
@@ -386,7 +386,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
     public void OpenSpinWheel()
     {
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
-        if (UIManagerScript.Instance.GetSpecialLevelNumber() < 20)
+        if (SaveData.GetSpecialLevelNumber() < 20)
         {
             var calVal = spinWheelBtn.transform.GetChild(0);
             print(":Scale"+calVal.localScale.x);

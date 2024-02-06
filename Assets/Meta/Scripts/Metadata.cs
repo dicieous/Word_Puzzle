@@ -20,7 +20,7 @@ public class Metadata : MonoBehaviour
     }
     
     ////---Required number to Construct object
-    public static int GetTotalBricks() => PlayerPrefs.GetInt("TotalBricks", 1000);
+    public static int GetTotalBricks() => PlayerPrefs.GetInt("TotalBricks", 0);
     public static void SetTotalBricks(int reqNum) => PlayerPrefs.SetInt("TotalBricks", reqNum);
     
     //Bricks Required For Object

@@ -191,7 +191,7 @@ public class ApplovinManager : MonoBehaviour
     private void OnInterstitialDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
     {
         print("Ad Displayed");
-        LionStudiosManager.AdsEvents(false,AdsEventState.Shown,UIManagerScript.Instance.GetSpecialLevelNumber(),adInfo.NetworkName,"LevelComplete",0);
+        LionStudiosManager.AdsEvents(false,AdsEventState.Shown,SaveData.GetSpecialLevelNumber(),adInfo.NetworkName,"LevelComplete",0);
     }
 
     private void OnInterstitialAdFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
@@ -204,7 +204,7 @@ public class ApplovinManager : MonoBehaviour
     private void OnInterstitialClickedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
     {
         print("Ad Closed");
-        LionStudiosManager.AdsEvents(false,AdsEventState.Clicked,UIManagerScript.Instance.GetSpecialLevelNumber(),adInfo.NetworkName,"LevelComplete",CoinManager.instance.GetCoinsCount());
+        LionStudiosManager.AdsEvents(false,AdsEventState.Clicked,SaveData.GetSpecialLevelNumber(),adInfo.NetworkName,"LevelComplete",SaveData.GetCoinsCount());
     }
 
     private void OnInterstitialHiddenEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
@@ -245,7 +245,7 @@ public class ApplovinManager : MonoBehaviour
 
         Time.timeScale = 0;
         MaxSdk.ShowInterstitial(interstitialAdUnitId, placement);
-        LionStudiosManager.AdsEvents(false,AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","LevelComplete",CoinManager.instance.GetCoinsCount());
+        LionStudiosManager.AdsEvents(false,AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","LevelComplete",SaveData.GetCoinsCount());
         ResetAdsTimeLimit(180);
     }
 
@@ -312,7 +312,7 @@ public class ApplovinManager : MonoBehaviour
         };
         
         if (placement is "None") return;
-        LionStudiosManager.AdsEvents(true,AdsEventState.Shown,UIManagerScript.Instance.GetSpecialLevelNumber(),adInfo.NetworkName,placement,CoinManager.instance.GetCoinsCount());
+        LionStudiosManager.AdsEvents(true,AdsEventState.Shown,SaveData.GetSpecialLevelNumber(),adInfo.NetworkName,placement,SaveData.GetCoinsCount());
     }
 
     private void OnRewardedAdFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
@@ -346,7 +346,7 @@ public class ApplovinManager : MonoBehaviour
             _ => AdErrorType.Unknown
         };
         
-        LionStudiosManager.RvShowAdFail(UIManagerScript.Instance.GetSpecialLevelNumber(),adeErrorType,adInfo.NetworkName,placement);
+        LionStudiosManager.RvShowAdFail(SaveData.GetSpecialLevelNumber(),adeErrorType,adInfo.NetworkName,placement);
         print("Reward Failed To Display::"+ errorInfo.Code+"::"+errorInfo.Message +"::" + adInfo.NetworkName +"::"+errorInfo.MediatedNetworkErrorCode+"::"+errorInfo.MediatedNetworkErrorMessage);
         
     }
@@ -372,7 +372,7 @@ public class ApplovinManager : MonoBehaviour
         
         if (placement is "None") return;
         
-        LionStudiosManager.AdsEvents(true,AdsEventState.Clicked,UIManagerScript.Instance.GetSpecialLevelNumber(),adInfo.NetworkName,placement,CoinManager.instance.GetCoinsCount());
+        LionStudiosManager.AdsEvents(true,AdsEventState.Clicked,SaveData.GetSpecialLevelNumber(),adInfo.NetworkName,placement,SaveData.GetCoinsCount());
     }
 
     private void OnRewardedAdHiddenEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
@@ -414,7 +414,7 @@ public class ApplovinManager : MonoBehaviour
         };
         if (placement is not "None")
         {
-            LionStudiosManager.AdsEvents(true,AdsEventState.RewardReceived,UIManagerScript.Instance.GetSpecialLevelNumber(),adInfo.NetworkName,placement,CoinManager.instance.GetCoinsCount());
+            LionStudiosManager.AdsEvents(true,AdsEventState.RewardReceived,SaveData.GetSpecialLevelNumber(),adInfo.NetworkName,placement,SaveData.GetCoinsCount());
            
         }
 

@@ -38,11 +38,12 @@ public class FunctionManager : MonoBehaviour
    public void ColoredIteamsData()
    {
       var num = Metadata.GetParentNumber();
+      if (num <= 0) return;
       if (num > Metadata.instance.propertyClassList.Count - 1)
       {
          num = Metadata.instance.propertyClassList.Count - 1;
       }
-      for (int i = 0; i <= num; i++)
+      for (int i = 0; i <= num-1; i++)
       {
          for (int j = 0; j < startFunLists[i].objDetails.Count; j++)
          {

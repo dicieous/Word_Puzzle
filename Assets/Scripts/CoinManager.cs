@@ -49,9 +49,9 @@ public class CoinManager : MonoBehaviour
 
     void Start()
     {
-        coinCountText.text = GetCoinsCount().ToString();
+        coinCountText.text = SaveData.GetCoinsCount().ToString();
         
-        var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
+        var s = SaveData.GetSpecialLevelNumber().ToString()[^1];
         if (s != '0')
         {
             if (GameManager.Instance)
@@ -72,15 +72,15 @@ public class CoinManager : MonoBehaviour
                     singleColor = greenColor;
                 } 
             }
-            if (GetCoinsCount() >= 50)
+            if (SaveData.GetCoinsCount() >= 50)
             {
-                var countNum = (int)GetCoinsCount() / 50;
-                SetHintCount(countNum);
-                hintText.text = GetHintCount().ToString();
-                specialLevelHintText.text = GetHintCount().ToString();
-                if (GetCoinsCount() >= 100)
+                var countNum = (int)SaveData.GetCoinsCount() / 50;
+                SaveData.SetHintCount(countNum);
+                hintText.text =SaveData. GetHintCount().ToString();
+                specialLevelHintText.text =SaveData. GetHintCount().ToString();
+                if (SaveData.GetCoinsCount() >= 100)
                 {
-                    autoWordCountText.text = ((int)(GetCoinsCount() / 100f)).ToString();
+                    autoWordCountText.text = ((int)(SaveData.GetCoinsCount() / 100f)).ToString();
                 }
                 else
                 {
@@ -89,26 +89,26 @@ public class CoinManager : MonoBehaviour
             }
             else
             {
-                SetHintCount(0);
-                hintText.text = GetHintCount().ToString();
-                specialLevelHintText.text = GetHintCount().ToString();
+                SaveData.SetHintCount(0);
+                hintText.text = SaveData.GetHintCount().ToString();
+                specialLevelHintText.text = SaveData.GetHintCount().ToString();
             }
             
-            progressionBarImage.fillAmount = GetLoaderPercent();
+            progressionBarImage.fillAmount = SaveData.GetLoaderPercent();
             //print(GetLoaderPercent());
-            progressionBarText.text = (int)(GetLoaderPercent() * 100) + "%";
+            progressionBarText.text = (int)(SaveData.GetLoaderPercent() * 100) + "%";
             
             if (s == '1')
             {
                 print(s);
-                SetLoaderPercentage(0f);
-                if (GetLoaderImageCount() >= progressionImageList.Count)
+                SaveData.SetLoaderPercentage(0f);
+                if (SaveData.GetLoaderImageCount() >= progressionImageList.Count)
                 {
-                    SetLoaderImageCount(0);
+                    SaveData.SetLoaderImageCount(0);
                 }
-                SetLoaderImageCount(GetLoaderImageCount() + 1);
+                SaveData.SetLoaderImageCount(SaveData.GetLoaderImageCount() + 1);
             }
-            progressionImage.sprite = progressionImageList[GetLoaderImageCount()];
+            progressionImage.sprite = progressionImageList[SaveData.GetLoaderImageCount()];
             
         }
         winEmoji.GetComponent<Image>().sprite = winEmojiSprites[Random.Range(0, winEmojiSprites.Count - 1)];
@@ -128,7 +128,7 @@ public class CoinManager : MonoBehaviour
         hintCounter++;
         if (ByteBrewManager.instance)
         {
-            ByteBrewManager.instance.ProgressEvent(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),
+            ByteBrewManager.instance.ProgressEvent(SaveData.GetSpecialLevelNumber().ToString(),
                 hintCounter.ToString(), "NormalMode", "Hints");
         }
 
@@ -141,13 +141,13 @@ public class CoinManager : MonoBehaviour
     }
     public void CountTextDetails(int cutNum)
     {
-        var totalCoins = GetCoinsCount() - cutNum;
+        var totalCoins = SaveData.GetCoinsCount() - cutNum;
         totalCoins = totalCoins <= 0 ? 0 : totalCoins;
-        SetCoinCount(totalCoins);
-        SetHintCount((int)totalCoins / 50);
+        SaveData.SetCoinCount(totalCoins);
+        SaveData.SetHintCount((int)totalCoins / 50);
         coinCountText.text = totalCoins.ToString();
-        hintText.text = GetHintCount().ToString();
-        specialLevelHintText.text = GetHintCount().ToString();
+        hintText.text = SaveData.GetHintCount().ToString();
+        specialLevelHintText.text = SaveData.GetHintCount().ToString();
         shuffleCountText.text = ((int)(totalCoins / 25)).ToString();
         fiftyFiftyCountText.text=((int)(totalCoins / 25)).ToString();
         autoWordCountText.text = ((int)(totalCoins / 100)).ToString();
@@ -174,10 +174,10 @@ public class CoinManager : MonoBehaviour
     public void CoinsIncrease(int x)
     {
         //var s1 = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
-        SetCoinCount(GetCoinsCount() + x);
-        if (GetCoinsCount() >= 50)
+        SaveData.SetCoinCount(SaveData.GetCoinsCount() + x);
+        if (SaveData.GetCoinsCount() >= 50)
         {
-            SetHintCount((int)(GetCoinsCount() / 50));
+            SaveData.SetHintCount((int)(SaveData.GetCoinsCount() / 50));
             /*if (s1 != '0')
             {
                 UIManagerScript.Instance.hintButton.interactable = true;
@@ -185,13 +185,13 @@ public class CoinManager : MonoBehaviour
             
         }
 
-        var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
+        var s = SaveData.GetSpecialLevelNumber().ToString()[^1];
         if (s != '0')
         {
-            if (GetCoinsCount() >= 100)
+            if (SaveData.GetCoinsCount() >= 100)
             {
                 UIManagerScript.Instance.AutoButtonActiveFun();
-                autoWordCountText.text = ((int)(GetCoinsCount() / 100)).ToString();
+                autoWordCountText.text = ((int)(SaveData.GetCoinsCount() / 100)).ToString();
             }
             else
             {
@@ -199,35 +199,15 @@ public class CoinManager : MonoBehaviour
             }
         }
         
-        coinCountText.text = GetCoinsCount().ToString();
-        hintText.text = GetHintCount().ToString();
-        specialLevelHintText.text = GetHintCount().ToString();
-        shuffleCountText.text = ((int)(GetCoinsCount() / 25)).ToString();
-        fiftyFiftyCountText.text=((int)(GetCoinsCount() / 25)).ToString();;
+        coinCountText.text = SaveData.GetCoinsCount().ToString();
+        hintText.text = SaveData.GetHintCount().ToString();
+        specialLevelHintText.text = SaveData.GetHintCount().ToString();
+        shuffleCountText.text = ((int)(SaveData.GetCoinsCount() / 25)).ToString();
+        fiftyFiftyCountText.text=((int)(SaveData.GetCoinsCount() / 25)).ToString();;
 
     }
     
-    private int GetLoaderImageCount() => PlayerPrefs.GetInt("LoaderImageNumber", 0);
-    private void SetLoaderImageCount(int num) => PlayerPrefs.SetInt("LoaderImageNumber", num);
-    
-    public float GetLoaderPercent() => PlayerPrefs.GetFloat("LoaderPercentage", 0);
-    public void SetLoaderPercentage(float percent) => PlayerPrefs.SetFloat("LoaderPercentage", percent);
-    
-    public int GetHintCount() => PlayerPrefs.GetInt("Hint Count", 0);
-    public void SetHintCount(int countHint) => PlayerPrefs.SetInt("Hint Count", countHint);
-
-    public int GetShuffleCount() => PlayerPrefs.GetInt("ShuffleCount", 0);
-    public void SetShuffleCount(int countShuffle) => PlayerPrefs.SetInt("ShuffleCount", countShuffle);
-    
-
-    public int Get5050Count() => PlayerPrefs.GetInt("Count5050", 0);
-    public void Set5050Count(int count5050) => PlayerPrefs.SetInt("Count5050", count5050);
-    
-    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 0);
-
-    public void SetCoinCount(int countCoin) => PlayerPrefs.SetInt("Coins Count", countCoin);
-    
-    public int GetSpinCount() => PlayerPrefs.GetInt("Spins Count", 1);
-    public void SetSpinCount(int countSpin) => PlayerPrefs.SetInt("Spins Count", countSpin);
+    // public int GetSpinCount() => PlayerPrefs.GetInt("Spins Count", 1);
+    // public void SetSpinCount(int countSpin) => PlayerPrefs.SetInt("Spins Count", countSpin);
     
 }

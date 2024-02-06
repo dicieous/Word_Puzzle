@@ -7,13 +7,15 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Park_Base
-  m_Shader: {fileID: 4800000, guid: 8daa3bc5d45deb640b9f4b1492733de8, type: 3}
+  m_Name: Pa_rk Base Glow
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - INVERT
+  - _EMISSION
+  - _GLOSSYREFLECTIONS_OFF
   m_InvalidKeywords:
+  - INVERT
   - TCP2_REFLECTIONS_FRESNEL
   - TCP2_RIM_LIGHTING_LIGHTMASK
   - TCP2_SHADOW_LIGHT_COLOR
@@ -36,14 +38,26 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ac5928c975ba3f54783f9d7e94309ccc, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 0.09, y: 0.03}
+        m_Offset: {x: 0, y: 1.47}
     - _MatCapMask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -52,11 +66,19 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Noise:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -117,7 +139,7 @@ Material:
     - _FresnelMax: 1.5
     - _FresnelMin: 0
     - _GlossMapScale: 0
-    - _Glossiness: 0.198
+    - _Glossiness: 0.319
     - _GlossyReflections: 0
     - _HeightScale: 0
     - _HighlightThickness: 0
@@ -130,7 +152,8 @@ Material:
     - _MaskStrength: 0
     - _MatCapMaskChannel: 0
     - _MatCapType: 0
-    - _Metallic: 0.027
+    - _Metallic: 0
+    - _Mode: 0
     - _NormalsSource: 0
     - _NormalsUVType: 0
     - _OcclusionChannel: 0
@@ -179,6 +202,7 @@ Material:
     - _SpecularType: 0
     - _SrcBlend: 1
     - _Surface: 0
+    - _UVSec: 0
     - _UseAlphaTest: 0
     - _UseEmission: 0
     - _UseFresnelReflections: 1
@@ -199,7 +223,7 @@ Material:
     - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.9433962, g: 0.69167566, b: 0.22694907, a: 1}
     - _Color_Intensity: {r: 0.922, g: 0.922, b: 0.922, a: 0}
     - _DisColor: {r: 1, g: 1, b: 0, a: 1}
     - _Emission: {r: 0.291, g: 0.291, b: 0.291, a: 0}

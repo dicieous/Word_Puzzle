@@ -92,7 +92,7 @@ public class EmojiManager : MonoBehaviour
             SetPanelsDone(0);
         }
 
-        var coinsCount = CoinManager.instance.GetCoinsCount();
+        var coinsCount = SaveData.GetCoinsCount();
         CoinManager.instance.coinCountText.text = coinsCount.ToString();
         CoinManager.instance.hintText.text = ((int)(coinsCount/50)).ToString();
         CoinManager.instance.specialLevelHintText.text = ((int)(coinsCount/50)).ToString();
@@ -266,7 +266,7 @@ public class EmojiManager : MonoBehaviour
 
     public void FunShuffle()
     {
-        if (CoinManager.instance.GetCoinsCount() >= 25)
+        if (SaveData.GetCoinsCount() >= 25)
         {
             CoinManager.instance.ShuffleReduce(25);
             Shuffle_CallBack();
@@ -276,7 +276,7 @@ public class EmojiManager : MonoBehaviour
             GameEssentials.RvType = RewardType.Shuffle;
             GameEssentials.ShowRewardedAds("Shuffle");
             if(LionStudiosManager.instance)
-                LionStudiosManager.AdsEvents(true, AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","Shuffle",CoinManager.instance.GetCoinsCount());
+                LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","Shuffle",SaveData.GetCoinsCount());
             /////--------------addcall
         }
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
@@ -288,7 +288,7 @@ public class EmojiManager : MonoBehaviour
         if(LionStudiosManager.instance)
         {
             LionStudiosManager.
-                Shuffle(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),_shuffleCount);
+                Shuffle(SaveData.GetSpecialLevelNumber().ToString(),_shuffleCount);
             _shuffleCount++;
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -301,11 +301,11 @@ public class EmojiManager : MonoBehaviour
         var rvIcon = UIManagerScript.Instance.shuffleButton.image.rectTransform.GetChild(2).gameObject;
         var loadingIcon = UIManagerScript.Instance.shuffleButton.image.rectTransform.GetChild(3).gameObject;
 			
-        shuffleText.SetActive(CoinManager.instance.GetCoinsCount()>=25);
-        coinsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=100);
+        shuffleText.SetActive(SaveData.GetCoinsCount()>=25);
+        coinsTxt.SetActive(SaveData.GetCoinsCount()>=100);
 			
-        rvIcon.SetActive(CoinManager.instance.GetCoinsCount()<25 && GameEssentials.IsRvAvailable());
-        loadingIcon.SetActive(CoinManager.instance.GetCoinsCount()<25 && !GameEssentials.IsRvAvailable());
+        rvIcon.SetActive(SaveData.GetCoinsCount()<25 && GameEssentials.IsRvAvailable());
+        loadingIcon.SetActive(SaveData.GetCoinsCount()<25 && !GameEssentials.IsRvAvailable());
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
@@ -317,11 +317,11 @@ public class EmojiManager : MonoBehaviour
         var rvIcon = UIManagerScript.Instance.shuffleButton.image.rectTransform.GetChild(2).gameObject;
         var loadingIcon = UIManagerScript.Instance.shuffleButton.image.rectTransform.GetChild(3).gameObject;
 			
-        shuffleText.SetActive(CoinManager.instance.GetCoinsCount()>=25);
-        coinsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=100);
+        shuffleText.SetActive(SaveData.GetCoinsCount()>=25);
+        coinsTxt.SetActive(SaveData.GetCoinsCount()>=100);
 			
-        rvIcon.SetActive(CoinManager.instance.GetCoinsCount()<25 && GameEssentials.IsRvAvailable());
-        loadingIcon.SetActive(CoinManager.instance.GetCoinsCount()<25 && !GameEssentials.IsRvAvailable());
+        rvIcon.SetActive(SaveData.GetCoinsCount()<25 && GameEssentials.IsRvAvailable());
+        loadingIcon.SetActive(SaveData.GetCoinsCount()<25 && !GameEssentials.IsRvAvailable());
         
     }
     [HideInInspector] public int hintDisplayNum;
@@ -330,7 +330,7 @@ public class EmojiManager : MonoBehaviour
         hintCounter++;
         /*ByteBrewManager.instance.EmojiEvent(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),
             hintCounter.ToString(), "EmojiMode", GetListNumbers().ToString(), "Hints");*/
-        if (CoinManager.instance.GetCoinsCount() >= 50)
+        if (SaveData.GetCoinsCount() >= 50)
         {
             CoinManager.instance.HintReduce(50);
             SpecialHint_CallBack();
@@ -340,7 +340,7 @@ public class EmojiManager : MonoBehaviour
             GameEssentials.RvType = RewardType.Hint;
             GameEssentials.ShowRewardedAds("Hint");
             if(LionStudiosManager.instance)
-                LionStudiosManager.AdsEvents(true, AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","Hint",CoinManager.instance.GetCoinsCount());
+                LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","Hint",SaveData.GetCoinsCount());
             /////----------------ad call
         }
         HintButtonDeActiveFun();
@@ -377,7 +377,7 @@ public class EmojiManager : MonoBehaviour
         }
         
         if(!LionStudiosManager.instance) return;
-        LionStudiosManager.Hint(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),UIManagerScript._hintCount.ToString());
+        LionStudiosManager.Hint(SaveData.GetSpecialLevelNumber().ToString(),UIManagerScript._hintCount.ToString());
         UIManagerScript._hintCount++;
     }
     public void HintButtonActiveFun()
@@ -400,11 +400,11 @@ public class EmojiManager : MonoBehaviour
         var rvIcon = UIManagerScript.Instance.specialHintButton.image.rectTransform.GetChild(2).gameObject;
         var loadingIcon = UIManagerScript.Instance.specialHintButton.image.rectTransform.GetChild(3).gameObject;
 			
-        specialHintText.SetActive(CoinManager.instance.GetCoinsCount()>=50);
-        coinsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=100);
+        specialHintText.SetActive(SaveData.GetCoinsCount()>=50);
+        coinsTxt.SetActive(SaveData.GetCoinsCount()>=100);
 			
-        rvIcon.SetActive(CoinManager.instance.GetCoinsCount()<50 && GameEssentials.IsRvAvailable());
-        loadingIcon.SetActive(CoinManager.instance.GetCoinsCount()<50 && !GameEssentials.IsRvAvailable());
+        rvIcon.SetActive(SaveData.GetCoinsCount()<50 && GameEssentials.IsRvAvailable());
+        loadingIcon.SetActive(SaveData.GetCoinsCount()<50 && !GameEssentials.IsRvAvailable());
     }
 
     public void HintButtonDeActiveFun()
@@ -415,17 +415,17 @@ public class EmojiManager : MonoBehaviour
         var rvIcon = UIManagerScript.Instance.specialHintButton.image.rectTransform.GetChild(2).gameObject;
         var loadingIcon = UIManagerScript.Instance.specialHintButton.image.rectTransform.GetChild(3).gameObject;
 			
-        specialHintText.SetActive(CoinManager.instance.GetCoinsCount()>=100);
-        coinsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=100);
+        specialHintText.SetActive(SaveData.GetCoinsCount()>=100);
+        coinsTxt.SetActive(SaveData.GetCoinsCount()>=100);
 			
-        rvIcon.SetActive(CoinManager.instance.GetCoinsCount()<100 && GameEssentials.IsRvAvailable());
-        loadingIcon.SetActive(CoinManager.instance.GetCoinsCount()<100 && !GameEssentials.IsRvAvailable());
+        rvIcon.SetActive(SaveData.GetCoinsCount()<100 && GameEssentials.IsRvAvailable());
+        loadingIcon.SetActive(SaveData.GetCoinsCount()<100 && !GameEssentials.IsRvAvailable());
     }
 
     //private bool _fiftyFifty;
     public void Fun5050()
     {
-        if (CoinManager.instance.GetCoinsCount() >= 25)
+        if (SaveData.GetCoinsCount() >= 25)
         {
             CoinManager.instance.FiftyFiftyReduce(25);
             FiftyFifty_CallBack();
@@ -436,7 +436,7 @@ public class EmojiManager : MonoBehaviour
             GameEssentials.RvType = RewardType.FiftyFifty;
             GameEssentials.ShowRewardedAds("FiftyFifty");
             if(LionStudiosManager.instance)
-                LionStudiosManager.AdsEvents(true, AdsEventState.Start,UIManagerScript.Instance.GetSpecialLevelNumber(),"Applovin","FiftyFifty",CoinManager.instance.GetCoinsCount());
+                LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","FiftyFifty",SaveData.GetCoinsCount());
         }
 
         //_fiftyFifty = true;
@@ -462,7 +462,7 @@ public class EmojiManager : MonoBehaviour
         }
         
         if(!LionStudiosManager.instance) return;
-        LionStudiosManager.FiftyFifty(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),_fiftyFiftyCount);
+        LionStudiosManager.FiftyFifty(SaveData.GetSpecialLevelNumber().ToString(),_fiftyFiftyCount);
         _fiftyFiftyCount++;
     }
     public void FiftyFiftyButtonActiveFun()
@@ -473,11 +473,11 @@ public class EmojiManager : MonoBehaviour
         var rvIcon = UIManagerScript.Instance.fiftyFiftyButton.image.rectTransform.GetChild(2).gameObject;
         var loadingIcon = UIManagerScript.Instance.fiftyFiftyButton.image.rectTransform.GetChild(3).gameObject;
 			
-        fun5050Text.SetActive(CoinManager.instance.GetCoinsCount()>=25);
-        coinsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=100);
+        fun5050Text.SetActive(SaveData.GetCoinsCount()>=25);
+        coinsTxt.SetActive(SaveData.GetCoinsCount()>=100);
 			
-        rvIcon.SetActive(CoinManager.instance.GetCoinsCount()<25 && GameEssentials.IsRvAvailable());
-        loadingIcon.SetActive(CoinManager.instance.GetCoinsCount()<25 && !GameEssentials.IsRvAvailable());
+        rvIcon.SetActive(SaveData.GetCoinsCount()<25 && GameEssentials.IsRvAvailable());
+        loadingIcon.SetActive(SaveData.GetCoinsCount()<25 && !GameEssentials.IsRvAvailable());
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
@@ -489,11 +489,11 @@ public class EmojiManager : MonoBehaviour
         var rvIcon = UIManagerScript.Instance.fiftyFiftyButton.image.rectTransform.GetChild(2).gameObject;
         var loadingIcon = UIManagerScript.Instance.fiftyFiftyButton.image.rectTransform.GetChild(3).gameObject;
 			
-        fun5050Text.SetActive(CoinManager.instance.GetCoinsCount()>=25);
-        coinsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=100);
+        fun5050Text.SetActive(SaveData.GetCoinsCount()>=25);
+        coinsTxt.SetActive(SaveData.GetCoinsCount()>=100);
 			
-        rvIcon.SetActive(CoinManager.instance.GetCoinsCount()<25 && GameEssentials.IsRvAvailable());
-        loadingIcon.SetActive(CoinManager.instance.GetCoinsCount()<25 && !GameEssentials.IsRvAvailable());
+        rvIcon.SetActive(SaveData.GetCoinsCount()<25 && GameEssentials.IsRvAvailable());
+        loadingIcon.SetActive(SaveData.GetCoinsCount()<25 && !GameEssentials.IsRvAvailable());
     }
    
     
