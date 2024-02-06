@@ -19,7 +19,7 @@ public class Timer : MonoBehaviour
     public float GetRemainingTimeData() => PlayerPrefs.GetFloat(LAST_CLOSED_REMAINING_TIME, 0);
 
 
-    private float totalTime = 60.0f;
+    private float totalTime = 3600.0f;
     public static double remainingTime;
 
     [SerializeField] private string savedDateTime;
@@ -122,6 +122,13 @@ public class Timer : MonoBehaviour
 
     public float TimePassedSinceLastClosed()
     {
-        return (float)Elapsed.TotalSeconds;
+        return Mathf.Clamp(GetRemainingTimeData() - (float)remainingTime, 0 , totalTime);
+    }
+
+    public bool DidRaceEndWhenDeviceOff() => Math.Abs(TimePassedSinceLastClosed() + (totalTime - GetRemainingTimeData()) - totalTime) < 0;
+
+    private void OnApplicationQuit()
+    {
+        SaveData();
     }
 }

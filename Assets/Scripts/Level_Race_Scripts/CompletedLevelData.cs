@@ -10,14 +10,14 @@ public class CompletedLevelData : MonoBehaviour
 {
     private const string PLAYER_INITIAL_LEVEL = "InitialPlayerLevel";
     private const string KEEP_ON_UPDATING = "KeepOnUpdating";
-    
+
     [SerializeField] private List<PlayersData> playersData;
 
     private Player _player;
     private List<Bots> _botsList;
-    
+
     [SerializeField] private Sprite playerSprite;
-    
+
     [SerializeField] private Timer timer;
 
     private int maxLevels = 30;
@@ -26,11 +26,10 @@ public class CompletedLevelData : MonoBehaviour
     {
         _player = new Player();
         _botsList = new List<Bots>();
-        
+
         InitializeBotList();
         LoadProgress();
         UpdateLeaderBoardEntries();
-       
     }
 
     private void InitializeBotList()
@@ -46,7 +45,8 @@ public class CompletedLevelData : MonoBehaviour
     {
         for (int i = 0; i < _botsList.Count; i++)
         {
-            var levelProgressTemp = PlayerPrefs.GetInt("Bot" + i + "Progress", 0);
+            var levelProgressTemp = PlayerPrefs.GetInt("Bot" + i + "Progress", 0) +
+                                    Convert.ToInt32(timer.TimePassedSinceLastClosed() / Random.Range(7f, 8f));
 
             _botsList[i].LevelProgress = Mathf.Clamp(levelProgressTemp, 0, maxLevels);
             _botsList[i].BotName = PlayerPrefs.GetString("Bot" + i + "Name", _botsList[i].BotName);
@@ -57,7 +57,10 @@ public class CompletedLevelData : MonoBehaviour
     {
         //Just for testing changed the level progress Value to 5
         List<LeaderboardEntry> leaderboardEntries = new List<LeaderboardEntry>
-            { new(_player.PlayerName, 5 /*UIManagerScript.Instance.GetSpecialLevelNumber() - PlayerDataUpdater.GetInitialPlayerLevel()*/) };
+        {
+            new(_player.PlayerName,
+                5 /*UIManagerScript.Instance.GetSpecialLevelNumber() - PlayerDataUpdater.GetInitialPlayerLevel()*/)
+        };
 
         foreach (var bot in _botsList)
         {
@@ -74,12 +77,12 @@ public class CompletedLevelData : MonoBehaviour
             {
                 playersData[i].playerProgressSlider.handleRect.gameObject.GetComponent<Image>().sprite = playerSprite;
             }
-            
+
             playersData[i].levelsCompletedHolder.text = $"{leaderboardEntries[i].LevelProgress.ToString()}/30";
             playersData[i].playerProgressSlider.value = leaderboardEntries[i].LevelProgress / 30f;
         }
     }
-    
+
     public void DeleteProgress()
     {
         PlayerPrefs.DeleteKey(PLAYER_INITIAL_LEVEL);

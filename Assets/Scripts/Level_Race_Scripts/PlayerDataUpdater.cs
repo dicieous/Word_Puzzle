@@ -7,9 +7,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+
 public class PlayerDataUpdater : MonoBehaviour
 {
     public static PlayerDataUpdater Instance;
+
+    //Max and min amount of time after which to increase level progression of bot
+    public float botProgressionMaxValue = 110f;
+    public float botProgressionMinValue = 50f;
+
 
     public event EventHandler OnPlayerWin;
     public event EventHandler OnPlayerLost;
@@ -24,7 +30,7 @@ public class PlayerDataUpdater : MonoBehaviour
     [Space(10)] [SerializeField] private List<string> randomPlayerNames;
 
     private bool keepOnUpdating;
-    private int NoOfBoards = 5;
+    private int noOfBoards = 5;
 
     private Player _player;
     private List<Bots> _botsList;
@@ -33,7 +39,7 @@ public class PlayerDataUpdater : MonoBehaviour
     public static int GetInitialPlayerLevel() => PlayerPrefs.GetInt(PLAYER_INITIAL_LEVEL, -2);
 
     //Test variable Delete when Done with testing
-    public static int PlayerLevel = 5;
+    public static int PlayerLevel = 5 /*UIManagerScript.Instance.GetSpecialLevelNumber() - playerSavedLevel*/;
 
     //Set & get keep on Updating playerpref
     private bool GetKeepOnUpdatingPref()
@@ -65,6 +71,12 @@ public class PlayerDataUpdater : MonoBehaviour
         _botsList = new List<Bots>();
 
         InitializeBotList();
+        if (playerSavedLevel != -2)
+        {
+            LoadProgress();
+            UpdateLeaderBoardEntries();
+        }
+
         timer.OnTimerStarted += StopWatchTimerOnTimerStarted;
     }
 
@@ -100,19 +112,29 @@ public class PlayerDataUpdater : MonoBehaviour
 
         keepOnUpdating = true;
         SetKeepOnUpdatingPref(keepOnUpdating);
-        Debug.Log(keepOnUpdating + " Keep on updating value");
+        //Debug.Log(keepOnUpdating + " Keep on updating value");
     }
 
     private void StopWatchTimerOnTimerEnded(object sender, EventArgs e)
     {
         SaveProgress();
-        CheckForWinAndLooseCase(LeaderBoardEntryData);
-        
+        //CheckForWinAndLooseCase(LeaderBoardEntryData);
+        if (DidPlayerLooseTesting(LeaderBoardEntryData) || timer.DidRaceEndWhenDeviceOff())
+        {
+            Debug.Log("Loose");
+
+            SaveProgress();
+            keepOnUpdating = false;
+            SetKeepOnUpdatingPref(keepOnUpdating);
+
+            OnPlayerLost?.Invoke(this, EventArgs.Empty);
+        }
+
         _player = null;
         _botsList = null;
+
         keepOnUpdating = false;
         SetKeepOnUpdatingPref(keepOnUpdating);
-
     }
 
     private void Update()
@@ -133,7 +155,7 @@ public class PlayerDataUpdater : MonoBehaviour
 
     private void InitializeBotList()
     {
-        for (var i = 0; i < NoOfBoards - 1; i++)
+        for (var i = 0; i < noOfBoards - 1; i++)
         {
             if (randomPlayerNames == null)
             {
@@ -149,10 +171,9 @@ public class PlayerDataUpdater : MonoBehaviour
 
     private void UpdateLeaderBoardEntries()
     {
-        //Just for testing changed the level progress Value to 5
         List<LeaderboardEntry> leaderboardEntries = new List<LeaderboardEntry>
         {
-            new(_player.PlayerName, PlayerLevel /*UIManagerScript.Instance.GetSpecialLevelNumber() - playerSavedLevel*/)
+            new(_player.PlayerName, PlayerLevel)
         };
 
         foreach (var bot in _botsList)
@@ -162,8 +183,8 @@ public class PlayerDataUpdater : MonoBehaviour
 
         leaderboardEntries.Sort((a, b) => b.LevelProgress.CompareTo(a.LevelProgress));
 
+
         LeaderBoardEntryData = leaderboardEntries;
-        //Update the UI
 
         CheckForWinAndLooseCase(leaderboardEntries);
     }
@@ -179,7 +200,7 @@ public class PlayerDataUpdater : MonoBehaviour
                 keepOnUpdating = false;
                 SetKeepOnUpdatingPref(keepOnUpdating);
 
-                Debug.Log("WinLooseCheckCalled");
+                //Debug.Log("WinLooseCheckCalled");
                 switch (i)
                 {
                     case 0:
@@ -224,7 +245,24 @@ public class PlayerDataUpdater : MonoBehaviour
             {
                 continue;
             }
-            
+
+            return false;
+        }
+
+        return true;
+    }
+
+    //TEMPORARY FUNCTION MADE FOR TESTING REMOVE THIS AND CALL DidPlayerLoose WHERE THIS IS CALLED IN FINAL BUILD
+    private bool DidPlayerLooseTesting(List<LeaderboardEntry> leaderboardEntries)
+    {
+        for (int i = 0; i < leaderboardEntries.Count - 2; i++)
+        {
+            if (leaderboardEntries[i].LevelProgress <= 30 && leaderboardEntries[i].Name != _player.PlayerName)
+            {
+                continue;
+            }
+
+            Debug.Log("This Condition is called");
             return false;
         }
 
@@ -248,8 +286,8 @@ public class PlayerDataUpdater : MonoBehaviour
         for (int i = 0; i < _botsList.Count; i++)
         {
             var levelProgressTemp = PlayerPrefs.GetInt("Bot" + i + "Progress", 0) +
-                                    Convert.ToInt32(timer.TimePassedSinceLastClosed() / Random.Range(2f, 8f));
-            Debug.Log(Convert.ToInt32(timer.TimePassedSinceLastClosed() / Random.Range(2f, 8f)) + " Added Value");
+                                    Convert.ToInt32(timer.TimePassedSinceLastClosed() / Random.Range(botProgressionMinValue, botProgressionMaxValue));
+            Debug.Log(Convert.ToInt32(timer.TimePassedSinceLastClosed() ) + " Added Value");
 
             _botsList[i].LevelProgress = Mathf.Clamp(levelProgressTemp, 0, maxLevels);
             _botsList[i].BotName = PlayerPrefs.GetString("Bot" + i + "Name", "");
@@ -308,7 +346,7 @@ public class Bots
 public class LeaderboardEntry
 {
     public string Name { get; }
-    public int LevelProgress { get; }
+    public int LevelProgress { get; set; }
 
     public LeaderboardEntry(string name, int levelProgress)
     {

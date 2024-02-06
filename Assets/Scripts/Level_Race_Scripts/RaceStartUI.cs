@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,11 +9,14 @@ public class RaceStartUI : MonoBehaviour
     [SerializeField] private Timer timer;
     
     [SerializeField] private Button startRaceButton;
+    [SerializeField] private Button closeButton;
 
     [SerializeField] private RaceStatusUI raceStatusUI;
 
     private void Awake()
     {
+        closeButton.onClick.AddListener(Hide);
+        
         startRaceButton.onClick.AddListener(() =>
         {
             timer.StartTheTimer();

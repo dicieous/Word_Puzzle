@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class RaceWinUI : MonoBehaviour
@@ -10,16 +11,17 @@ public class RaceWinUI : MonoBehaviour
 
     [SerializeField] private CompletedLevelData completedLevelData;
     
-    [SerializeField] private Button raceCompletedContinueButton;
+    [FormerlySerializedAs("raceCompletedContinueButton")] [SerializeField] private Button raceWinContinueButton;
    
     private void Awake()
     {
        
         
-        raceCompletedContinueButton.onClick.AddListener( () =>
+        raceWinContinueButton.onClick.AddListener( () =>
         {
             OnWinUIContinueButtonClicked?.Invoke(this, EventArgs.Empty);
             completedLevelData.DeleteProgress();
+            PlayerDataUpdater.PlayerLevel = 5;
             Hide();
         });
         
