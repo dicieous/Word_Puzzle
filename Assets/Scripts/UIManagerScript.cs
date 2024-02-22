@@ -129,6 +129,7 @@ public class UIManagerScript : MonoBehaviour
 
 	private void Start()
 	{
+		//IAPManager.instance.enabled = true;
 		StartButtonActivateFun();
 		// autoWordButton.interactable = true; 
 		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
@@ -656,7 +657,7 @@ public class UIManagerScript : MonoBehaviour
 		});*/
 		DOVirtual.DelayedCall(2f, () =>
 		{
-			CoinManager.instance.CoinsIncrease(x);
+			cm.CoinsIncrease(x);
 			//nextButton.interactable = true;
 			if (giftLevel)
 			{
@@ -757,14 +758,7 @@ public class UIManagerScript : MonoBehaviour
 			        
 			       // var magnetText = autoWordButton.image.rectTransform.GetChild(0).gameObject;
 			       // var coinsTxt = autoWordButton.image.rectTransform.GetChild(1).gameObject;
-			        var rvIcon = autoWordButton.image.rectTransform.GetChild(2).gameObject;
-			        var loadingIcon = autoWordButton.image.rectTransform.GetChild(3).gameObject;
-			
-			        //magnetText.SetActive(CoinManager.instance.GetCoinsCount()>=100);
-			        //coinsTxt.SetActive(CoinManager.instance.GetCoinsCount()>=100);
-			
-			        rvIcon.SetActive(SaveData.GetCoinsCount()<100 && GameEssentials.IsRvAvailable());
-			        loadingIcon.SetActive(SaveData.GetCoinsCount()<100 && !GameEssentials.IsRvAvailable());
+			       RvCheckFun();
 		        }
 	        }
         }
@@ -787,32 +781,33 @@ public class UIManagerScript : MonoBehaviour
         }
         //var magnetText = autoWordButton.image.rectTransform.GetChild(0).gameObject;
        // var coinsTxt = autoWordButton.image.rectTransform.GetChild(1).gameObject;
-        var rvIcon = autoWordButton.image.rectTransform.GetChild(2).gameObject;
-        var loadingIcon = autoWordButton.image.rectTransform.GetChild(3).gameObject;
-			
-        //magnetText.SetActive(SaveData.GetCoinsCount()>=100);
-        //coinsTxt.SetActive(SaveData.GetCoinsCount()>=100);
-			
-        rvIcon.SetActive(SaveData.GetCoinsCount()<100 && GameEssentials.IsRvAvailable());
-        loadingIcon.SetActive(SaveData.GetCoinsCount()<100 && !GameEssentials.IsRvAvailable());
+       RvCheckFun();
     }
     public void AutoWordCompleteButton()
     {
-	    
-	    if (SaveData.GetCoinsCount() >= 100)
+	    if (SaveData.GetMagnetCount() > 0)
 	    {
-		    StartCoroutine(CoinsReduceAnim(instanceImageRef, instancePos, magnetPosDeduct));
 		    AutoWordComplete_Callback();
-		    CoinManager.instance.AutoWordReduce();
+		    SaveData.SetMagnetCount(SaveData.GetMagnetCount() - 1);
 	    }
 	    else
 	    {
-		    if (!GameEssentials.IsRvAvailable())  return;
-		    GameEssentials.RvType = RewardType.Magnet;
-		    GameEssentials.ShowRewardedAds("Magnet");
-		    if(LionStudiosManager.instance)
-			    LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","Magnet",SaveData.GetCoinsCount());
+		    if (SaveData.GetCoinsCount() >= 100)
+		    {
+			    StartCoroutine(CoinsReduceAnim(instanceImageRef, instancePos, magnetPosDeduct));
+			    AutoWordComplete_Callback();
+			    cm.AutoWordReduce();
+		    }
+		    else
+		    {
+			    if (!GameEssentials.IsRvAvailable())  return;
+			    GameEssentials.RvType = RewardType.Magnet;
+			    GameEssentials.ShowRewardedAds("Magnet");
+			    if(LionStudiosManager.instance)
+				    LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","Magnet",SaveData.GetCoinsCount());
+		    }
 	    }
+	    
 	    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 	    if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
     }
@@ -870,22 +865,29 @@ public class UIManagerScript : MonoBehaviour
     }
     public void OnHintButtonClick()
 	{
-		
-		if (SaveData.GetCoinsCount() >= 50)
+		if (SaveData.GetHintCount() > 0)
 		{
-			StartCoroutine(CoinsReduceAnim(instanceImageRef, instancePos, hintPosDeduct));
 			Hint_CallBack();
-			CoinManager.instance.HintReduce(50);
-			
+			SaveData.SetHintCount(SaveData.GetHintCount() - 1);
 		}
 		else
 		{
-			if (!GameEssentials.IsRvAvailable()) return;
-			GameEssentials.RvType = RewardType.Hint;
-			GameEssentials.ShowRewardedAds("Hint");
-			if(LionStudiosManager.instance)
-				LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","Hint",SaveData.GetCoinsCount());
+			if (SaveData.GetCoinsCount() >= 50)
+			{
+				StartCoroutine(CoinsReduceAnim(instanceImageRef, instancePos, hintPosDeduct));
+				Hint_CallBack();
+				cm.HintReduce(50);
+			
+			}
+			else
+			{
+				if (!GameEssentials.IsRvAvailable()) return;
+				GameEssentials.RvType = RewardType.Hint;
+				GameEssentials.ShowRewardedAds("Hint");
+				if(LionStudiosManager.instance)
+					LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","Hint",SaveData.GetCoinsCount());
 
+			}
 		}
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
@@ -930,7 +932,7 @@ public class UIManagerScript : MonoBehaviour
 						_hintActive = true;
 						//var hintsTxt = hintButton.image.rectTransform.GetChild(0).gameObject;
 						// coinsTxt = hintButton.image.rectTransform.GetChild(1).gameObject;
-						var rvIcon = hintButton.image.rectTransform.GetChild(2).gameObject;
+						/*var rvIcon = hintButton.image.rectTransform.GetChild(2).gameObject;
 						var loadingIcon = hintButton.image.rectTransform.GetChild(3).gameObject;
 
 						//hintsTxt.SetActive(CoinManager.instance.GetCoinsCount() >= 50);
@@ -938,7 +940,8 @@ public class UIManagerScript : MonoBehaviour
 
 						rvIcon.SetActive(SaveData.GetCoinsCount() < 50 && GameEssentials.IsRvAvailable());
 						loadingIcon.SetActive(SaveData.GetCoinsCount() < 50 &&
-						                      !GameEssentials.IsRvAvailable());
+						                      !GameEssentials.IsRvAvailable());*/
+						RvCheckFun();
 					}
 
 				}
@@ -952,20 +955,44 @@ public class UIManagerScript : MonoBehaviour
 		{
 			_hintActive = false;
 			hintButton.interactable = !hintButton.interactable;
+			RvCheckFun();
 			//var hintsTxt = hintButton.image.rectTransform.GetChild(0).gameObject;
 			//var coinsTxt = hintButton.image.rectTransform.GetChild(1).gameObject;
-			var rvIcon = hintButton.image.rectTransform.GetChild(2).gameObject;
+			/*var rvIcon = hintButton.image.rectTransform.GetChild(2).gameObject;
 			var loadingIcon = hintButton.image.rectTransform.GetChild(3).gameObject;
 			
 			//hintsTxt.SetActive(SaveData.GetCoinsCount()>=50);
 			//coinsTxt.SetActive(SaveData.GetCoinsCount()>=50);
 			
 			rvIcon.SetActive(SaveData.GetCoinsCount()<50 && GameEssentials.IsRvAvailable());
-			loadingIcon.SetActive(SaveData.GetCoinsCount()<50 && !GameEssentials.IsRvAvailable());
+			loadingIcon.SetActive(SaveData.GetCoinsCount()<50 && !GameEssentials.IsRvAvailable());*/
 		}
+		
 		
 	}
 
+	public void RvCheckFun()
+	{
+		var rvIcon = hintButton.image.rectTransform.GetChild(2).gameObject;
+		var loadingIcon = hintButton.image.rectTransform.GetChild(3).gameObject;
+		rvIcon.SetActive(SaveData.GetHintCount() <= 0 && SaveData.GetCoinsCount() < 50 && GameEssentials.IsRvAvailable());
+		loadingIcon.SetActive(SaveData.GetHintCount() <= 0 && SaveData.GetCoinsCount() < 50 && !GameEssentials.IsRvAvailable());
+		if (SaveData.GetHintCount() > 0)
+		{
+			rvIcon.SetActive(false);
+			loadingIcon.SetActive(false);
+		}
+		var rvIcon1 = autoWordButton.image.rectTransform.GetChild(2).gameObject;
+		var loadingIcon1 = autoWordButton.image.rectTransform.GetChild(3).gameObject;
+		rvIcon1.SetActive(SaveData.GetMagnetCount() <= 0 && SaveData.GetCoinsCount() < 100 && GameEssentials.IsRvAvailable());
+		loadingIcon1.SetActive(SaveData.GetMagnetCount() <= 0 && SaveData.GetCoinsCount() < 100 && !GameEssentials.IsRvAvailable());
+		if (SaveData.GetMagnetCount() > 0)
+		{
+			rvIcon1.SetActive(false);
+			loadingIcon1.SetActive(false);
+		}
+		
+	}
 	public void OnEmojiRevelButton()
 	{
 		/*var countNum=GameManager.Instance.stickingCubes.Count;
@@ -1074,8 +1101,8 @@ public class UIManagerScript : MonoBehaviour
 	{
 		var num = SaveData.GetLoaderPercent() + ((1f / 9f));
 		//CoinManager.instance.SetLoaderPercentage(CoinManager.instance.GetLoaderPercent() + ((1f / 9f)));
-		CoinManager.instance.progressionBarImage.DOFillAmount(num, 1f);
-		CoinManager.instance.progressionBarText.text = ((int)(num * 100) + "%");
+		cm.progressionBarImage.DOFillAmount(num, 1f);
+		cm.progressionBarText.text = ((int)(num * 100) + "%");
 	}
 	
 	public void NextSceneLoader()
@@ -1156,10 +1183,26 @@ public class UIManagerScript : MonoBehaviour
         
     }
 
+    public void GetMoreMovesCoins()
+    {
+	    if (SaveData.GetCoinsCount() >= 100)
+	    {
+		    var x = SaveData.GetCoinsCount() - 100;
+		    if (x < 0) return;
+		    SaveData.SetCoinCount(SaveData.GetCoinsCount() - 100);
+		    cm.coinCountText.text = SaveData.GetCoinsCount().ToString();
+		    GetMoreMoves_CallBack();
+	    }
+	    else
+	    {
+		    
+		    IAPManager.instance.OpenIAP();
+	    }
+    }
     public void GetMoreMovesFun()
     {
 	   if(!GameEssentials.instance) return;
-
+	   
 	   GameEssentials.RvType = RewardType.NoMoreMoves;
 	   GameEssentials.ShowRewardedAds("NoMoreMoves");
 	   if(LionStudiosManager.instance)
@@ -1182,6 +1225,7 @@ public class UIManagerScript : MonoBehaviour
 	    if (!LionStudiosManager.instance) return;
 	    LionStudiosManager.NoMoreMoves(SaveData.GetSpecialLevelNumber().ToString(),"Coins","100",_noMoreMovesCount.ToString());
 	    _noMoreMovesCount++;
+	    RvCheckFun();
     }
 
     public void GiftCoinOpenFun(bool reclaim)
@@ -1252,7 +1296,7 @@ public class UIManagerScript : MonoBehaviour
 	    },false);
 	    DOVirtual.DelayedCall(1.25f, () =>
 	    {
-		    CoinManager.instance.CoinsIncrease(_coinIncreaseNUm);
+		    cm.CoinsIncrease(_coinIncreaseNUm);
 		    claimButton.GetComponent<RectTransform>().DOScale(Vector3.zero, 0.35f);
 		    giftObj.GetComponent<RectTransform>().DOScale(Vector3.zero, 0.35f).OnComplete(() =>
 		    {
@@ -1296,7 +1340,7 @@ public class UIManagerScript : MonoBehaviour
 	    },false);
 	    DOVirtual.DelayedCall(1.7f, () =>
 	    {
-		    CoinManager.instance.CoinsIncrease(_coinIncreaseNUm);
+		    cm.CoinsIncrease(_coinIncreaseNUm);
 		    print("coinsincreasenum          "+_coinIncreaseNUm);
 		    coinsObj.GetComponent<RectTransform>().DOScale(Vector3.zero, 0.05f);
 		    DOVirtual.DelayedCall(1f, () =>
@@ -1451,7 +1495,7 @@ public class UIManagerScript : MonoBehaviour
 	    },false);
 	    DOVirtual.DelayedCall(2f, () =>
 	    {
-		    CoinManager.instance.CoinsIncrease(_coinIncreaseNUm);
+		    cm.CoinsIncrease(_coinIncreaseNUm);
 		    print("coinsincreasenum          "+_coinIncreaseNUm);
 		    DOVirtual.DelayedCall(1f, () =>
 		    {
@@ -1530,7 +1574,7 @@ public class UIManagerScript : MonoBehaviour
 	    }
 	    else if(SaveData.GetSpecialLevelNumber() > 5)
 	    {
-		    var countList = new List<int>() {200,300,350,400};
+		    var countList = new List<int>() {25,30,35,40};
 		    countList.Sort((a, b) => 1 - 2 * Random.Range(0, countList.Count));
 		    var coinCount = countList[0];
 		    Metadata.SetTotalBricks(Metadata.GetTotalBricks() + coinCount);

@@ -336,4 +336,29 @@ public class LionStudiosManager : SingletonInstance<LionStudiosManager>
         };
         LionAnalytics.RewardVideoShowFail(adFailEventArgs);
     }
+    
+    public static void IAPEvent(UnityEngine.Purchasing.Product product, int noAds, int moves, int coins)
+    {
+        var spentCurrency = new RealCurrency(product.metadata.isoCurrencyCode, (float)product.metadata.localizedPrice);
+        var spent = new Product();
+        spent.AddRealCurrency(currency: spentCurrency);
+        var productsReceived = new Product
+        {
+            items = new List<Item>()
+            {
+                new("noads","rewards",noAds),
+                new("moves","rewards",moves),
+                new("coins","rewards",coins)
+            }
+        };
+        var storeTransaction = new Transaction(
+            name: product.metadata.localizedTitle,
+            type: "Purchase",
+            productsReceived: productsReceived,
+            productsSpent: spent,
+            transactionID: product.transactionID,
+            productID: product.definition.id);
+
+        LionAnalytics.InAppPurchase(storeTransaction);
+    }
 }

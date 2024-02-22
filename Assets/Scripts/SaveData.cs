@@ -15,6 +15,13 @@ public class SaveData
     public static int GetHintCount() => PlayerPrefs.GetInt("Hint Count", 0);
     public static void SetHintCount(int countHint) => PlayerPrefs.SetInt("Hint Count", countHint);
     
+    //-----Magnet Count details
+    public static int GetMagnetCount() => PlayerPrefs.GetInt("MagnetCount", 0);
+    public static void SetMagnetCount(int num) => PlayerPrefs.SetInt("MagnetCount", num);
+    //---Moves Count
+    public static int GetMovesCount() => PlayerPrefs.GetInt("MovesCount", 0);
+    public static void SetMovesCount(int num) => PlayerPrefs.SetInt("MovesCount", num);
+    
     //---Shuffle count
     public static int GetShuffleCount() => PlayerPrefs.GetInt("ShuffleCount", 0);
     public static void SetShuffleCount(int countShuffle) => PlayerPrefs.SetInt("ShuffleCount", countShuffle);
@@ -40,6 +47,11 @@ public class SaveData
     //--Image details
     public static int GetLoaderImageCount() => PlayerPrefs.GetInt("LoaderImageNumber", 0);
     public static void SetLoaderImageCount(int num) => PlayerPrefs.SetInt("LoaderImageNumber", num);
+    
+    
+    //-----IAP Saving
+    public static int GetIAPBoughtCount() => PlayerPrefs.GetInt("IAPBoughtCount", 0);
+    public static void SetIAPBoughtCount(int num) => PlayerPrefs.SetInt("IAPBoughtCount", num);
     
     
     public static void SavedData()

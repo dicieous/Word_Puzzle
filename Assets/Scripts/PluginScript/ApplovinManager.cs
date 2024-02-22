@@ -130,14 +130,14 @@ public class ApplovinManager : MonoBehaviour
         _bannerAdsAvailable = true;
     }
 
-    public void ShowBannerAds()
+    public static void ShowBannerAds()
     {
         if(!_isInitialized) return;
 
         MaxSdk.ShowBanner(bannerAdUnitId);
     }
 
-    public void HideBannerAds()
+    public static void HideBannerAds()
     {
         if(!_isInitialized) return;
         MaxSdk.HideBanner(bannerAdUnitId);

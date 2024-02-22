@@ -67,4 +67,17 @@ public class ByteBrewManager : MonoBehaviour
     {
         return values.Aggregate("", (current, keyPair) => current + $"{keyPair.Key}={keyPair.Value};");
     }
+    
+    public static void IAPEvents(UnityEngine.Purchasing.Product product, string levelNo)
+    {
+        var data = new Dictionary<string, string>()
+        {
+            {"level_number", levelNo},
+            {"product_id", product.definition.id},
+            {"product_name", product.metadata.localizedTitle},
+            {"product_price", product.metadata.localizedPriceString},
+            {"price_currency", product.metadata.isoCurrencyCode}
+        };
+        ByteBrew.NewCustomEvent("iap", ParseEventValues(data));
+    }
 }

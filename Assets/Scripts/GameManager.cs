@@ -241,11 +241,11 @@ public class GameManager : MonoBehaviour
         {
             if (movesCount <= 0 && !levelCompleted && !levelFail)
             {
-               print("Failed1");
+               
                 if (!scriptOff)
                     scriptOff = true;
                 ButtonsTurnOffFun();
-                print("Failed2");
+               
                 DOVirtual.DelayedCall(1f, () =>
                 {
                     if (!levelCompleted)

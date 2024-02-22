@@ -12,6 +12,8 @@ public class MetaManager : MonoBehaviour
 {
    public static MetaManager instance;
    
+   public GameObject backGroundObj;
+   public List<Material> backGroundMats;
    private int bricksCount;
    private int bricksRequired;
    [Header("BricksCount TextDetails")] 
@@ -225,9 +227,13 @@ public class MetaManager : MonoBehaviour
       if (!Metadata.instance.propertyClassList[Metadata.GetParentNumber()].propertiesList[Metadata.GetChildNumber()]
              .activeInHierarchy)
       {
+         Metadata.instance.propertyClassList[Metadata.GetParentNumber()].propertiesList[Metadata.GetChildNumber()]
+            .transform.localScale = Vector3.zero;
          Metadata.instance.propertyClassList[Metadata.GetParentNumber()].propertiesList[Metadata.GetChildNumber()].SetActive(true);
+         /*Metadata.instance.propertyClassList[Metadata.GetParentNumber()].propertiesList[Metadata.GetChildNumber()].transform
+            .DOPunchPosition(new Vector3(0f, -2.5f, 0f), 0.4f, 10, 1f).SetEase(Ease.OutBounce);*/
          Metadata.instance.propertyClassList[Metadata.GetParentNumber()].propertiesList[Metadata.GetChildNumber()].transform
-            .DOPunchPosition(new Vector3(0f, -2.5f, 0f), 0.4f, 10, 1f).SetEase(Ease.OutBounce);
+            .DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBounce);
       }
             
       //print("Meta data parent num :::::::::::::::::::::::"+Metadata.GetParentNumber());
@@ -276,8 +282,12 @@ public class MetaManager : MonoBehaviour
          .propertiesList[Metadata.GetChildNumber()].transform.GetChild(0).gameObject;
    }
 
+   // ReSharper disable Unity.PerformanceAnalysis
    public void LeftRightButtonsFun()
    {
+      var objPos = Metadata.instance.mainParentObj.transform.localPosition.x;
+      BackGroundColorFun(objPos);
+      
       if (Metadata.instance.posNumber == 0)
       {
          leftButton.transform.gameObject.SetActive(false);
@@ -304,6 +314,7 @@ public class MetaManager : MonoBehaviour
       Metadata.instance.posNumber -= 40;
       objPos = new Vector3((Metadata.instance.posNumber), 0f, 0f);
       Metadata.instance.mainParentObj.transform.DOLocalMove(objPos, 0.25f);
+      BackGroundColorFun(Metadata.instance.posNumber);
       if (Metadata.GetTotalBricks() <= 0)
       {
          if (num <= (4 * -40)) rightButton.transform.gameObject.SetActive(false);
@@ -323,6 +334,7 @@ public class MetaManager : MonoBehaviour
       Metadata.instance.posNumber += 40;
       objPos = new Vector3((Metadata.instance.posNumber), 0f, 0f);
       Metadata.instance.mainParentObj.transform.DOLocalMove(objPos, 0.25f);
+      BackGroundColorFun(Metadata.instance.posNumber);
       if (Metadata.GetTotalBricks() <= 0)
       {
          if (incNUm >= 0)  leftButton.transform.gameObject.SetActive(false);
@@ -332,5 +344,12 @@ public class MetaManager : MonoBehaviour
       if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("MetaIn");
    }
 
+   public void BackGroundColorFun(float x)
+   {
+      var num = Mathf.RoundToInt(-(x) / 40f);
+      //print("NUMDECIDE"+num);
+      if (num - 1 < 0 && num - 1 > backGroundMats.Count - 1) return;
+      backGroundObj.GetComponent<MeshRenderer>().material = backGroundMats[num];
+   }
    public List<GameObject> obj;
 }

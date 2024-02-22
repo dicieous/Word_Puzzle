@@ -148,7 +148,7 @@ public class MonitizationScript : MonoBehaviour
             obj.transform.parent = hintBubble.transform.parent;
             obj.transform.GetComponent<RectTransform>().anchoredPosition =
                hintBubble.GetComponent<RectTransform>().anchoredPosition;
-            BubblePopFun(obj, magnetMovePos, 200);
+            BubblePopFun(obj, magnetMovePos, 200,"Magnet");
             // BubblePopFun(powerObj.transform.GetChild(1))
             break;
          case "Hint":
@@ -157,7 +157,7 @@ public class MonitizationScript : MonoBehaviour
             obj.transform.parent = hintBubble.transform.parent;
             obj.transform.GetComponent<RectTransform>().anchoredPosition =
                hintBubble.GetComponent<RectTransform>().anchoredPosition;
-            BubblePopFun(obj, hintMovePos, 100);
+            BubblePopFun(obj, hintMovePos, 100,"Hint");
             break;
          default:
             break;
@@ -165,10 +165,21 @@ public class MonitizationScript : MonoBehaviour
       
    }
    
-    public void BubblePopFun(GameObject popObj2,GameObject popPosition2,int coinsCount)
+    public void BubblePopFun(GameObject popObj2,GameObject popPosition2,int coinsCount,String coinsOrMagnet)
     {
        // if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("RewardOpen");
-       CoinManager.instance.CoinsIncrease(coinsCount);
+       //CoinManager.instance.CoinsIncrease(coinsCount);
+       switch (coinsOrMagnet)
+       {
+          case "Magnet":
+             SaveData.SetMagnetCount(SaveData.GetMagnetCount() + 2);
+             break;
+          case "Hint":
+             SaveData.SetHintCount(SaveData.GetHintCount() + 2);
+             break;
+          default:
+             break;
+       }
        popObj2.GetComponent<RectTransform>().DOScale(Vector3.one, 0.45f).SetEase(Ease.OutBounce);
        popObj2.GetComponent<RectTransform>()
           .DOJumpAnchorPos(popPosition2.GetComponent<RectTransform>().anchoredPosition, 400f, 1, 0.5f)
@@ -214,7 +225,7 @@ public class MonitizationScript : MonoBehaviour
             break;
          case  1:
             instanceImageRef.GetComponent<Image>().sprite = magnetImage;
-            MagnetSpawn(instanceImageRef,giftMagnetInstancePosition,giftMagnetMovePosition,100);
+            MagnetSpawn(instanceImageRef,giftMagnetInstancePosition,giftMagnetMovePosition,"Magnet");
             if (LionStudiosManager.instance)
             {
                LionStudiosManager.GiftBox(SaveData.GetSpecialLevelNumber().ToString(),"Coins","100",_giftBoxCount.ToString());
@@ -223,7 +234,7 @@ public class MonitizationScript : MonoBehaviour
             break;
          case 2:
             instanceImageRef.GetComponent<Image>().sprite = hintImage;
-            MagnetSpawn(instanceImageRef,giftHintInstancePosition,giftHintMovePosition,50);
+            MagnetSpawn(instanceImageRef,giftHintInstancePosition,giftHintMovePosition,"Hint");
             if (LionStudiosManager.instance)
             {
                LionStudiosManager.GiftBox(SaveData.GetSpecialLevelNumber().ToString(),"Coins","100",_giftBoxCount.ToString());
@@ -241,7 +252,7 @@ public class MonitizationScript : MonoBehaviour
       
    }
 
-   public void MagnetSpawn(GameObject instanceObj,GameObject instancePos,GameObject movePosition,int coinIncreaseNumber)
+   public void MagnetSpawn(GameObject instanceObj,GameObject instancePos,GameObject movePosition,string hintOrMagnet)
    {
       GameObject obj=Instantiate(instanceObj, instancePos.transform.position,instanceObj.transform.rotation);
       //magnet.transform.DOScale(Vector3.zero, 0.15f).From();
@@ -256,11 +267,20 @@ public class MonitizationScript : MonoBehaviour
          .SetEase(Ease.Linear).OnComplete(() =>
          {
             //magnet.GetComponent<RectTransform>().DOPunchAnchorPos(Vector2.one * 2.5f, 0.15f, 2);
-            CoinManager.instance.CoinsIncrease(coinIncreaseNumber);
+            if (hintOrMagnet == "Hint")
+            {
+               SaveData.SetHintCount(SaveData.GetHintCount() + 1);
+            }
+            else if (hintOrMagnet == "Magnet")
+            {
+               SaveData.SetMagnetCount(SaveData.GetMagnetCount() + 1);
+            }
+            //CoinManager.instance.CoinsIncrease(coinIncreaseNumber);
             DOVirtual.DelayedCall(0.2f, () =>
             {
                obj.gameObject.SetActive(false);
                Destroy(obj);
+               UIManagerScript.Instance.RvCheckFun();
             },false);
          });
    }
@@ -284,6 +304,7 @@ public class MonitizationScript : MonoBehaviour
          obj.GetComponent<RectTransform>().DOAnchorPos(movePosition.GetComponent<RectTransform>().anchoredPosition, 0.75f).SetEase(Ease.OutBack).OnComplete(
             () =>
             {
+               UIManagerScript.Instance.RvCheckFun();
                obj.gameObject.SetActive(false);
                Destroy(obj);
             });

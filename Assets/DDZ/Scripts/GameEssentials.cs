@@ -202,10 +202,10 @@ namespace DDZ
         public static void ShowBannerAds()
         {
             if(!ConnectedToInternet()) return;
-            ApplovinManager.instance.ShowBannerAds();
+            ApplovinManager.ShowBannerAds();
         }
         
-        public static void HideBannerAds() =>  ApplovinManager.instance.HideBannerAds();
+        public static void HideBannerAds() =>  ApplovinManager.HideBannerAds();
 
         private static bool ConnectedToInternet() => Application.internetReachability != NetworkReachability.NotReachable;
 

@@ -1,26 +1,31 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
 
 [Serializable]
 public class SaveState
 {
-    // public int levelProgress = 0;
-    //
-    // public List<SavePlayersProgressAndData> SavePlayersProgressAndDataList = new List<SavePlayersProgressAndData>();
-    //  public class SavePlayersProgressAndData
-    // {
-    //     public string BotName { get; set; }
-    //     public int LevelProgress { get; set; }
-    //     
-    //     public SavePlayersProgressAndData(string name, int levelProgress)
-    //     {
-    //         BotName = name;
-    //         LevelProgress = levelProgress;
-    //     }
-    //
-    // }
+    //public ChallengeMode challengeMode;
+    public int challengeLevel;
+    public bool isChallengeCompleted;
+    public bool isBackFromChallenge;
+    public int remainingSpin ;
+
+    public int totalHelicopters, totalHints, totalFreeze;
+    // IAP
+    public string welcomePackTime = "";
+    public bool noAds;
+    //public bool unlimitedPowerUps;
+    public bool challengeUnlocked;
+    public int iapBoughtCount;
+    
+    //RaceMode
+    public bool firstTimeRaceMode;
+    public bool isRaceStarted;
+    public int globalMoves;
+    public int levelNum;
+    public bool isRaceOpened;
+    
 }
 
 
