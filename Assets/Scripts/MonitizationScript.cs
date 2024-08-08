@@ -116,8 +116,8 @@ public class MonitizationScript : MonoBehaviour
    private void OnBubbleBtnPress()
    {
       GameEssentials.instance.bubbleTime =SaveData.GetSpecialLevelNumber() < 31 ? 60 : 80;
-      GameEssentials.RvType = RewardType.BubbleRv;
-      GameEssentials.ShowRewardedAds("Bubble2X");
+      // GameEssentials.RvType = RewardType.BubbleRv;
+      GameEssentials.ShowRewardedAds("Bubble2X",RewardType.BubbleRv);
    }
    public void BubbleFunHit()
    {
@@ -200,10 +200,10 @@ public class MonitizationScript : MonoBehaviour
       if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
       if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
       if(!GameEssentials.instance) return;
-      GameEssentials.RvType = RewardType.GiftBox;
-      GameEssentials.ShowRewardedAds("GiftBox");
-      if(LionStudiosManager.instance)
-         LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","GiftBox",SaveData.GetCoinsCount());
+      // GameEssentials.RvType = RewardType.GiftBox;
+      GameEssentials.ShowRewardedAds("GiftBox",RewardType.GiftBox);
+      /*if(LionStudiosManager.instance)
+         LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","GiftBox",SaveData.GetCoinsCount());*/
    }
    
    // ReSharper disable Unity.PerformanceAnalysis
@@ -217,29 +217,29 @@ public class MonitizationScript : MonoBehaviour
          case 0 :
             instanceImageRef.GetComponent<Image>().sprite = coinImage;
             StartCoroutine(UpdateMoneyOnWin(instanceImageRef,giftCoinInstancePos,giftCoinMovePosition,50));
-            if (LionStudiosManager.instance)
+            /*if (LionStudiosManager.instance)
             {
                LionStudiosManager.GiftBox(SaveData.GetSpecialLevelNumber().ToString(),"Coins","100",_giftBoxCount.ToString());
                _giftBoxCount++;
-            }
+            }*/
             break;
          case  1:
             instanceImageRef.GetComponent<Image>().sprite = magnetImage;
             MagnetSpawn(instanceImageRef,giftMagnetInstancePosition,giftMagnetMovePosition,"Magnet");
-            if (LionStudiosManager.instance)
+            /*if (LionStudiosManager.instance)
             {
                LionStudiosManager.GiftBox(SaveData.GetSpecialLevelNumber().ToString(),"Coins","100",_giftBoxCount.ToString());
                _giftBoxCount++;
-            }
+            }*/
             break;
          case 2:
             instanceImageRef.GetComponent<Image>().sprite = hintImage;
             MagnetSpawn(instanceImageRef,giftHintInstancePosition,giftHintMovePosition,"Hint");
-            if (LionStudiosManager.instance)
+            /*if (LionStudiosManager.instance)
             {
                LionStudiosManager.GiftBox(SaveData.GetSpecialLevelNumber().ToString(),"Coins","100",_giftBoxCount.ToString());
                _giftBoxCount++;
-            }
+            }*/
             break;
          default:
             break;

@@ -66,8 +66,8 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
         if (totalSpinWheel <= 0)
         {
             //ad call and event
-            GameEssentials.RvType = RewardType.SpinWheel;
-            GameEssentials.ShowRewardedAds("SpinWheel");
+            // GameEssentials.RvType = RewardType.SpinWheel;
+            GameEssentials.ShowRewardedAds("SpinWheel",RewardType.SpinWheel);
             return;
         }
         StopTheSpin_Callback();

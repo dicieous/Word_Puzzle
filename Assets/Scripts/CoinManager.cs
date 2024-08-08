@@ -126,12 +126,6 @@ public class CoinManager : MonoBehaviour
     public void HintReduce(int x)
     {
         hintCounter++;
-        if (ByteBrewManager.instance)
-        {
-            ByteBrewManager.instance.ProgressEvent(SaveData.GetSpecialLevelNumber().ToString(),
-                hintCounter.ToString(), "NormalMode", "Hints");
-        }
-
         CountTextDetails(x);
     }
 

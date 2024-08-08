@@ -147,9 +147,9 @@ namespace DDZ
             }
         } 
         
-        public static bool IsRvAvailable() => ApplovinManager.instance.RewardAdsAvailable();
-        public static bool IsBannerAvailable() => ApplovinManager.instance.BannerAdsAvailable();
-        public static bool IsInterstitialAvailable() => ApplovinManager.instance.InterstitialAdsAvailable();
+        public static bool IsRvAvailable() => ISManager.instance.isRewardedAdsLoaded;
+        public static bool IsBannerAvailable() => true;
+        public static bool IsInterstitialAvailable() => ISManager.instance.isInterstitialAdsLoaded;
 
 
         public static void Print(object val) => print(val);
@@ -191,11 +191,11 @@ namespace DDZ
             ApplovinManager.instance.ShowInterstitialAds_120Sec(placement);
         }
 
-        public static void ShowRewardedAds(string placement)
+        public static void ShowRewardedAds(string placement, RewardType rvType)
         {
             if(!IsRvAvailable() || !ConnectedToInternet()) return;
              print("showing Rewarded Ads");
-             
+             RvType = rvType;
              ApplovinManager.instance.ShowRewardedAds(placement);
         }
 
@@ -226,39 +226,63 @@ namespace DDZ
                   break;
               case RewardType.LevelCompleteReward: 
                   UIManagerScript.Instance.DoubleCoins_CallBack();
+                  ByteBrewManager.AdEventTracking(true, SaveData.GetSpecialLevelNumber().ToString(),
+                      "rv_levelreward");
                   break;
               case RewardType.BubbleRv:
                   MonitizationScript.instance.Bubble2X_CallBack();
+                  ByteBrewManager.AdEventTracking(true, SaveData.GetSpecialLevelNumber().ToString(),
+                      "rv_bubble");
                   break;
               case RewardType.Magnet:
                   UIManagerScript.Instance.AutoWordComplete_Callback();
+                  ByteBrewManager.AdEventTracking(true, SaveData.GetSpecialLevelNumber().ToString(),
+                      "rv_magnet");
                   break;
               case RewardType.GiftBox:
                   MonitizationScript.instance.GiftBox_CallBack();
+                  ByteBrewManager.AdEventTracking(true, SaveData.GetSpecialLevelNumber().ToString(),
+                      "rv_gift");
                   break;
               case RewardType.NoMoreMoves:
                   UIManagerScript.Instance.GetMoreMoves_CallBack();
+                  ByteBrewManager.AdEventTracking(true, SaveData.GetSpecialLevelNumber().ToString(),
+                      "rv_nomoremoves");
                   break;
               case RewardType.ImageReveal:
                   UIManagerScript.Instance.Emoji_CallBack();
+                  ByteBrewManager.AdEventTracking(true, SaveData.GetSpecialLevelNumber().ToString(),
+                      "rv_imagereveal");
                   break;
               case RewardType.FiftyFifty:
                   EmojiManager.Instance.FiftyFifty_CallBack();
+                  ByteBrewManager.AdEventTracking(true, SaveData.GetSpecialLevelNumber().ToString(),
+                      "rv_fifty_fifty");
                   break;
               case RewardType.Shuffle:
                   EmojiManager.Instance.Shuffle_CallBack();
+                  ByteBrewManager.AdEventTracking(true, SaveData.GetSpecialLevelNumber().ToString(),
+                      "rv_shuffle");
                   break;
               case RewardType.Calendar:
                   DailyChallengesHandler.instance.DailyChallenge_Callback();
+                  ByteBrewManager.AdEventTracking(true, SaveData.GetSpecialLevelNumber().ToString(),
+                      "rv_calender");
                   break;
               case RewardType.SpinWheel:
                   SpinWheelManager.instance.StopTheSpin_Callback();
+                  ByteBrewManager.AdEventTracking(true, SaveData.GetSpecialLevelNumber().ToString(),
+                      "rv_spinwheel");
                   break;
               case RewardType.DailyReward:
                   DailyRewardManager.instance.DailyCallBack();
+                  ByteBrewManager.AdEventTracking(true, SaveData.GetSpecialLevelNumber().ToString(),
+                      "rv_dailyreward");
                   break;
               case RewardType.CalenderStart:
                   UIManagerScript.Instance.CalenderUnlock_CallBack();
+                  ByteBrewManager.AdEventTracking(true, SaveData.GetSpecialLevelNumber().ToString(),
+                      "rv_calenderstart");
                   break;
               default:
                   print("default");

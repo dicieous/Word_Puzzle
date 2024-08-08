@@ -14,6 +14,7 @@ using Product = UnityEngine.Purchasing.Product;
 public class IAPManager : MonoBehaviour, IDetailedStoreListener
 {
     public static IAPManager instance;
+    private SaveManager DataManager => SaveManager.Instance;
     public bool isRestored;
     public GameObject iapPanel;
     private static string GetIAPId(string addOn) => Application.identifier +"."+ addOn;
@@ -40,7 +41,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
     private IStoreController _storeController;
     private IExtensionProvider _extensionProvider;
     private IGooglePlayStoreExtensions _iGooglePlayStoreExtensions;
-    private static SaveManager DataManager => SaveManager.Instance;
+    
     //private IAppleExtensions _iAppleExtensionProvider;
     private string _welcomePackTime = "";
     private TimeSpan _wpTimeDifference;
@@ -65,8 +66,6 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
         }
         
         SetUpBuilder();
-        iapBoughtCount = DataManager.state.iapBoughtCount;
-        CheckOutSideIAPButtons();
     }
 
     private void CheckOutSideIAPButtons()
@@ -91,6 +90,9 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
             Console.WriteLine(e);
             throw;
         }
+        
+        iapBoughtCount = DataManager.state.iapBoughtCount;
+        CheckOutSideIAPButtons();
     }
     private void SetUpBuilder()
     {
@@ -210,7 +212,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
                 {
                     AddCoins(200);
                     DataManager.state.noAds = true;
-                    ApplovinManager.HideBannerAds();
+                    //ApplovinManager.HideBannerAds();
                 }
             } 
         }
@@ -244,10 +246,10 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
             
             AddCoins(200);
             DataManager.state.noAds = true;
-            ApplovinManager.HideBannerAds();
+            // ApplovinManager.HideBannerAds();
             IAP_ButtonStatus(true);
            
-            LionStudiosManager.IAPEvent(product,1,0,200);
+            // LionStudiosManager.IAPEvent(product,1,0,200);
             ByteBrewManager.IAPEvents(product,SaveData.GetSpecialLevelNumber()+"");
             iapBoughtCount++;
             CheckOutSideIAPButtons();
@@ -256,14 +258,14 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
         {
             AddMoves(50);
             AddCoins(500);
-            LionStudiosManager.IAPEvent(product,0,50,500);
+            // LionStudiosManager.IAPEvent(product,0,50,500);
             ByteBrewManager.IAPEvents(product,SaveData.GetSpecialLevelNumber()+"");
             iapBoughtCount++;
         }
         else if (productID == ExtraMoves_50)
         {
             AddMoves(50);
-            LionStudiosManager.IAPEvent(product,0,50,0);
+            // LionStudiosManager.IAPEvent(product,0,50,0);
             ByteBrewManager.IAPEvents(product,SaveData.GetSpecialLevelNumber()+"");
             iapBoughtCount++;
            
@@ -271,7 +273,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
         else if (productID == ExtraMoves_150)
         {
             AddMoves(150);
-            LionStudiosManager.IAPEvent(product,0,150,0);
+            // LionStudiosManager.IAPEvent(product,0,150,0);
             ByteBrewManager.IAPEvents(product,SaveData.GetSpecialLevelNumber()+"");
             iapBoughtCount++;
             
@@ -279,7 +281,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
         else if (productID == ExtraMoves_300)
         {
             AddMoves(300);
-            LionStudiosManager.IAPEvent(product,0,300,0);
+            // LionStudiosManager.IAPEvent(product,0,300,0);
             ByteBrewManager.IAPEvents(product,SaveData.GetSpecialLevelNumber()+"");
             iapBoughtCount++;
            
@@ -287,7 +289,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
         else if (productID == ExtraMoves_700)
         {
             AddMoves(700);
-            LionStudiosManager.IAPEvent(product,0,700,0);
+            // LionStudiosManager.IAPEvent(product,0,700,0);
             ByteBrewManager.IAPEvents(product,SaveData.GetSpecialLevelNumber()+"");
             iapBoughtCount++;
           
@@ -295,7 +297,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
         else if (productID == ExtraMoves_1500)
         {
             AddMoves(1500);
-            LionStudiosManager.IAPEvent(product,0,1500,0);
+            // LionStudiosManager.IAPEvent(product,0,1500,0);
             ByteBrewManager.IAPEvents(product,SaveData.GetSpecialLevelNumber()+"");
             iapBoughtCount++;
           
@@ -303,7 +305,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
         else if (productID == Coins_500)
         {
             AddCoins(500);
-            LionStudiosManager.IAPEvent(product,0,0,500);
+            // LionStudiosManager.IAPEvent(product,0,0,500);
             ByteBrewManager.IAPEvents(product,SaveData.GetSpecialLevelNumber()+"");
             iapBoughtCount++;
             
@@ -311,35 +313,35 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
         else if (productID == Coins_1000)
         {
             AddCoins(1000);
-            LionStudiosManager.IAPEvent(product,0,0,1000);
+            //LionStudiosManager.IAPEvent(product,0,0,1000);
             ByteBrewManager.IAPEvents(product,SaveData.GetSpecialLevelNumber()+"");
             iapBoughtCount++;
         }
         else if (productID == Coins_2500)
         {
             AddCoins(2500);
-            LionStudiosManager.IAPEvent(product,0,0,2500);
+            //LionStudiosManager.IAPEvent(product,0,0,2500);
             ByteBrewManager.IAPEvents(product,SaveData.GetSpecialLevelNumber()+"");
             iapBoughtCount++;
         }
         else if (productID == Coins_5000)
         {
             AddCoins(5000);
-            LionStudiosManager.IAPEvent(product,0,0,5000);
+           // LionStudiosManager.IAPEvent(product,0,0,5000);
             ByteBrewManager.IAPEvents(product,SaveData.GetSpecialLevelNumber()+"");
             iapBoughtCount++;
         }
         else if (productID == Coins_10000)
         {
             AddCoins(10000);
-            LionStudiosManager.IAPEvent(product,0,0,10000);
+            //LionStudiosManager.IAPEvent(product,0,0,10000);
             ByteBrewManager.IAPEvents(product,SaveData.GetSpecialLevelNumber()+"");
             iapBoughtCount++;
         }  
         else if (productID == Coins_25000)
         {
             AddCoins(25000);
-            LionStudiosManager.IAPEvent(product,0,0,25000);
+            //LionStudiosManager.IAPEvent(product,0,0,25000);
             ByteBrewManager.IAPEvents(product,SaveData.GetSpecialLevelNumber()+"");
             iapBoughtCount++;
         }

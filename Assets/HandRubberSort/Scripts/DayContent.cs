@@ -124,8 +124,8 @@ public class DayContent : MonoBehaviour
             break;
             case DayState.ClaimAd:
             print("Show ad and Change to claimed");
-            GameEssentials.RvType = RewardType.DailyReward;
-            GameEssentials.ShowRewardedAds("DailyReward");
+            //GameEssentials.RvType = RewardType.DailyReward;
+            GameEssentials.ShowRewardedAds("DailyReward",RewardType.DailyReward);
             //SaveDay();
             break;
         }

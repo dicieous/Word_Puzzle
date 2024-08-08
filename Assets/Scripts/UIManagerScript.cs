@@ -602,10 +602,10 @@ public class UIManagerScript : MonoBehaviour
 
 		_claimCoinsClick = true;
 		if (!GameEssentials.IsRvAvailable()) return;
-		GameEssentials.RvType = RewardType.LevelCompleteReward;
-		GameEssentials.ShowRewardedAds("LevelCompleteReward");
-		if(LionStudiosManager.instance)
-			LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","LevelCompleteReward",SaveData.GetCoinsCount());
+		// GameEssentials.RvType = RewardType.LevelCompleteReward;
+		GameEssentials.ShowRewardedAds("LevelCompleteReward",RewardType.LevelCompleteReward);
+		/*if(LionStudiosManager.instance)
+			LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","LevelCompleteReward",SaveData.GetCoinsCount());*/
 		//loseItButton.interactable = false;
 		if (SoundHapticManager.Instance)
 		{
@@ -789,6 +789,8 @@ public class UIManagerScript : MonoBehaviour
 	    {
 		    AutoWordComplete_Callback();
 		    SaveData.SetMagnetCount(SaveData.GetMagnetCount() - 1);
+		    if (ByteBrewManager.instance)
+			    ByteBrewManager.PowerUpsTracking(SaveData.GetSpecialLevelNumber().ToString(), "magnet");
 	    }
 	    else
 	    {
@@ -797,14 +799,16 @@ public class UIManagerScript : MonoBehaviour
 			    StartCoroutine(CoinsReduceAnim(instanceImageRef, instancePos, magnetPosDeduct));
 			    AutoWordComplete_Callback();
 			    cm.AutoWordReduce();
+			    if (ByteBrewManager.instance)
+				    ByteBrewManager.PowerUpsTracking(SaveData.GetSpecialLevelNumber().ToString(), "magnet");
 		    }
 		    else
 		    {
 			    if (!GameEssentials.IsRvAvailable())  return;
-			    GameEssentials.RvType = RewardType.Magnet;
-			    GameEssentials.ShowRewardedAds("Magnet");
-			    if(LionStudiosManager.instance)
-				    LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","Magnet",SaveData.GetCoinsCount());
+			    // GameEssentials.RvType = RewardType.Magnet;
+			    GameEssentials.ShowRewardedAds("Magnet",RewardType.Magnet);
+			    /*if(LionStudiosManager.instance)
+				    LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","Magnet",SaveData.GetCoinsCount());*/
 		    }
 	    }
 	    
@@ -836,8 +840,8 @@ public class UIManagerScript : MonoBehaviour
 		    /*print("autoword::::"+autoWordButton.interactable);
 		    print("WordClick::::::::"+GameManager.Instance.autoWordClick);*/
 		    
-		    if(!LionStudiosManager.instance) return;
-		    LionStudiosManager.Magnet(SaveData.GetSpecialLevelNumber().ToString(),_magnetCount);
+		    /*if(!LionStudiosManager.instance) return;
+		    LionStudiosManager.Magnet(SaveData.GetSpecialLevelNumber().ToString(),_magnetCount);*/
 		    _magnetCount++;
 	    }
     }
@@ -869,6 +873,8 @@ public class UIManagerScript : MonoBehaviour
 		{
 			Hint_CallBack();
 			SaveData.SetHintCount(SaveData.GetHintCount() - 1);
+			if (ByteBrewManager.instance)
+				ByteBrewManager.PowerUpsTracking(SaveData.GetSpecialLevelNumber().ToString(), "hint");
 		}
 		else
 		{
@@ -877,15 +883,17 @@ public class UIManagerScript : MonoBehaviour
 				StartCoroutine(CoinsReduceAnim(instanceImageRef, instancePos, hintPosDeduct));
 				Hint_CallBack();
 				cm.HintReduce(50);
+				if (ByteBrewManager.instance)
+					ByteBrewManager.PowerUpsTracking(SaveData.GetSpecialLevelNumber().ToString(), "hint");
 			
 			}
 			else
 			{
 				if (!GameEssentials.IsRvAvailable()) return;
-				GameEssentials.RvType = RewardType.Hint;
-				GameEssentials.ShowRewardedAds("Hint");
-				if(LionStudiosManager.instance)
-					LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","Hint",SaveData.GetCoinsCount());
+				// GameEssentials.RvType = RewardType.Hint;
+				GameEssentials.ShowRewardedAds("Hint",RewardType.Hint);
+				/*if(LionStudiosManager.instance)
+					LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","Hint",SaveData.GetCoinsCount());*/
 
 			}
 		}
@@ -907,8 +915,8 @@ public class UIManagerScript : MonoBehaviour
 		SoundHapticManager.Instance.Vibrate(30);
 		SoundHapticManager.Instance.Play("ButtonClickMG");
 		
-		if(!LionStudiosManager.instance) return;
-		LionStudiosManager.Hint(SaveData.GetSpecialLevelNumber().ToString(),_hintCount.ToString());
+		/*if(!LionStudiosManager.instance) return;
+		LionStudiosManager.Hint(SaveData.GetSpecialLevelNumber().ToString(),_hintCount.ToString());*/
 		_hintCount++;
 	}
 
@@ -975,8 +983,8 @@ public class UIManagerScript : MonoBehaviour
 	{
 		var rvIcon = hintButton.image.rectTransform.GetChild(2).gameObject;
 		var loadingIcon = hintButton.image.rectTransform.GetChild(3).gameObject;
-		rvIcon.SetActive(SaveData.GetHintCount() <= 0 && SaveData.GetCoinsCount() < 50 && GameEssentials.IsRvAvailable());
-		loadingIcon.SetActive(SaveData.GetHintCount() <= 0 && SaveData.GetCoinsCount() < 50 && !GameEssentials.IsRvAvailable());
+		rvIcon.SetActive(SaveData.GetHintCount() <= 0 && SaveData.GetCoinsCount() < 50 && ISManager.instance.isRewardedAdsLoaded);
+		loadingIcon.SetActive(SaveData.GetHintCount() <= 0 && SaveData.GetCoinsCount() < 50 && !ISManager.instance.isRewardedAdsLoaded);
 		if (SaveData.GetHintCount() > 0)
 		{
 			rvIcon.SetActive(false);
@@ -1015,13 +1023,18 @@ public class UIManagerScript : MonoBehaviour
 		}*/
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
-		if (SaveData.GetCoinsCount() >= 50) Emoji_CallBack();
+		if (SaveData.GetCoinsCount() >= 50)
+		{
+			if (ByteBrewManager.instance)
+				ByteBrewManager.PowerUpsTracking(SaveData.GetSpecialLevelNumber().ToString(), "image_reveal");
+			Emoji_CallBack();
+		}
 		else
 		{
-			GameEssentials.RvType = RewardType.ImageReveal;
-			GameEssentials.ShowRewardedAds("ImageReveal");
-			if(LionStudiosManager.instance)
-				LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","ImageReveal",SaveData.GetCoinsCount());
+			// GameEssentials.RvType = RewardType.ImageReveal;
+			GameEssentials.ShowRewardedAds("ImageReveal",RewardType.ImageReveal);
+			/*if(LionStudiosManager.instance)
+				LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","ImageReveal",SaveData.GetCoinsCount());*/
 		}
 	}
 
@@ -1043,8 +1056,8 @@ public class UIManagerScript : MonoBehaviour
 			}
 		}
 		
-		if(!LionStudiosManager.instance) return;
-		LionStudiosManager.ImageReveal(SaveData.GetSpecialLevelNumber().ToString(),_imageRevealCount);
+		/*if(!LionStudiosManager.instance) return;
+		LionStudiosManager.ImageReveal(SaveData.GetSpecialLevelNumber().ToString(),_imageRevealCount);*/
 		_imageRevealCount++;
 	}
 	// ReSharper disable Unity.PerformanceAnalysis
@@ -1192,10 +1205,11 @@ public class UIManagerScript : MonoBehaviour
 		    SaveData.SetCoinCount(SaveData.GetCoinsCount() - 100);
 		    cm.coinCountText.text = SaveData.GetCoinsCount().ToString();
 		    GetMoreMoves_CallBack();
+		    if (ByteBrewManager.instance)
+			    ByteBrewManager.PowerUpsTracking(SaveData.GetSpecialLevelNumber().ToString(), "nomoremoves");
 	    }
 	    else
 	    {
-		    
 		    IAPManager.instance.OpenIAP();
 	    }
     }
@@ -1203,10 +1217,10 @@ public class UIManagerScript : MonoBehaviour
     {
 	   if(!GameEssentials.instance) return;
 	   
-	   GameEssentials.RvType = RewardType.NoMoreMoves;
-	   GameEssentials.ShowRewardedAds("NoMoreMoves");
-	   if(LionStudiosManager.instance)
-		   LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","NoMoreMoves",SaveData.GetCoinsCount());
+	   // GameEssentials.RvType = RewardType.NoMoreMoves;
+	   GameEssentials.ShowRewardedAds("NoMoreMoves",RewardType.NoMoreMoves);
+	   /*if(LionStudiosManager.instance)
+		   LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","NoMoreMoves",SaveData.GetCoinsCount());*/
 	   if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 	   if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
     }
@@ -1222,8 +1236,8 @@ public class UIManagerScript : MonoBehaviour
 		    GameManager.Instance.levelFail = false;
 	    hintButton.interactable = true;
 	    autoWordButton.interactable = true;
-	    if (!LionStudiosManager.instance) return;
-	    LionStudiosManager.NoMoreMoves(SaveData.GetSpecialLevelNumber().ToString(),"Coins","100",_noMoreMovesCount.ToString());
+	    /*if (!LionStudiosManager.instance) return;
+	    LionStudiosManager.NoMoreMoves(SaveData.GetSpecialLevelNumber().ToString(),"Coins","100",_noMoreMovesCount.ToString());*/
 	    _noMoreMovesCount++;
 	    RvCheckFun();
     }
@@ -1378,21 +1392,21 @@ public class UIManagerScript : MonoBehaviour
 			    case 0:
 				    GiftPopFun(coinsObj, giftHintObj,giftJumpPLace,giftJumpPLace2,coinCount, 50,1);
 				    _magnetOrHint = "Hint";
-				    if (LionStudiosManager.instance)
+				    /*if (LionStudiosManager.instance)
 				    {
 					    LionStudiosManager.LevelCompleteReward(SaveData.GetSpecialLevelNumber().ToString(),"Coins","50",_levelCompleteRewardCount.ToString());
 					    _levelCompleteRewardCount++;
-				    }
+				    }*/
 				    //_revelItem = "Hint";
 				    break;
 			    case 1:
 				    GiftPopFun(coinsObj, giftMagnetObj,giftJumpPLace,giftJumpPLace2, coinCount,100,1);
 				    _magnetOrHint = "Magnet";
-				    if (LionStudiosManager.instance)
+				    /*if (LionStudiosManager.instance)
 				    {
 					    LionStudiosManager.LevelCompleteReward(SaveData.GetSpecialLevelNumber().ToString(),"Coins","100",_levelCompleteRewardCount.ToString());
 					    _levelCompleteRewardCount++;
-				    }
+				    }*/
 				    //_revelItem = "Magnet";
 				    break;
 			    case 2:
@@ -1623,8 +1637,8 @@ public class UIManagerScript : MonoBehaviour
 	
 	public void CalenderUnLockButton()
 	{
-		GameEssentials.RvType = RewardType.CalenderStart;
-		GameEssentials.ShowRewardedAds("CalenderStart");
+		// GameEssentials.RvType = RewardType.CalenderStart;
+		GameEssentials.ShowRewardedAds("CalenderStart",RewardType.CalenderStart);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 		//CalenderUnlock_CallBack();

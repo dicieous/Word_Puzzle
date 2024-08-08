@@ -268,15 +268,17 @@ public class EmojiManager : MonoBehaviour
     {
         if (SaveData.GetCoinsCount() >= 25)
         {
+            if (ByteBrewManager.instance)
+                ByteBrewManager.PowerUpsTracking(SaveData.GetSpecialLevelNumber().ToString(), "boss_shuffle");
             CoinManager.instance.ShuffleReduce(25);
             Shuffle_CallBack();
         }
         else
         {
-            GameEssentials.RvType = RewardType.Shuffle;
-            GameEssentials.ShowRewardedAds("Shuffle");
-            if(LionStudiosManager.instance)
-                LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","Shuffle",SaveData.GetCoinsCount());
+            //GameEssentials.RvType = RewardType.Shuffle;
+            GameEssentials.ShowRewardedAds("Shuffle",RewardType.Shuffle);
+            /*if(LionStudiosManager.instance)
+                LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","Shuffle",SaveData.GetCoinsCount());*/
             /////--------------addcall
         }
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
@@ -285,12 +287,12 @@ public class EmojiManager : MonoBehaviour
 
     public void Shuffle_CallBack()
     {
-        if(LionStudiosManager.instance)
+        /*if(LionStudiosManager.instance)
         {
             LionStudiosManager.
                 Shuffle(SaveData.GetSpecialLevelNumber().ToString(),_shuffleCount);
             _shuffleCount++;
-        }
+        }*/
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void ShuffleButtonActive()
@@ -332,15 +334,17 @@ public class EmojiManager : MonoBehaviour
             hintCounter.ToString(), "EmojiMode", GetListNumbers().ToString(), "Hints");*/
         if (SaveData.GetCoinsCount() >= 50)
         {
+            if (ByteBrewManager.instance)
+                ByteBrewManager.PowerUpsTracking(SaveData.GetSpecialLevelNumber().ToString(), "boss_hint");
             CoinManager.instance.HintReduce(50);
             SpecialHint_CallBack();
         }
         else
         {
-            GameEssentials.RvType = RewardType.Hint;
-            GameEssentials.ShowRewardedAds("Hint");
-            if(LionStudiosManager.instance)
-                LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","Hint",SaveData.GetCoinsCount());
+            // GameEssentials.RvType = RewardType.Hint;
+            GameEssentials.ShowRewardedAds("Hint",RewardType.Hint);
+            /*if(LionStudiosManager.instance)
+                LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","Hint",SaveData.GetCoinsCount());*/
             /////----------------ad call
         }
         HintButtonDeActiveFun();
@@ -376,8 +380,8 @@ public class EmojiManager : MonoBehaviour
             }
         }
         
-        if(!LionStudiosManager.instance) return;
-        LionStudiosManager.Hint(SaveData.GetSpecialLevelNumber().ToString(),UIManagerScript._hintCount.ToString());
+        /*if(!LionStudiosManager.instance) return;
+        LionStudiosManager.Hint(SaveData.GetSpecialLevelNumber().ToString(),UIManagerScript._hintCount.ToString());*/
         UIManagerScript._hintCount++;
     }
     public void HintButtonActiveFun()
@@ -429,14 +433,16 @@ public class EmojiManager : MonoBehaviour
         {
             CoinManager.instance.FiftyFiftyReduce(25);
             FiftyFifty_CallBack();
+            if (ByteBrewManager.instance)
+                ByteBrewManager.PowerUpsTracking(SaveData.GetSpecialLevelNumber().ToString(), "boss_fifty");
         }
         else
         {
             /////--------add call
-            GameEssentials.RvType = RewardType.FiftyFifty;
-            GameEssentials.ShowRewardedAds("FiftyFifty");
-            if(LionStudiosManager.instance)
-                LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","FiftyFifty",SaveData.GetCoinsCount());
+            // GameEssentials.RvType = RewardType.FiftyFifty;
+            GameEssentials.ShowRewardedAds("FiftyFifty",RewardType.FiftyFifty);
+            /*if(LionStudiosManager.instance)
+                LionStudiosManager.AdsEvents(true, AdsEventState.Start,SaveData.GetSpecialLevelNumber(),"Applovin","FiftyFifty",SaveData.GetCoinsCount());*/
         }
 
         //_fiftyFifty = true;
@@ -461,8 +467,8 @@ public class EmojiManager : MonoBehaviour
             //panelObj.GetComponent<EmojiClick>().optionBtn[i].gameObject.SetActive(false);
         }
         
-        if(!LionStudiosManager.instance) return;
-        LionStudiosManager.FiftyFifty(SaveData.GetSpecialLevelNumber().ToString(),_fiftyFiftyCount);
+        /*if(!LionStudiosManager.instance) return;
+        LionStudiosManager.FiftyFifty(SaveData.GetSpecialLevelNumber().ToString(),_fiftyFiftyCount);*/
         _fiftyFiftyCount++;
     }
     public void FiftyFiftyButtonActiveFun()

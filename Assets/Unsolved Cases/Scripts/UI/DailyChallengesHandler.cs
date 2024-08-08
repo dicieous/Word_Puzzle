@@ -362,11 +362,11 @@ public class DailyChallengesHandler : MonoBehaviour
             DailyChallenge_Callback();
             return;
         }
-        GameEssentials.RvType = RewardType.Calendar;
-        GameEssentials.ShowRewardedAds("Calendar");
-        if (LionStudiosManager.instance)
+        // GameEssentials.RvType = RewardType.Calendar;
+        GameEssentials.ShowRewardedAds("Calendar",RewardType.Calendar);
+        /*if (LionStudiosManager.instance)
             LionStudiosManager.AdsEvents(true, AdsEventState.Start, SaveData.GetSpecialLevelNumber(),
-                "Applovin", "Calendar", SaveData.GetCoinsCount());
+                "Applovin", "Calendar", SaveData.GetCoinsCount());*/
     }
 
     public void DailyChallenge_Callback()

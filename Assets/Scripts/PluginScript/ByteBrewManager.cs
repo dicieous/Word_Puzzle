@@ -33,12 +33,7 @@ public class ByteBrewManager : MonoBehaviour
         ByteBrew.NewCustomEvent("Level_Complete", "Level" + levelname);
     }
 
-    public void AdEventTracking(string adName, string adPlace)
-    {
-        ByteBrew.TrackAdEvent(adName, adPlace);
-    }
-
-    public void ProgressEvent(string levelNo, string hintsCount, string gameMode, string eventName)
+    /*public void ProgressEvent(string levelNo, string hintsCount, string gameMode, string eventName)
     {
         var additionalData = new Dictionary<string, string>()
         {
@@ -49,7 +44,30 @@ public class ByteBrewManager : MonoBehaviour
 
         ByteBrew.NewCustomEvent(eventName, ParseEventValues(additionalData));
     }
+    Function Calling------------
+    ByteBrewManager.instance.ProgressEvent(SaveData.GetSpecialLevelNumber().ToString(),hintCounter.ToString(), "NormalMode", "Hints");*/
 
+    //////----Using RV Data
+    public static void AdEventTracking(bool isRv, string levelNum, string adPlacement)
+    {
+        var rvPlacement = new Dictionary<string, string>()
+        {
+            {"level_num",levelNum},
+            {"ad_placement", adPlacement},
+        };
+        ByteBrew.NewCustomEvent(isRv ? "rewarded_video":"interstitial", ParseEventValues(rvPlacement));
+        ByteBrew.TrackAdEvent(isRv ? ByteBrewAdTypes.Reward : ByteBrewAdTypes.Interstitial, adPlacement);
+    }
+    //////----Using Coins Data
+    public static void PowerUpsTracking(string levelNum, string powerUpName)
+    {
+        var rvPlacement = new Dictionary<string, string>()
+        {
+            {"level_num",levelNum},
+            {"power_up_name", powerUpName},
+        };
+        ByteBrew.NewCustomEvent("power_up", ParseEventValues(rvPlacement));
+    }
     public void EmojiEvent(string levelNo, string hintsCount, string gameMode, string emojiModeIndex, string eventName)
     {
         var additionalData = new Dictionary<string, string>()
