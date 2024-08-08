@@ -28,7 +28,7 @@ public class ISManager : MonoBehaviour
 
     private void OnEnable()
     {
-        /*IronSourceEvents.onSdkInitializationCompletedEvent += SdkInitializationCompletedEvent;
+        IronSourceEvents.onSdkInitializationCompletedEvent += SdkInitializationCompletedEvent;
         
         // Interstitial Events Callback
         IronSourceInterstitialEvents.onAdReadyEvent += InterstitialOnAdReadyEvent;
@@ -46,13 +46,13 @@ public class ISManager : MonoBehaviour
         IronSourceRewardedVideoEvents.onAdOpenedEvent += RewardedVideoOnAdOpenedEvent;
         IronSourceRewardedVideoEvents.onAdClickedEvent += RewardedVideoOnAdClickedEvent;
         IronSourceRewardedVideoEvents.onAdRewardedEvent += RewardedVideoOnAdRewardedEvent;
-        IronSourceRewardedVideoEvents.onAdClosedEvent += RewardedVideoOnAdClosedEvent;*/
+        IronSourceRewardedVideoEvents.onAdClosedEvent += RewardedVideoOnAdClosedEvent;
     }
     
     private void OnDisable()
     {
         // Interstitial Events Callback
-        /*IronSourceInterstitialEvents.onAdReadyEvent -= InterstitialOnAdReadyEvent;
+        IronSourceInterstitialEvents.onAdReadyEvent -= InterstitialOnAdReadyEvent;
         IronSourceInterstitialEvents.onAdLoadFailedEvent -= InterstitialOnAdLoadFailed;
         IronSourceInterstitialEvents.onAdOpenedEvent -= InterstitialOnAdOpenedEvent;
         IronSourceInterstitialEvents.onAdClickedEvent -= InterstitialOnAdClickedEvent;
@@ -67,12 +67,12 @@ public class ISManager : MonoBehaviour
         IronSourceRewardedVideoEvents.onAdUnavailableEvent -= RewardedVideoOnAdUnavailable;
         IronSourceRewardedVideoEvents.onAdShowFailedEvent -= RewardedVideoOnAdShowFailedEvent;
         IronSourceRewardedVideoEvents.onAdRewardedEvent -= RewardedVideoOnAdRewardedEvent;
-        IronSourceRewardedVideoEvents.onAdClickedEvent -= RewardedVideoOnAdClickedEvent;*/
+        IronSourceRewardedVideoEvents.onAdClickedEvent -= RewardedVideoOnAdClickedEvent;
     }
 
     private void SdkInitializationCompletedEvent()
     {
-       /*if(isTesting) IronSource.Agent.launchTestSuite();*/
+       if(isTesting) IronSource.Agent.launchTestSuite();
         
         if (ConnectedToInternet())
         {
@@ -82,9 +82,9 @@ public class ISManager : MonoBehaviour
 
     private void Init()
     {
-        /*IronSource.Agent.init(appKey, IronSourceAdUnits.REWARDED_VIDEO);
+        IronSource.Agent.init(appKey, IronSourceAdUnits.REWARDED_VIDEO);
         IronSource.Agent.init(appKey, IronSourceAdUnits.INTERSTITIAL);
-        IronSource.Agent.init(appKey, IronSourceAdUnits.BANNER);*/
+        IronSource.Agent.init(appKey, IronSourceAdUnits.BANNER);
         ApplovinManager.instance.AdsInit();
     }
 
@@ -94,8 +94,8 @@ public class ISManager : MonoBehaviour
 
         if (isTesting)
         {
-            /*IronSource.Agent.validateIntegration();
-            IronSource.Agent.shouldTrackNetworkState(true);*/
+            IronSource.Agent.validateIntegration();
+            IronSource.Agent.shouldTrackNetworkState(true);
             //IronSource.Agent.setMetaData("is_test_suite", "enable"); 
             //IronSource.Agent.setMetaData("Chartboost_Coppa","false");
         }
@@ -143,7 +143,7 @@ public class ISManager : MonoBehaviour
             return;
         }
 
-        /*if (!IronSource.Agent.isRewardedVideoAvailable())
+        if (!IronSource.Agent.isRewardedVideoAvailable())
         {
             Time.timeScale = 1;
             print("Rewarded Ads are Not Ready");
@@ -155,7 +155,7 @@ public class ISManager : MonoBehaviour
         timeGap = 5;
         Time.timeScale = 0;
         IronSource.Agent.SetPauseGame(true);
-        IronSource.Agent.showRewardedVideo();*/
+        IronSource.Agent.showRewardedVideo();
     }
     
     public void LoadInterstitialAds()
@@ -163,9 +163,9 @@ public class ISManager : MonoBehaviour
         if (!ConnectedToInternet())
             return;
 
-        /*print("LoadInterstitialAds::" + IronSource.Agent.isInterstitialReady());
+        print("LoadInterstitialAds::" + IronSource.Agent.isInterstitialReady());
 
-        IronSource.Agent.loadInterstitial();*/
+        IronSource.Agent.loadInterstitial();
     }
 
     public void ShowInterstitialAds()
@@ -174,11 +174,11 @@ public class ISManager : MonoBehaviour
         {
             Time.timeScale = 1;
             print("No internet or Still Time to Show Ads");
-            /*if (!IronSource.Agent.isInterstitialReady()) LoadInterstitialAds();*/
+            if (!IronSource.Agent.isInterstitialReady()) LoadInterstitialAds();
             return;
         }
 
-        /*if (!IronSource.Agent.isInterstitialReady())
+        if (!IronSource.Agent.isInterstitialReady())
         {
             Time.timeScale = 1;
             LoadInterstitialAds();
@@ -190,7 +190,7 @@ public class ISManager : MonoBehaviour
 
         Time.timeScale = 0;
         IronSource.Agent.showInterstitial();
-        IronSource.Agent.SetPauseGame(true);*/
+        IronSource.Agent.SetPauseGame(true);
     }
     
     private void LoadBannerAds()
@@ -199,7 +199,7 @@ public class ISManager : MonoBehaviour
             return;
 
         print("LoadBannerAds");
-        /*IronSource.Agent.loadBanner(IronSourceBannerSize.SMART, IronSourceBannerPosition.BOTTOM);*/
+        IronSource.Agent.loadBanner(IronSourceBannerSize.SMART, IronSourceBannerPosition.BOTTOM);
     }
 
     public void ShowBannerAds()
@@ -207,7 +207,7 @@ public class ISManager : MonoBehaviour
         if (!ConnectedToInternet())
             return;
 
-        /*IronSource.Agent.displayBanner();*/
+        IronSource.Agent.displayBanner();
     }
 
     public void HideBannerAds()
@@ -215,7 +215,7 @@ public class ISManager : MonoBehaviour
         if (!ConnectedToInternet())
             return;
 
-        /*IronSource.Agent.hideBanner();*/
+        IronSource.Agent.hideBanner();
     }
 
     public void RewardCallBacks()
@@ -227,10 +227,10 @@ public class ISManager : MonoBehaviour
     
     private void OnApplicationPause(bool pauseStatus)
     {
-        /*IronSource.Agent.onApplicationPause(pauseStatus);*/
+        IronSource.Agent.onApplicationPause(pauseStatus);
     }
     
-    /*private void InterstitialOnAdReadyEvent(IronSourceAdInfo adInfo)
+    private void InterstitialOnAdReadyEvent(IronSourceAdInfo adInfo)
     {
         isInterstitialAdsLoaded = true;
         // Invoked when the interstitial ad was loaded Successfully.  
@@ -338,5 +338,5 @@ public class ISManager : MonoBehaviour
         // Invoked when the video ad was clicked.
         // This callback is not supported by all networks, and we recommend using it only if
         // it’s supported by all networks you included in your build.
-    }*/
+    }
 }
