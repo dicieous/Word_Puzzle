@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     public event EventHandler OnPartComplete;
 
 
-    [SerializeField] private List<GameObject> _allCubeObjects;
+    [SerializeField] public List<GameObject> _allCubeObjects;
     [Space(10)]public List<GameObject> hintCubesHolder;
 
     [Space(10)] [SerializeField] private GameObject starFX;
@@ -547,6 +547,7 @@ public class GameManager : MonoBehaviour
                     CoinManager.instance.confettiFx1.Play();
                     if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
                     UI.WinPanelActive();
+                    WordsFallingAfterWinFun();
                     // BlockSeqCall();
                     //Debug.Log("LevelComplete");
                 },false);
@@ -771,7 +772,7 @@ public class GameManager : MonoBehaviour
         DOVirtual.DelayedCall(0.5f, () =>
         {
             //Time.timeScale = 2f;
-            BlockSeq();
+            //WordsFallingAfterWinFun();
         },false);
     }
     public int wordsDeleteNumber;
@@ -1234,24 +1235,25 @@ public class GameManager : MonoBehaviour
     private bool autoFunCall = false;
     private int blocknum;
 
-    private void BlockSeq()
+    private void WordsFallingAfterWinFun()
     {
         var seq = DOTween.Sequence();
         seq.AppendCallback(() =>
         {
             if (blocknum < _allCubeObjects.Count)
             {
-                _allCubeObjects[blocknum].AddComponent<Rigidbody>();
+                _allCubeObjects[blocknum].AddComponent<Rigidbody>().mass = 0.6f;
                 _allCubeObjects[blocknum].GetComponent<Collider>().enabled = false;
-                _allCubeObjects[blocknum].transform
+                /*_allCubeObjects[blocknum].transform
                     .DOScale(
                         new Vector3(_allCubeObjects[blocknum].transform.localScale.x + .5f,
                             _allCubeObjects[blocknum].transform.localScale.y + .7f,
-                            _allCubeObjects[blocknum].transform.localScale.z + 0.7f), 1f);
+                            _allCubeObjects[blocknum].transform.localScale.z + 0.7f), 1f);*/
                 _allCubeObjects[blocknum].transform.GetChild(0).GetComponent<TextMeshPro>().enabled = false;
                 _allCubeObjects[blocknum].transform.GetChild(2).GetComponent<TextMeshPro>().enabled = true;
+                
                 _allCubeObjects[blocknum].transform.GetComponent<Rigidbody>()
-                    .AddForce(new Vector3(0, Random.Range(350, 400), -150));
+                    .AddForce(new Vector3(Random.Range(-200,200), Random.Range(350, 400)* 2,0), ForceMode.Acceleration);
                 _allCubeObjects[blocknum].transform
                     .DORotate(new Vector3(Random.Range(-180, 180), Random.Range(-180, 180), Random.Range(-180, 180)),
                         0.05f)
@@ -1262,12 +1264,12 @@ public class GameManager : MonoBehaviour
 
                 blocknum++;
             }
-            else
+            /*else
             {
                 DOVirtual.DelayedCall(1.25f, () => { UI.NextMoveFun(); },false);
-            }
+            }*/
         });
-        seq.AppendInterval(0.1f);
+        seq.AppendInterval(0.05f);
         seq.SetLoops(_allCubeObjects.Count + 1);
     }
 

@@ -395,7 +395,7 @@ public class UIManagerScript : MonoBehaviour
             tutorialtext.GetComponent<TextMeshProUGUI>().enabled = false;
         }
 		//if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
-		DOVirtual.DelayedCall(1.5f,()=>
+		DOVirtual.DelayedCall(2.5f,()=>
 		{
 			
             var s = GetSpecialLevelNumber().ToString()[^1];
@@ -407,7 +407,7 @@ public class UIManagerScript : MonoBehaviour
             {
 	            DOVirtual.DelayedCall(0.05f, () => { LevelProgressionBarFun(); },false);
             }
-            endScreen.SetActive(true);
+            // endScreen.SetActive(true);
 	            
             ///////////----without double coins load bar ---------/////////
             if (GetSpecialLevelNumber() <= 3)

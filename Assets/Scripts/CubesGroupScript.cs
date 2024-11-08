@@ -72,6 +72,9 @@ public class CubesGroupScript : MonoBehaviour
 	        }
 	        transform.GetChild(0).GetComponent<PlayerCubeScript>().anim = true;
         }
+		
+		GameManager.Instance._allCubeObjects.AddRange(
+			childObjects.Where(obj => !GameManager.Instance._allCubeObjects.Contains(obj)));
 	}
 
     public void AnimSeq()
@@ -142,11 +145,13 @@ public class CubesGroupScript : MonoBehaviour
 					    .color = CoinManager.instance.greenColor;
 				    childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
 					    .color = CoinManager.instance.greenColor;
+				    /*childObjects[countnum].transform.DOScale(Vector3.one * 1.3f,0.1f).SetEase(Ease.Linear)
+					    .SetLoops(2, LoopType.Yoyo);*/
 				    childObjects[countnum].transform.GetChild(0).transform
 					    .DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
 					    .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
 				    childObjects[countnum].transform.GetChild(1).transform
-					    .DOScale(new Vector3(20f, 30f, 15f), 0.1f)
+					    .DOScale(Vector3.one * 1.2f, 0.1f)
 					    .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
 				    countnum++;
 			    });
@@ -175,11 +180,13 @@ public class CubesGroupScript : MonoBehaviour
                 .color = CoinManager.instance.redColor; 
             childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
                 .color = CoinManager.instance.redColor;
+            /*childObjects[countnum].transform.DOScale(Vector3.one * 1.3f,0.1f).SetEase(Ease.Linear)
+	            .SetLoops(2, LoopType.Yoyo);*/
             childObjects[countnum].transform.GetChild(0).transform
                 .DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
                 .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
             childObjects[countnum].transform.GetChild(1).transform
-                .DOScale(new Vector3(20f, 30f, 15f), 0.1f)
+                .DOScale(Vector3.one * 1.2f, 0.1f)
                 .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
             countnum++;
         });
