@@ -392,7 +392,7 @@ public class UIManagerScript : MonoBehaviour
 		if (tutorialHand2)
         {
             tutorialHand2.enabled = false;
-            tutorialtext.GetComponent<TextMeshProUGUI>().enabled = false;
+            if(tutorialtext) tutorialtext.GetComponent<TextMeshProUGUI>().enabled = false;
         }
 		//if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
 		DOVirtual.DelayedCall(2.5f,()=>
