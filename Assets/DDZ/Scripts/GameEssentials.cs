@@ -147,9 +147,9 @@ namespace DDZ
             }
         } 
         
-        public static bool IsRvAvailable() => ApplovinManager.instance.RewardAdsAvailable();
-        public static bool IsBannerAvailable() => ApplovinManager.instance.BannerAdsAvailable();
-        public static bool IsInterstitialAvailable() => ApplovinManager.instance.InterstitialAdsAvailable();
+        public static bool IsRvAvailable() => false;
+        public static bool IsBannerAvailable() => false;
+        public static bool IsInterstitialAvailable() => false;
 
 
         public static void Print(object val) => print(val);
@@ -188,7 +188,7 @@ namespace DDZ
         {
             if(!IsInterstitialAvailable() || !ConnectedToInternet() ) return;
             Print("ShowingAds");
-            ApplovinManager.instance.ShowInterstitialAds_120Sec(placement);
+            //ApplovinManager.instance.ShowInterstitialAds_120Sec(placement);
         }
 
         public static void ShowRewardedAds(string placement)
@@ -196,16 +196,16 @@ namespace DDZ
             if(!IsRvAvailable() || !ConnectedToInternet()) return;
              print("showing Rewarded Ads");
              
-             ApplovinManager.instance.ShowRewardedAds(placement);
+             //ApplovinManager.instance.ShowRewardedAds(placement);
         }
 
         public static void ShowBannerAds()
         {
             if(!ConnectedToInternet()) return;
-            ApplovinManager.instance.ShowBannerAds();
+           // ApplovinManager.instance.ShowBannerAds();
         }
         
-        public static void HideBannerAds() =>  ApplovinManager.instance.HideBannerAds();
+        // public static void HideBannerAds() =>  ApplovinManager.instance.HideBannerAds();
 
         private static bool ConnectedToInternet() => Application.internetReachability != NetworkReachability.NotReachable;
 

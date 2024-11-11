@@ -72,7 +72,7 @@ public class LevelMapInstantiator : MonoBehaviour
         totalLevelCount += 60;
         
         SetContentHeight();
-        CheckCalendarIndicator();
+        // CheckCalendarIndicator();
     }
 
     private void CheckCalendarIndicator()

@@ -12,6 +12,12 @@ public class SavedData
     private const string AudioState = "SoundState";
     private const string HapticState = "HapticState";
 
+    public static int HintTutorial
+    {
+        get => PlayerPrefs.GetInt("Hint", 1);
+        set => PlayerPrefs.SetInt("Hint", value);
+    }
+
 
     // Get Value // Get//
     
