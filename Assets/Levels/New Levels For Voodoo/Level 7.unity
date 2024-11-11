@@ -436,6 +436,10 @@ PrefabInstance:
       value: -6.36
       objectReference: {fileID: 0}
     - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6209641413315200802, guid: 0a2f50c7a9ef67844b2ab7d89a0296c3, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
@@ -2406,7 +2410,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5185339923748389139, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5185339923748389139, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3733,7 +3737,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5185339923748389139, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5185339923748389139, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3833,7 +3837,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5185339923748389139, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5185339923748389139, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4882,9 +4886,17 @@ MonoBehaviour:
     - {fileID: 173289814}
   - completeWordCubeGroup:
     - {fileID: 1734263102}
+  - completeWordCubeGroup:
+    - {fileID: 1734263102}
+  - completeWordCubeGroup:
+    - {fileID: 1734263102}
   completeWordPositionsList:
   - completeWordCubePositionGroup:
     - {x: -0.61, y: 1.19, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 2.84, y: 1.14, z: -3.5}
+  - completeWordCubePositionGroup:
+    - {x: 2.84, y: 1.14, z: -3.5}
   - completeWordCubePositionGroup:
     - {x: 2.84, y: 1.14, z: -3.5}
   canClickNow: 1

@@ -5,6 +5,7 @@ using DDZ;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -54,9 +55,9 @@ public class UIManagerScript : MonoBehaviour
     [Header("Levels changing")]
 	public GameObject starparticleEffect;
 
-	public Image tutorialHand, tutorialHand2;
-    public List<Collider> gameobject1, gameobject2;
-	public List<Vector2> targetPos;
+	public Image tutorialHand;
+    // public List<Collider> gameobject1, gameobject2;
+	// public List<Vector2> targetPos;
 	public GameObject tutorialtext;
 
     // [Space(10)] [Header("Hint Stuff")]
@@ -107,9 +108,31 @@ public class UIManagerScript : MonoBehaviour
     public Button spinwheel;
     [Header("DailyReward")] 
     public Button dailyRewardBtr;
+    
+    [Header("Background Dotted")]
+    [SerializeField] private Canvas bgDottedCanvas;
+
+    [Header("Background Plane")] [SerializeField]
+    private ScrollingTex backgroundPlane;
+
     private void Awake()
 	{
 		if (!Instance) Instance = this;
+		if(SceneManager.GetActiveScene().name == "Map") return;
+		var originalBg = GameObject.Find("Plane");
+		if(!GameObject.Find("BgCanvas"))
+		{
+			var bgCanvas = Instantiate(bgDottedCanvas);
+			bgCanvas.worldCamera = Camera.main;
+		}
+		var directionalLight = FindObjectOfType<Light>();
+		directionalLight.color = Color.white;
+		if(!originalBg.GetComponent<ScrollingTex>())
+		{
+			Destroy(originalBg);
+			Instantiate(backgroundPlane, new Vector3(2.9000001f, 1.29999995f, 0.790000021f),
+				new Quaternion(-0.670953453f, 0.223207206f, -0.223207206f, 0.670953453f));
+		}
 		//CalendarIndicatorCheck();
 	}
 
@@ -235,16 +258,16 @@ public class UIManagerScript : MonoBehaviour
 	{
 		if ((PlayerPrefs.GetInt("Level", 1) == 1))
 		{
-			hintButton.gameObject.SetActive(false);
+			//hintButton.gameObject.SetActive(false);
 			//MonitizationScript.instance.giftObject.SetActive(false);
-			if(GameManager.Instance)
-				GameManager.Instance.ShowTheText();
+			/*if(GameManager.Instance)
+				GameManager.Instance.ShowTheText();*/
 			if(tutorialtext)
 				tutorialtext.SetActive(true);
-			foreach (var t in gameobject2)
+			/*foreach (var t in gameobject2)
 			{
 				t.enabled = false;
-			}
+			}*/
 		}
 
 		if ((GetSpecialLevelNumber() <= 5))
@@ -312,40 +335,7 @@ public class UIManagerScript : MonoBehaviour
 	}
 	public void HelpHand()
 	{
-		if (tutorialHand || tutorialHand2)
-		{
-			if (countnumhelp == 0)
-			{
-				tutorialHand.gameObject.SetActive(true);
-                tutorialHand.enabled = true; 
-				tutorialHand.rectTransform.DOAnchorPos(targetPos[0], 2f).SetEase(Ease.InOutCirc).SetLoops(-1, LoopType.Restart);
-				countnumhelp = 1;
-			}
-            
-			else if (countnumhelp == 1)
-			{
-				//print("tutorial2");
-				tutorialHand2.gameObject.SetActive(true);
-                tutorialHand.enabled = false;
-				tutorialHand2.rectTransform.DOAnchorPos(targetPos[1], 2f).SetEase(Ease.InOutCirc).SetLoops(-1, LoopType.Restart);
-				countnumhelp = 2;
-                foreach (var t in gameobject2)
-                {
-                    t.enabled = true;
-                }
-				/*for (int i = 0; i < gameobject2.Count; i++)
-				{
-					gameobject2[i].enabled = true;
-				}
-				for (int i = 0; i < gameobject1.Count; i++)
-				{
-					gameobject1[i].enabled = false;
-				}*/
-//				print(countnumhelp);
-			
-			}
-		}
-		
+		if (tutorialHand) tutorialHand.gameObject.SetActive(false);
 	}
 	[Header("Claim Coins ParticleEffect")]
 	public RectTransform claimCoinMovePos;
@@ -389,15 +379,14 @@ public class UIManagerScript : MonoBehaviour
 	}
 	public void WinPanelActive()
 	{
-		if (tutorialHand2)
+		/*if (tutorialHand2)
         {
             tutorialHand2.enabled = false;
             if(tutorialtext) tutorialtext.GetComponent<TextMeshProUGUI>().enabled = false;
-        }
+        }*/
 		//if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Coins");
 		DOVirtual.DelayedCall(2.5f,()=>
 		{
-			
             var s = GetSpecialLevelNumber().ToString()[^1];
             MonitizationScript.instance.giftObject.SetActive(false);
             targetCongratulationImage.GetComponent<Image>().sprite =
@@ -408,7 +397,8 @@ public class UIManagerScript : MonoBehaviour
 	            DOVirtual.DelayedCall(0.05f, () => { LevelProgressionBarFun(); },false);
             }
             // endScreen.SetActive(true);
-	            
+            CoinsDoubleClaimFun(10);
+            return;
             ///////////----without double coins load bar ---------/////////
             if (GetSpecialLevelNumber() <= 3)
             {

@@ -502,6 +502,10 @@ public class GameManager : MonoBehaviour
                 s.correctWordMade = true;
                 //Debug.Log("Correct Word");
                 Debug.Log("Words Made " + wordsMade);
+                if (PlayerPrefs.GetInt("Level", 1) == 1)
+                {
+                    UIManagerScript.Instance.HelpHand();
+                }
                 if (wordsAfterWhichToMoveCam.Count > 0)
                 {
                     foreach (var wordNo in wordsAfterWhichToMoveCam)
@@ -681,13 +685,7 @@ public class GameManager : MonoBehaviour
                 {
                     Instantiate(starFX, cube.transform.position, Quaternion.identity);
                     hintSpawnObject = cube;
-                    /*if (PlayerPrefs.GetInt("Level", 1) > 1)
-                    {
-                        CoinManager.instance.HintReduce(50);
-                    }*/
-
-                    if (PlayerPrefs.GetInt("Level", 1) == 1) UIManagerScript.Instance.HelpHand();
-                    //print("instantiated");
+                    // if (PlayerPrefs.GetInt("Level", 1) == 1) UIManagerScript.Instance.HelpHand();
                 }
 
                 for (int j = 0; j < count; j++)

@@ -126,6 +126,11 @@ public class CubesGroupScript : MonoBehaviour
 	    {
 		    //PosCheck();
 		    doneWithWord = true;
+		    if (PlayerPrefs.GetInt("Level", 1) == 1)
+		    {
+			    if (check1done) UIManagerScript.Instance.HelpHand();
+			    check1done = true;
+		    }
 		    DOVirtual.DelayedCall(0.5f, () =>
 		    {
 			    countnum = 0;
@@ -315,9 +320,12 @@ public class CubesGroupScript : MonoBehaviour
 		mouseScreenPos.z = Camera.main!.WorldToScreenPoint(transform.position).z;
 		return Camera.main.ScreenToWorldPoint(mouseScreenPos);
 	}
-
 	private void Update()
 	{
+		if (Input.GetKeyDown(KeyCode.A))
+		{
+			CondToAttachCubesInGrid();
+		}
 		//Debug.Log("isFilledC Value "+ isFilledC);
 		if (Input.GetMouseButtonUp(0) && isFilledC && !GameManager.Instance.scriptOff)
 		{
@@ -488,7 +496,6 @@ public class CubesGroupScript : MonoBehaviour
 	private void AttachTheObj(RaycastHit hitInfo, Transform child)
 	{
 		isFilledC = hitInfo.collider.GetComponent<HolderCubeScript>().isFilled;
-
 	
 		//Debug.Log("isFilled Value " + isFilledC);
 
@@ -509,27 +516,11 @@ public class CubesGroupScript : MonoBehaviour
                 //GameManager.Instance.canPlaceNow = false;
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Pop");
-
-				if (PlayerPrefs.GetInt("Level", 1) == 1)
-				{
-					DOVirtual.DelayedCall(0.3f, () =>
-					{
-						if (!check2done)
-						{
-//							print("checkingObj");
-							GameManager.Instance.ShowTheText();
-							check2done = true;
-						}
-					},false);
-				}
-				
 			}
 		}
 	}
 
 	public bool check1done;
-	public bool check2done; 
-	public bool check3done;
 
     public bool canPlaceNow = false;
     private bool _doneWard = false;
@@ -547,7 +538,7 @@ public class CubesGroupScript : MonoBehaviour
 					var hitInfo = RayCastInfo(child);
                     if (Input.GetMouseButtonUp(0) || canPlaceNow && !_doneWard)
                     {
-                        //Debug.Log("Show");
+						Debug.Log("Show");
                         AttachTheObj(hitInfo, child);
                     }
 				}
