@@ -93,8 +93,8 @@ public class CoinManager : MonoBehaviour
                 hintText.text = GetHintCount().ToString();
                 specialLevelHintText.text = GetHintCount().ToString();
             }
-            
-            progressionBarImage.fillAmount = GetLoaderPercent();
+            ////------Progression bar details
+            /*progressionBarImage.fillAmount = GetLoaderPercent();
             //print(GetLoaderPercent());
             progressionBarText.text = (int)(GetLoaderPercent() * 100) + "%";
             
@@ -108,7 +108,7 @@ public class CoinManager : MonoBehaviour
                 }
                 SetLoaderImageCount(GetLoaderImageCount() + 1);
             }
-            progressionImage.sprite = progressionImageList[GetLoaderImageCount()];
+            progressionImage.sprite = progressionImageList[GetLoaderImageCount()];*/
             
         }
         winEmoji.GetComponent<Image>().sprite = winEmojiSprites[Random.Range(0, winEmojiSprites.Count - 1)];
@@ -138,6 +138,15 @@ public class CoinManager : MonoBehaviour
     public void EmojiReduce()
     {
         CountTextDetails(50);
+    }
+
+    public bool OutOfCoinsReduce(int x)
+    {
+        var totalCoins = GetCoinsCount() - x;
+        var zeroCoins = totalCoins >= 0;
+        if (!zeroCoins) return false;
+        CountTextDetails(x);
+        return true;
     }
     public void CountTextDetails(int cutNum)
     {
@@ -223,7 +232,7 @@ public class CoinManager : MonoBehaviour
     public int Get5050Count() => PlayerPrefs.GetInt("Count5050", 0);
     public void Set5050Count(int count5050) => PlayerPrefs.SetInt("Count5050", count5050);
     
-    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 200);
+    public int GetCoinsCount() => PlayerPrefs.GetInt("Coins Count", 200000);
 
     public void SetCoinCount(int countCoin) => PlayerPrefs.SetInt("Coins Count", countCoin);
     

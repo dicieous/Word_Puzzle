@@ -199,7 +199,7 @@ public class LevelMapInstantiator : MonoBehaviour
             }
             oldLevel = image.transform;
             
-            if (i + startLevel >=level)
+            /*if (i + startLevel >=level)
             {
                 for (int j = 0; j < refLevels.Count; j++)
                 {
@@ -211,7 +211,7 @@ public class LevelMapInstantiator : MonoBehaviour
                         refPrefab.GetComponent<RectTransform>().localScale = Vector3.one;
                     }
                 }
-            }
+            }*/
             //Debug.Log("Called");
         }
 

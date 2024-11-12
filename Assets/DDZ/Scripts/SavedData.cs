@@ -18,6 +18,12 @@ public class SavedData
         set => PlayerPrefs.SetInt("Hint", value);
     }
 
+    public static int MagnetTutorial
+    {
+        get => PlayerPrefs.GetInt("Magnet", 1);
+        set => PlayerPrefs.SetInt("Magnet", value);
+    }
+
 
     // Get Value // Get//
     

@@ -10,6 +10,9 @@ public class LevelLoader : MonoBehaviour
     {
         if (isTesting)
         {
+            PlayerPrefs.SetInt("Level", buildIndex);
+            SavedData.SetLevelNumber(buildIndex);
+            PlayerPrefs.SetInt("SpecialLevelNumber", buildIndex);
             SceneManager.LoadScene(buildIndex);
         }
         else

@@ -132,25 +132,9 @@ public class GameManager : MonoBehaviour
         }*/
 
         starFX = UI.starparticleEffect;
-        if (UIManagerScript.Instance.GetSpecialLevelNumber() < 20)
-        {
-            var num = hintCubesHolder.Count * 2;
-            // movesCount = hintCubesHolder.Count+ num + ((int)(hintCubesHolder.Count/2));
-            movesCount = num;
-        }
-        /*else
-        {
-            movesCount = hintCubesHolder.Count + ((int)(hintCubesHolder.Count/2));
-        }*/
-        var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
-        if (s == '0')
-        {
-            UIManagerScript.Instance.movesText.enabled = false;
-        }
-        else
-        {
-            UIManagerScript.Instance.movesText.text = "Moves: " + movesCount;
-        }
+        var num = hintCubesHolder.Count * 2;
+        movesCount = num; 
+        UIManagerScript.Instance.movesText.text = "Moves: " + movesCount;
     }
 
 //#region Initialize Grid Words
@@ -702,7 +686,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (hintCubesHolder.Count == 0) return;
+            // if (hintCubesHolder.Count == 0) return;
             if (hintCubesHolder[0].gameObject.activeInHierarchy && !hintCubesHolder[0].GetComponent<HintParent>().doneObject)
             {
                 var selectObj = hintCubesHolder[0];
@@ -712,7 +696,7 @@ public class GameManager : MonoBehaviour
                     if (j < selectObj.transform.childCount)
                     {
                         var obj = selectObj.transform.GetChild(j);
-                        obj.GetChild(0).GetComponent<TextMeshPro>().DOFade(217f / 255f, 2f);
+                        obj.GetChild(0).GetComponent<TextMeshPro>().DOFade(1, .5f).SetEase(Ease.Linear);
                     }
                     else
                     {
