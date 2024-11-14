@@ -536,6 +536,7 @@ public class GameManager : MonoBehaviour
                     CoinManager.instance.confettiFx1.Play();
                     if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BlastPopper");
                     UI.WinPanelActive();
+                    // UI.NextSceneLoader();
                     WordsFallingAfterWinFun();
                     // BlockSeqCall();
                     //Debug.Log("LevelComplete");

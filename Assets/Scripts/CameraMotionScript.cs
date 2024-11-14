@@ -153,8 +153,10 @@ public class CameraMotionScript : MonoBehaviour
                     var j1 = j;
                     //print("Color Changed");
                     t.transform.GetChild(j1).GetComponent<Collider>().enabled = true;
-                    t.transform.GetChild(j1).transform.GetChild(0).GetComponent<MeshRenderer>().material =
-                        activatedColorMaterial;
+                    /*t.transform.GetChild(j1).transform.GetChild(0).GetComponent<MeshRenderer>().material =
+                        activatedColorMaterial;   */
+                    t.transform.GetChild(j1).transform.GetComponentInChildren<SpriteRenderer>().enabled =
+                        true;
                     yield return new WaitForSeconds(0.1f);
                 }
             }
@@ -247,8 +249,10 @@ public class CameraMotionScript : MonoBehaviour
 
                 for (int j = 0; j < t.transform.childCount; j++)
                 {
-                    t.transform.GetChild(j).transform.GetChild(0).GetComponent<MeshRenderer>().material =
-                        deactivatedColorMaterial;
+                    /*t.transform.GetChild(j).transform.GetChild(0).GetComponent<MeshRenderer>().material =
+                        deactivatedColorMaterial;*/
+                    t.transform.GetChild(j).transform.GetComponentInChildren<SpriteRenderer>().enabled =
+                        false;
                 }
             }
         }

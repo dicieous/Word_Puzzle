@@ -119,6 +119,7 @@ public class UIManagerScript : MonoBehaviour
 
     [FormerlySerializedAs("tutorialHandImage")] [Header("Tutorial Components")] [SerializeField]
     private Image tutorialBoxHandImage;
+
     [SerializeField] private TextMeshProUGUI tutorialBoxText;
     [SerializeField] private Image tutorialBox;
 
@@ -260,19 +261,19 @@ public class UIManagerScript : MonoBehaviour
             if (SavedData.HintTutorial == 1 && GetSpecialLevelNumber() == 4)
             {
                 GameManager.Instance.scriptOff = true;
-                tutorialBoxHandImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-170,-40);
+                tutorialBoxHandImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-170, -40);
                 tutorialBoxHandImage.gameObject.SetActive(true);
-                tutorialBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-160,95);
+                tutorialBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-160, 95);
                 tutorialBox.gameObject.SetActive(true);
                 tutorialBoxText.text = "Tap to show a group of letters!";
             }
-            
-            if(SavedData.MagnetTutorial == 1 && GetSpecialLevelNumber() == 11)
+
+            if (SavedData.MagnetTutorial == 1 && GetSpecialLevelNumber() == 11)
             {
                 GameManager.Instance.scriptOff = true;
-                tutorialBoxHandImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-170,260);
+                tutorialBoxHandImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-170, 260);
                 tutorialBoxHandImage.gameObject.SetActive(true);
-                tutorialBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-160,400);
+                tutorialBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-160, 400);
                 tutorialBox.gameObject.SetActive(true);
                 tutorialBoxText.text = "Tap the magnet to complete the word!";
             }
@@ -460,7 +461,9 @@ public class UIManagerScript : MonoBehaviour
                 DOVirtual.DelayedCall(0.05f, () => { LevelProgressionBarFun(); }, false);
             }*/
 
-            endScreen.SetActive(true);
+            if (GetSpecialLevelNumber() % 2 == 0) endScreen.SetActive(true);
+            else NextMoveFun();
+
             ///////////----without double coins load bar ---------/////////
             /*if (GetSpecialLevelNumber() <= 3)
             {
@@ -831,14 +834,14 @@ public class UIManagerScript : MonoBehaviour
 
     public void AutoWordCompleteButton()
     {
-        
-        if(SavedData.MagnetTutorial == 1 && GetSpecialLevelNumber() == 11)
+        if (SavedData.MagnetTutorial == 1 && GetSpecialLevelNumber() == 11)
         {
             GameManager.Instance.scriptOff = false;
             tutorialBoxHandImage.gameObject.SetActive(false);
             tutorialBox.gameObject.SetActive(false);
             SavedData.MagnetTutorial = 0;
         }
+
         if (CoinManager.instance.GetCoinsCount() >= autoWordCostValue)
         {
             StartCoroutine(CoinsReduceAnim(instanceImageRef, instancePos, magnetPosDeduct));
@@ -921,6 +924,7 @@ public class UIManagerScript : MonoBehaviour
             tutorialBox.gameObject.SetActive(false);
             SavedData.HintTutorial = 0;
         }
+
         if (CoinManager.instance.GetCoinsCount() >= hintCostValue)
         {
             StartCoroutine(CoinsReduceAnim(instanceImageRef, instancePos, hintPosDeduct));
@@ -1257,6 +1261,7 @@ public class UIManagerScript : MonoBehaviour
         {
             /////-----Out of Coins text
         }
+
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
     }
@@ -1479,6 +1484,7 @@ public class UIManagerScript : MonoBehaviour
         {
             SceneManager.LoadScene(PlayerPrefs.GetInt("Level", 1));
         }
+
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
     }
