@@ -51,7 +51,7 @@ public class CoinManager : MonoBehaviour
     {
         coinCountText.text = GetCoinsCount().ToString();
         
-        var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
+        var s = SavedData.GetSpecialLevelNumber().ToString()[^1];
         if (s != '0')
         {
             if (GameManager.Instance)
@@ -128,7 +128,7 @@ public class CoinManager : MonoBehaviour
         hintCounter++;
         if (ByteBrewManager.instance)
         {
-            ByteBrewManager.instance.ProgressEvent(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),
+            ByteBrewManager.instance.ProgressEvent(SavedData.GetSpecialLevelNumber().ToString(),
                 hintCounter.ToString(), "NormalMode", "Hints");
         }
 
@@ -194,7 +194,7 @@ public class CoinManager : MonoBehaviour
             
         }
 
-        var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
+        var s = SavedData.GetSpecialLevelNumber().ToString()[^1];
         if (s != '0')
         {
             if (GetCoinsCount() >= 100)

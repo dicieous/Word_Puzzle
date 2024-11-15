@@ -88,7 +88,7 @@ public class MonitizationScript : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1) return;
 
         // bubbleTimeLimit -= Time.deltaTime;
-        if (bubbleTimeLimit <= 0 && UIManagerScript.Instance.GetSpecialLevelNumber() > 5)
+        if (bubbleTimeLimit <= 0 && SavedData.GetSpecialLevelNumber() > 5)
         {
             GameEssentials.instance.bubbleTime = hintBubble.GetComponent<Image>().enabled ? 30f : 120f;
             hintBubble.GetComponent<Image>().enabled = true;
@@ -119,7 +119,7 @@ public class MonitizationScript : MonoBehaviour
 
     private void OnBubbleBtnPress()
     {
-        GameEssentials.instance.bubbleTime = UIManagerScript.Instance.GetSpecialLevelNumber() < 31 ? 60 : 80;
+        GameEssentials.instance.bubbleTime = SavedData.GetSpecialLevelNumber() < 31 ? 60 : 80;
         GameEssentials.RvType = RewardType.BubbleRv;
         GameEssentials.ShowRewardedAds("Bubble2X");
     }

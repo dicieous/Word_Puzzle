@@ -386,7 +386,7 @@ public class SpinWheelManager : SingletonInstance<SpinWheelManager>
     public void OpenSpinWheel()
     {
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
-        if (UIManagerScript.Instance.GetSpecialLevelNumber() < 20)
+        if (SavedData.GetSpecialLevelNumber() < 20)
         {
             var calVal = spinWheelBtn.transform.GetChild(0);
             print(":Scale"+calVal.localScale.x);

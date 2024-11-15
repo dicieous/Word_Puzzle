@@ -10,14 +10,13 @@ public class LevelLoader : MonoBehaviour
     {
         if (isTesting)
         {
-            PlayerPrefs.SetInt("Level", buildIndex);
-            SavedData.SetLevelNumber(buildIndex);
+            SavedData.SetSpecialLevelNumber( buildIndex);
             PlayerPrefs.SetInt("SpecialLevelNumber", buildIndex);
             SceneManager.LoadScene(buildIndex);
         }
         else
         {
-            /*if (PlayerPrefs.GetInt("Level", 1) >= 2)
+            /*if (SavedData.GetSpecialLevelNumber() >= 2)
             {
                 SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
             }*/
@@ -25,15 +24,15 @@ public class LevelLoader : MonoBehaviour
             {
                 SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 2);
             }*/
-            if (PlayerPrefs.GetInt("Level", 1) >= 2)
+            if (SavedData.GetSpecialLevelNumber() >= 4)
             {
                 SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
             }
             else
             {
-                SceneManager.LoadScene(PlayerPrefs.GetInt("Level") >= SceneManager.sceneCountInBuildSettings 
+                SceneManager.LoadScene(SavedData.GetLevelNumber() >= SceneManager.sceneCountInBuildSettings - 34
                     ? PlayerPrefs.GetInt("ThisLevel")
-                    : PlayerPrefs.GetInt("Level", 1));
+                    : SavedData.GetLevelNumber());
             }
         }
     }

@@ -126,7 +126,7 @@ public class CubesGroupScript : MonoBehaviour
 	    {
 		    //PosCheck();
 		    doneWithWord = true;
-		    if (PlayerPrefs.GetInt("Level", 1) == 1)
+		    if (SavedData.GetSpecialLevelNumber() == 1)
 		    {
 			    if (check1done) UIManagerScript.Instance.HelpHand();
 			    check1done = true;

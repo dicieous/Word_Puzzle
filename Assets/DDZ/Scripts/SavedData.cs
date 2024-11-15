@@ -36,7 +36,8 @@ public class SavedData
 
     public static string GetSoundState()=>PlayerPrefs.GetString(AudioState, "On");
     public static string GetHapticState()=>PlayerPrefs.GetString(HapticState, "On");
-
+    public static int GetSpecialLevelNumber() => PlayerPrefs.GetInt("SpecialLevelNumber", 1);
+    public static void SetSpecialLevelNumber(int levelNum) => PlayerPrefs.SetInt("SpecialLevelNumber", levelNum);
 
     // Set Value // Set//
     

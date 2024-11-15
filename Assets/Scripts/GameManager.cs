@@ -229,7 +229,7 @@ public class GameManager : MonoBehaviour
                 }
             });
         }
-        if (UIManagerScript.Instance.GetSpecialLevelNumber() > 10)
+        if (SavedData.GetSpecialLevelNumber() > 10)
         {
             if (movesCount <= 0 && !levelCompleted && !levelFail)
             {
@@ -487,7 +487,7 @@ public class GameManager : MonoBehaviour
                 s.correctWordMade = true;
                 //Debug.Log("Correct Word");
                 Debug.Log("Words Made " + wordsMade);
-                if (PlayerPrefs.GetInt("Level", 1) == 1)
+                if (SavedData.GetSpecialLevelNumber() == 1)
                 {
                     UIManagerScript.Instance.HelpHand();
                 }
@@ -642,12 +642,12 @@ public class GameManager : MonoBehaviour
             {
                 Instantiate(starFX, cube.transform.position, Quaternion.identity);
                 hintSpawnObject = cube;
-                /*if (PlayerPrefs.GetInt("Level", 1) > 1)
+                /*if (SavedData.GetSpecialLevelNumber() > 1)
                 {
                     CoinManager.instance.HintReduce(50);
                 }#1#
 
-                if (PlayerPrefs.GetInt("Level", 1) == 1) UIManagerScript.Instance.HelpHand();
+                if (SavedData.GetSpecialLevelNumber() == 1) UIManagerScript.Instance.HelpHand();
                 //print("instantiated");
             }
 
@@ -661,7 +661,7 @@ public class GameManager : MonoBehaviour
 
             break;
         }*/
-        if (UIManagerScript.Instance.GetSpecialLevelNumber() == 1)
+        if (SavedData.GetSpecialLevelNumber() == 1)
         {
             foreach (var cube in hintCubesHolder)
             {
@@ -671,7 +671,7 @@ public class GameManager : MonoBehaviour
                 {
                     Instantiate(starFX, cube.transform.position, Quaternion.identity);
                     hintSpawnObject = cube;
-                    // if (PlayerPrefs.GetInt("Level", 1) == 1) UIManagerScript.Instance.HelpHand();
+                    // if (SavedData.GetSpecialLevelNumber() == 1) UIManagerScript.Instance.HelpHand();
                 }
 
                 for (int j = 0; j < count; j++)

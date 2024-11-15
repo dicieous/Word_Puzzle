@@ -39,7 +39,7 @@ public class LevelsPicInstantiator : MonoBehaviour
     void ShowTheActiveLevel()
     {
         Debug.Log("2");
-        var activeLevel = PlayerPrefs.GetInt("Level");
+        var activeLevel = SavedData.GetSpecialLevelNumber();
         //Debug.Log("Active Level " + activeLevel);
 
         var child = transform.GetChild(activeLevel);

@@ -44,8 +44,8 @@ public class LevelMapInstantiator : MonoBehaviour
     void Start()
     {
         isNewLevel= false;
-        //level = PlayerPrefs.GetInt("Level", 1);
-        level = UIManagerScript.Instance.GetSpecialLevelNumber();
+        //level = SavedData.GetSpecialLevelNumber();
+        level = SavedData.GetSpecialLevelNumber();
         
         if (!PlayerPrefs.HasKey("RoadLevel"))
         {
@@ -79,7 +79,7 @@ public class LevelMapInstantiator : MonoBehaviour
     {
         var calenderIndicator = UIManagerScript.Instance.calenderButton.transform.GetChild(2).GetComponent<Image>();
         var todayDateCheck =  PlayerPrefs.GetInt("DailyChallenges_" + GameEssentials.GameStartTime.Day + GameEssentials.GameStartTime.Month + GameEssentials.GameStartTime.Year, 0);
-        calenderIndicator.enabled = UIManagerScript.Instance.GetSpecialLevelNumber() >= 30 && todayDateCheck == 0;
+        calenderIndicator.enabled = SavedData.GetSpecialLevelNumber() >= 30 && todayDateCheck == 0;
     }
 
     private void SetContentHeight()

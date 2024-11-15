@@ -220,7 +220,7 @@ namespace DDZ
               case RewardType.None:
                   break;
               case RewardType.Hint:
-                  var s = UIManagerScript.Instance.GetSpecialLevelNumber().ToString()[^1];
+                  var s = SavedData.GetSpecialLevelNumber().ToString()[^1];
                   if(s=='0') EmojiManager.Instance.SpecialHint_CallBack();
                   else UIManagerScript.Instance.Hint_CallBack();
                   break;
