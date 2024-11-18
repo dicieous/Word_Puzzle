@@ -117,6 +117,7 @@ public class UIManagerScript : MonoBehaviour
     [Header("Background Plane")] [SerializeField]
     private ScrollingTex backgroundPlane;
 
+    [Header("Checker Background"),SerializeField] private SpriteRenderer checkerBackground;
     [FormerlySerializedAs("tutorialHandImage")] [Header("Tutorial Components")] [SerializeField]
     private Image tutorialBoxHandImage;
 
@@ -131,20 +132,20 @@ public class UIManagerScript : MonoBehaviour
         if (!Instance) Instance = this;
         if (SceneManager.GetActiveScene().name == "Map" || SceneManager.GetActiveScene().name == "Picto") return;
         var originalBg = GameObject.Find("Plane");
-        if (!GameObject.Find("BgCanvas"))
+        if (GameObject.Find("BgCanvas"))
         {
-            var bgCanvas = Instantiate(bgDottedCanvas);
-            bgCanvas.worldCamera = Camera.main;
+            Destroy(GameObject.Find("BgCanvas"));
         }
 
         var directionalLight = FindObjectOfType<Light>();
         directionalLight.color = Color.white;
-        if (!originalBg.GetComponent<ScrollingTex>())
+        Instantiate(checkerBackground);
+        /*if (!originalBg.GetComponent<ScrollingTex>())
         {
             Destroy(originalBg);
             Instantiate(backgroundPlane, new Vector3(2.9000001f, 1.29999995f, 0.790000021f),
                 new Quaternion(-0.670953453f, 0.223207206f, -0.223207206f, 0.670953453f));
-        }
+        }*/
 
         print("Hint Data::" + SavedData.HintTutorial);
         //CalendarIndicatorCheck();
