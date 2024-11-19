@@ -24,6 +24,12 @@ public class SavedData
         set => PlayerPrefs.SetInt("Magnet", value);
     }
 
+    public static bool SoundToggle
+    {
+        get => PlayerPrefs.GetInt("Sound", 1) == 1;
+        set => PlayerPrefs.SetInt("Sound", value ? 1 : 0);
+    }
+
 
     // Get Value // Get//
     

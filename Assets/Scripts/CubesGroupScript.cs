@@ -145,18 +145,22 @@ public class CubesGroupScript : MonoBehaviour
 						    UIManagerScript.Instance.AutoButtonActiveFun();
 					    },false);
 				    }
-
-				    childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+				    print($"{countnum}:::{childObjects.Count}");
+				    childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().material
 					    .color = CoinManager.instance.greenColor;
-				    childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
-					    .color = CoinManager.instance.greenColor;
+				    childObjects[countnum].transform.GetChild(3).GetComponent<SpriteRenderer>().color = new Color(0.8f, 1f, 0.38f);
+				    /*childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+					    .color = CoinManager.instance.greenColor;*/
 				    /*childObjects[countnum].transform.DOScale(Vector3.one * 1.3f,0.1f).SetEase(Ease.Linear)
 					    .SetLoops(2, LoopType.Yoyo);*/
 				    childObjects[countnum].transform.GetChild(0).transform
 					    .DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
 					    .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
-				    childObjects[countnum].transform.GetChild(1).transform
+				    /*childObjects[countnum].transform.GetChild(1).transform
 					    .DOScale(Vector3.one * 1.2f, 0.1f)
+					    .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);*/
+				    childObjects[countnum].transform.GetChild(3).transform
+					    .DOScale(Vector3.one * 1.4f, 0.1f)
 					    .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
 				    countnum++;
 			    });
@@ -181,18 +185,22 @@ public class CubesGroupScript : MonoBehaviour
         var seq = DOTween.Sequence();
         seq.AppendCallback(() =>
         {
-            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().material
                 .color = CoinManager.instance.redColor; 
-            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
-                .color = CoinManager.instance.redColor;
+            /*childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+                .color = CoinManager.instance.redColor;*/
+            childObjects[countnum].transform.GetChild(3).GetComponent<SpriteRenderer>().color = new Color(0.98f, 0.47f, 0.3f);
             /*childObjects[countnum].transform.DOScale(Vector3.one * 1.3f,0.1f).SetEase(Ease.Linear)
 	            .SetLoops(2, LoopType.Yoyo);*/
             childObjects[countnum].transform.GetChild(0).transform
                 .DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
                 .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
-            childObjects[countnum].transform.GetChild(1).transform
+            /*childObjects[countnum].transform.GetChild(1).transform
                 .DOScale(Vector3.one * 1.2f, 0.1f)
-                .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+                .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);*/
+            childObjects[countnum].transform.GetChild(3).transform
+	            .DOScale(Vector3.one * 1.4f, 0.1f)
+	            .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
             countnum++;
         });
         seq.AppendInterval(0.05f);
@@ -228,10 +236,11 @@ public class CubesGroupScript : MonoBehaviour
             }
             else
             {
-                childObjects[countBackNum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+                childObjects[countBackNum].transform.GetChild(1).GetComponent<MeshRenderer>().material
                     .color = Color.white; 
-                childObjects[countBackNum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
-                    .color = Color.white;
+                /*childObjects[countBackNum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+                    .color = Color.white;*/
+                childObjects[countBackNum].transform.GetChild(3).GetComponent<SpriteRenderer>().color = Color.white;
             }
             countBackNum++;
         });

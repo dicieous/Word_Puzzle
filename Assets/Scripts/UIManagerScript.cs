@@ -47,11 +47,14 @@ public class UIManagerScript : MonoBehaviour
 
     [Header("hint Button Details")] public GameObject hintObj;
 
+    public int hintUnlockedLevel;
     public int hintCostValue;
     public Button hintButton;
     public Button specialHintButton;
     [Header("Restart Button Details")] public Button restartButton;
-    [Header("AutoWord Details")] public int autoWordCostValue;
+    [Header("AutoWord Details")] 
+    public int autoWordUnlockedLevel;
+    public int autoWordCostValue;
     public Button autoWordButton;
     public bool autoWordDisableWordBool;
     [Header("EmojiReveal")] public Button emojiRevealButton;
@@ -117,7 +120,9 @@ public class UIManagerScript : MonoBehaviour
     [Header("Background Plane")] [SerializeField]
     private ScrollingTex backgroundPlane;
 
-    [Header("Checker Background"),SerializeField] private SpriteRenderer checkerBackground;
+    [Header("Checker Background"), SerializeField]
+    private SpriteRenderer checkerBackground;
+
     [FormerlySerializedAs("tutorialHandImage")] [Header("Tutorial Components")] [SerializeField]
     private Image tutorialBoxHandImage;
 
@@ -127,6 +132,15 @@ public class UIManagerScript : MonoBehaviour
 
     [Header("Current Level Components")] [SerializeField]
     private Image[] dots;
+
+    [SerializeField] public GameObject levelNumberProgression;
+    
+    [Header("Locked Sprite"), SerializeField] private Sprite lockedSprite;
+
+    [Header("Sound Components")] 
+    public Button soundButton;
+    public Sprite soundOn, soundOff;
+
     private void Awake()
     {
         if (!Instance) Instance = this;
@@ -137,9 +151,12 @@ public class UIManagerScript : MonoBehaviour
             Destroy(GameObject.Find("BgCanvas"));
         }
 
+        originalBg.transform.rotation = Quaternion.Euler(-90, 0, 0);
+        originalBg.transform.localScale = new Vector3(10, 1, 10);
+        if (originalBg.GetComponent<ScrollingTex>()) originalBg.GetComponent<ScrollingTex>().enabled = false;
         var directionalLight = FindObjectOfType<Light>();
         directionalLight.color = Color.white;
-        Instantiate(checkerBackground);
+        // Instantiate(checkerBackground);
         /*if (!originalBg.GetComponent<ScrollingTex>())
         {
             Destroy(originalBg);
@@ -149,6 +166,21 @@ public class UIManagerScript : MonoBehaviour
 
         print("Hint Data::" + SavedData.HintTutorial);
         //CalendarIndicatorCheck();
+    }
+
+
+    private void BackgroundMusic()
+    {
+        if (!SavedData.SoundToggle)
+        {
+            soundButton.transform.GetChild(0).GetComponent<Image>().sprite = soundOff;
+            SoundHapticManager.Instance.Pause("BG_Music");
+        }
+        else
+        {
+            soundButton.transform.GetChild(0).GetComponent<Image>().sprite = soundOn;
+            SoundHapticManager.Instance.Play("BG_Music");
+        }
     }
 
     private void CalendarIndicatorCheck()
@@ -162,6 +194,12 @@ public class UIManagerScript : MonoBehaviour
     private void Start()
     {
         StartButtonActivateFun();
+        soundButton.onClick.AddListener(() =>
+        {
+            SavedData.SoundToggle = !SavedData.SoundToggle;
+            BackgroundMusic();
+            // soundButton.transform.GetChild(0).GetComponent<Image>().sprite = SavedData.SoundToggle ? soundOff : soundOn;
+        });
         // autoWordButton.interactable = true;
         MonitizationScript.instance.giftObject.SetActive(false);
         if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
@@ -173,6 +211,7 @@ public class UIManagerScript : MonoBehaviour
             levelNo.gameObject.SetActive(false);
             movesText.gameObject.SetActive(false);
             emojiRevealButton.gameObject.SetActive(false);
+            levelNumberProgression.SetActive(false);
         }
         else
         {
@@ -262,22 +301,22 @@ public class UIManagerScript : MonoBehaviour
                 if (GAScript.instance) GAScript.instance.LevelStart(SavedData.GetSpecialLevelNumber().ToString(), levelAttempts);
             }
 
-            if (SavedData.HintTutorial == 1 && SavedData.GetSpecialLevelNumber() == 4)
+            if (SavedData.HintTutorial == 1 && SavedData.GetSpecialLevelNumber() == hintUnlockedLevel)
             {
                 GameManager.Instance.scriptOff = true;
-                tutorialBoxHandImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-170, -40);
+                tutorialBoxHandImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, 115);
                 tutorialBoxHandImage.gameObject.SetActive(true);
-                tutorialBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-160, 95);
+                tutorialBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-350, 250);
                 tutorialBox.gameObject.SetActive(true);
                 tutorialBoxText.text = "Tap to show a group of letters!";
             }
 
-            if (SavedData.MagnetTutorial == 1 && SavedData.GetSpecialLevelNumber() == 11)
+            if (SavedData.MagnetTutorial == 1 && SavedData.GetSpecialLevelNumber() == autoWordUnlockedLevel)
             {
                 GameManager.Instance.scriptOff = true;
-                tutorialBoxHandImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-170, 260);
+                tutorialBoxHandImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-230, 115);
                 tutorialBoxHandImage.gameObject.SetActive(true);
-                tutorialBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-160, 400);
+                tutorialBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-180, 250);
                 tutorialBox.gameObject.SetActive(true);
                 tutorialBoxText.text = "Tap the magnet to complete the word!";
             }
@@ -309,9 +348,9 @@ public class UIManagerScript : MonoBehaviour
                 break;
         }
         
+        BackgroundMusic();
         DotsFill();
     }
-
 
 
     private void DotsFill()
@@ -328,6 +367,7 @@ public class UIManagerScript : MonoBehaviour
                 dotsCount = 2;
             }
         }
+
         for (int i = 0; i < dotsCount; i++)
         {
             dots[i].gameObject.SetActive(true);
@@ -350,9 +390,15 @@ public class UIManagerScript : MonoBehaviour
             }*/
         }
 
-        if ((SavedData.GetSpecialLevelNumber() <= 10))
+        if ((SavedData.GetSpecialLevelNumber() <= autoWordUnlockedLevel - 1))
         {
-            autoWordButton.gameObject.SetActive(false);
+            // autoWordButton.gameObject.SetActive(false);
+            autoWordButton.interactable = false;
+            autoWordButton.GetComponent<Image>().sprite = lockedSprite;
+            autoWordButton.transform.GetChild(1).gameObject.SetActive(false); // Cost Value Text
+            autoWordButton.transform.GetChild(5).gameObject.SetActive(true); // Locked Text
+            autoWordButton.transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = $"Level {autoWordUnlockedLevel}"; // Locked Text
+            autoWordButton.transform.GetChild(4).GetComponent<Image>().enabled = false;
         }
 
         /*if (GetSpecialLevelNumber() <= 3)
@@ -364,9 +410,16 @@ public class UIManagerScript : MonoBehaviour
             movesText.gameObject.SetActive(false);
         }
 
-        if (SavedData.GetSpecialLevelNumber() <= 3)
+        if (SavedData.GetSpecialLevelNumber() <= hintUnlockedLevel - 1)
         {
-            hintButton.gameObject.SetActive(false);
+            // hintButton.gameObject.SetActive(false);
+            hintButton.interactable = false;
+            hintButton.GetComponent<Image>().sprite = lockedSprite;
+            hintButton.transform.GetChild(1).gameObject.SetActive(false); // Cost Value Text
+            hintButton.transform.GetChild(5).gameObject.SetActive(true); // Locked Text
+            hintButton.transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = $"Level {hintUnlockedLevel}"; // Locked Texts
+            hintButton.transform.GetChild(4).GetComponent<Image>().enabled = false; // Coin Image
+
         }
 
         if ((SavedData.GetSpecialLevelNumber() == 11))
@@ -773,6 +826,7 @@ public class UIManagerScript : MonoBehaviour
     //private bool _autoButtonActivate;
     public void AutoButtonActiveFun()
     {
+        if(SavedData.GetSpecialLevelNumber() <= autoWordUnlockedLevel - 1) return;
         if (!GameManager.Instance) return;
         autoWordDisableWordBool = false;
         if (!GameManager.Instance.levelCompleted && !GameManager.Instance.autoWordClick)
@@ -839,7 +893,6 @@ public class UIManagerScript : MonoBehaviour
             tutorialBox.gameObject.SetActive(false);
             SavedData.MagnetTutorial = 0;
         }
-
         if (CoinManager.instance.GetCoinsCount() >= autoWordCostValue)
         {
             StartCoroutine(CoinsReduceAnim(instanceImageRef, instancePos, magnetPosDeduct));
@@ -964,6 +1017,7 @@ public class UIManagerScript : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     public void HintButtonActiveFun()
     {
+        if (SavedData.GetSpecialLevelNumber() <= hintUnlockedLevel - 1) return;
         DOVirtual.DelayedCall(0.2f, () =>
         {
             if (GameManager.Instance.hintCubesHolder.Count == 0) return;
@@ -1140,6 +1194,7 @@ public class UIManagerScript : MonoBehaviour
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
         }
         else NextMoveFun();
+
         nextButton.interactable = false;
     }
 
@@ -1454,7 +1509,6 @@ public class UIManagerScript : MonoBehaviour
         }
         ///if(GAScript.instance) GAScript.instance.LevelStart(GetSpecialLevelNumber().ToString(),levelAttempts);
     }
-    
 
 
     public int GetLevelNumberDetails() => PlayerPrefs.GetInt("LevelNumberDetails", 1);

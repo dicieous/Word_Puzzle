@@ -168,7 +168,7 @@ public class CoinManager : MonoBehaviour
     }
     public void AutoWordReduce()
     {
-        CountTextDetails(100);
+        CountTextDetails(UIManagerScript.Instance.autoWordCostValue);
         /*if (ByteBrewManager.instance)
            {
                ByteBrewManager.instance.ProgressEvent(UIManagerScript.Instance.GetSpecialLevelNumber().ToString(),

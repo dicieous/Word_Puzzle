@@ -1235,6 +1235,7 @@ public class GameManager : MonoBehaviour
                             _allCubeObjects[blocknum].transform.localScale.z + 0.7f), 1f);*/
                 _allCubeObjects[blocknum].transform.GetChild(0).GetComponent<TextMeshPro>().enabled = false;
                 _allCubeObjects[blocknum].transform.GetChild(2).GetComponent<TextMeshPro>().enabled = true;
+                _allCubeObjects[blocknum].transform.GetChild(3).GetComponent<SpriteRenderer>().enabled = false;
                 
                 _allCubeObjects[blocknum].transform.GetComponent<Rigidbody>()
                     .AddForce(new Vector3(Random.Range(-200,200), Random.Range(350, 400)* 2,0), ForceMode.Acceleration);
