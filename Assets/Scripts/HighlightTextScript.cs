@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,6 +9,12 @@ public class HighlightTextScript : MonoBehaviour
 	[HideInInspector]
 	public bool isVisible = false;
 	public bool done;
+
+	private void Start()
+	{
+		transform.position = new Vector3(transform.position.x, transform.position.y, -0.4f);
+	}
+
 	private void OnTriggerEnter(Collider other)
 	{
 		//if (!other.gameObject.CompareTag("Player_Cube")) return;

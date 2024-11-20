@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
@@ -404,7 +405,8 @@ public class GameManager : MonoBehaviour
                     //Debug.Log(madeword + " The word you made");
                     if (canInstantiate)
                     {
-                        Instantiate(complementPrefab, instPos.position, Quaternion.identity);
+                        // Instantiate(complementPrefab, instPos.position, Quaternion.identity);
+                        UIManagerScript.Instance.GetComponent<FloatingTextScript>().TextExpression();
                         instTime = 1f;
                         canInstantiate = false;
                     }
@@ -505,7 +507,8 @@ public class GameManager : MonoBehaviour
                 
                 if (canInstantiate && wordsAfterWhichToMoveCam.Count <= 0)
                 {
-                    Instantiate(complementPrefab, instPos.position, Quaternion.identity);
+                    // Instantiate(complementPrefab, instPos.position, Quaternion.identity);
+                    UIManagerScript.Instance.GetComponent<FloatingTextScript>().TextExpression();
                     instTime = 1f;
                     canInstantiate = false;
                 }

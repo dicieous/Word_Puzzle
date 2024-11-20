@@ -174,12 +174,12 @@ public class UIManagerScript : MonoBehaviour
         if (!SavedData.SoundToggle)
         {
             soundButton.transform.GetChild(0).GetComponent<Image>().sprite = soundOff;
-            SoundHapticManager.Instance.Pause("BG_Music");
+            if(SoundHapticManager.Instance) SoundHapticManager.Instance.Pause("BG_Music");
         }
         else
         {
             soundButton.transform.GetChild(0).GetComponent<Image>().sprite = soundOn;
-            SoundHapticManager.Instance.Play("BG_Music");
+            if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BG_Music");
         }
     }
 
