@@ -31,8 +31,15 @@ public class CubesGroupScript : MonoBehaviour
 	
 	[FormerlySerializedAs("_doneWithWord")] public bool doneWithWord;
 	[FormerlySerializedAs("canPlaceCheck")] public bool canNotPlace;
+
+	public int letterCount;
+
+	private Tween _clickTween;
+	
+	public List<GameObject> tempList;
 	void Start()
 	{
+		letterCount = childObjects.Count;
 		_initPos = transform.position;
 
 		initialPos = new Vector3[childObjects.Count];
@@ -278,7 +285,10 @@ public class CubesGroupScript : MonoBehaviour
 				UIManagerScript.Instance.hintButton.interactable = false;
 				UIManagerScript.Instance.emojiRevealButton.interactable = false;
 			}
-				
+			if(!_clickTween.IsActive())
+			{
+				_clickTween = transform.DOMoveY(position.y, 0.15f).SetEase(Ease.Flash);
+			}
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 			if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		}

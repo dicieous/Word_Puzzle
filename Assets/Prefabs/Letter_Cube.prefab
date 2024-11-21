@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1568243399041238347}
   - component: {fileID: 1827967581898260437}
   - component: {fileID: 2993427281339464173}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Letter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 2425014579304215170}
   - component: {fileID: 4148490482053643137}
   - component: {fileID: 6783209919625516775}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Letter_Cube
   m_TagString: Player_Cube
   m_Icon: {fileID: 0}
@@ -298,6 +298,9 @@ MonoBehaviour:
   anim: 0
   stickingCubeObjRef: {fileID: 0}
   startPos: {x: 0, y: 0, z: 0}
+  cubeLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &6711738244031078266
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +313,7 @@ GameObject:
   - component: {fileID: 2780292912027010443}
   - component: {fileID: 2338493841057285020}
   - component: {fileID: 6921716934110566945}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,7 +413,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5245030113095858774}
   - component: {fileID: 6549569660283131437}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AnswerCube Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -495,7 +498,7 @@ GameObject:
   - component: {fileID: 4104260833818413207}
   - component: {fileID: 3928891622484983683}
   - component: {fileID: 6720992991307097995}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Letter (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
