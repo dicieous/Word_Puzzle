@@ -40,14 +40,6 @@ public class CubesGroupScript : MonoBehaviour
 	void Start()
 	{
 		letterCount = childObjects.Count;
-		_initPos = transform.position;
-
-		initialPos = new Vector3[childObjects.Count];
-		for (int i = 0; i < childObjects.Count; i++)
-		{
-			initialPos[i] = childObjects[i].transform.position;
-			//Debug.Log("Initial Position get " + initialPos[i]);
-		}
 		
 		for (int i = 0; i < GameManager.Instance.completeWordCubesList.Count; i++)
 		{
@@ -84,6 +76,16 @@ public class CubesGroupScript : MonoBehaviour
 			childObjects.Where(obj => !GameManager.Instance._allCubeObjects.Contains(obj)));
 	}
 
+	public void StartPositionAssignFun(Vector3 pos)
+	{
+		_initPos = pos;
+		initialPos = new Vector3[childObjects.Count];
+		for (int i = 0; i < childObjects.Count; i++)
+		{
+			initialPos[i] = childObjects[i].transform.position;
+			//Debug.Log("Initial Position get " + initialPos[i]);
+		}
+	}
     public void AnimSeq()
     {
 //	    print("animseqCall");
@@ -133,6 +135,7 @@ public class CubesGroupScript : MonoBehaviour
 	    {
 		    //PosCheck();
 		    doneWithWord = true;
+		    LetterGroupSet.OnLetterGroupSet ?.Invoke();
 		    if (SavedData.GetSpecialLevelNumber() == 1)
 		    {
 			    if (check1done) UIManagerScript.Instance.HelpHand();

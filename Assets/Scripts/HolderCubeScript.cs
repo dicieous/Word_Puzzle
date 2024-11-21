@@ -28,7 +28,7 @@ public class HolderCubeScript : MonoBehaviour
 
     private void Update()
     {
-        if (isFilled) return;
+        // if (isFilled) return;
         var rayOrigin = transform.position;
         var rayDirection = transform.TransformDirection(Vector3.back);
         RaycastHit hit;
