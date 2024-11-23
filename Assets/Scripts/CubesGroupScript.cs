@@ -395,9 +395,12 @@ public class CubesGroupScript : MonoBehaviour
 		        //Debug.Log("Check Start");
 	        });
 			
-	        for (int i = 0; i < childObjects.Count; i++)
+	        if(!LetterGroupSet.instance.lettersSpawning)
 	        {
-		        childObjects[i].transform.DOMove(initialPos[i], 0.2f).SetEase(Ease.Flash);
+		        for (int i = 0; i < childObjects.Count; i++)
+		        {
+			        childObjects[i].transform.DOMove(initialPos[i], 0.2f).SetEase(Ease.Flash);
+		        }
 	        }
         }
         //transform.position = _initPos;

@@ -24,6 +24,7 @@ public class LetterGroupSet : SingletonInstance<LetterGroupSet>
 
     private void OnEnable()
     {
+        lettersSpawning = true;
         OnLetterGroupSet += RemoveElement;
     }
 
@@ -49,7 +50,8 @@ public class LetterGroupSet : SingletonInstance<LetterGroupSet>
         letterSets.AddRange(GetComponentsInChildren<CubesGroupScript>(true));
         foreach (var letterSet in letterSets)
         {
-            letterSet.gameObject.SetActive(false);
+            if(!letterSet.canPlaceNow)
+                letterSet.gameObject.SetActive(false);
         }
 
         _completeWordCubesList = GameManager.Instance.completeWordCubesList;
@@ -119,11 +121,14 @@ public class LetterGroupSet : SingletonInstance<LetterGroupSet>
 
         foreach (var currentlyActiveSet in currentlyActiveSets)
         {
-            currentlyActiveSet.gameObject.SetActive(true);
-            currentlyActiveSet.transform.DOScale(0, .5f).SetEase(Ease.OutBack).From().OnComplete(() =>
+            if(!currentlyActiveSet.canPlaceNow)
             {
-                currentlyActiveSet.StartPositionAssignFun(currentlyActiveSet.transform.position);
-            });
+                currentlyActiveSet.gameObject.SetActive(true);
+                currentlyActiveSet.transform.DOScale(0, .5f).SetEase(Ease.OutBack).From().OnComplete(() =>
+                {
+                    currentlyActiveSet.StartPositionAssignFun(currentlyActiveSet.transform.position);
+                });
+            }
         }
 
         DOVirtual.DelayedCall(1f, ()=>

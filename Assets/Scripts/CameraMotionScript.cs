@@ -199,7 +199,7 @@ public class CameraMotionScript : MonoBehaviour
                             else if (i == numColliders)
                             {
                                 GameManager.Instance.cameraMoving = false;
-                                //UIManagerScript.Instance.AutoButtonActiveFun();
+                                UIManagerScript.Instance.AutoButtonActiveFun();
                                 UIManagerScript.Instance.HintButtonActiveFun(); 
                                 UIManagerScript.Instance.EmojiRevelButtonActiveFun();
                             }

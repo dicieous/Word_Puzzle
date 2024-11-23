@@ -814,7 +814,8 @@ public class GameManager : MonoBehaviour
             objNumbers.Clear();
         }
 
-        var firstAutoWordData = completeWordCubesList[0].completeWordCubeGroup;
+        var number = LetterGroupSet.instance.magnetIndexNum;
+        var obj = LetterGroupSet.instance.currentAutoWordSets[number];
         var firstAutoWordDataCount = completeWordCubesList[0].completeWordCubeGroup.Count;
         for (int i = 0; i < firstAutoWordDataCount; i++)
         {
@@ -824,7 +825,7 @@ public class GameManager : MonoBehaviour
                 objNumbers.Add(completeWordCubesList[0].completeWordCubeGroup[i].transform.GetChild(j).GetComponent<PlayerCubeScript>().checknumber);
             }
         }
-        /*if (levelTypeChanged)
+        if (levelTypeChanged)
         {
             var stickingCount = stickingCubes.Count;
             for (int i = 0; i < stickingCount; i++)
@@ -889,7 +890,7 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
-        },false);*/
+        },false);
 
         DOVirtual.DelayedCall(0.5f, () =>
         {

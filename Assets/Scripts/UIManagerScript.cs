@@ -308,7 +308,7 @@ public class UIManagerScript : MonoBehaviour
                 tutorialBoxHandImage.gameObject.SetActive(true);
                 tutorialBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-350, 250);
                 tutorialBox.gameObject.SetActive(true);
-                tutorialBoxText.text = "Tap to show a group of letters!";
+                tutorialBoxText.text = "Tap to show a single letter!";
             }
 
             if (SavedData.MagnetTutorial == 1 && SavedData.GetSpecialLevelNumber() == autoWordUnlockedLevel)
@@ -318,7 +318,7 @@ public class UIManagerScript : MonoBehaviour
                 tutorialBoxHandImage.gameObject.SetActive(true);
                 tutorialBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-180, 250);
                 tutorialBox.gameObject.SetActive(true);
-                tutorialBoxText.text = "Tap the magnet to complete the word!";
+                tutorialBoxText.text = "Tap the magnet to fill in half of the word!";
             }
         }
 
@@ -780,6 +780,7 @@ public class UIManagerScript : MonoBehaviour
             //nextButton.interactable = true;
             if (giftLevel)
             {
+                var value = Random.Range(1, 3);
                 if (SavedData.GetSpecialLevelNumber() == 5)
                 {
                     GiftOpenFun(1);
@@ -788,8 +789,7 @@ public class UIManagerScript : MonoBehaviour
                 }
                 else
                 {
-                    var num = Random.Range(0, 2);
-                    GiftOpenFun(num);
+                    GiftOpenFun(value);
                     giftMagnetCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / autoWordCostValue).ToString();
                     giftHintCountTemp.text = ((int)CoinManager.instance.GetCoinsCount() / hintCostValue).ToString();
                 }
@@ -883,29 +883,29 @@ public class UIManagerScript : MonoBehaviour
 
     public void AutoWordCompleteButton()
     {
-        /*if (SavedData.MagnetTutorial == 1 && SavedData.GetSpecialLevelNumber() == 11)
+        var num = LetterGroupSet.instance.magnetIndexNum = LetterGroupSet.instance.MagnetData();
+        if (num < 0 || LetterGroupSet.instance.lettersSpawning) return;
+        if (SavedData.MagnetTutorial == 1 && SavedData.GetSpecialLevelNumber() == 11)
         {
             GameManager.Instance.scriptOff = false;
             tutorialBoxHandImage.gameObject.SetActive(false);
             tutorialBox.gameObject.SetActive(false);
             SavedData.MagnetTutorial = 0;
-        }*/
-        var num = LetterGroupSet.instance.magnetIndexNum = LetterGroupSet.instance.MagnetData();
-        if (num < 0 || LetterGroupSet.instance.lettersSpawning) return;
+        }
         if (CoinManager.instance.GetCoinsCount() >= autoWordCostValue)
         {
             StartCoroutine(CoinsReduceAnim(instanceImageRef, instancePos, magnetPosDeduct));
             AutoWordComplete_Callback();
             CoinManager.instance.AutoWordReduce();
         }
-        else
+        /*else
         {
             if (!GameEssentials.IsRvAvailable()) return;
             GameEssentials.RvType = RewardType.Magnet;
             GameEssentials.ShowRewardedAds("Magnet");
             /*if(LionStudiosManager.instance)
-                LionStudiosManager.AdsEvents(true, AdsEventState.Start,GetSpecialLevelNumber(),"Applovin","Magnet",CoinManager.instance.GetCoinsCount());*/
-        }
+                LionStudiosManager.AdsEvents(true, AdsEventState.Start,GetSpecialLevelNumber(),"Applovin","Magnet",CoinManager.instance.GetCoinsCount());#1#
+        }*/
 
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
@@ -1175,7 +1175,7 @@ public class UIManagerScript : MonoBehaviour
         SavedData.SetLevelNumber(num + 1);
         if (num % 2 == 0)
         {
-            CoinsDoubleClaimFun(10);
+            CoinsDoubleClaimFun(50);
             SavedData.SetSpecialLevelNumber(SavedData.GetSpecialLevelNumber() + 1);
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
@@ -1267,7 +1267,7 @@ public class UIManagerScript : MonoBehaviour
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("GiftOpen");
             giftPanel.SetActive(true);
             giftPanel.transform.GetChild(0).DOLocalRotate(new Vector3(0, 0, 360f), 1f).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
-            var countList = new List<int>() { 20, 30, 40, 50 };
+            var countList = new List<int>() { 100, 120, 130, 140,150 };
             countList.Sort((a, b) => 1 - 2 * Random.Range(0, countList.Count));
             var coinCount = countList[0];
             switch (num)
@@ -1293,7 +1293,7 @@ public class UIManagerScript : MonoBehaviour
                     //_revelItem = "Magnet";
                     break;
                 case 2:
-                    GiftPopFun(coinsObj, giftHintObj, giftJumpPLace, giftJumpPLace2, 200, hintCostValue, 1);
+                    GiftPopFun(coinsObj, giftHintObj, giftJumpPLace, giftJumpPLace2, coinCount, hintCostValue, 1);
                     _magnetOrHint = "Hint";
                     break;
                 case 3:
