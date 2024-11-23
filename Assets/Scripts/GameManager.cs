@@ -816,14 +816,11 @@ public class GameManager : MonoBehaviour
 
         var number = LetterGroupSet.instance.magnetIndexNum;
         var obj = LetterGroupSet.instance.currentAutoWordSets[number];
-        var firstAutoWordDataCount = completeWordCubesList[0].completeWordCubeGroup.Count;
-        for (int i = 0; i < firstAutoWordDataCount; i++)
+        //var firstAutoWordDataCount = completeWordCubesList[0].completeWordCubeGroup.Count;
+        var childCountDetails = obj.transform.childCount;
+        for (int j = 0; j < childCountDetails; j++)
         {
-            var childcountdetails = completeWordCubesList[0].completeWordCubeGroup[i].transform.childCount;
-            for (int j = 0; j < childcountdetails; j++)
-            {
-                objNumbers.Add(completeWordCubesList[0].completeWordCubeGroup[i].transform.GetChild(j).GetComponent<PlayerCubeScript>().checknumber);
-            }
+            objNumbers.Add(obj.transform.GetChild(j).GetComponent<PlayerCubeScript>().checknumber);
         }
         if (levelTypeChanged)
         {
@@ -881,13 +878,10 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < numberCubeHolders.Count; i++)
             {
                 var holderCube = numberCubeHolders[i];
-                for (int j = 0; j < firstAutoWordDataCount; j++)
+                if (holderCube != obj && !holderCube.GetComponent<CubesGroupScript>().doneWithWord)
                 {
-                    if (holderCube != completeWordCubesList[0].completeWordCubeGroup[j] && !holderCube.GetComponent<CubesGroupScript>().doneWithWord)
-                    {
-                        //FunWaitCall(holderCube,completeWordPositionsList[0].completeWordCubePositionGroup[j]);
-                        ResetObjects(holderCube);
-                    }
+                    //FunWaitCall(holderCube,completeWordPositionsList[0].completeWordCubePositionGroup[j]);
+                    ResetObjects(holderCube);
                 }
             }
         },false);
@@ -899,12 +893,10 @@ public class GameManager : MonoBehaviour
                 FunWaitCall(completeWordCubesList[0].completeWordCubeGroup[i],
                     completeWordPositionsList[0].completeWordCubePositionGroup[i]);
             }*/
-            var number = LetterGroupSet.instance.magnetIndexNum;
-            print("Letter Activated ::::::" + number);
-            var obj = LetterGroupSet.instance.currentAutoWordSets[number];
             obj.GetComponent<CubesGroupScript>().magnetStarted = true;
             FunWaitCall(LetterGroupSet.instance.currentAutoWordSets[number],
                 LetterGroupSet.instance.currentAutoWordPositions[number]);
+            print("Pos:::"+LetterGroupSet.instance.currentAutoWordPositions[number]);
             LetterGroupSet.instance.currentAutoWordSets.RemoveAt(number);
             LetterGroupSet.instance.currentAutoWordPositions.RemoveAt(number);
         }, false);
