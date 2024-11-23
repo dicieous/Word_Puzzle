@@ -1322,6 +1322,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1001 &186809899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2222,6 +2223,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!4 &262508563 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3308641931941906712, guid: cd18edbc591f2a34092156623bda967e, type: 3}
@@ -2439,6 +2441,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1 &318966015
 GameObject:
   m_ObjectHideFlags: 0
@@ -2489,6 +2492,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1 &333091486
 GameObject:
   m_ObjectHideFlags: 0
@@ -3300,6 +3304,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1 &443301888 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3708174803144042342, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
@@ -3792,6 +3797,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1001 &507851035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4338,6 +4344,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1001 &535557642
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5874,6 +5881,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1001 &625581568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6235,6 +6243,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1001 &665524940
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7107,6 +7116,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1001 &709825432
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7601,6 +7611,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1001 &768485302
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8334,6 +8345,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1001 &883066085
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10359,6 +10371,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1 &1077563589
 GameObject:
   m_ObjectHideFlags: 0
@@ -11721,6 +11734,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1 &1221473556
 GameObject:
   m_ObjectHideFlags: 0
@@ -14537,6 +14551,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1500105351}
+  - component: {fileID: 1500105352}
   m_Layer: 0
   m_Name: Letters_Holder
   m_TagString: Untagged
@@ -14577,6 +14592,26 @@ Transform:
   - {fileID: 1113321429}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1500105352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500105350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc18bd28f73328241bd11447c95fd2ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lettersSpawning: 0
+  letterSets: []
+  currentlyActiveSets: []
+  currentAutoWordSets: []
+  currentAutoWordPositions: []
+  magnetIndexNum: 0
+  lettersList: []
+  hintValue: []
 --- !u!1001 &1501678981
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16949,6 +16984,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1001 &1743492685
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17939,6 +17975,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1 &1870371617
 GameObject:
   m_ObjectHideFlags: 0
@@ -18192,6 +18229,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1001 &1885333885
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20592,6 +20630,7 @@ MonoBehaviour:
   crctString: []
   takenString: []
   doneObject: 0
+  highlightScripts: []
 --- !u!1 &2099310851 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3708174803144042342, guid: 4c3411e48ea5d6a4a807b46514b0edb0, type: 3}
