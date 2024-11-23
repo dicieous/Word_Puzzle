@@ -32,7 +32,6 @@ public class HighlightTextScript : MonoBehaviour
 
 		if (other.gameObject.layer == LayerMask.NameToLayer("Cube_Grid"))
 		{
-			print("Calling");
 			gameObject.name = other.GetComponent<HolderCubeScript>().checkNumberRef.ToString();
 		}
 	}

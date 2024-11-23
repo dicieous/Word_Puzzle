@@ -164,7 +164,7 @@ public class UIManagerScript : MonoBehaviour
                 new Quaternion(-0.670953453f, 0.223207206f, -0.223207206f, 0.670953453f));
         }*/
 
-        print("Hint Data::" + SavedData.HintTutorial);
+        //print("Hint Data::" + SavedData.HintTutorial);
         //CalendarIndicatorCheck();
     }
 
@@ -916,7 +916,6 @@ public class UIManagerScript : MonoBehaviour
     {
         if (autoWordButton.interactable && !autoWordDisableWordBool)
         {
-            //AutoButtonDisActive();
             if (!GameManager.Instance.autoWordClick /*&& _autoButtonActivate*/)
             {
                 AutoButtonDisActive();
@@ -930,15 +929,8 @@ public class UIManagerScript : MonoBehaviour
             }, false);
             DOVirtual.DelayedCall(2.5f, () =>
             {
-                // print("One attack::::::::::::::::::::::::::::::::::::::");
                 GameManager.Instance.autoWordClick = false;
-                //AutoButtonActiveFun();
             }, false);
-            /*print("autoword::::"+autoWordButton.interactable);
-            print("WordClick::::::::"+GameManager.Instance.autoWordClick);*/
-
-            /*if(!LionStudiosManager.instance) return;
-            LionStudiosManager.Magnet(GetSpecialLevelNumber().ToString(),_magnetCount);*/
             _magnetCount++;
         }
     }
@@ -1261,7 +1253,7 @@ public class UIManagerScript : MonoBehaviour
         if (GameManager.Instance.levelFail)
             GameManager.Instance.levelFail = false;
         hintButton.interactable = true;
-        autoWordButton.interactable = true;
+        AutoButtonActiveFun();
         /*if (!LionStudiosManager.instance) return;
         LionStudiosManager.NoMoreMoves(GetSpecialLevelNumber().ToString(),"Coins","100",_noMoreMovesCount.ToString());*/
         _noMoreMovesCount++;

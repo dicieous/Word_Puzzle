@@ -231,7 +231,8 @@ namespace DDZ
                   MonitizationScript.instance.Bubble2X_CallBack();
                   break;
               case RewardType.Magnet:
-                  UIManagerScript.Instance.AutoWordComplete_Callback();
+                  //UIManagerScript.Instance.AutoWordComplete_Callback();
+                  print("RV Calling");
                   break;
               case RewardType.GiftBox:
                   MonitizationScript.instance.GiftBox_CallBack();

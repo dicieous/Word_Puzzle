@@ -75,21 +75,20 @@ public class LetterGroupSet : SingletonInstance<LetterGroupSet>
 
     private void RemoveElement()
     {
-        var letterSetDone = currentlyActiveSets.FirstOrDefault(letterSet => letterSet != null /*&& letterSet.doneWithWord*/);
+        var letterSetDone = currentlyActiveSets.FirstOrDefault(letterSet => letterSet != null && letterSet.doneWithWord);
         if (letterSetDone == null) return;
         letterSets.Remove(letterSetDone);
         currentlyActiveSets.Remove(letterSetDone);
 
         if (!CurrentlyActiveSet()) return;
         lettersSpawning = true;
-        print("Letter spawning in letter set");
         NewLetterSet();
     }
 
     public int MagnetData()
     {
         if (lettersSpawning) return -1;
-        var activeObject = currentAutoWordSets.Find(x => x.activeInHierarchy);
+        var activeObject = currentAutoWordSets.Find(x => x.activeInHierarchy && !x.GetComponent<CubesGroupScript>().doneWithWord);
         return activeObject == null ? -1 : currentAutoWordSets.FindIndex(x => x.name == activeObject.name);
     }
     public GameObject HintActivateDecider()
@@ -127,16 +126,16 @@ public class LetterGroupSet : SingletonInstance<LetterGroupSet>
             });
         }
 
-        DOVirtual.DelayedCall(3f, ()=>
+        DOVirtual.DelayedCall(1f, ()=>
         {
             lettersSpawning = false;
-            UIManagerScript.Instance.HintButtonActiveFun();
-            GameManager.Instance.autoWordClick = false;
-            UIManagerScript.Instance.AutoButtonActiveFun();
             if (GameManager.Instance)
             {
                 GameManager.Instance.scriptOff = false;
             }
+            UIManagerScript.Instance.HintButtonActiveFun();
+            GameManager.Instance.autoWordClick = false;
+            UIManagerScript.Instance.AutoButtonActiveFun();
         });
     }
 

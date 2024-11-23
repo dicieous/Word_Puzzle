@@ -94,16 +94,7 @@ public class GameManager : MonoBehaviour
     {
         if (!Instance) Instance = this;
     }
-
-    private void OnEnable()
-    {
-        var letterSetGroup = GameObject.Find("Letters_Holder");
-        if (!letterSetGroup.GetComponent<LetterGroupSet>())
-        {
-            letterSetGroup.AddComponent<LetterGroupSet>();
-        }
-    }
-
+ 
     private void Start()
     {
         canClickNow = true;
@@ -907,7 +898,10 @@ public class GameManager : MonoBehaviour
                 FunWaitCall(completeWordCubesList[0].completeWordCubeGroup[i],
                     completeWordPositionsList[0].completeWordCubePositionGroup[i]);
             }*/
-            var number = LetterGroupSet.instance.magnetIndexNum                ;
+            var number = LetterGroupSet.instance.magnetIndexNum;
+            print("Letter Activated ::::::" + number);
+            var obj = LetterGroupSet.instance.currentAutoWordSets[number];
+            obj.GetComponent<CubesGroupScript>().magnetStarted = true;
             FunWaitCall(LetterGroupSet.instance.currentAutoWordSets[number],
                 LetterGroupSet.instance.currentAutoWordPositions[number]);
             LetterGroupSet.instance.currentAutoWordSets.RemoveAt(number);
@@ -1337,7 +1331,6 @@ public class GameManager : MonoBehaviour
     private bool ResetCubeFunc(Transform holdersCube, int refNumber)
     {
         var holderCube = holdersCube.GetComponent<HolderCubeScript>();
-
         if (!holderCube.isFilled) return false;
         if (holderCube.checkNumberRef == refNumber)
         {

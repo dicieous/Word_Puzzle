@@ -28,7 +28,7 @@ public class CubesGroupScript : MonoBehaviour
     [HideInInspector] public bool canCheckForPlacement = true;
     private int _parentNumberInList;
 	private int _wordNUmberInList;
-	
+	public bool magnetStarted;
 	[FormerlySerializedAs("_doneWithWord")] public bool doneWithWord;
 	[FormerlySerializedAs("canPlaceCheck")] public bool canNotPlace;
 
@@ -135,23 +135,25 @@ public class CubesGroupScript : MonoBehaviour
 	    {
 		    //PosCheck();
 		    doneWithWord = true;
-		    LetterGroupSet.OnLetterGroupSet ?.Invoke();
+		    // var letterGroupSet = LetterGroupSet.instance;
 		    if (SavedData.GetSpecialLevelNumber() == 1)
 		    {
 			    if (check1done) UIManagerScript.Instance.HelpHand();
 			    check1done = true;
 		    }
+		    LetterGroupSet.OnLetterGroupSet ?.Invoke();
 		    DOVirtual.DelayedCall(0.5f, () =>
 		    {
 			    countnum = 0;
 			    var seq = DOTween.Sequence();
 			    seq.AppendCallback(() =>
 			    {
-				    if (countnum == childObjects.Count)
+				    print("Letter");
+				    if (countnum == childObjects.Count-1)
 				    {
 					    DOVirtual.DelayedCall(1.5f, () =>
 					    {
-						    if (LetterGroupSet.instance.lettersSpawning)
+						    if (!LetterGroupSet.instance.lettersSpawning)
 						    {
 							    GameManager.Instance.autoWordClick = false;
 							    UIManagerScript.Instance.AutoButtonActiveFun();
@@ -348,10 +350,6 @@ public class CubesGroupScript : MonoBehaviour
 	}
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.A))
-		{
-			CondToAttachCubesInGrid();
-		}
 		//Debug.Log("isFilledC Value "+ isFilledC);
 		if (Input.GetMouseButtonUp(0) && isFilledC && !GameManager.Instance.scriptOff)
 		{
@@ -564,7 +562,7 @@ public class CubesGroupScript : MonoBehaviour
 					var hitInfo = RayCastInfo(child);
                     if (Input.GetMouseButtonUp(0) || canPlaceNow && !_doneWard)
                     {
-						Debug.Log("Show");
+						//Debug.Log("Show");
                         AttachTheObj(hitInfo, child);
                     }
 				}
@@ -580,13 +578,13 @@ public class CubesGroupScript : MonoBehaviour
 		}
 		else
 		{
+			if (LetterGroupSet.instance.lettersSpawning || magnetStarted) return;
 			for (int i = 0; i < childObjects.Count; i++)
 			{
 				var child = childObjects[i].transform;
 				if (!child.GetComponent<PlayerCubeScript>().isPlaced)
 				{
-					if (Input.GetMouseButtonUp(0))
-						ResetPosition();
+					if (Input.GetMouseButtonUp(0)) ResetPosition();
 				}
 
 			}
