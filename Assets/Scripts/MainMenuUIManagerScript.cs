@@ -21,7 +21,7 @@ public class MainMenuUIManagerScript : MonoBehaviour
     public void MoveToActivePlayableLevel()
     {
         Debug.Log("3");
-        var levelImageIndex = PlayerPrefs.GetInt("Level")+1;
+        var levelImageIndex = SavedData.GetSpecialLevelNumber()+1;
 
         VerticalLayoutGroup vert = levelsScrollRect.content.GetComponent<VerticalLayoutGroup>();
         levelImageIndex = Mathf.Clamp(levelImageIndex, 0, levelsScrollRect.content.transform.childCount-1);

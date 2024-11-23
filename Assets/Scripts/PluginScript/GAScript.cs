@@ -23,7 +23,7 @@ public class GAScript : MonoBehaviour
     public void LevelStart(string levelName, int levelAttempts)
     {
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, levelName);
-        LionStudiosManager.LevelStart(int.Parse(levelName), levelAttempts);
+        // LionStudiosManager.LevelStart(int.Parse(levelName), levelAttempts);
         ByteBrewManager.instance.LevelStart(levelName);
         print("LevelStart"+levelName);
     }
@@ -31,7 +31,7 @@ public class GAScript : MonoBehaviour
     public void LevelFail(string levelName, int levelAttempts)
     {
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, levelName);
-        LionStudiosManager.LevelFail(int.Parse(levelName), levelAttempts);
+        // LionStudiosManager.LevelFail(int.Parse(levelName), levelAttempts);
         ByteBrewManager.instance.LevelFail(levelName);
         print("LevelFail"+levelName);
     }
@@ -39,13 +39,13 @@ public class GAScript : MonoBehaviour
     public void LevelCompleted(string levelName, int levelAttempts)
     {
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, levelName);
-        LionStudiosManager.LevelComplete(int.Parse(levelName), levelAttempts);
+        // LionStudiosManager.LevelComplete(int.Parse(levelName), levelAttempts);
         ByteBrewManager.instance.LevelCompleted(levelName);
         print("LevelComplete"+levelName);
     }
 
     public void LevelRestart(string levelName, int levelAttempts)
     {
-        LionStudiosManager.LevelRestart(int.Parse(levelName), levelAttempts);
+        // LionStudiosManager.LevelRestart(int.Parse(levelName), levelAttempts);
     }
 }

@@ -13,12 +13,18 @@ public class HintParent : MonoBehaviour
 	public List<String> takenString;
 
 	public bool doneObject;
+	
+	public List<HighlightTextScript> highlightScripts = new List<HighlightTextScript>();
 	private void Start()
 	{
 		for (int i = 0; i < transform.childCount; i++)
 		{
 			crctString.Add(transform.GetChild(i).GetChild(0).GetComponent<TextMeshPro>().text);
 		}
+		
+		highlightScripts.AddRange(GetComponentsInChildren<HighlightTextScript>(true));
+		// yield return new WaitForSeconds(0.01f);
+		LetterGroupSet.instance.hintValue.AddRange(highlightScripts);
 	}
 
 	private bool once;

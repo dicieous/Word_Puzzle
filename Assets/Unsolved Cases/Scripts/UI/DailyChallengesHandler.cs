@@ -364,9 +364,9 @@ public class DailyChallengesHandler : MonoBehaviour
         }
         GameEssentials.RvType = RewardType.Calendar;
         GameEssentials.ShowRewardedAds("Calendar");
-        if (LionStudiosManager.instance)
-            LionStudiosManager.AdsEvents(true, AdsEventState.Start, SaveData.GetSpecialLevelNumber(),
-                "Applovin", "Calendar", SaveData.GetCoinsCount());
+        /*if (LionStudiosManager.instance)
+            LionStudiosManager.AdsEvents(true, AdsEventState.Start, UIManagerScript.Instance.GetSpecialLevelNumber(),
+                "Applovin", "Calendar", CoinManager.instance.GetCoinsCount());*/
     }
 
     public void DailyChallenge_Callback()

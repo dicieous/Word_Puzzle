@@ -44,8 +44,8 @@ public class LevelMapInstantiator : MonoBehaviour
     void Start()
     {
         isNewLevel= false;
-        //level = PlayerPrefs.GetInt("Level", 1);
-        level = SaveData.GetSpecialLevelNumber();
+        //level = SavedData.GetSpecialLevelNumber();
+        level = SavedData.GetSpecialLevelNumber();
         
         if (!PlayerPrefs.HasKey("RoadLevel"))
         {
@@ -72,14 +72,14 @@ public class LevelMapInstantiator : MonoBehaviour
         totalLevelCount += 60;
         
         SetContentHeight();
-        CheckCalendarIndicator();
+        // CheckCalendarIndicator();
     }
 
     private void CheckCalendarIndicator()
     {
         var calenderIndicator = UIManagerScript.Instance.calenderButton.transform.GetChild(2).GetComponent<Image>();
         var todayDateCheck =  PlayerPrefs.GetInt("DailyChallenges_" + GameEssentials.GameStartTime.Day + GameEssentials.GameStartTime.Month + GameEssentials.GameStartTime.Year, 0);
-        calenderIndicator.enabled = SaveData.GetSpecialLevelNumber() >= 30 && todayDateCheck == 0;
+        calenderIndicator.enabled = SavedData.GetSpecialLevelNumber() >= 30 && todayDateCheck == 0;
     }
 
     private void SetContentHeight()
@@ -150,7 +150,7 @@ public class LevelMapInstantiator : MonoBehaviour
             {
                 levelImages = bossLevel;
             }
-            else if((i + startLevel) % 5 == 0 && (i + startLevel != 5))
+            else if((i + startLevel) % 5 == 0)
             {
                 levelImages = giftLevel;
             }
@@ -171,7 +171,7 @@ public class LevelMapInstantiator : MonoBehaviour
             //    image.transform.GetChild(1).GetComponent <Image>().color=Color.red;
 
             //}else
-            if (((i + startLevel) % 5 == 0 && (i + startLevel) != 5) && ( (i + startLevel) % 10 != 0) && (i + startLevel) < level)
+            if ((i + startLevel) % 5 == 0&&( (i + startLevel) % 10 != 0)&&(i+startLevel)<level)
             {
                image.transform.GetChild(2).gameObject.SetActive(false);
             }
@@ -199,7 +199,7 @@ public class LevelMapInstantiator : MonoBehaviour
             }
             oldLevel = image.transform;
             
-            if (i + startLevel >=level)
+            /*if (i + startLevel >=level)
             {
                 for (int j = 0; j < refLevels.Count; j++)
                 {
@@ -211,7 +211,7 @@ public class LevelMapInstantiator : MonoBehaviour
                         refPrefab.GetComponent<RectTransform>().localScale = Vector3.one;
                     }
                 }
-            }
+            }*/
             //Debug.Log("Called");
         }
 

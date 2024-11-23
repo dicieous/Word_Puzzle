@@ -34,6 +34,9 @@ public class CameraMotionScript : MonoBehaviour
     public Color deactivatedColor;
     public Color activatedColor;
 
+    public Material activatedColorMaterial; 
+    public Material deactivatedColorMaterial;
+
     [Serializable]
     private struct StickingAreaToShow
     {
@@ -82,8 +85,10 @@ public class CameraMotionScript : MonoBehaviour
     {
         if(UIManagerScript.Instance.autoWordButton.interactable)
             UIManagerScript.Instance.autoWordButton.interactable = false;
-        if(UIManagerScript.Instance.hintButton.interactable)
-            UIManagerScript.Instance.hintButton.interactable = false;
+        UIManagerScript.Instance.HintButtonDeActiveFun();
+        //UIManagerScript.Instance.AutoButtonDisActive();
+        /*if(UIManagerScript.Instance.hintButton.interactable)
+            UIManagerScript.Instance.hintButton.interactable = false;*/
         if(UIManagerScript.Instance.emojiRevealButton.interactable)
             UIManagerScript.Instance.emojiRevealButton.interactable = false;
         if(!GameManager.Instance.cameraMoving)
@@ -150,8 +155,10 @@ public class CameraMotionScript : MonoBehaviour
                     var j1 = j;
                     //print("Color Changed");
                     t.transform.GetChild(j1).GetComponent<Collider>().enabled = true;
-                    t.transform.GetChild(j1).transform.GetChild(0).GetComponent<MeshRenderer>().materials[0].color =
-                        activatedColor;
+                    /*t.transform.GetChild(j1).transform.GetChild(0).GetComponent<MeshRenderer>().material =
+                        activatedColorMaterial;   */
+                    t.transform.GetChild(j1).transform.GetComponentInChildren<SpriteRenderer>().enabled =
+                        true;
                     yield return new WaitForSeconds(0.1f);
                 }
             }
@@ -244,8 +251,10 @@ public class CameraMotionScript : MonoBehaviour
 
                 for (int j = 0; j < t.transform.childCount; j++)
                 {
-                    t.transform.GetChild(j).transform.GetChild(0).GetComponent<MeshRenderer>().materials[0].color =
-                        deactivatedColor;
+                    /*t.transform.GetChild(j).transform.GetChild(0).GetComponent<MeshRenderer>().material =
+                        deactivatedColorMaterial;*/
+                    t.transform.GetChild(j).transform.GetComponentInChildren<SpriteRenderer>().enabled =
+                        false;
                 }
             }
         }

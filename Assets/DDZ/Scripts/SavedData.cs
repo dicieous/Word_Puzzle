@@ -12,6 +12,24 @@ public class SavedData
     private const string AudioState = "SoundState";
     private const string HapticState = "HapticState";
 
+    public static int HintTutorial
+    {
+        get => PlayerPrefs.GetInt("Hint", 1);
+        set => PlayerPrefs.SetInt("Hint", value);
+    }
+
+    public static int MagnetTutorial
+    {
+        get => PlayerPrefs.GetInt("Magnet", 1);
+        set => PlayerPrefs.SetInt("Magnet", value);
+    }
+
+    public static bool SoundToggle
+    {
+        get => PlayerPrefs.GetInt("Sound", 1) == 1;
+        set => PlayerPrefs.SetInt("Sound", value ? 1 : 0);
+    }
+
 
     // Get Value // Get//
     
@@ -24,7 +42,8 @@ public class SavedData
 
     public static string GetSoundState()=>PlayerPrefs.GetString(AudioState, "On");
     public static string GetHapticState()=>PlayerPrefs.GetString(HapticState, "On");
-
+    public static int GetSpecialLevelNumber() => PlayerPrefs.GetInt("SpecialLevelNumber", 1);
+    public static void SetSpecialLevelNumber(int levelNum) => PlayerPrefs.SetInt("SpecialLevelNumber", levelNum);
 
     // Set Value // Set//
     

@@ -35,7 +35,7 @@ public class SoundHapticManager : MonoBehaviour
 
 	private void Start()
 	{
-		Play("BG_Music");
+		// Play("BG_Music");
 
 		Vibration.Init();
 	}

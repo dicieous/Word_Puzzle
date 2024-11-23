@@ -28,19 +28,18 @@ public class CubesGroupScript : MonoBehaviour
     [HideInInspector] public bool canCheckForPlacement = true;
     private int _parentNumberInList;
 	private int _wordNUmberInList;
-	
+	public bool magnetStarted;
 	[FormerlySerializedAs("_doneWithWord")] public bool doneWithWord;
 	[FormerlySerializedAs("canPlaceCheck")] public bool canNotPlace;
+
+	public int letterCount;
+
+	private Tween _clickTween;
+	
+	public List<GameObject> tempList;
 	void Start()
 	{
-		_initPos = transform.position;
-
-		initialPos = new Vector3[childObjects.Count];
-		for (int i = 0; i < childObjects.Count; i++)
-		{
-			initialPos[i] = childObjects[i].transform.position;
-			//Debug.Log("Initial Position get " + initialPos[i]);
-		}
+		letterCount = childObjects.Count;
 		
 		for (int i = 0; i < GameManager.Instance.completeWordCubesList.Count; i++)
 		{
@@ -72,8 +71,21 @@ public class CubesGroupScript : MonoBehaviour
 	        }
 	        transform.GetChild(0).GetComponent<PlayerCubeScript>().anim = true;
         }
+		
+		GameManager.Instance._allCubeObjects.AddRange(
+			childObjects.Where(obj => !GameManager.Instance._allCubeObjects.Contains(obj)));
 	}
 
+	public void StartPositionAssignFun(Vector3 pos)
+	{
+		_initPos = pos;
+		initialPos = new Vector3[childObjects.Count];
+		for (int i = 0; i < childObjects.Count; i++)
+		{
+			initialPos[i] = childObjects[i].transform.position;
+			//Debug.Log("Initial Position get " + initialPos[i]);
+		}
+	}
     public void AnimSeq()
     {
 //	    print("animseqCall");
@@ -123,30 +135,48 @@ public class CubesGroupScript : MonoBehaviour
 	    {
 		    //PosCheck();
 		    doneWithWord = true;
+		    // var letterGroupSet = LetterGroupSet.instance;
+		    if (SavedData.GetSpecialLevelNumber() == 1)
+		    {
+			    if (check1done) UIManagerScript.Instance.HelpHand();
+			    check1done = true;
+		    }
+		    LetterGroupSet.OnLetterGroupSet ?.Invoke();
 		    DOVirtual.DelayedCall(0.5f, () =>
 		    {
 			    countnum = 0;
 			    var seq = DOTween.Sequence();
 			    seq.AppendCallback(() =>
 			    {
-				    if (countnum == childObjects.Count)
+				    print("Letter");
+				    if (countnum == childObjects.Count-1)
 				    {
-					    DOVirtual.DelayedCall(2.5f, () =>
+					    DOVirtual.DelayedCall(1.5f, () =>
 					    {
-						    GameManager.Instance.autoWordClick = false;
-						    UIManagerScript.Instance.AutoButtonActiveFun();
+						    if (!LetterGroupSet.instance.lettersSpawning)
+						    {
+							    GameManager.Instance.autoWordClick = false;
+							    UIManagerScript.Instance.AutoButtonActiveFun();
+							    print("Letter spawning in cube group");
+						    }
 					    },false);
 				    }
-
-				    childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+				    //print($"{countnum}:::{childObjects.Count}");
+				    childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().material
 					    .color = CoinManager.instance.greenColor;
-				    childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
-					    .color = CoinManager.instance.greenColor;
+				    childObjects[countnum].transform.GetChild(3).GetComponent<SpriteRenderer>().color = new Color(0.8f, 1f, 0.38f);
+				    /*childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+					    .color = CoinManager.instance.greenColor;*/
+				    /*childObjects[countnum].transform.DOScale(Vector3.one * 1.3f,0.1f).SetEase(Ease.Linear)
+					    .SetLoops(2, LoopType.Yoyo);*/
 				    childObjects[countnum].transform.GetChild(0).transform
 					    .DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
 					    .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
-				    childObjects[countnum].transform.GetChild(1).transform
-					    .DOScale(new Vector3(20f, 30f, 15f), 0.1f)
+				    /*childObjects[countnum].transform.GetChild(1).transform
+					    .DOScale(Vector3.one * 1.2f, 0.1f)
+					    .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);*/
+				    childObjects[countnum].transform.GetChild(3).transform
+					    .DOScale(Vector3.one * 1.4f, 0.1f)
 					    .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
 				    countnum++;
 			    });
@@ -171,16 +201,22 @@ public class CubesGroupScript : MonoBehaviour
         var seq = DOTween.Sequence();
         seq.AppendCallback(() =>
         {
-            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().material
                 .color = CoinManager.instance.redColor; 
-            childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
-                .color = CoinManager.instance.redColor;
+            /*childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+                .color = CoinManager.instance.redColor;*/
+            childObjects[countnum].transform.GetChild(3).GetComponent<SpriteRenderer>().color = new Color(0.98f, 0.47f, 0.3f);
+            /*childObjects[countnum].transform.DOScale(Vector3.one * 1.3f,0.1f).SetEase(Ease.Linear)
+	            .SetLoops(2, LoopType.Yoyo);*/
             childObjects[countnum].transform.GetChild(0).transform
                 .DOScale(new Vector3(1.75f, 1.75f, 2f), 0.1f)
                 .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
-            childObjects[countnum].transform.GetChild(1).transform
-                .DOScale(new Vector3(20f, 30f, 15f), 0.1f)
-                .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
+            /*childObjects[countnum].transform.GetChild(1).transform
+                .DOScale(Vector3.one * 1.2f, 0.1f)
+                .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);*/
+            childObjects[countnum].transform.GetChild(3).transform
+	            .DOScale(Vector3.one * 1.4f, 0.1f)
+	            .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
             countnum++;
         });
         seq.AppendInterval(0.05f);
@@ -216,10 +252,11 @@ public class CubesGroupScript : MonoBehaviour
             }
             else
             {
-                childObjects[countBackNum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[0]
+                childObjects[countBackNum].transform.GetChild(1).GetComponent<MeshRenderer>().material
                     .color = Color.white; 
-                childObjects[countBackNum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
-                    .color = Color.white;
+                /*childObjects[countBackNum].transform.GetChild(1).GetComponent<MeshRenderer>().materials[1]
+                    .color = Color.white;*/
+                childObjects[countBackNum].transform.GetChild(3).GetComponent<SpriteRenderer>().color = Color.white;
             }
             countBackNum++;
         });
@@ -257,7 +294,10 @@ public class CubesGroupScript : MonoBehaviour
 				UIManagerScript.Instance.hintButton.interactable = false;
 				UIManagerScript.Instance.emojiRevealButton.interactable = false;
 			}
-				
+			if(!_clickTween.IsActive())
+			{
+				_clickTween = transform.DOMoveY(position.y, 0.15f).SetEase(Ease.Flash);
+			}
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 			if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		}
@@ -308,7 +348,6 @@ public class CubesGroupScript : MonoBehaviour
 		mouseScreenPos.z = Camera.main!.WorldToScreenPoint(transform.position).z;
 		return Camera.main.ScreenToWorldPoint(mouseScreenPos);
 	}
-
 	private void Update()
 	{
 		//Debug.Log("isFilledC Value "+ isFilledC);
@@ -356,9 +395,12 @@ public class CubesGroupScript : MonoBehaviour
 		        //Debug.Log("Check Start");
 	        });
 			
-	        for (int i = 0; i < childObjects.Count; i++)
+	        if(!LetterGroupSet.instance.lettersSpawning)
 	        {
-		        childObjects[i].transform.DOMove(initialPos[i], 0.2f).SetEase(Ease.Flash);
+		        for (int i = 0; i < childObjects.Count; i++)
+		        {
+			        childObjects[i].transform.DOMove(initialPos[i], 0.2f).SetEase(Ease.Flash);
+		        }
 	        }
         }
         //transform.position = _initPos;
@@ -481,7 +523,6 @@ public class CubesGroupScript : MonoBehaviour
 	private void AttachTheObj(RaycastHit hitInfo, Transform child)
 	{
 		isFilledC = hitInfo.collider.GetComponent<HolderCubeScript>().isFilled;
-
 	
 		//Debug.Log("isFilled Value " + isFilledC);
 
@@ -502,27 +543,11 @@ public class CubesGroupScript : MonoBehaviour
                 //GameManager.Instance.canPlaceNow = false;
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 				if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("Pop");
-
-				if (PlayerPrefs.GetInt("Level", 1) == 1)
-				{
-					DOVirtual.DelayedCall(0.3f, () =>
-					{
-						if (!check2done)
-						{
-//							print("checkingObj");
-							GameManager.Instance.ShowTheText();
-							check2done = true;
-						}
-					},false);
-				}
-				
 			}
 		}
 	}
 
 	public bool check1done;
-	public bool check2done; 
-	public bool check3done;
 
     public bool canPlaceNow = false;
     private bool _doneWard = false;
@@ -540,7 +565,7 @@ public class CubesGroupScript : MonoBehaviour
 					var hitInfo = RayCastInfo(child);
                     if (Input.GetMouseButtonUp(0) || canPlaceNow && !_doneWard)
                     {
-                        //Debug.Log("Show");
+						//Debug.Log("Show");
                         AttachTheObj(hitInfo, child);
                     }
 				}
@@ -556,13 +581,13 @@ public class CubesGroupScript : MonoBehaviour
 		}
 		else
 		{
+			if (LetterGroupSet.instance.lettersSpawning || magnetStarted) return;
 			for (int i = 0; i < childObjects.Count; i++)
 			{
 				var child = childObjects[i].transform;
 				if (!child.GetComponent<PlayerCubeScript>().isPlaced)
 				{
-					if (Input.GetMouseButtonUp(0))
-						ResetPosition();
+					if (Input.GetMouseButtonUp(0)) ResetPosition();
 				}
 
 			}

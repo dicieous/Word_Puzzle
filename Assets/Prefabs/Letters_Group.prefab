@@ -25,6 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5931574303327248809}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,7 +34,6 @@ Transform:
   - {fileID: 2105571065622522270}
   - {fileID: 5066871820357044684}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4126890787108033142
 MonoBehaviour:
@@ -52,10 +52,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   dustFX: {fileID: 3098921073377997907, guid: 6690041c92ae487419606881eae3ac2c, type: 3}
-  number: 0
+  FinalPosition: {x: 0, y: 0, z: 0}
+  canCheckForPlacement: 1
+  doneWithWord: 0
+  canNotPlace: 0
   check1done: 0
-  check2done: 0
-  check3done: 0
+  canPlaceNow: 0
 --- !u!65 &3476716897945682098
 BoxCollider:
   m_ObjectHideFlags: 0
