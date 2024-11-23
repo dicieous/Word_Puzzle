@@ -85,8 +85,10 @@ public class CameraMotionScript : MonoBehaviour
     {
         if(UIManagerScript.Instance.autoWordButton.interactable)
             UIManagerScript.Instance.autoWordButton.interactable = false;
-        if(UIManagerScript.Instance.hintButton.interactable)
-            UIManagerScript.Instance.hintButton.interactable = false;
+        UIManagerScript.Instance.HintButtonDeActiveFun();
+        //UIManagerScript.Instance.AutoButtonDisActive();
+        /*if(UIManagerScript.Instance.hintButton.interactable)
+            UIManagerScript.Instance.hintButton.interactable = false;*/
         if(UIManagerScript.Instance.emojiRevealButton.interactable)
             UIManagerScript.Instance.emojiRevealButton.interactable = false;
         if(!GameManager.Instance.cameraMoving)
@@ -197,7 +199,7 @@ public class CameraMotionScript : MonoBehaviour
                             else if (i == numColliders)
                             {
                                 GameManager.Instance.cameraMoving = false;
-                                UIManagerScript.Instance.AutoButtonActiveFun();
+                                //UIManagerScript.Instance.AutoButtonActiveFun();
                                 UIManagerScript.Instance.HintButtonActiveFun(); 
                                 UIManagerScript.Instance.EmojiRevelButtonActiveFun();
                             }

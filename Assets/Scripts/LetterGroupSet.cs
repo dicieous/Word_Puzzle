@@ -6,17 +6,21 @@ using UnityEngine;
 
 public class LetterGroupSet : SingletonInstance<LetterGroupSet>
 {
+    public bool lettersSpawning;
     public static Action OnLetterGroupSet;
     public List<CubesGroupScript> letterSets;
 
-    [SerializeField] private List<CubesGroupScript> currentlyActiveSets;
-
-    public List<GameManager.CompleteWordCubes> completeWordCubesList = new();
-
-    [SerializeField] public List<GameManager.CompleteWordPosition> completeWordPositionsList = new();
+    [SerializeField] public List<CubesGroupScript> currentlyActiveSets;
+    
+    private List<GameManager.CompleteWordCubes> _completeWordCubesList = new();
+    private List<GameManager.CompleteWordPosition> _completeWordPositionsList = new();
 
     public List<GameObject> currentAutoWordSets;
     public List<Vector3> currentAutoWordPositions;
+    public int magnetIndexNum;
+    
+    public List<GameObject> lettersList;
+    public List<HighlightTextScript> hintValue;
 
     private void OnEnable()
     {
@@ -28,32 +32,41 @@ public class LetterGroupSet : SingletonInstance<LetterGroupSet>
         OnLetterGroupSet -= RemoveElement;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            RemoveElement();
+        }
+    }
+
     private void Start()
     {
         letterSets ??= new List<CubesGroupScript>();
         currentlyActiveSets ??= new List<CubesGroupScript>();
+        hintValue ??= new List<HighlightTextScript>();
 
-        letterSets.AddRange(GetComponentsInChildren<CubesGroupScript>());
+        letterSets.AddRange(GetComponentsInChildren<CubesGroupScript>(true));
         foreach (var letterSet in letterSets)
         {
             letterSet.gameObject.SetActive(false);
         }
 
-        completeWordCubesList = GameManager.Instance.completeWordCubesList;
-        for (int i = 0; i < completeWordCubesList.Count; i++)
+        _completeWordCubesList = GameManager.Instance.completeWordCubesList;
+        for (int i = 0; i < _completeWordCubesList.Count; i++)
         {
-            for (int j = 0; j < completeWordCubesList[i].completeWordCubeGroup.Count; j++)
+            for (int j = 0; j < _completeWordCubesList[i].completeWordCubeGroup.Count; j++)
             {
-                var obj = completeWordCubesList[i].completeWordCubeGroup[j];
+                var obj = _completeWordCubesList[i].completeWordCubeGroup[j];
                 currentAutoWordSets.Add(obj);   
             }
         }
-        completeWordPositionsList= GameManager.Instance.completeWordPositionsList;
-        for (int i = 0; i < completeWordPositionsList.Count; i++)
+        _completeWordPositionsList= GameManager.Instance.completeWordPositionsList;
+        for (int i = 0; i < _completeWordPositionsList.Count; i++)
         {
-            for (int j = 0; j < completeWordPositionsList[i].completeWordCubePositionGroup.Count; j++)
+            for (int j = 0; j < _completeWordPositionsList[i].completeWordCubePositionGroup.Count; j++)
             {
-                var vector3Pos = completeWordPositionsList[i].completeWordCubePositionGroup[j];
+                var vector3Pos = _completeWordPositionsList[i].completeWordCubePositionGroup[j];
                 currentAutoWordPositions.Add(vector3Pos);
             }
         }
@@ -62,22 +75,43 @@ public class LetterGroupSet : SingletonInstance<LetterGroupSet>
 
     private void RemoveElement()
     {
-        var letterSetDone = currentlyActiveSets.FirstOrDefault(letterSet => letterSet != null && letterSet.doneWithWord);
+        var letterSetDone = currentlyActiveSets.FirstOrDefault(letterSet => letterSet != null /*&& letterSet.doneWithWord*/);
         if (letterSetDone == null) return;
         letterSets.Remove(letterSetDone);
         currentlyActiveSets.Remove(letterSetDone);
 
-        if (CurrentlyActiveSet())
-        {
-            NewLetterSet();
-        }
+        if (!CurrentlyActiveSet()) return;
+        lettersSpawning = true;
+        print("Letter spawning in letter set");
+        NewLetterSet();
     }
 
-    public int MagnetData() => currentAutoWordSets.FindIndex(x=>x.activeInHierarchy);
+    public int MagnetData()
+    {
+        if (lettersSpawning) return -1;
+        var activeObject = currentAutoWordSets.Find(x => x.activeInHierarchy);
+        return activeObject == null ? -1 : currentAutoWordSets.FindIndex(x => x.name == activeObject.name);
+    }
+    public GameObject HintActivateDecider()
+    {
+        if (hintValue.Count <= 0 || lettersList.Count <= 0) return null;
+        var hintValueObj = hintValue.Find(x => !x.done &&
+                                               lettersList.Find(a => a.name == x.gameObject.name && a.activeInHierarchy))?.gameObject;
+        if (hintValueObj != null)
+        {
+            var script = hintValueObj.GetComponent<HighlightTextScript>();
+            hintValue.Remove(script);
+        }
+        var hintObject = lettersList.Find(a => hintValueObj != null && a.name == hintValueObj.name)?.gameObject;
+        if (hintObject != null) lettersList.Remove(hintObject);
+        
+        return hintValueObj;
+    }
     
-
     private void NewLetterSet()
     {
+        UIManagerScript.Instance.HintButtonDeActiveFun();
+        UIManagerScript.Instance.AutoButtonDisActive();
         for (int i = 0; i < Mathf.Min(3, letterSets.Count); i++)
         {
             if (!currentlyActiveSets.Contains(letterSets[i]))
@@ -87,12 +121,23 @@ public class LetterGroupSet : SingletonInstance<LetterGroupSet>
         foreach (var currentlyActiveSet in currentlyActiveSets)
         {
             currentlyActiveSet.gameObject.SetActive(true);
-            print("Calling");
             currentlyActiveSet.transform.DOScale(0, .5f).SetEase(Ease.OutBack).From().OnComplete(() =>
             {
                 currentlyActiveSet.StartPositionAssignFun(currentlyActiveSet.transform.position);
             });
         }
+
+        DOVirtual.DelayedCall(3f, ()=>
+        {
+            lettersSpawning = false;
+            UIManagerScript.Instance.HintButtonActiveFun();
+            GameManager.Instance.autoWordClick = false;
+            UIManagerScript.Instance.AutoButtonActiveFun();
+            if (GameManager.Instance)
+            {
+                GameManager.Instance.scriptOff = false;
+            }
+        });
     }
 
     private bool CurrentlyActiveSet() => currentlyActiveSets.Count == 0;

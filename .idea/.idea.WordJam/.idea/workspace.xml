@@ -4,12 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b01ee03-0e14-4741-802d-4aef53ed90e6" name="Changes" comment="Highlighting Done and OnClick Smooth">
+    <list default="true" id="7b01ee03-0e14-4741-802d-4aef53ed90e6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WordJam/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WordJam/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Levels/Level 83.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Levels/Level 83.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Levels/Level 73.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Levels/Level 73.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraMotionScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CameraMotionScript.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CubesGroupScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CubesGroupScript.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/HolderCubeScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HolderCubeScript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/HighlightTextScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HighlightTextScript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/HintParent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HintParent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LetterGroupSet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LetterGroupSet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerCubeScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerCubeScript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UIManagerScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UIManagerScript.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,8 +46,15 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d44b17e136d09081da1e8fd0e8c83fde60e11818b9f2442d7ed8cb733fae895e/System.Collections.Generic.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://S:/Amgo Games/WordJam/Assets/Levels/Level 83.unity" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://S:/Amgo Games/WordJam/Assets/Scripts/CubesGroupScript.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://S:/Amgo Games/WordJam/Assets/Levels/Level 69.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://S:/Amgo Games/WordJam/Assets/Levels/Level 69.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://S:/Amgo Games/WordJam/Assets/Levels/Level 69.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://S:/Amgo Games/WordJam/Assets/Levels/Level 73.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://S:/Amgo Games/WordJam/Assets/Levels/Level 73.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://S:/Amgo Games/WordJam/Assets/Levels/Level 73.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://S:/Amgo Games/WordJam/Assets/Levels/Level 73.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://S:/Amgo Games/WordJam/Assets/Scripts/CameraMotionScript.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://S:/Amgo Games/WordJam/Assets/Scripts/LetterGroupSet.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/ScrollingTex.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Editor/TMP_BitmapShaderGUI.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Editor/TMP_SDFShaderGUI.cs" root0="SKIP_HIGHLIGHTING" />
@@ -61,7 +73,7 @@
     &quot;Attach to Unity Editor.Attach to Unity Editor &amp; Play.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.74899864&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.3609516&quot;,
     &quot;do_not_show_Android_plugin_suggestion&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Jyothiraditya&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
@@ -85,15 +97,13 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="16128">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="16128" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list>
-          <MonoRuntime />
-        </list>
+        <list />
       </option>
       <option name="selectedOptions">
         <list />
@@ -145,6 +155,7 @@
     <MESSAGE value="Set Level Done" />
     <MESSAGE value="New UI Implemented and Some Fixes" />
     <MESSAGE value="Highlighting Done and OnClick Smooth" />
-    <option name="LAST_COMMIT_MESSAGE" value="Highlighting Done and OnClick Smooth" />
+    <MESSAGE value="Triple Spawn and Magnet Fixed for triple" />
+    <option name="LAST_COMMIT_MESSAGE" value="Triple Spawn and Magnet Fixed for triple" />
   </component>
 </project>

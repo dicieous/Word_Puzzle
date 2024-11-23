@@ -149,13 +149,17 @@ public class CubesGroupScript : MonoBehaviour
 			    {
 				    if (countnum == childObjects.Count)
 				    {
-					    DOVirtual.DelayedCall(2.5f, () =>
+					    DOVirtual.DelayedCall(1.5f, () =>
 					    {
-						    GameManager.Instance.autoWordClick = false;
-						    UIManagerScript.Instance.AutoButtonActiveFun();
+						    if (LetterGroupSet.instance.lettersSpawning)
+						    {
+							    GameManager.Instance.autoWordClick = false;
+							    UIManagerScript.Instance.AutoButtonActiveFun();
+							    print("Letter spawning in cube group");
+						    }
 					    },false);
 				    }
-				    print($"{countnum}:::{childObjects.Count}");
+				    //print($"{countnum}:::{childObjects.Count}");
 				    childObjects[countnum].transform.GetChild(1).GetComponent<MeshRenderer>().material
 					    .color = CoinManager.instance.greenColor;
 				    childObjects[countnum].transform.GetChild(3).GetComponent<SpriteRenderer>().color = new Color(0.8f, 1f, 0.38f);

@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -16,6 +17,9 @@ public class PlayerCubeScript : MonoBehaviour
         var posStart = transform.localPosition;
         startPos = posStart;
         transform.GetChild(2).GetComponent<TextMeshPro>().text = transform.GetChild(0).GetComponent<TextMeshPro>().text;
+        name = checknumber.ToString();
+        // yield return new WaitForSeconds(0.01f);
+        LetterGroupSet.instance.lettersList.Add(gameObject);
     }
 
     private void Update()

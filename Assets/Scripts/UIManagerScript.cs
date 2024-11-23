@@ -274,7 +274,7 @@ public class UIManagerScript : MonoBehaviour
             }
 
             HintButtonActiveFun();
-            AutoButtonActiveFun();
+            //AutoButtonActiveFun();
             EmojiRevelButtonActiveFun();
             if (s == '5' || SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 33 &&
                 SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 2)
@@ -827,18 +827,17 @@ public class UIManagerScript : MonoBehaviour
     public void AutoButtonActiveFun()
     {
         if(SavedData.GetSpecialLevelNumber() <= autoWordUnlockedLevel - 1) return;
-        if (!GameManager.Instance) return;
+        if (!GameManager.Instance || LetterGroupSet.instance.lettersSpawning) return;
         autoWordDisableWordBool = false;
         if (!GameManager.Instance.levelCompleted && !GameManager.Instance.autoWordClick)
         {
-            if (GameManager.Instance.completeWordCubesList.Count > 0)
+            if (/*GameManager.Instance.completeWordCubesList.Count > 0*/LetterGroupSet.instance.currentlyActiveSets.Count > 0)
             {
                 if (!GameManager.Instance.cameraMoving && !GameManager.Instance.wordTouch)
                 {
                     //_autoButtonActivate = true;
                     autoWordButton.interactable = true;
                     _autoButtonActive = true;
-
                     // var magnetText = autoWordButton.image.rectTransform.GetChild(0).gameObject;
                     // var coinsTxt = autoWordButton.image.rectTransform.GetChild(1).gameObject;
                     /*
@@ -862,13 +861,11 @@ public class UIManagerScript : MonoBehaviour
         autoWordDisableWordBool = true;
         _autoButtonActive = false;
         autoWordButton.interactable = false;
-        print("autowordclick");
         GameManager.Instance.autoWordClick = true;
         //_autoButtonActivate = false;
         HintButtonDeActiveFun();
         if (GameManager.Instance)
         {
-            GameManager.Instance.AutoCompleteFunc();
             GameManager.Instance.scriptOff = true;
         }
 
@@ -886,13 +883,15 @@ public class UIManagerScript : MonoBehaviour
 
     public void AutoWordCompleteButton()
     {
-        if (SavedData.MagnetTutorial == 1 && SavedData.GetSpecialLevelNumber() == 11)
+        /*if (SavedData.MagnetTutorial == 1 && SavedData.GetSpecialLevelNumber() == 11)
         {
             GameManager.Instance.scriptOff = false;
             tutorialBoxHandImage.gameObject.SetActive(false);
             tutorialBox.gameObject.SetActive(false);
             SavedData.MagnetTutorial = 0;
-        }
+        }*/
+        var num = LetterGroupSet.instance.magnetIndexNum = LetterGroupSet.instance.MagnetData();
+        if (num < 0 || LetterGroupSet.instance.lettersSpawning) return;
         if (CoinManager.instance.GetCoinsCount() >= autoWordCostValue)
         {
             StartCoroutine(CoinsReduceAnim(instanceImageRef, instancePos, magnetPosDeduct));
@@ -921,6 +920,7 @@ public class UIManagerScript : MonoBehaviour
             if (!GameManager.Instance.autoWordClick /*&& _autoButtonActivate*/)
             {
                 AutoButtonDisActive();
+                GameManager.Instance.AutoCompleteFunc();
             }
 
             DOVirtual.DelayedCall(1.75f, () =>
@@ -932,7 +932,7 @@ public class UIManagerScript : MonoBehaviour
             {
                 // print("One attack::::::::::::::::::::::::::::::::::::::");
                 GameManager.Instance.autoWordClick = false;
-                AutoButtonActiveFun();
+                //AutoButtonActiveFun();
             }, false);
             /*print("autoword::::"+autoWordButton.interactable);
             print("WordClick::::::::"+GameManager.Instance.autoWordClick);*/
@@ -966,8 +966,11 @@ public class UIManagerScript : MonoBehaviour
         }
     }
 
+    public GameObject hintObjetcToreveal;
     public void OnHintButtonClick()
     {
+        hintObjetcToreveal = LetterGroupSet.instance.HintActivateDecider();
+        if (hintObjetcToreveal == null) return;
         if (SavedData.HintTutorial == 1 && SavedData.GetSpecialLevelNumber() == 4)
         {
             GameManager.Instance.scriptOff = false;
@@ -982,14 +985,6 @@ public class UIManagerScript : MonoBehaviour
             Hint_CallBack();
             CoinManager.instance.HintReduce(hintCostValue);
         }
-        /*else
-        {
-            if (!GameEssentials.IsRvAvailable()) return;
-            GameEssentials.RvType = RewardType.Hint;
-            GameEssentials.ShowRewardedAds("Hint");
-            /*if(LionStudiosManager.instance)
-                LionStudiosManager.AdsEvents(true, AdsEventState.Start,GetSpecialLevelNumber(),"Applovin","Hint",CoinManager.instance.GetCoinsCount());#1#
-        }*/
 
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
@@ -1000,15 +995,15 @@ public class UIManagerScript : MonoBehaviour
     {
         HintButtonDeActiveFun();
         DOVirtual.DelayedCall(0.1f, () => { HintButtonActiveFun(); }, false);
-        GameManager.Instance.ShowTheText();
+        var obj = hintObjetcToreveal.transform.GetChild(0);
+        obj.GetComponent<TextMeshPro>().DOFade(1, .5f).SetEase(Ease.Linear);
+        hintObjetcToreveal = null;
+        /////---------Old hint method
+        //GameManager.Instance.ShowTheText();
 
         if (!SoundHapticManager.Instance) return;
         SoundHapticManager.Instance.Vibrate(30);
         SoundHapticManager.Instance.Play("ButtonClickMG");
-
-        /*if(!LionStudiosManager.instance) return;
-        LionStudiosManager.Hint(GetSpecialLevelNumber().ToString(),_hintCount.ToString());*/
-        _hintCount++;
     }
 
     private bool _hintActive;

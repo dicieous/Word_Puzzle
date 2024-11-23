@@ -23,10 +23,17 @@ public class HighlightTextScript : MonoBehaviour
 		{
 			if (other.gameObject.GetComponentInChildren<TextMeshPro>().text == gameObject.GetComponentInChildren<TextMeshPro>().text)
 			{
+				done = true;
 				//gameObject.SetActive(false);
 				transform.parent.GetComponent<HintParent>().takenString.Add(other.gameObject.GetComponentInChildren<TextMeshPro>().text);
 				//Destroy(gameObject);
 			}
+		}
+
+		if (other.gameObject.layer == LayerMask.NameToLayer("Cube_Grid"))
+		{
+			print("Calling");
+			gameObject.name = other.GetComponent<HolderCubeScript>().checkNumberRef.ToString();
 		}
 	}
 

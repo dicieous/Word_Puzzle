@@ -95,6 +95,15 @@ public class GameManager : MonoBehaviour
         if (!Instance) Instance = this;
     }
 
+    private void OnEnable()
+    {
+        var letterSetGroup = GameObject.Find("Letters_Holder");
+        if (!letterSetGroup.GetComponent<LetterGroupSet>())
+        {
+            letterSetGroup.AddComponent<LetterGroupSet>();
+        }
+    }
+
     private void Start()
     {
         canClickNow = true;
@@ -898,7 +907,7 @@ public class GameManager : MonoBehaviour
                 FunWaitCall(completeWordCubesList[0].completeWordCubeGroup[i],
                     completeWordPositionsList[0].completeWordCubePositionGroup[i]);
             }*/
-            var number = LetterGroupSet.instance.MagnetData();
+            var number = LetterGroupSet.instance.magnetIndexNum                ;
             FunWaitCall(LetterGroupSet.instance.currentAutoWordSets[number],
                 LetterGroupSet.instance.currentAutoWordPositions[number]);
             LetterGroupSet.instance.currentAutoWordSets.RemoveAt(number);
