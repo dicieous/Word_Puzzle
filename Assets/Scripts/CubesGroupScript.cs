@@ -285,7 +285,7 @@ public class CubesGroupScript : MonoBehaviour
 		            }
 	            }
             }
-			var position = new Vector3(position1.x, position1.y + 3f, position1.z + 2.5f);
+			var position = new Vector3(position1.x, position1.y , position1.z + 2.5f);
 			_offset = position - MouseWorldPosition();
 			if (!GameManager.Instance.wordTouch)
 			{
@@ -294,10 +294,10 @@ public class CubesGroupScript : MonoBehaviour
 				UIManagerScript.Instance.hintButton.interactable = false;
 				UIManagerScript.Instance.emojiRevealButton.interactable = false;
 			}
-			if(!_clickTween.IsActive())
+			/*if(!_clickTween.IsActive())
 			{
 				_clickTween = transform.DOMoveY(position.y, 0.15f).SetEase(Ease.Flash);
-			}
+			}*/
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
 			if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
 		}
@@ -353,6 +353,7 @@ public class CubesGroupScript : MonoBehaviour
 		//Debug.Log("isFilledC Value "+ isFilledC);
 		if (Input.GetMouseButtonUp(0) && isFilledC && !GameManager.Instance.scriptOff)
 		{
+			print("Heyyy");
 			ResetPosition();
 		}
         if(canCheckForPlacement && !canNotPlace)

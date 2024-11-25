@@ -48,11 +48,11 @@ public class LetterGroupSet : SingletonInstance<LetterGroupSet>
         hintValue ??= new List<HighlightTextScript>();
 
         letterSets.AddRange(GetComponentsInChildren<CubesGroupScript>(true));
-        foreach (var letterSet in letterSets)
+        /*foreach (var letterSet in letterSets)
         {
             if(!letterSet.canPlaceNow)
                 letterSet.gameObject.SetActive(false);
-        }
+        }*/
 
         _completeWordCubesList = GameManager.Instance.completeWordCubesList;
         for (int i = 0; i < _completeWordCubesList.Count; i++)
@@ -113,7 +113,7 @@ public class LetterGroupSet : SingletonInstance<LetterGroupSet>
     {
         UIManagerScript.Instance.HintButtonDeActiveFun();
         UIManagerScript.Instance.AutoButtonDisActive();
-        for (int i = 0; i < Mathf.Min(3, letterSets.Count); i++)
+        for (int i = 0; i < letterSets.Count; i++)
         {
             if (!currentlyActiveSets.Contains(letterSets[i]))
                 currentlyActiveSets.Add(letterSets[i]);
