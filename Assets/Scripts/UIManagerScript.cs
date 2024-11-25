@@ -301,7 +301,7 @@ public class UIManagerScript : MonoBehaviour
                 if (GAScript.instance) GAScript.instance.LevelStart(SavedData.GetSpecialLevelNumber().ToString(), levelAttempts);
             }
 
-            if (SavedData.HintTutorial == 1 && SavedData.GetSpecialLevelNumber() == hintUnlockedLevel)
+            /*if (SavedData.HintTutorial == 1 && SavedData.GetSpecialLevelNumber() == hintUnlockedLevel)
             {
                 GameManager.Instance.scriptOff = true;
                 tutorialBoxHandImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, 115);
@@ -319,7 +319,7 @@ public class UIManagerScript : MonoBehaviour
                 tutorialBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-180, 250);
                 tutorialBox.gameObject.SetActive(true);
                 tutorialBoxText.text = "Tap the magnet to fill in half of the word!";
-            }
+            }*/
         }
 
         switch (dailyRewardDetails)
@@ -352,6 +352,28 @@ public class UIManagerScript : MonoBehaviour
         DotsFill();
     }
 
+    public void AbilityTutorial()
+    {
+        if (SavedData.HintTutorial == 1 && SavedData.GetSpecialLevelNumber() == hintUnlockedLevel)
+        {
+            GameManager.Instance.scriptOff = true;
+            tutorialBoxHandImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, 115);
+            tutorialBoxHandImage.gameObject.SetActive(true);
+            tutorialBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-350, 250);
+            tutorialBox.gameObject.SetActive(true);
+            tutorialBoxText.text = "Tap to show a single letter!";
+        }
+
+        if (SavedData.MagnetTutorial == 1 && SavedData.GetSpecialLevelNumber() == autoWordUnlockedLevel)
+        {
+            GameManager.Instance.scriptOff = true;
+            tutorialBoxHandImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-230, 115);
+            tutorialBoxHandImage.gameObject.SetActive(true);
+            tutorialBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-180, 250);
+            tutorialBox.gameObject.SetActive(true);
+            tutorialBoxText.text = "Tap the magnet to fill in half of the word!";
+        }
+    }
 
     private void DotsFill()
     {

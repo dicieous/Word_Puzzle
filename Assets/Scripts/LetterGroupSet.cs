@@ -137,6 +137,7 @@ public class LetterGroupSet : SingletonInstance<LetterGroupSet>
             if (GameManager.Instance)
             {
                 GameManager.Instance.scriptOff = false;
+                UIManagerScript.Instance.AbilityTutorial();
             }
             UIManagerScript.Instance.HintButtonActiveFun();
             GameManager.Instance.autoWordClick = false;
