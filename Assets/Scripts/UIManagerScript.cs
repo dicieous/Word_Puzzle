@@ -1211,7 +1211,7 @@ public class UIManagerScript : MonoBehaviour
     {
         if (SavedData.GetLevelNumber() > SceneManager.sceneCountInBuildSettings - 34)
         {
-            var i = Random.Range(2, SceneManager.sceneCountInBuildSettings - 34);
+            var i = Random.Range(15, SceneManager.sceneCountInBuildSettings - 34);
             PlayerPrefs.SetInt("ThisLevel", i);
             SceneManager.LoadScene(i);
         }
@@ -1475,7 +1475,7 @@ public class UIManagerScript : MonoBehaviour
         }*/
         if (SavedData.GetLevelNumber() > SceneManager.sceneCountInBuildSettings - 34)
         {
-            var i = Random.Range(2, SceneManager.sceneCountInBuildSettings - 34);
+            var i = Random.Range(15, SceneManager.sceneCountInBuildSettings - 34);
             PlayerPrefs.SetInt("ThisLevel", i);
             SceneManager.LoadScene(i);
         }
