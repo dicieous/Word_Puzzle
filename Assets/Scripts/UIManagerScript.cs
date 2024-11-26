@@ -299,6 +299,7 @@ public class UIManagerScript : MonoBehaviour
                  SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 2))
             {
                 // if (GAScript.instance) GAScript.instance.LevelStart(SavedData.GetSpecialLevelNumber().ToString(), levelAttempts);
+                if(TinySauceManager.instance) TinySauceManager.instance.LevelStart(SavedData.GetSpecialLevelNumber().ToString());
             }
 
             /*if (SavedData.HintTutorial == 1 && SavedData.GetSpecialLevelNumber() == hintUnlockedLevel)
@@ -427,7 +428,7 @@ public class UIManagerScript : MonoBehaviour
         {
             barMeterObj.SetActive(false);
         }*/
-        if ((SavedData.GetSpecialLevelNumber() <= 10))
+        if ((SavedData.GetSpecialLevelNumber() <= 11))
         {
             movesText.gameObject.SetActive(false);
         }
@@ -928,7 +929,7 @@ public class UIManagerScript : MonoBehaviour
             /*if(LionStudiosManager.instance)
                 LionStudiosManager.AdsEvents(true, AdsEventState.Start,GetSpecialLevelNumber(),"Applovin","Magnet",CoinManager.instance.GetCoinsCount());#1#
         }*/
-
+        if(TinySauceManager.instance) TinySauceManager.instance.PowerUpUsed("Magnet",SavedData.GetSpecialLevelNumber().ToString());
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
     }
@@ -999,7 +1000,8 @@ public class UIManagerScript : MonoBehaviour
             Hint_CallBack();
             CoinManager.instance.HintReduce(hintCostValue);
         }
-
+        
+        if(TinySauceManager.instance) TinySauceManager.instance.PowerUpUsed("Hint",SavedData.GetSpecialLevelNumber().ToString());
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
     }
@@ -1198,6 +1200,7 @@ public class UIManagerScript : MonoBehaviour
         if (num % 2 == 0)
         {
             CoinsDoubleClaimFun(50);
+            if(TinySauceManager.instance) TinySauceManager.instance.LevelEnd(true,50,SavedData.GetSpecialLevelNumber().ToString());
             SavedData.SetSpecialLevelNumber(SavedData.GetSpecialLevelNumber() + 1);
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
             if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
@@ -1226,6 +1229,7 @@ public class UIManagerScript : MonoBehaviour
     {
         //GameManager.Instance.ResetScreen();
         // if (GAScript.instance) GAScript.instance.LevelRestart(SavedData.GetSpecialLevelNumber().ToString(), levelAttempts);
+        if(TinySauceManager.instance) TinySauceManager.instance.LevelEnd(false,0,SavedData.GetSpecialLevelNumber().ToString());
         levelAttempts++;
         //DOTween.KillAll();
         //GameManager.Instance.compSequence.Kill();

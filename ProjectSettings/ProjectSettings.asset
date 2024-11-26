@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: meemeegames
-  productName: Emoji Crossword
+  companyName: younick games
+  productName: Emoji Cross Word
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -76,6 +76,7 @@ PlayerSettings:
   androidMinimumWindowWidth: 400
   androidMinimumWindowHeight: 300
   androidFullscreenMode: 1
+  androidAutoRotationBehavior: 1
   defaultIsNativeResolution: 1
   macRetinaSupport: 1
   runInBackground: 1
@@ -136,6 +137,8 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
+  visionOSBundleVersion: 1.0
+  tvOSBundleVersion: 1.0
   bundleVersion: 0.1
   preloadedAssets: []
   metroInputSource: 0
@@ -158,7 +161,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.meemeegames.wordjam
+    Android: com.younickgames.emojicrossword
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -230,6 +233,7 @@ PlayerSettings:
   iOSMetalForceHardShadows: 0
   metalEditorSupport: 1
   metalAPIValidation: 1
+  metalCompileShaderBinary: 0
   iOSRenderExtraFrameOnPause: 0
   iosCopyPluginsCodeInsteadOfSymlink: 0
   appleDeveloperTeamID: 
@@ -247,20 +251,20 @@ PlayerSettings:
   clonedFromGUID: c0afd0d1d80e3634a9dac47e8a0426ea
   templatePackageId: com.unity.template.3d@8.1.1
   templateDefaultScene: Assets/Scenes/SampleScene.unity
-  useCustomMainManifest: 0
-  useCustomLauncherManifest: 0
-  useCustomMainGradleTemplate: 0
-  useCustomLauncherGradleManifest: 0
+  useCustomMainManifest: 1
+  useCustomLauncherManifest: 1
+  useCustomMainGradleTemplate: 1
+  useCustomLauncherGradleManifest: 1
   useCustomBaseGradleTemplate: 0
-  useCustomGradlePropertiesTemplate: 0
+  useCustomGradlePropertiesTemplate: 1
   useCustomGradleSettingsTemplate: 0
   useCustomProguardFile: 0
   AndroidTargetArchitectures: 3
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: D:/Plugins,Scripts,Keystores/Keystores/MeemeeGames.keystore
-  AndroidKeyaliasName: meemeegames
+  AndroidKeystoreName: S:/Amgo Stuff/Keystores/YounickGames.keystore
+  AndroidKeyaliasName: younick games
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
@@ -268,7 +272,7 @@ PlayerSettings:
   AndroidEnableTango: 0
   androidEnableBanner: 1
   androidUseLowAccuracyLocation: 0
-  androidUseCustomKeystore: 0
+  androidUseCustomKeystore: 1
   m_AndroidBanners:
   - width: 320
     height: 180
@@ -839,7 +843,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: LK_HAS_LION_ANALYTICS;HAS_LION_ADJUST_SDK;HAS_LION_GAME_ANALYTICS_SDK;HAS_LION_APPLOVIN_SDK;HAS_LION_FACEBOOK_SDK;FACEBOOK_PRESENT_AND_ASMDEF_CREATED;ADJUST_PRESENT_AND_ASMDEF_CREATED
+    Android: VS_ATT;LK_HAS_LION_ANALYTICS;HAS_LION_ADJUST_SDK;HAS_LION_GAME_ANALYTICS_SDK;HAS_LION_APPLOVIN_SDK;HAS_LION_FACEBOOK_SDK;FACEBOOK_PRESENT_AND_ASMDEF_CREATED;ADJUST_PRESENT_AND_ASMDEF_CREATED
     iPhone: LK_HAS_LION_ANALYTICS;FACEBOOK_PRESENT_AND_ASMDEF_CREATED;ADJUST_PRESENT_AND_ASMDEF_CREATED;HAS_LION_APPLOVIN_SDK
   additionalCompilerArguments: {}
   platformArchitecture: {}
@@ -893,6 +897,7 @@ PlayerSettings:
   metroTileBackgroundColor: {r: 0.13333334, g: 0.17254902, b: 0.21568628, a: 0}
   metroSplashScreenBackgroundColor: {r: 0.12941177, g: 0.17254902, b: 0.21568628, a: 1}
   metroSplashScreenUseBackgroundColor: 0
+  syncCapabilities: 0
   platformCapabilities: {}
   metroTargetDeviceFamilies: {}
   metroFTAName: 
