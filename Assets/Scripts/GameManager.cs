@@ -231,7 +231,7 @@ public class GameManager : MonoBehaviour
             });
         }
 
-        if (SavedData.GetSpecialLevelNumber() > 10)
+        if (SavedData.GetSpecialLevelNumber() > 11)
         {
             if (movesCount <= 0 && !levelCompleted && !levelFail)
             {

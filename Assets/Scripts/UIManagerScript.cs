@@ -444,7 +444,7 @@ public class UIManagerScript : MonoBehaviour
 
         }
 
-        if ((SavedData.GetSpecialLevelNumber() == 11))
+        if ((SavedData.GetSpecialLevelNumber() == 12))
         {
             movesText.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             DOVirtual.DelayedCall(5f, () => { movesText.gameObject.transform.GetChild(0).gameObject.SetActive(false); }, false);
