@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using GameAnalyticsSDK;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -79,7 +78,6 @@ namespace DDZ
         private static void OnInIt()
         {
             Vibration.Init();
-            GAScript.Init();
         }
 
         private void OnEnable()

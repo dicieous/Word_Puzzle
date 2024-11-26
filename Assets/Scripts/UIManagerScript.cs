@@ -298,7 +298,7 @@ public class UIManagerScript : MonoBehaviour
             if ((SceneManager.GetActiveScene().buildIndex <= SceneManager.sceneCountInBuildSettings - 33 ||
                  SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 2))
             {
-                if (GAScript.instance) GAScript.instance.LevelStart(SavedData.GetSpecialLevelNumber().ToString(), levelAttempts);
+                // if (GAScript.instance) GAScript.instance.LevelStart(SavedData.GetSpecialLevelNumber().ToString(), levelAttempts);
             }
 
             /*if (SavedData.HintTutorial == 1 && SavedData.GetSpecialLevelNumber() == hintUnlockedLevel)
@@ -1225,7 +1225,7 @@ public class UIManagerScript : MonoBehaviour
     public void ResetScreenOnClick()
     {
         //GameManager.Instance.ResetScreen();
-        if (GAScript.instance) GAScript.instance.LevelRestart(SavedData.GetSpecialLevelNumber().ToString(), levelAttempts);
+        // if (GAScript.instance) GAScript.instance.LevelRestart(SavedData.GetSpecialLevelNumber().ToString(), levelAttempts);
         levelAttempts++;
         //DOTween.KillAll();
         //GameManager.Instance.compSequence.Kill();
@@ -1240,7 +1240,7 @@ public class UIManagerScript : MonoBehaviour
         retryButton.interactable = false;
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Vibrate(30);
         if (SoundHapticManager.Instance) SoundHapticManager.Instance.Play("ButtonClickMG");
-        if (GAScript.instance) GAScript.instance.LevelFail(SavedData.GetSpecialLevelNumber().ToString(), levelAttempts);
+        // if (GAScript.instance) GAScript.instance.LevelFail(SavedData.GetSpecialLevelNumber().ToString(), levelAttempts);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
