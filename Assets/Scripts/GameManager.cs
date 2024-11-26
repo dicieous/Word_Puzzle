@@ -408,7 +408,7 @@ public class GameManager : MonoBehaviour
                     {
                         // Instantiate(complementPrefab, instPos.position, Quaternion.identity);
                         UIManagerScript.Instance.GetComponent<FloatingTextScript>().TextExpression();
-                        instTime = 1f;
+                        instTime = 10f;
                         canInstantiate = false;
                     }
 
@@ -511,7 +511,7 @@ public class GameManager : MonoBehaviour
                 {
                     // Instantiate(complementPrefab, instPos.position, Quaternion.identity);
                     UIManagerScript.Instance.GetComponent<FloatingTextScript>().TextExpression();
-                    instTime = 1f;
+                    instTime = 10f;
                     canInstantiate = false;
                 }
                 //wordNoToComplete++;
