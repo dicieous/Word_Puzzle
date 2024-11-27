@@ -136,11 +136,11 @@ public class CubesGroupScript : MonoBehaviour
 		    //PosCheck();
 		    doneWithWord = true;
 		    // var letterGroupSet = LetterGroupSet.instance;
-		    if (SavedData.GetSpecialLevelNumber() == 1)
+		    /*if (SavedData.GetSpecialLevelNumber() == 1)
 		    {
 			    if (check1done) UIManagerScript.Instance.HelpHand();
 			    check1done = true;
-		    }
+		    }*/
 		    LetterGroupSet.OnLetterGroupSet ?.Invoke();
 		    DOVirtual.DelayedCall(0.5f, () =>
 		    {

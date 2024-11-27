@@ -490,10 +490,6 @@ public class GameManager : MonoBehaviour
                 s.correctWordMade = true;
                 //Debug.Log("Correct Word");
                 Debug.Log("Words Made " + wordsMade);
-                if (SavedData.GetSpecialLevelNumber() == 1)
-                {
-                    UIManagerScript.Instance.HelpHand();
-                }
 
                 if (wordsAfterWhichToMoveCam.Count > 0)
                 {
@@ -535,7 +531,10 @@ public class GameManager : MonoBehaviour
                 Debug.Log("LevelComplete");
 
                 ButtonsTurnOffFun();
-
+                if (SavedData.GetSpecialLevelNumber() == 1)
+                {
+                    UIManagerScript.Instance.HelpHand();
+                }
                 DOVirtual.DelayedCall(1.5f, () =>
                 {
                     CoinManager.instance.confettiFx.Play();
