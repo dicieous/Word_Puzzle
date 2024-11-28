@@ -182,6 +182,11 @@ public class UIManagerScript : MonoBehaviour
             if(SoundHapticManager.Instance) SoundHapticManager.Instance.Play("BG_Music");
         }
     }
+    
+    private void BgSpriteType()
+    {
+        soundButton.transform.GetChild(0).GetComponent<Image>().sprite = SavedData.SoundToggle ? soundOn : soundOff;
+    }
 
     private void CalendarIndicatorCheck()
     {
@@ -349,7 +354,8 @@ public class UIManagerScript : MonoBehaviour
                 break;
         }
         
-        BackgroundMusic();
+        // BackgroundMusic();
+        BgSpriteType();
         DotsFill();
     }
 
@@ -1012,6 +1018,7 @@ public class UIManagerScript : MonoBehaviour
         HintButtonDeActiveFun();
         DOVirtual.DelayedCall(0.1f, () => { HintButtonActiveFun(); }, false);
         var obj = hintObjetcToreveal.transform.GetChild(0);
+        Instantiate(GameManager.Instance.HintStarFx(), obj.transform.position, Quaternion.identity);
         obj.GetComponent<TextMeshPro>().DOFade(1, .5f).SetEase(Ease.Linear);
         hintObjetcToreveal = null;
         /////---------Old hint method

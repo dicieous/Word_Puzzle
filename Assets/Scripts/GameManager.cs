@@ -726,6 +726,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public GameObject HintStarFx() => starFX;
+ 
     private bool IsInstantiated(GameObject obj, int count)
     {
         for (int i = 0; i < count; i++)

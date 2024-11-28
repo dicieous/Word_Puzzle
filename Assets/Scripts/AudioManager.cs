@@ -35,8 +35,8 @@ public class SoundHapticManager : MonoBehaviour
 
 	private void Start()
 	{
-		// Play("BG_Music");
-
+		if(SavedData.SoundToggle)
+			Play("BG_Music");
 		Vibration.Init();
 	}
 
